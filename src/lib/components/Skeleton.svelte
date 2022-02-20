@@ -16,7 +16,7 @@
 					<p>How to make Whatsapp clone using html and css</p>
 				</div>
 			</div>
-			<Shimmer />
+			<!-- <Shimmer /> -->
 		</div>
 		{/each}
 </ul>

@@ -3,8 +3,7 @@
 	import {
 		createUserWithEmailAndPassword,
 		signInWithEmailAndPassword,
-		signInWithPopup,
-		GoogleAuthProvider
+		signInWithPopup
 	} from 'firebase/auth';
 	import { auth, db, google } from '$lib/firebase/client';
 
@@ -15,7 +14,6 @@
 	let signup = false;
 	let isPending = false;
 	let result = null;
-	let token = null;
 
 	const handleSubmit = async () => {
 		try {
@@ -55,7 +53,7 @@
 			.then((result) => {
 				let user = result.user;
 				console.log('current loggedin user', user);
-				console.log('current loggedin user id ', auth.currentUser.uid);			
+				console.log('current loggedin user id ', auth.currentUser.uid);	
 			})
 			.catch((err) => {
 				console.log(err.message);
