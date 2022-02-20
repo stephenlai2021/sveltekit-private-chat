@@ -7,6 +7,7 @@
 		GoogleAuthProvider
 	} from 'firebase/auth';
 	import { auth, db, google } from '$lib/firebase/client';
+
 	let displayName = '';
 	let email = '';
 	let password = '';
@@ -14,6 +15,8 @@
 	let signup = false;
 	let isPending = false;
 	let result = null;
+	let token = null;
+
 	const handleSubmit = async () => {
 		try {
 			if (signup) {
@@ -46,7 +49,7 @@
 			isPending = false;
 		}
 	};
-	let token = null;
+	
 	const loginWithGoogle = () => {
 		signInWithPopup(auth, google)
 			.then((result) => {

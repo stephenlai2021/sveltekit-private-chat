@@ -16,16 +16,15 @@
 	let q = null;
 	let colRef = collection(db, 'whatzapp_users');
 
+	/* Range filter and Ordery on different fields not working in this case */
+	// q = query(colRef, where('contactList', 'array-contains', user.uid), orderBy('name', 'asc'));
+
 	onMount(async () => {
 		onAuthStateChanged(auth, (_user) => {
 			if (!_user) {
 				goto('/login');
 			} else {
-				user = _user;
-				
-				/* Range filter and Ordery on different fields not working in this case */
-				// q = query(colRef, where('contactList', 'array-contains', user.uid), orderBy('name', 'asc'));
-				
+				user = _user;				
 				q = query(colRef, where('contactList', 'array-contains', user.uid));
 				console.log('user | booklist', user);
 				show = true;
