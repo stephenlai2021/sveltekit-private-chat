@@ -7,7 +7,6 @@
 		GoogleAuthProvider
 	} from 'firebase/auth';
 	import { auth, db, google } from '$lib/firebase/client';
-	import { idToken } from '$lib/store';
 	let displayName = '';
 	let email = '';
 	let password = '';
@@ -53,12 +52,7 @@
 			.then((result) => {
 				let user = result.user;
 				console.log('current loggedin user', user);
-				console.log('current loggedin user id ', auth.currentUser.uid);
-				auth.currentUser.getIdToken().then((_token) => {
-					token = _token;
-					console.log('token', _token);
-					idToken.set(token);
-				});				
+				console.log('current loggedin user id ', auth.currentUser.uid);			
 			})
 			.catch((err) => {
 				console.log(err.message);
