@@ -1,0 +1,21 @@
+{
+  "name": "private-chat",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "package": "svelte-kit package",
+    "preview": "svelte-kit preview",
+    "push": "git add . && git commit -m commit && git push origin master"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "svelte": "^3.44.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "firebase": "^9.6.7",
+    "firebase-admin": "^10.0.2"
+  }
+}
