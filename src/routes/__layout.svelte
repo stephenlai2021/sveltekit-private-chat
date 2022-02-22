@@ -12,7 +12,7 @@
 
 <SvelteTheme />
 <svelte:head>
-  <title>Lets Chat</title>
+  <title>Letschat</title>
 </svelte:head>
 
 <slot />
