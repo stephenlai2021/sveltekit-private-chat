@@ -4,7 +4,6 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Login from '$lib/components/Login.svelte';
-	import { fly } from 'svelte/transition'
 
 	let show = false;
 

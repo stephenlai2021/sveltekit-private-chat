@@ -1,5 +1,6 @@
 <script>
 	import { fly } from 'svelte/transition';
+	import { showModal } from '$lib/store'
 
 	let keyword = '';
   
@@ -22,16 +23,17 @@
 		width: 100%;
 		padding: 30px;
 	}
+
 	.search_user {
 		position: relative;
 		width: 100%;
 		height: 50px;
 		background: transparent;
-		/* background: var(--search-bg-color); */
 		padding: 0 15px;
 		line-height: 50px;
 		/* border: 1px solid; */
 	}
+
 	.search_user input {
 		width: 100%;
 		outline: none;
@@ -43,15 +45,18 @@
 		font-size: 14px;
 		padding-left: 40px;
 	}
+
 	.search_user input::placeholder {
 		color: #bbb;
 	}
+
 	.search_user .material-icons {
 		position: absolute;
 		left: 25px;
 		top: 15px;
 		color: #bbb;
 	}
+
 	.add-friend {
 		position: absolute;
 		top: 0;
@@ -60,11 +65,11 @@
 		height: 100%;
 		display: flex;
 		justify-content: center;
-		/* flex-direction: column; */
 		z-index: 100;
 		background: #e5ddd5;
-		border: 1px solid green;
+		/* border: 1px solid green; */
 	}
+
 	@media (max-width: 700px) {
 		.add-friend {
 			width: 122%;

@@ -16,6 +16,7 @@
   "type": "module",
   "dependencies": {
     "firebase": "^9.6.7",
-    "firebase-admin": "^10.0.2"
+    "firebase-admin": "^10.0.2",
+    "svelte-themes": "^0.0.98"
   }
 }
