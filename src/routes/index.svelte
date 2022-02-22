@@ -67,7 +67,7 @@
     color: var(--intro-title-color);
     font-weight: 100;
   }
-  
+
   main {
     text-align: center;
   }

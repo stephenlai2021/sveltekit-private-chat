@@ -81,7 +81,7 @@
         <!-- <h4 class="user-title">{user.displayName}</h4>
         <div class="user-email">{user.email}</div> -->
         <!-- <h3 class="user-title">聊天室</h3> -->
-        <h3 class="user-title">Whatsapp</h3>
+        <h3 class="user-title"><i>Lets Chat</i></h3>
       </div>
     </div>
   {/if}

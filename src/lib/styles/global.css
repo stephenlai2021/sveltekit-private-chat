@@ -30,8 +30,10 @@ body {
 	max-width: 1920px;
 	margin: auto;
 	overflow-y: hidden;
-	min-height: 100vh;
+	/* min-height: 100vh; */
+	height: 100vh;
 	background: linear-gradient(var(--theme-green) 0%, var(--theme-green) 127px, var(--theme-grey) 127px, var(--theme-grey) 100%);
+	/* border: 2px solid red; */
 }
 
 a {
@@ -82,7 +84,7 @@ a {
 	position: relative;
 	width: 44%;
 	height: 100%;
-	border-right: 1px solid rgba(0, 0, 0, 0.02);
+	border-right: 1px solid rgba(0, 0, 0, 0.15);
 	background: white;
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;

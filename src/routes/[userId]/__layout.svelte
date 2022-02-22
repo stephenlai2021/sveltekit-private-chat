@@ -6,8 +6,8 @@
   import TopSide from "$lib/components/TopSide.svelte";
   import LeftSide from "$lib/components/LeftSide.svelte";
   import { fly } from "svelte/transition";
-  import { browser } from '$app/env'
-  import { page } from '$app/stores'
+  import { browser } from "$app/env";
+  import { page } from "$app/stores";
 
   let show = false;
   let leftSide = true;
@@ -24,18 +24,17 @@
   });
 
   $: if (browser) {
-    window.addEventListener('resize', () => {
-      console.log('page width', window.innerWidth)
+    window.addEventListener("resize", () => {
+      console.log("page width", window.innerWidth);
 
       if (window.innerWidth <= 800) {
-        if ($page.url.pathname === '/') {
+        if ($page.url.pathname === "/") {
           // hide right side
-        }
-        else {
+        } else {
           // hide left side
         }
       }
-    })
+    });
   }
 </script>
 
