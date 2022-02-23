@@ -35,10 +35,10 @@
   <li>
     {#if $connection}
       <span class="material-icons">wifi</span>
-      <span>連線成功</span>
+      <span class="menu-item">連線成功</span>
     {:else}
       <span class="material-icons">wifi_off</span>
-      <span>連線失敗</span>
+      <span class="menu-item">連線失敗</span>
     {/if}
   </li>
   <li on:click={() => ($showModal = !$showModal)}>
@@ -68,6 +68,7 @@
 
   span.menu-item {
     cursor: pointer;
+    /* color: black; */
   }
 
   ul {
@@ -86,7 +87,8 @@
   li {
     display: flex;
     align-items: center;
-    padding: 5px 10px;
+    padding: 10px 20px;
+    background: white;
     /* display: flex;
     justify-content: center; */
     /* border: 1px solid; */

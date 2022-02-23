@@ -3,11 +3,10 @@
   import { auth } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from "$app/navigation";
-  import TopSide from "$lib/components/TopSide.svelte";
   import LeftSide from "$lib/components/LeftSide.svelte";
   import { fly } from "svelte/transition";
   import { browser } from "$app/env";
-  import { page } from "$app/stores";
+  import { showSettingsModal } from '$lib/store'
 
   let show = false;
   let hideLeftSide = false;
@@ -36,6 +35,10 @@
 
   $: if (browser) {
     window.addEventListener("resize", () => resizeWindow());
+    window.addEventListener("click", (e) => {
+      console.log("window event", e);
+      showSettingsModal.set(false);
+    });
   }
 </script>
 
@@ -47,8 +50,8 @@
     <div
       class="rightSide"
       class:active={showRightSide}
-      in:fly={{ y: 50, duration: 300, delay: 300 }}
-      out:fly={{ duration: 300 }}
+      in:fly={{ x: 30, duration: 200, delay: 200 }}
+      out:fly={{ duration: 200 }}
     >
       <slot />
     </div>

@@ -3,10 +3,9 @@
   import { auth } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from "$app/navigation";
-  import TopSide from "$lib/components/TopSide.svelte";
   import LeftSide from "$lib/components/LeftSide.svelte";
   import { browser } from "$app/env";
-  import { page } from "$app/stores";
+  import { showSettingsModal } from '$lib/store'
 
   let show = false;
   let showLeftSide = false;
@@ -35,8 +34,18 @@
 
   $: if (browser) {
     window.addEventListener("resize", () => resizeWindow());
+    window.addEventListener("click", (e) => {
+      console.log("window event", e);
+      showSettingsModal.set(false);
+    });
   }
+
 </script>
+
+<svelte:head>
+  <title>Welcome</title>
+</svelte:head>
+
 
 {#if show}
   <div class="wrapper">

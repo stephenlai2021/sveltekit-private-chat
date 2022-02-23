@@ -17,6 +17,7 @@
 
   $: if (logout) goto("/login");
 
+  /*  read selected user data and render on header  */
   $: if ($page.params.userId) {
     q = query(colRef, where("name", "==", $page.params.userId));
     const unsub = onSnapshot(q, (snapshot) => {
@@ -28,12 +29,13 @@
       return () => unsub();
     });
   }
-
-  window.addEventListener("click", (e) => {
-    console.log("window event", e);
-    showSettingsModal.set(false);
-  });
 </script>
+
+<svelte:head>
+  {#if $page.params.userId}
+  <title>Chat | {$page.params.userId}</title>
+  {/if}
+</svelte:head>
 
 <img
   src="https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
@@ -151,10 +153,6 @@
   .left-part {
     display: flex;
     align-items: center;
-  }
-
-  .nav_icons span {
-    margin-left: 20px;
   }
 
   .chatbox_input span:nth-child(1) {

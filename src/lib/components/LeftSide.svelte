@@ -116,9 +116,9 @@
 {#if users.length}
   <div
     class="chatlist"
-    in:fly={{ x: 50, duration: 300, delay: 300 }}
-    out:fly={{ duration: 300 }}
-  >
+    >
+    <!-- in:fly={{ y: 30, duration: 200, delay: 200 }}
+    out:fly={{ duration: 200 }} -->
     {#each filteredUsers as user}
       <div
         class="block"
