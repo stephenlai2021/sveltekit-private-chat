@@ -1,6 +1,6 @@
 <script>
   import Skeleton from "$lib/components/Skeleton.svelte";
-  import { keyword, showSettingsModal } from "$lib/store";
+  import { keyword, showModal, showSettingsModal } from "$lib/store";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
@@ -9,6 +9,7 @@
   import { onAuthStateChanged } from "firebase/auth";
   import { fly } from "svelte/transition";
   import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
+  import AddFriendModal from '$lib/components/modal/AddFriendModal.svelte'
 
   let user = null;
   let users = [];
@@ -22,7 +23,7 @@
   const selectedUser = (user) => {
     console.log("selected user | left side", user);
     activeItem = user.name;
-    goto(`/chat/${user.name}`);
+    goto(`/${user.name}`);
   };
 
   onMount(async () => {
@@ -146,6 +147,11 @@
   <div class="loading">
     <Skeleton />
   </div>
+{/if}
+
+
+{#if $showModal}
+  <AddFriendModal />
 {/if}
 
 <style>

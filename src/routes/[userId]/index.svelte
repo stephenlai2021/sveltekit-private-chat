@@ -1,5 +1,5 @@
 <script>
-  import AddFriendModal from "$lib/components/AddFriendModal.svelte";
+  import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
   import { showModal } from "$lib/store";
   import { db } from "$lib/firebase/client";
   import { collection, onSnapshot, query, where } from "firebase/firestore";
@@ -30,10 +30,8 @@
   }
 
   window.addEventListener("click", (e) => {
-    console.log('window event', e)
-    // if (e.path[0].className !== 'header') {
-      showSettingsModal.set(false);
-    // }
+    console.log("window event", e);
+    showSettingsModal.set(false);
   });
 </script>
 
@@ -144,10 +142,6 @@
   <input type="text" placeholder="Type a message" />
   <span class="material-icons">mic_none</span>
 </div>
-
-{#if $showModal}
-  <AddFriendModal />
-{/if}
 
 <style>
   .arrow-back {
@@ -271,8 +265,6 @@
     top: 60px;
     bottom: 0px;
     width: 100%;
-    /* height: 100%; */
-    /* height: calc(100vh - 60px); */
     padding: 20px;
     padding-bottom: 60px;
     overflow-y: auto;
@@ -318,6 +310,7 @@
     .arrow-back {
       margin-right: 10px;
       display: block;
+      color: #51585c;
       /* font-size: 1.5rem; */
     }
   }

@@ -41,11 +41,11 @@
       <span>連線失敗</span>
     {/if}
   </li>
-  <!-- <li on:click={() => ($showModal = !$showModal)}>
+  <li on:click={() => ($showModal = !$showModal)}>
     <span class="material-icons">person_add_alt</span>
     <span class="menu-item">新增朋友</span>
-  </li> -->
-  <li class="theme" on:click={toggleTheme}>
+  </li>
+  <!-- <li class="theme" on:click={toggleTheme}>
     {#if $themeStore.theme === "light"}
       <span class="material-icons">dark_mode</span>
       <span class="menu-item">黑暗模式</span>
@@ -53,7 +53,7 @@
       <span class="material-icons">light_mode</span>
       <span class="menu-item">明亮模式</span>
     {/if}
-  </li>
+  </li> -->
   <li on:click={handleSignout}>
     <span class="material-icons">logout</span>
     <span class="menu-item">登出</span>

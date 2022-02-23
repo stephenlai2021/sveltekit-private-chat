@@ -225,7 +225,9 @@ a {
 .chatlist {
 	overflow-y: auto;
 	background: white;
-	height: calc(100vh - 156px);
+	/* height: 110%; */
+	/* height: calc(100vh - 156px); */
+	height: calc(100vh - 110px);
 }
 
 .chatlist .block {
@@ -357,6 +359,7 @@ background: #b6b5b5;
 	}
 
 	.leftSide .header {
+		border-top-left-radius: 0;
 		background: var(--theme-green);
 	}
 

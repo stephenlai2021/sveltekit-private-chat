@@ -7,7 +7,7 @@
 	const handleSubmit = () => {};
 </script>
 
-<div class="add-friend" transition:fly={{ y: 100, duration: 200 }}>
+<div class="add-friend" transition:fly={{ x: -100, duration: 200 }}>
 	<div class="form-container">
 		<div class="search_user">
 			<div>
