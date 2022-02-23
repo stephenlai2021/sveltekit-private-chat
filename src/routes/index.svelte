@@ -9,8 +9,18 @@
   import { page } from "$app/stores";
 
   let show = false;
-  let leftSide = true;
-  let rightSide = true;
+  let showLeftSide = false;
+  let hideRightSide = false;
+
+  const resizeWindow = () => {
+    if (window.innerWidth <= 800) {
+      showLeftSide = true;
+      hideRightSide = true;
+    } else {
+      showLeftSide = false;
+      hideRightSide = false;
+    }
+  };
 
   onMount(async () => {
     onAuthStateChanged(auth, (_user) => {
@@ -20,36 +30,23 @@
         show = true;
       }
     });
+    resizeWindow();
   });
 
   $: if (browser) {
-    window.addEventListener("resize", () => {
-      console.log("page width", window.innerWidth);
-
-      if (window.innerWidth <= 800) {
-        if ($page.url.pathname === "/") {
-          // hide right side, show left side
-        } else {
-          // hide left side, show right side
-        }
-      }
-    });
+    window.addEventListener("resize", () => resizeWindow());
   }
 </script>
 
 {#if show}
   <div class="wrapper">
-    <!-- <div class="leftSide" class:leftSide={} class:righSide={}> -->
-    <div class="leftSide">
+    <div class="leftSide" class:active={showLeftSide}>
       <LeftSide />
     </div>
-    <!-- <div class="rightSide" class:leftSide={} class:rightSide={}> -->
-    <div class="rightSide">
-      <!-- <img src="https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg" alt="" /> -->
-      <main>
+    <div class="rightSide" class:hide={hideRightSide}>
+      <main class:hide={hideRightSide}>
         <img src="/whatsapp-logo.jpg" alt="" />
         <h1>與朋友保持連線</h1>
-        <!-- <h1>Keep your phone connected</h1> -->
         <p>Whatsapp 會連線到您的手機來同步訊息</p>
       </main>
     </div>
@@ -57,6 +54,16 @@
 {/if}
 
 <style>
+  .active {
+    width: 100%;
+  }
+
+  .hide {
+    display: none;
+    width: 0%;
+    height: 0%;
+  }
+
   main p {
     margin-top: 8px;
     color: var(--intro-subtitle-color);
@@ -77,9 +84,7 @@
     justify-content: center;
     align-items: center;
     background: var(--intro-grey);
-    padding: 28px;
     border-bottom: 6px solid var(--intro-border-color);
-    /* border: 1px solid red; */
   }
 
   .rightSide img {

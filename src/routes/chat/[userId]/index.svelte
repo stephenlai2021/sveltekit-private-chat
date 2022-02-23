@@ -293,7 +293,6 @@
     font-weight: 600;
     line-height: 1.2em;
     color: var(--icon-add-color);
-    /* border: 1px solid green; */
   }
 
   .rightSide .header .imgText span {
@@ -315,9 +314,9 @@
     opacity: 1;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     .arrow-back {
-      margin-right: 15px;
+      margin-right: 10px;
       display: block;
       /* font-size: 1.5rem; */
     }

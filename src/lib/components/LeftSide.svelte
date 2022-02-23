@@ -22,7 +22,7 @@
   const selectedUser = (user) => {
     console.log("selected user | left side", user);
     activeItem = user.name;
-    goto(`/${user.name}`);
+    goto(`/chat/${user.name}`);
   };
 
   onMount(async () => {
@@ -80,8 +80,8 @@
       <div class="user-details">
         <!-- <h4 class="user-title">{user.displayName}</h4>
         <div class="user-email">{user.email}</div> -->
-        <!-- <h3 class="user-title">聊天室</h3> -->
-        <h3 class="user-title"><i>Letschat</i></h3>
+        <h3 class="user-title">聊天室</h3>
+        <!-- <h3 class="user-title"><i>Letschat</i></h3> -->
       </div>
     </div>
   {/if}
@@ -99,7 +99,7 @@
       on:click|stopPropagation={() =>
         ($showSettingsModal = !$showSettingsModal)}
     >
-      <span class="material-icons">settings</span>
+      <span class="material-icons settings">settings</span>
     </li>
   </ul>
   {#if $showSettingsModal}

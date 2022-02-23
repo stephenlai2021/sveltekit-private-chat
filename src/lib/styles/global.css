@@ -63,6 +63,7 @@ a {
 	margin: 20px auto;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
 	border-radius: 4px;
+	/* border: 1px solid red; */
 }
 
 .topSide {
@@ -97,7 +98,6 @@ a {
 	background: #e5ddd5;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
-	/* border: 1px solid red; */
 }
 
 .rightSide .header {
@@ -345,105 +345,28 @@ background: #b6b5b5;
 }
 
 @media (max-width: 800px) {
-	.leftSide {
-		border: none;
-	}
-
-	.rightSide .header {
-		border-top: 5px solid var(--theme-green);
-	}
-
 	.wrapper {
 		margin: 0;
 		height: 100vh;
 		width: 100%;
 	}
 
-	.topSide {
-		display: block;
-	}
-
-	.search_user {
-		background: var(--bg-grey);
-	}
-
 	.leftSide {
-		width: 15%;
-		/* width: 100%; */
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
 	}
 
 	.leftSide .header {
-		padding: 0;
-		display: flex;
-		justify-content: center;
 		background: var(--theme-green);
+	}
+
+	.user-title,
+	.nav_icons .material-icons.person-add,
+	.nav_icons .material-icons.settings {
+		color: var(--search-bg-color);
+	}
+
+	.rightSide .header {
 		border-top: 5px solid var(--theme-green);
-	}
-
-	.leftSide .header .user-details,
-	.leftSide .header .nav_icons,
-	.leftSide .search_user {
-		display: none;
-	}
-
-	.leftSide .header .left {
-		height: 60px;
-	}
-
-	.left .userimg {
-		margin-left: 15px;
-	}
-
-	.left .userimg .user-name-capital {
-		position: absolute;
-		bottom: 0;
-		right: -5px;
-		width: 20px;
-		height: 20px;
-		font-size: 1.2em;
-		font-weight: bold;
-		color: var(--icon-add-color);
-	}
-
-  .chatlist .block {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 8px;
-	}
-	
-	.chatlist .block .imgbx {
-		width: 45px;
-		height: 45px;
-		margin-right: 0;		
-	}
-
-	.chatlist .block .details {
-		display: none;
-	}
-
-  .chatlist .block .details .listHead {
-		text-align: center;
-	}
-
-  .chatlist .block .details .listHead .time {
-		display: none;
-	}
-}
-
-@media (max-width: 600px) {
-	.chatlist .block .details .listHead h4 {
-		display: none;
-	}
-}
-
-@media (max-width: 500px) {
-	.chatlist .block .details .message_p {
-		display: none;
-	}
-	.chatlist .block .details .listHead {
-		justify-content: center;
-		align-items: center;
-		height: 100%;
 	}
 }

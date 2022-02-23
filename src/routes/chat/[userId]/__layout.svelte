@@ -10,8 +10,18 @@
   import { page } from "$app/stores";
 
   let show = false;
-  let leftSide = true;
-  let rightSide = true;
+  let hideLeftSide = false;
+  let showRightSide = false;
+
+  const resizeWindow = () => {
+    if (window.innerWidth <= 800) {
+      showRightSide = true;
+      hideLeftSide = true;
+    } else {
+      showRightSide = false;
+      hideLeftSide = false;
+    }
+  };
 
   onMount(async () => {
     onAuthStateChanged(auth, (_user) => {
@@ -21,30 +31,22 @@
         show = true;
       }
     });
+    resizeWindow();
   });
 
   $: if (browser) {
-    window.addEventListener("resize", () => {
-      console.log("page width", window.innerWidth);
-
-      if (window.innerWidth <= 800) {
-        if ($page.url.pathname === "/") {
-          // hide right side
-        } else {
-          // hide left side
-        }
-      }
-    });
+    window.addEventListener("resize", () => resizeWindow());
   }
 </script>
 
 {#if show}
   <div class="wrapper">
-    <div class="leftSide">
+    <div class="leftSide" class:hide={hideLeftSide}>
       <LeftSide />
     </div>
     <div
       class="rightSide"
+      class:active={showRightSide}
       in:fly={{ y: 50, duration: 300, delay: 300 }}
       out:fly={{ duration: 300 }}
     >
@@ -52,3 +54,13 @@
     </div>
   </div>
 {/if}
+
+<style>
+  .active {
+    display: block;
+  }
+
+  .hide {
+    display: none;
+  }
+</style>
