@@ -10,6 +10,7 @@
 	onMount(() => {
 		const unsub = onAuthStateChanged(auth, (user) => {
 			if (user) {
+				show = false
 				goto('/');
 			} else {
 				show = true;

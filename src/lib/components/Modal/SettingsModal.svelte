@@ -26,10 +26,10 @@
   });
 </script>
 
+<!-- in:fly={{ y: -20, x: 20, duration: 100, delay: 100 }}
+out:fly={{ y: -20, x: 20, duration: 100, delay: 100 }} -->
 <ul
   class="menu-settings"
-  in:fly={{ y: -20, x: 20, duration: 100, delay: 100 }}
-  out:fly={{ y: -20, x: 20, duration: 100, delay: 100 }}
   on:click|stopPropagation={() => console.log('hi, there !')}
 >
   <li>

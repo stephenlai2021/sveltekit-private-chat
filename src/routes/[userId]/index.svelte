@@ -5,6 +5,7 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
+  import { browser } from '$app/env'
   import { onMount } from "svelte";
   import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
   import { showSettingsModal } from "$lib/store";
@@ -17,7 +18,6 @@
 
   $: if (logout) goto("/login");
 
-  /*  read selected user data and render on header  */
   $: if ($page.params.userId) {
     q = query(colRef, where("name", "==", $page.params.userId));
     const unsub = onSnapshot(q, (snapshot) => {
@@ -58,14 +58,6 @@
         </div>
       </div>
     </div>
-    <!-- <ul class="nav_icons">
-      <li on:click|stopPropagation={() => ($showSettingsModal = !$showSettingsModal)}>
-        <span class="material-icons">settings</span>
-      </li>
-    </ul>
-    {#if $showSettingsModal}
-      <SettingsModal />
-    {/if} -->
   </div>
 {/if}
 
@@ -271,25 +263,7 @@
 
   .details {
     padding-left: 15px;
-  }
-
-  .rightSide .header .imgText {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .rightSide .header .imgText h4 {
-    font-weight: 600;
-    line-height: 1.2em;
-    color: var(--icon-add-color);
-  }
-
-  .rightSide .header .imgText span {
-    font-size: 0.8em;
-    color: #555;
-    /* border: 1px solid blue; */
-  }
+  }  
 
   .rightSide .header .imgText .userimg {
     position: relative;

@@ -6,6 +6,7 @@
 		signInWithPopup
 	} from 'firebase/auth';
 	import { auth, db, google } from '$lib/firebase/client';
+	import { fly } from 'svelte/transition'
 
 	let displayName = '';
 	let email = '';
@@ -126,15 +127,18 @@
 	:root {
 		--form-bg-color: #e8f0fe;
 	}
+
 	.page {
 		display: flex;
 		justify-content: center;
 	}
+
 	.content {
 		min-width: 350px;
 		margin-top: 20px;
 		text-align: center;
 	}
+
 	.content header {
 		color: var(--dark-mode-text);
 		font-size: 30px;
@@ -142,6 +146,7 @@
 		margin: 0 0 35px 0;
 		font-family: 'Montserrat', sans-serif;
 	}
+
 	.field {
 		position: relative;
 		height: 45px;
@@ -150,6 +155,7 @@
 		/* background: rgba(255, 255, 255, 0.04); */
 		background: var(--form-bg-color);
 	}
+
 	.field span {
 		color: #222;
 		background: var(--form-bg-color);
@@ -158,6 +164,7 @@
 		/* border: none;
 		outline: none; */
 	}
+
 	.field input {
 		height: 100%;
 		width: 100%;
@@ -169,6 +176,7 @@
 		font-size: 16px;
 		font-family: 'Poppins', sans-serif;
 	}
+
 	.show {
 		position: absolute;
 		right: 13px;
@@ -179,21 +187,26 @@
 		display: none;
 		font-family: 'Montserrat', sans-serif;
 	}
+
 	.space {
 		margin-top: 16px;
 	}
+
 	.pass {
 		text-align: left;
 		margin: 10px 0;
 	}
+
 	.pass a {
 		color: var(--dark-mode-text);
 		font-family: 'Poppins', sans-serif;
 		text-decoration: none;
 	}
+	
 	.pass:hover a {
 		text-decoration: underline;
 	}
+
 	input[type='submit'] {
 		background: #3498db;
 		border: 1px solid #2691d9;
@@ -204,20 +217,24 @@
 		cursor: pointer;
 		font-family: 'Montserrat', sans-serif;
 	}
+
 	input[type='submit']:hover {
 		background: #2691d9;
 	}
+
 	.login {
 		color: var(--dark-mode-text);
 		margin: 20px 0;
 		font-family: 'Poppins', sans-serif;
 	}
+
 	.link {
 		display: flex;
 		cursor: pointer;
 		color: white;
 		margin: 0 0 20px 0;
 	}
+
 	.google {
 		width: 100%;
 		height: 45px;
@@ -227,6 +244,7 @@
 		display: flex;
 		position: relative;
 	}
+
 	.google .img-container {
 		position: absolute;
 		left: 0;
@@ -236,21 +254,26 @@
 		display: grid;
 		place-content: center;
 	}
+
 	.google img {
 		width: 25px;
 		height: 25px;
 	}
+
 	.google h4 {
 		width: 100%;
 		font-family: 'Poppins', sans-serif;
 	}
+
 	.signup {
 		color: var(--dark-mode-text);
 	}
+
 	.signup span:hover {
 		text-decoration: underline;
 		cursor: pointer;
 	}
+	
 	.error {
 		margin-top: 10px;
 	}

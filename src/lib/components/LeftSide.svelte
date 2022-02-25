@@ -18,7 +18,6 @@
   let activeItem = null;
   let q = null;
   let colRef = collection(db, "whatzapp_users");
-  let showSearchbar = false;
 
   const selectedUser = (user) => {
     console.log("selected user | left side", user);
@@ -41,11 +40,6 @@
 
   const handleProfileModal = () => {
     alert("hi, there !");
-  };
-
-  const toggleSearchbar = () => {
-    showSearchbar = !showSearchbar;
-    console.log("search bar state: ", showSearchbar ? "open" : "close");
   };
 
   onMount(() => {
@@ -79,23 +73,14 @@
         <img class="cover" src={user.photoURL} alt="" />
       </div>
       <div class="user-details">
-        <!-- <h4 class="user-title">{user.displayName}</h4>
-        <div class="user-email">{user.email}</div> -->
         <h3 class="user-title">聊天室</h3>
-        <!-- <h3 class="user-title"><i>Letschat</i></h3> -->
       </div>
     </div>
   {/if}
-  <!-- <li on:click={() => ($showModal = !$showModal)}>
-    <span class="material-icons">person_add_alt</span>
-  </li> -->
   <ul class="nav_icons">
     <li>
       <span class="material-icons person-add">person_add_alt</span>
     </li>
-    <!-- <li on:click={toggleSearchbar}>
-      <span class="material-icons">search</span>
-    </li> -->
     <li
       on:click|stopPropagation={() =>
         ($showSettingsModal = !$showSettingsModal)}
@@ -113,12 +98,12 @@
     <span class="material-icons">search</span>
   </div>
 </div>
-{#if users.length}
+<!-- {#if users.length}
   <div
     class="chatlist"
+    in:fly={{ x: 20, duration: 100, delay: 100 }}
+    out:fly={{ duration: 100 }}
     >
-    <!-- in:fly={{ y: 30, duration: 200, delay: 200 }}
-    out:fly={{ duration: 200 }} -->
     {#each filteredUsers as user}
       <div
         class="block"
@@ -143,11 +128,11 @@
       </div>
     {/each}
   </div>
-{:else}
+{:else} -->
   <div class="loading">
     <Skeleton />
   </div>
-{/if}
+<!-- {/if} -->
 
 
 {#if $showModal}
