@@ -1,5 +1,5 @@
 <script>
-  import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
+  // import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
   import { showModal } from "$lib/store";
   import { db } from "$lib/firebase/client";
   import { collection, onSnapshot, query, where } from "firebase/firestore";

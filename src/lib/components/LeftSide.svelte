@@ -9,7 +9,7 @@
   import { onAuthStateChanged } from "firebase/auth";
   import { fly, fade } from "svelte/transition";
   import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
-  import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
+  // import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
 
   let user = null;
   let users = [];
@@ -128,9 +128,9 @@
   </div>
 {/if}
 
-<!-- {#if $showModal}
+{#if $showModal}
   <AddFriendModal />
-{/if} -->
+{/if}
 
 <style>
   .person-add {
