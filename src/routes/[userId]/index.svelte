@@ -171,7 +171,10 @@
     width: 100%;
     height: 50px;
     background: #f0f0f0;
-    padding: 15px;
+    background: transparent;
+    backdrop-filter: blur(15px);
+    /* background: linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%); */
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -260,18 +263,7 @@
     padding-left: 15px;
   }  
 
-  .rightSide .header .imgText .userimg {
-    position: relative;
-    display: flex;
-  }
-
-  .rightSide .header .imgText .userimg img {
-    width: 40px;
-    height: 40px;
-    color: var(--icon-add-color);
-    border-radius: 50%;
-    opacity: 1;
-  }
+  
 
   @media (max-width: 800px) {
     .arrow-back {

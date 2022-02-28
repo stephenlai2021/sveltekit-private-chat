@@ -34,7 +34,6 @@ body {
   max-width: 1920px;
   margin: auto;
   overflow-y: hidden;
-  /* min-height: 100vh; */
   height: 100vh;
   /* background: linear-gradient(var(--theme-green) 0%, var(--theme-green) 127px, var(--app-bg) 127px, var(--app-bg) 100%); */
   /* border: 2px solid red; */
@@ -70,21 +69,6 @@ a {
   border-radius: 4px;
 }
 
-.topSide {
-  display: none;
-}
-
-.topSide .header .userimg {
-  width: 40px;
-  height: 40px;
-}
-
-.topSide .header .userimg img {
-  width: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .header {
   width: 100%;
   background: var(--bg-grey);
@@ -110,6 +94,18 @@ a {
   width: 100%;
   height: 100%;
   background: #e5ddd5;
+  background: linear-gradient(225deg, var(--logo-green) 25%, var(--logo-purple));
+  /* vital Ocean */
+  background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%);
+
+  background: linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%);
+  background: linear-gradient(225deg, #00C9FF 0%, #92FE9D 100%);
+  background: linear-gradient(225deg, #d53369 0%, #daae51 100%);
+  background: linear-gradient(225deg, #efd5ff 0%, #515ada 100%);
+  background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%);
+  background: linear-gradient(225deg, #FDBB2D 0%, #22C1C3 100%);
+  background: linear-gradient(225deg, #00d2ff 0%, #3a47d5 100%);
+  background: linear-gradient(225deg, #e3ffe7 0%, #d9e7ff 100%);
   border-bottom-right-radius: 4px;
 }
 
@@ -123,7 +119,10 @@ a {
   position: absolute;
   top: 0px;
   height: 60px;
-  border-top: 5px solid var(--intro-border-color);
+  background: transparent;
+  backdrop-filter: blur(15px);
+  /* background: linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%); */
+  /* border-top: 5px solid var(--intro-border-color); */
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
@@ -136,6 +135,19 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.rightSide .header .imgText .userimg {
+  position: relative;
+  display: flex;
+}
+
+.rightSide .header .imgText .userimg img {
+  width: 40px;
+  height: 40px;
+  color: var(--icon-add-color);
+  border-radius: 50%;
+  opacity: 1;
 }
 
 .rightSide .header .imgText h4 {

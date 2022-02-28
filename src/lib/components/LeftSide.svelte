@@ -9,7 +9,7 @@
   import { onAuthStateChanged } from "firebase/auth";
   import { fly, fade } from "svelte/transition";
   import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
-  import AddFriendModal from '$lib/components/modal/AddFriendModal.svelte'
+  import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
 
   let user = null;
   let users = [];
@@ -39,8 +39,8 @@
   });
 
   onMount(() => {
-    if ($page.url.pathname === '/') activeItem = null
-    if ($page.url.pathname != '/') activeItem = $page.params.userId;
+    if ($page.url.pathname === "/") activeItem = null;
+    if ($page.url.pathname != "/") activeItem = $page.params.userId;
     console.log("active item | onMount ", activeItem);
   });
 
@@ -97,10 +97,7 @@
   </div>
 </div>
 {#if users.length}
-  <div
-    class="chatlist"
-    transition:fade={{ duration: 100 }}
-    >
+  <div class="chatlist" transition:fade={{ duration: 100 }}>
     {#each filteredUsers as user}
       <div
         class="block"
@@ -130,7 +127,6 @@
     <Skeleton />
   </div>
 {/if}
-
 
 {#if $showModal}
   <AddFriendModal />
