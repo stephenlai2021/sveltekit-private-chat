@@ -1,10 +1,8 @@
 <script>
-  import { connection, showModal, showSettingsModal } from "$lib/store";
+  import { connection, showModal } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
   import { onMount } from "svelte";
-  import { auth } from "$lib/firebase/client";
-  import { signOut } from "firebase/auth";
-  import { fly } from "svelte/transition";
+  import { signout } from '$lib/functions/auth/signout'
 
   let theme = true;
 
@@ -12,12 +10,6 @@
     theme = !theme;
     if (theme) setTheme("dark");
     if (!theme) setTheme("light");
-  };
-
-  const handleSignout = () => {
-    signOut(auth).then(() => {
-      logout = true;
-    });
   };
 
   onMount(() => {
@@ -54,7 +46,7 @@ out:fly={{ y: -20, x: 20, duration: 100, delay: 100 }} -->
       <span class="menu-item">明亮模式</span>
     {/if}
   </li> -->
-  <li on:click={handleSignout}>
+  <li on:click={signout}>
     <span class="material-icons">logout</span>
     <span class="menu-item">登出</span>
   </li>
@@ -89,8 +81,5 @@ out:fly={{ y: -20, x: 20, duration: 100, delay: 100 }} -->
     align-items: center;
     padding: 10px 20px;
     background: white;
-    /* display: flex;
-    justify-content: center; */
-    /* border: 1px solid; */
   }
 </style>

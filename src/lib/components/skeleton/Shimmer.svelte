@@ -9,7 +9,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    animation: loading 1s infinite;
+    animation: loading 1.5s infinite;
   }
   
   .shimmer {
@@ -19,6 +19,7 @@
     transform: skewX(-20deg);
     box-shadow: 0 0 30px 30px rgba(255, 255, 255, 0.05);
   }
+
   @keyframes loading {
     0% { transform: translateX(-150%) }
     50% { transform: translateX(-60%) }

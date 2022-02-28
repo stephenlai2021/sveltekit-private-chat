@@ -1,5 +1,5 @@
 <script>
-  import Skeleton from "$lib/components/Skeleton.svelte";
+  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import { keyword, showModal, showSettingsModal } from "$lib/store";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
@@ -7,7 +7,7 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
-  import { fly } from "svelte/transition";
+  import { fly, fade } from "svelte/transition";
   import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
   import AddFriendModal from '$lib/components/modal/AddFriendModal.svelte'
 
@@ -38,12 +38,9 @@
     });
   });
 
-  const handleProfileModal = () => {
-    alert("hi, there !");
-  };
-
   onMount(() => {
-    activeItem = $page.params.userId;
+    if ($page.url.pathname === '/') activeItem = null
+    if ($page.url.pathname != '/') activeItem = $page.params.userId;
     console.log("active item | onMount ", activeItem);
   });
 
@@ -69,11 +66,12 @@
 <div class="header">
   {#if user}
     <div class="left">
-      <div class="userimg" on:click={handleProfileModal}>
+      <!-- <div class="userimg" on:click={handleProfileModal}>
         <img class="cover" src={user.photoURL} alt="" />
-      </div>
+      </div> -->
       <div class="user-details">
-        <h3 class="user-title">聊天室</h3>
+        <!-- <h3 class="user-title">Messenger</h3> -->
+        <h3 class="user-title">即時通</h3>
       </div>
     </div>
   {/if}
@@ -98,11 +96,10 @@
     <span class="material-icons">search</span>
   </div>
 </div>
-<!-- {#if users.length}
+{#if users.length}
   <div
     class="chatlist"
-    in:fly={{ x: 20, duration: 100, delay: 100 }}
-    out:fly={{ duration: 100 }}
+    transition:fade={{ duration: 100 }}
     >
     {#each filteredUsers as user}
       <div
@@ -128,11 +125,11 @@
       </div>
     {/each}
   </div>
-{:else} -->
+{:else}
   <div class="loading">
     <Skeleton />
   </div>
-<!-- {/if} -->
+{/if}
 
 
 {#if $showModal}

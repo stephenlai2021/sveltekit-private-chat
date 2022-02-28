@@ -5,10 +5,6 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { browser } from '$app/env'
-  import { onMount } from "svelte";
-  import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
-  import { showSettingsModal } from "$lib/store";
 
   let q = null;
   let user = {};
@@ -54,7 +50,6 @@
         </div>
         <div class="details">
           <h4>{user.name}</h4>
-          <!-- <span>{user.isOnline ? "online" : "offline"}</span> -->
         </div>
       </div>
     </div>

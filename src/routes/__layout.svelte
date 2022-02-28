@@ -19,8 +19,6 @@
     } else {
       mobile = false;
     }
-    console.log('mobile state: ', mobile)
-    console.log("current url: ", $page.url.pathname, "page width: ", window.innerWidth);
   };
 
   onMount(() => {
@@ -31,6 +29,9 @@
       } else {
         loginFormShow = false;
       }
+
+      // if (user) loginFormShow = false
+      // if (!user) goto('/login')
     });
     resizeWindow();
   });
@@ -41,7 +42,6 @@
     window.addEventListener("online", () => connection.set(true));
     window.addEventListener("offline", () => connection.set(false));
     window.addEventListener("click", (e) => {
-      console.log("window event | layout", e);
       showSettingsModal.set(false);
     });
     window.addEventListener("resize", () => resizeWindow());
