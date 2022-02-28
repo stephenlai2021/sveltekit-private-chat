@@ -128,9 +128,9 @@
   </div>
 {/if}
 
-{#if $showModal}
+<!-- {#if $showModal}
   <AddFriendModal />
-{/if}
+{/if} -->
 
 <style>
   .person-add {
