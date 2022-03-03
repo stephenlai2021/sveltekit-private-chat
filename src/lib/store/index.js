@@ -19,25 +19,25 @@ export const mobile = writable(false)
 export const loginFormShow = writable(false)
 export const showAddFriendModal = writable(false)
 
-// export const bgColor = writable(
-//   browser && localStorage.getItem("background color")
-// );
-// bgColor.subscribe(
-//   (val) => browser && localStorage.setItem("background color", val)
-// );
+export const bgColor = writable(
+  browser && localStorage.getItem("background color")
+);
+bgColor.subscribe(
+  (val) => browser && localStorage.setItem("background color", val)
+);
 
 // export const bgColor = derived(session, ($session, set) => {
 //   if ($session.bgColor) set($session.bgColor);
 // });
 
-if (browser) {
-  bgColor = writable(localStorage.getItem("background color"));
-  bgColor.subscribe((val) => localStorage.setItem("background color", val));
-} else {
-  bgColor = derived(session, ($session, set) => {
-    if ($session.bgColor) set($session.bgColor);
-  });
-}
+// if (browser) {
+//   bgColor = writable(localStorage.getItem("background color"));
+//   bgColor.subscribe((val) => localStorage.setItem("background color", val));
+// } else {
+//   bgColor = derived(session, ($session, set) => {
+//     if ($session.bgColor) set($session.bgColor);
+//   });
+// }
 
 export const setBgColor = (bgColor) => {
   session.update(($session) => ({ ...$session, bgColor }))

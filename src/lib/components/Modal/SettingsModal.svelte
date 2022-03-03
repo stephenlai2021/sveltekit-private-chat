@@ -36,10 +36,10 @@
   </li>
   <li>
     <label>
+      <!-- on:input={() => setBgColor($bgColor)} -->
       <input
         type="color"
         bind:value={$bgColor}
-        on:input={() => setBgColor($bgColor)}
         style:height="0"
         style:width="0"
         style:opacity="0"
@@ -86,9 +86,6 @@
     width: 333px;
     height: 100vh;
     z-index: 200;
-    /* opacity: 0.8; */
-    /* background: transparent; */
-    /* backdrop-filter: blur(15px); */
   }
 
   li {
