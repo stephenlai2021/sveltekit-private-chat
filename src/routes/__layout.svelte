@@ -28,7 +28,10 @@
   $: if (browser) {
     // window.addEventListener("online", () => connection.set(true));
     // window.addEventListener("offline", () => connection.set(false));
-    window.addEventListener("online", () => $connection = true);
+    window.addEventListener("online", () => { 
+      // $connection = true
+      alert("internet is connected 😀");
+    });
     window.addEventListener("offline", () => { 
       // $connection = false
       alert("OOh, internet is disconnected 😮");
