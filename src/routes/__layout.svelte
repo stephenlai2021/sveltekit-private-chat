@@ -26,8 +26,13 @@
   $: if (!user) $loginFormShow = true;
 
   $: if (browser) {
-    window.addEventListener("online", () => connection.set(true));
-    window.addEventListener("offline", () => connection.set(false));
+    // window.addEventListener("online", () => connection.set(true));
+    // window.addEventListener("offline", () => connection.set(false));
+    window.addEventListener("online", () => $connection = true);
+    window.addEventListener("offline", () => { 
+      // $connection = false
+      alert("OOh, internet is disconnected 😮");
+    });
     window.addEventListener("click", (e) => {
       $showSettingsModal = false
       $showAddFriendModal = false
@@ -35,7 +40,7 @@
     window.addEventListener("resize", () => resizeWindow());
 
     // if ($connection) alert("internet is connected 😀");
-    if (!$connection) alert("OOh, internet is disconnected 😮");
+    // if (!$connection) alert("OOh, internet is disconnected 😮");
   }
 </script>
 

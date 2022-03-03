@@ -240,10 +240,6 @@ a {
 .chatlist {
   overflow-y: auto;
   overflow-x: hidden;
-  /* position: absolute;
-  top: 115px;
-  bottom: 60px;
-  width: 100%; */
   padding-bottom: 120px;
   /* height: calc(100vh - 156px); */
 }
