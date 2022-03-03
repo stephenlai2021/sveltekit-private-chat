@@ -94,16 +94,16 @@ a {
   
   background: #e5ddd5;
   background: linear-gradient(225deg, var(--logo-green) 25%, var(--logo-purple));
-  background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%);
+  /* background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%); */
 
   background: linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%);
-  background: linear-gradient(225deg, #00C9FF 0%, #92FE9D 100%);
-  background: linear-gradient(225deg, #d53369 0%, #daae51 100%);
-  background: linear-gradient(225deg, #efd5ff 0%, #515ada 100%);
-  background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%);
-  background: linear-gradient(225deg, #FDBB2D 0%, #22C1C3 100%);
-  background: linear-gradient(225deg, #00d2ff 0%, #3a47d5 100%);
-  background: linear-gradient(225deg, #e3ffe7 0%, #d9e7ff 100%);
+  /* background: linear-gradient(225deg, #00C9FF 0%, #92FE9D 100%); */
+  /* background: linear-gradient(225deg, #d53369 0%, #daae51 100%); */
+  /* background: linear-gradient(225deg, #efd5ff 0%, #515ada 100%); */
+  /* background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%); */
+  /* background: linear-gradient(225deg, #FDBB2D 0%, #22C1C3 100%); */
+  /* background: linear-gradient(225deg, #00d2ff 0%, #3a47d5 100%); */
+  /* background: linear-gradient(225deg, #e3ffe7 0%, #d9e7ff 100%); */
 }
 
 .rightSide img {

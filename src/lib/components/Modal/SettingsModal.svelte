@@ -19,12 +19,12 @@
   });
 </script>
 
-<!-- style:background={$bgColor} -->
 <ul
   class="menu-settings"
+  style:background={$bgColor}
   on:click|stopPropagation={() => console.log("hi, there !")}
   transition:fly={{ x: -70, duration: 200, delay: 200 }}
-  >
+>
   <li class="theme" on:click={toggleTheme}>
     {#if $themeStore.theme === "light"}
       <span class="material-icons">dark_mode</span>
@@ -44,7 +44,9 @@
         style:width="0"
         style:opacity="0"
       />
-      <span class="material-icons icon-palette" style:cursor="pointer">palette</span>
+      <span class="material-icons icon-palette" style:cursor="pointer"
+        >palette</span
+      >
       <span class="menu-item">主題</span>
     </label>
   </li>
