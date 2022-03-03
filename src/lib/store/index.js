@@ -6,7 +6,7 @@ export const keyword = writable("");
 export const showModal = writable(false);
 export const showSettingsModal = writable(false);
 export const activeItem = writable(null);
-let bgColor = null;
+// let bgColor = null;
 
 export const connection = writable(
   browser && localStorage.getItem("internet connection")
@@ -48,4 +48,4 @@ export const setBgColor = (bgColor) => {
   })
 }
 
-export { bgColor };
+// export { bgColor };
