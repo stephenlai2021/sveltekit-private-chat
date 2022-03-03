@@ -41,7 +41,7 @@
     });
     window.addEventListener("resize", () => resizeWindow());
 
-    if ($connection) alert("internet is connected 😀");
+    // if ($connection) alert("internet is connected 😀");
     if (!$connection) alert("OOh, internet is disconnected 😮");
   }
 </script>

@@ -21,6 +21,7 @@
 
 <ul
   class="menu-settings"
+  style:background={$bgColor}
   on:click|stopPropagation={() => console.log("hi, there !")}
   transition:fly={{ x: -70, duration: 200, delay: 200 }}
   >
@@ -85,7 +86,8 @@
     width: 333px;
     height: 100vh;
     z-index: 200;
-    background: rgb(190, 141, 141);
+    /* background: rgb(190, 141, 141); */
+    /* background: rgb(255, 255, 255); */
   }
 
   li {

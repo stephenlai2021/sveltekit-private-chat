@@ -35,14 +35,16 @@
 
   // $: console.log('mobile | sidebar menu: ', $mobile)
 </script>
-
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$bgColor}
-  style:display={$mobile && $page.url.pathname != '/' 
+  style:display={$mobile && $page.url.pathname != "/" && $page.url.pathname != "/tinder" && $page.url.pathname != "/movie"
     ? "none"
-    : "flex"}
+    : $page.url.pathname === "/login"
+    ? 'none'
+    : "flex"
+  }
 >
   {#each menuIcon as item}
     <div
@@ -118,7 +120,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    opacity: 80%;
+    /* opacity: 80%; */
   }
 
   @media (max-width: 800px) {

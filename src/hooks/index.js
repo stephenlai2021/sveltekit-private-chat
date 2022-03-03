@@ -14,7 +14,7 @@ export const handle = ({ event, resolve }) => {
 
 export const getSession = ({ locals }) => {
   // const bgColor = locals.bgColor  
-  const bgColor = 'red'
+  const bgColor = 'linear-gradient(225deg, #e3ffe7 0%, #d9e7ff 100%)'
 
   return { bgColor };
 };
