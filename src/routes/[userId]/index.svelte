@@ -29,7 +29,7 @@
 
 <svelte:head>
   {#if $page.params.userId}
-  <title>Chat | {$page.params.userId}</title>
+  <title>Chat</title>
   {/if}
 </svelte:head>
 

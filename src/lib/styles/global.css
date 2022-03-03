@@ -239,6 +239,7 @@ a {
 
 .chatlist {
   overflow-y: auto;
+  overflow-x: hidden;
   height: calc(100vh - 156px);
 }
 

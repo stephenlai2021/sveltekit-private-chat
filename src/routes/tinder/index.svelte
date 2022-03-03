@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Find your matches</title>
+</svelte:head>
+
 <div class="tinder">
   <h1>Tinder</h1>
   <p>Find your match</p>

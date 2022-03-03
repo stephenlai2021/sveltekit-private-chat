@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Movie DB</title>
+</svelte:head>
+
 <div class="movie">
   <h1>Movie DB</h1>
   <p>Explore new movies</p>
