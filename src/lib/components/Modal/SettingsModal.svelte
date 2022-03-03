@@ -86,8 +86,9 @@
     width: 333px;
     height: 100vh;
     z-index: 200;
-    /* background: rgb(190, 141, 141); */
-    /* background: rgb(255, 255, 255); */
+    /* opacity: 0.8; */
+    /* background: transparent; */
+    /* backdrop-filter: blur(15px); */
   }
 
   li {

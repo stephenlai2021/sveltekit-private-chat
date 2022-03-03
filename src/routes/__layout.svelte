@@ -1,13 +1,11 @@
 <script>
   import "$lib/styles/global.css";
-  import { connection, bgColor, mobile, loginFormShow } from "$lib/store";
+  import { connection, bgColor, mobile, loginFormShow, showSettingsModal, showAddFriendModal } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import { auth } from "$lib/firebase/client";
-  import { showSettingsModal } from "$lib/store";
-  import LeftSide from "$lib/components/LeftSide.svelte";
+  import { auth } from "$lib/firebase/client";  import LeftSide from "$lib/components/LeftSide.svelte";
   import { page } from "$app/stores";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
@@ -15,18 +13,12 @@
   let user = null;
 
   const resizeWindow = () => {
-    if (window.innerWidth <= 800) {
-      $mobile = true;
-    } else {
-      $mobile = false;
-    }
-    // console.log("mobile | layout ", $mobile);
+    if (window.innerWidth <= 800) $mobile = true;
+    else $mobile = false;
   };
 
   onMount(() => {
-    onAuthStateChanged(auth, (_user) => {
-      user = _user;
-    });
+    onAuthStateChanged(auth, (_user) => user = _user);
     resizeWindow();
   });
 
@@ -37,7 +29,8 @@
     window.addEventListener("online", () => connection.set(true));
     window.addEventListener("offline", () => connection.set(false));
     window.addEventListener("click", (e) => {
-      showSettingsModal.set(false);
+      $showSettingsModal = false
+      $showAddFriendModal = false
     });
     window.addEventListener("resize", () => resizeWindow());
 

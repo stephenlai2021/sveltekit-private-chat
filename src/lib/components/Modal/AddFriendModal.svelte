@@ -1,13 +1,18 @@
 <script>
 	import { fly } from 'svelte/transition';
-	import { showModal } from '$lib/store'
+	import { bgColor } from '$lib/store'
 
 	let keyword = '';
   
 	const handleSubmit = () => {};
 </script>
 
-<div class="add-friend" transition:fly={{ x: -100, duration: 200 }}>
+<div 
+	class="modal-addfriend" 
+	style:background={$bgColor}
+	on:click|stopPropagation={() => console.log("hi, there !")}
+	transition:fly={{ y: 50, duration: 150, delay: 150 }}	
+>
 	<div class="form-container">
 		<div class="search_user">
 			<div>
@@ -57,12 +62,13 @@
 		color: #bbb;
 	}
 
-	.add-friend {
+	.modal-addfriend {
 		position: absolute;
 		top: 0;
 		left: 0;
+		z-index: 200;
 		width: 100%;
-		height: 100%;
+		height: 100vh;
 		display: flex;
 		justify-content: center;
 		z-index: 100;
@@ -70,9 +76,9 @@
 		/* border: 1px solid green; */
 	}
 
-	@media (max-width: 700px) {
+	/* @media (max-width: 700px) {
 		.add-friend {
 			width: 122%;
 		}
-	}
+	} */
 </style>

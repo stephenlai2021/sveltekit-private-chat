@@ -17,6 +17,7 @@ connection.subscribe(
 
 export const mobile = writable(false)
 export const loginFormShow = writable(false)
+export const showAddFriendModal = writable(false)
 
 // export const bgColor = writable(
 //   browser && localStorage.getItem("background color")

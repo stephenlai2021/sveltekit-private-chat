@@ -1,6 +1,6 @@
 <script>
   import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
-  import { keyword, showModal, showSettingsModal, mobile } from "$lib/store";
+  import { keyword, showModal, showSettingsModal, mobile, showAddFriendModal } from "$lib/store";
   import { activeItem, bgColor, setBgColor } from "$lib/store";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
@@ -10,6 +10,7 @@
   import { onAuthStateChanged } from "firebase/auth";
   import { fade } from "svelte/transition";
   import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
+  import AddFriendModal from "$lib/components/Modal/AddFriendModal.svelte";
 
   let q = null;
   let user = null;
@@ -75,14 +76,17 @@
         <span class="material-icons settings">settings</span>
       </div>
     {/if}
-    {#if !mobile}
-      <li>
-        <span class="material-icons settings">person_add_alt</span>
+    {#if !$mobile}
+      <li on:click|stopPropagation={() => $showAddFriendModal = !$showAddFriendModal}>
+        <span class="material-icons">person_add_alt</span>
       </li>
     {/if}
   </ul>
   {#if $showSettingsModal}
     <SettingsModal />
+  {/if}
+  {#if $showAddFriendModal}
+    <AddFriendModal />
   {/if}
 </div>
 <div class="search_user">
@@ -99,8 +103,13 @@
         class:unread={user.unread}
         class:active={$activeItem === user.name}
         on:click={() => selectedUser(user)}
-      >
-        <div class="imgbx" class:active={$activeItem === user.name}>
+        >
+        <!-- style:border-bottom={$activeItem === user.name ? `2px solid ${$bgColor}` : ''}         -->
+        <div 
+          class="imgbx" 
+          class:active={$activeItem === user.name}
+          style:background={$activeItem === user.name ? $bgColor : ''}
+        >
           <img src={user.avatar} alt="" class="cover" />
           <div class={user.isOnline ? "status online" : "status offline"} />
         </div>
@@ -144,5 +153,6 @@
     bottom: -8px;
     right: -5px;
     font-size: 1.2em;
+    /* color: white; */
   }
 </style>
