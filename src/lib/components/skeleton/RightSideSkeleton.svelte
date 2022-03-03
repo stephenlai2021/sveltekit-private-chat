@@ -1,11 +1,8 @@
 <script>
   import Shimmer from "$lib/components/skeleton/Shimmer.svelte";
-
-  let users = [1, 1, 1, 1, 1, 1, 1, 1];
 </script>
 
 <ul class="skeleton">
-  {#each users as user}
     <div class="block">
       <div class="imgbx">
         <img src="" alt="" class="cover" />
@@ -13,22 +10,15 @@
       <div class="details">
         <div class="listHead">
           <h4 class="title">Stephen Lai</h4>
-          <p class="time">10:56</p>
-        </div>
-        <div class="message_p">
-          <p>How to make Whatsapp clone using html and css</p>
-          <b>1</b>
         </div>
       </div>
-
       <Shimmer />
     </div>
-  {/each}
 </ul>
 
 <style>
   .skeleton {
-		height: 100vh;
+		height: 100px;
   }
 
 	.skeleton .block {
@@ -45,9 +35,7 @@
 	}
 
 	.skeleton .imgbx,
-  .skeleton .block .details .listHead .title,
-  .skeleton .block .details .listHead .time,
-  .skeleton .block .details .message_p p {
+  .skeleton .block .details .listHead .title {
     background: #d6d8dc;
 		color: transparent;
   }

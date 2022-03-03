@@ -1,8 +1,9 @@
 <script>
-  import { connection, showModal } from "$lib/store";
+  import { bgColor, setBgColor } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
   import { onMount } from "svelte";
-  import { signout } from '$lib/functions/auth/signout'
+  import { signout } from "$lib/functions/auth/signout";
+  import { fly } from "svelte/transition";
 
   let theme = true;
 
@@ -18,26 +19,12 @@
   });
 </script>
 
-<!-- in:fly={{ y: -20, x: 20, duration: 100, delay: 100 }}
-out:fly={{ y: -20, x: 20, duration: 100, delay: 100 }} -->
 <ul
   class="menu-settings"
-  on:click|stopPropagation={() => console.log('hi, there !')}
->
-  <li>
-    {#if $connection}
-      <span class="material-icons">wifi</span>
-      <span class="menu-item">連線成功</span>
-    {:else}
-      <span class="material-icons">wifi_off</span>
-      <span class="menu-item">連線失敗</span>
-    {/if}
-  </li>
-  <li on:click={() => ($showModal = !$showModal)}>
-    <span class="material-icons">person_add_alt</span>
-    <span class="menu-item">新增朋友</span>
-  </li>
-  <!-- <li class="theme" on:click={toggleTheme}>
+  on:click|stopPropagation={() => console.log("hi, there !")}
+  transition:fly={{ x: -70, duration: 200, delay: 200 }}
+  >
+  <li class="theme" on:click={toggleTheme}>
     {#if $themeStore.theme === "light"}
       <span class="material-icons">dark_mode</span>
       <span class="menu-item">黑暗模式</span>
@@ -45,7 +32,21 @@ out:fly={{ y: -20, x: 20, duration: 100, delay: 100 }} -->
       <span class="material-icons">light_mode</span>
       <span class="menu-item">明亮模式</span>
     {/if}
-  </li> -->
+  </li>
+  <li>
+    <label>
+      <input
+        type="color"
+        bind:value={$bgColor}
+        on:input={() => setBgColor($bgColor)}
+        style:height="0"
+        style:width="0"
+        style:opacity="0"
+      />
+      <span class="material-icons icon-palette" style:cursor="pointer">palette</span>
+      <span class="menu-item">主題</span>
+    </label>
+  </li>
   <li on:click={signout}>
     <span class="material-icons">logout</span>
     <span class="menu-item">登出</span>
@@ -53,6 +54,19 @@ out:fly={{ y: -20, x: 20, duration: 100, delay: 100 }} -->
 </ul>
 
 <style>
+  .icon-palette {
+    margin-left: -3px;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+  }
+
+  span {
+    color: white;
+  }
+
   span.material-icons {
     margin-right: 10px;
     font-size: 18px;
@@ -60,26 +74,24 @@ out:fly={{ y: -20, x: 20, duration: 100, delay: 100 }} -->
 
   span.menu-item {
     cursor: pointer;
-    /* color: black; */
   }
 
   ul {
     list-style: none;
     padding: 10px;
     position: absolute;
-    right: 30px;
-    top: 50px;
+    top: 0;
+    left: 0;
+    width: 333px;
+    height: 100vh;
     z-index: 200;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 2px 2px 2px var(--text-color);
-    min-width: 136px;
+    background: rgb(190, 141, 141);
   }
 
   li {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    background: white;
+    cursor: pointer;
   }
 </style>

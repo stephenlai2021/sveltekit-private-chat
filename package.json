@@ -17,6 +17,7 @@
   "dependencies": {
     "firebase": "^9.6.7",
     "firebase-admin": "^10.0.2",
+    "js-cookie": "^3.0.1",
     "svelte-themes": "^0.0.98"
   }
 }

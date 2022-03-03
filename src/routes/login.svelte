@@ -16,8 +16,8 @@
 				show = true;
 			}
 
-			if (user) goto('/')
-			if (!user) show = true
+			// if (user) goto('/')
+			// if (!user) show = true
 			return () => unsub;
 		});
 	});

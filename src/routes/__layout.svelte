@@ -1,6 +1,6 @@
 <script>
   import "$lib/styles/global.css";
-  import { connection } from "$lib/store";
+  import { connection, bgColor, mobile, loginFormShow } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from "$app/navigation";
@@ -9,34 +9,29 @@
   import { showSettingsModal } from "$lib/store";
   import LeftSide from "$lib/components/LeftSide.svelte";
   import { page } from "$app/stores";
+  import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
+  import SidebarMenu from "$lib/components/SidebarMenu.svelte";
 
-  let mobile = false;
-  let loginFormShow = false;
+  let user = null;
 
   const resizeWindow = () => {
-    if (window.innerWidth <= 800) { 
-      mobile = true;
+    if (window.innerWidth <= 800) {
+      $mobile = true;
     } else {
-      mobile = false;
+      $mobile = false;
     }
+    // console.log("mobile | layout ", $mobile);
   };
 
   onMount(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        loginFormShow = true;
-        goto("/login");
-      } else {
-        loginFormShow = false;
-      }
-
-      // if (user) loginFormShow = false
-      // if (!user) goto('/login')
+    onAuthStateChanged(auth, (_user) => {
+      user = _user;
     });
     resizeWindow();
   });
 
-  // $: console.log("url: ", $page.params.userId);
+  $: if (user) $loginFormShow = false;
+  $: if (!user) $loginFormShow = true;
 
   $: if (browser) {
     window.addEventListener("online", () => connection.set(true));
@@ -45,6 +40,9 @@
       showSettingsModal.set(false);
     });
     window.addEventListener("resize", () => resizeWindow());
+
+    if ($connection) alert("internet is connected 😀");
+    if (!$connection) alert("OOh, internet is disconnected 😮");
   }
 </script>
 
@@ -52,32 +50,31 @@
   <title>Letschat</title>
 </svelte:head>
 
+<SvelteTheme />
 <div class="wrapper">
+  <SidebarMenu />
   <div
     class="leftSide"
-    class:loginform-hide={loginFormShow}
-    style:width={mobile && $page.url.pathname === "/"
+    class:loginform-hide={$loginFormShow}
+    style:width={$mobile && $page.url.pathname === "/"
       ? "100%"
-      : mobile && $page.url.pathname != '/'
+      : $mobile && $page.url.pathname != "/"
       ? "0%"
-      : "33%"}
+      : $page.url.pathname != "/movie" && $page.url.pathname != "/tinder"
+      ? "450px"
+      : "0%"}
   >
     <LeftSide />
   </div>
   <div
     class="rightSide"
-    style:width={mobile && $page.url.pathname === "/"
+    style:background={$bgColor}
+    style:width={$mobile && $page.url.pathname === "/"
       ? "0%"
-      : mobile && $page.url.pathname != "/"
+      : $mobile && $page.url.pathname != "/"
       ? "100%"
       : "100%"}
   >
     <slot />
   </div>
 </div>
-
-<style>
-  .loginform-hide {
-    display: none;
-  }
-</style>

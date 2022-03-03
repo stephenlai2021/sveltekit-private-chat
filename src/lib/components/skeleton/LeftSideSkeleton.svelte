@@ -20,7 +20,7 @@
           <b>1</b>
         </div>
       </div>
-      <Shimmer />
+      <!-- <Shimmer /> -->
     </div>
   {/each}
 </ul>
@@ -33,7 +33,7 @@
 	.skeleton .block {
 		display: flex;
     padding: 15px;
-    background: var(--skeleton-bg-color);
+    /* background: var(--skeleton-bg-color); */
     position: relative;
 		/* border: 1px solid red; */
   }
@@ -49,6 +49,7 @@
   .skeleton .block .details .message_p p {
     background: #d6d8dc;
 		color: transparent;
+    /* overflow: hidden; */
   }
 
   .skeleton .block .details .listHead {

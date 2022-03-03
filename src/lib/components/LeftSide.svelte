@@ -1,31 +1,30 @@
 <script>
   import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
-  import { keyword, showModal, showSettingsModal } from "$lib/store";
+  import { keyword, showModal, showSettingsModal, mobile } from "$lib/store";
+  import { activeItem, bgColor, setBgColor } from "$lib/store";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
-  import { fly, fade } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
-  // import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
 
+  let q = null;
   let user = null;
   let users = [];
   let show = false;
   let filteredUsers = [];
-  let activeItem = null;
-  let q = null;
   let colRef = collection(db, "whatzapp_users");
 
   const selectedUser = (user) => {
-    console.log("selected user | left side", user);
-    activeItem = user.name;
+    console.log("selected user | left side: ", user.name);
+    activeItem.set(user.name);
     goto(`/${user.name}`);
   };
 
-  onMount(async () => {
+  onMount(() => {
     onAuthStateChanged(auth, (_user) => {
       if (!_user) {
         goto("/login");
@@ -36,12 +35,10 @@
         show = true;
       }
     });
-  });
 
-  onMount(() => {
-    if ($page.url.pathname === "/") activeItem = null;
-    if ($page.url.pathname != "/") activeItem = $page.params.userId;
-    console.log("active item | onMount ", activeItem);
+    if ($page.url.pathname === "/") activeItem.set(null);
+    if ($page.url.pathname != "/") activeItem.set($page.params.userId);
+    console.log("selected user | left side on mount: ", $activeItem);
   });
 
   $: if (q) {
@@ -64,27 +61,25 @@
 </script>
 
 <div class="header">
-  {#if user}
-    <div class="left">
-      <!-- <div class="userimg" on:click={handleProfileModal}>
-        <img class="cover" src={user.photoURL} alt="" />
-      </div> -->
-      <div class="user-details">
-        <!-- <h3 class="user-title">Messenger</h3> -->
-        <h3 class="user-title">即時通</h3>
-      </div>
-    </div>
-  {/if}
+  <div class="left">
+    <h3 class="user-title">Chat</h3>
+  </div>
   <ul class="nav_icons">
-    <li>
-      <span class="material-icons person-add">person_add_alt</span>
-    </li>
-    <li
-      on:click|stopPropagation={() =>
-        ($showSettingsModal = !$showSettingsModal)}
-    >
-      <span class="material-icons settings">settings</span>
-    </li>
+    {#if $mobile && user}
+      <div
+        class="userimg"
+        on:click|stopPropagation={() =>
+          ($showSettingsModal = !$showSettingsModal)}
+      >
+        <img src={user.photoURL} alt="" />
+        <span class="material-icons settings">settings</span>
+      </div>
+    {/if}
+    {#if !mobile}
+      <li>
+        <span class="material-icons settings">person_add_alt</span>
+      </li>
+    {/if}
   </ul>
   {#if $showSettingsModal}
     <SettingsModal />
@@ -102,10 +97,10 @@
       <div
         class="block"
         class:unread={user.unread}
-        class:active={activeItem === user.name}
+        class:active={$activeItem === user.name}
         on:click={() => selectedUser(user)}
       >
-        <div class="imgbx">
+        <div class="imgbx" class:active={$activeItem === user.name}>
           <img src={user.avatar} alt="" class="cover" />
           <div class={user.isOnline ? "status online" : "status offline"} />
         </div>
@@ -128,12 +123,26 @@
   </div>
 {/if}
 
-{#if $showModal}
-  <AddFriendModal />
-{/if}
-
 <style>
-  .person-add {
-    font-size: 26px;
+  .userimg {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .userimg img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+  }
+
+  .settings {
+    position: absolute;
+    bottom: -8px;
+    right: -5px;
+    font-size: 1.2em;
   }
 </style>

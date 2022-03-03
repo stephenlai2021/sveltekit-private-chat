@@ -12,7 +12,7 @@
   let logout = false;
   let colRef = collection(db, "whatzapp_users");
 
-  $: if (logout) goto("/login");
+  // $: if (logout) goto("/login");
 
   $: if ($page.params.userId) {
     q = query(colRef, where("name", "==", $page.params.userId));
@@ -251,10 +251,10 @@
   .chatBox {
     position: absolute;
     top: 60px;
-    bottom: 0px;
+    bottom: 60px;
     width: 100%;
     padding: 20px;
-    padding-bottom: 60px;
+    padding-bottom: 0px;
     overflow-y: auto;
     border-bottom-right-radius: 4px;
   }
