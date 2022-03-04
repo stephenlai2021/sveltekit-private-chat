@@ -12,7 +12,8 @@
   import { page } from "$app/stores";
 
   let user = null;
-  let menuIcon = ["chat_bubble_outline", "volunteer_activism", "movie"];
+  let menuIcon = ["chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
+  // let menuIcon = ["chat_bubble_outline", "volunteer_activism", "movie"];
   let activeMenu = menuIcon[0];
 
   onAuthStateChanged(auth, (_user) => (user = _user));
@@ -52,7 +53,8 @@
       class:active={item === activeMenu}
       on:click={() => switchRoute(item)}
     >
-      <span class="material-icons">{item}</span>
+    <ion-icon name={item}></ion-icon>
+      <!-- <span class="material-icons">{item}</span> -->
     </div>
   {/each}
 
@@ -120,6 +122,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
+    /* backdrop-filter: blur(8px); */
     /* opacity: 80%; */
   }
 

@@ -2,11 +2,12 @@
   import { doc, setDoc } from "firebase/firestore";
   import {
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
   } from "firebase/auth";
   import { auth, db } from "$lib/firebase/client";
   import { fly } from "svelte/transition";
-  import { loginWithGoogle } from '$lib/functions/auth/google'
+  import { loginWithGoogle } from "$lib/functions/auth/google";
+  import { bgColor } from "$lib/store";
 
   let displayName = "";
   let email = "";
@@ -15,6 +16,7 @@
   let signup = false;
   let isPending = false;
   let result = null;
+  let mouseOver = false;
 
   const handleSubmit = async () => {
     try {
@@ -51,12 +53,19 @@
 </script>
 
 <section>
-  <div class="imgBx">
+  <style>
+    .imgBx:before {
+      background: var(--bg);
+    }
+  </style>
+  <div class="imgBx" style="--bg: {$bgColor}">
     <img src="/login-bg.jpg" alt="" />
   </div>
   <div class="contentBx">
     <div class="formBx">
-      <h2>{signup ? "signup" : "login"}</h2>
+      <h2 style:border-bottom="4px solid {$bgColor}">
+        {signup ? "signup" : "login"}
+      </h2>
       <form on:submit|preventDefault={handleSubmit}>
         {#if signup}
           <div class="inputBx">
@@ -78,21 +87,32 @@
           </label>
         </div>
         <div class="inputBx btn-submit">
-          <input type="submit" value="Sign in" />
+          <input type="submit" value="Sign in" style:background={$bgColor} />
         </div>
         <div class="inputBx">
           <p>
-            Don't have an account? <span on:click={() => signup = !signup}
-              >{signup ? "Login" : "Sign up"}</span
+            Don't have an account?
+            <span
+              class="toggle"
+              on:click={() => (signup = !signup)}
+              style:color={$bgColor}
             >
+              {signup ? "Login" : "Sign up"}
+            </span>
           </p>
         </div>
       </form>
       <h3 class:mt={!signup}>Login with social media</h3>
       <ul class="sci">
-        <li on:click={loginWithGoogle}><img src="/google.png" alt="" /></li>
-        <li><img src="/facebook.png" alt="" /></li>
-        <li><img src="/instagram.png" alt="" /></li>
+        <li on:click={loginWithGoogle}>
+          <img src="/google.png" alt="" />
+        </li>
+        <li>
+          <img src="/facebook.png" alt="" />
+        </li>
+        <li>
+          <img src="/instagram.png" alt="" />
+        </li>
       </ul>
     </div>
   </div>
@@ -102,6 +122,6 @@
   @import url("$lib/styles/login.css");
 
   .mt {
-    margin: 80px 0 10px;
+    /* margin: 80px 0 10px; */
   }
 </style>

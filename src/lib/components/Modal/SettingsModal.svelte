@@ -1,5 +1,10 @@
 <script>
-  import { bgColor, setBgColor } from "$lib/store";
+  import {
+    bgColor,
+    setBgColor,
+    showThemeModal,
+    showSettingsModal,
+  } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
   import { onMount } from "svelte";
   import { signout } from "$lib/functions/auth/signout";
@@ -25,38 +30,93 @@
   on:click|stopPropagation={() => console.log("hi, there !")}
   transition:fly={{ x: -70, duration: 200, delay: 200 }}
 >
+  <!-- transition:fly={{ x: -70, duration: 200, delay: 200 }} -->
+  <div
+    class="icon-arrow"
+    on:click|stopPropagation={() => ($showSettingsModal = false)}
+  >
+    <span class="material-icons">close</span>
+  </div>
   <li class="theme" on:click={toggleTheme}>
-    {#if $themeStore.theme === "light"}
-      <span class="material-icons">dark_mode</span>
-      <span class="menu-item">黑暗模式</span>
-    {:else}
-      <span class="material-icons">light_mode</span>
-      <span class="menu-item">明亮模式</span>
-    {/if}
+    <div class="content">
+      {#if $themeStore.theme === "light"}
+        <span class="material-icons">dark_mode</span>
+        <span class="menu-item">黑暗模式</span>
+      {:else}
+        <span class="material-icons">light_mode</span>
+        <span class="menu-item">明亮模式</span>
+      {/if}
+    </div>
   </li>
   <li>
-    <label>
-      <!-- on:input={() => setBgColor($bgColor)} -->
-      <input
-        type="color"
-        bind:value={$bgColor}
-        style:height="0"
-        style:width="0"
-        style:opacity="0"
-      />
-      <span class="material-icons icon-palette" style:cursor="pointer"
-        >palette</span
+    <div class="content">
+      <label>
+        <!-- on:input={() => setBgColor($bgColor)} -->
+        <input
+          type="color"
+          bind:value={$bgColor}
+          style:height="0"
+          style:width="0"
+          style:opacity="0"
+        />
+        <span class="material-icons icon-palette" style:cursor="pointer"
+          >palette</span
+        >
+        <span class="menu-item bg-color" style:margin-left="5px">背景顏色</span>
+      </label>
+    </div>
+  </li>
+  <li>
+    <div class="content">
+      <span class="material-icons">wallpaper</span>
+      <span
+        class="menu-item"
+        on:click|stopPropagation={() => ($showThemeModal = true)}>特色主題</span
       >
-      <span class="menu-item">主題</span>
-    </label>
+    </div>
+  </li>
+  <li>
+    <div class="content">
+      <span class="material-icons">info</span>
+      <div class="title-wrapper">
+        <span class="menu-item">關於</span>
+      </div>
+    </div>
   </li>
   <li on:click={signout}>
-    <span class="material-icons">logout</span>
-    <span class="menu-item">登出</span>
+    <div class="content">
+      <span class="material-icons">logout</span>
+      <div class="title-wrapper">
+        <span class="menu-item">登出</span>
+      </div>
+    </div>
   </li>
 </ul>
 
 <style>
+  .title-wrapper {
+    width: 100%;
+    text-align: center;
+    /* border: 1px solid red; */
+  }
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 96px;
+    /* border: 1px solid; */
+  }
+
+  .icon-arrow {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    padding-top: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .icon-palette {
     margin-left: -3px;
   }
@@ -73,6 +133,7 @@
   span.material-icons {
     margin-right: 10px;
     font-size: 18px;
+    /* border: 1px solid; */
   }
 
   span.menu-item {
@@ -88,13 +149,17 @@
     width: 333px;
     height: 100vh;
     z-index: 200;
-    background: rgb(189, 202, 202);
+    background: rgba(189, 202, 202, 0.5);
+    /* background: red; */
+    backdrop-filter: blur(15px);
   }
 
   li {
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    justify-content: center;
     padding: 10px 20px;
     cursor: pointer;
+    /* border: 1px solid; */
   }
 </style>

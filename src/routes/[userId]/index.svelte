@@ -5,6 +5,7 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
+  import themeStore from "svelte-themes";
 
   let q = null;
   let user = {};
@@ -40,9 +41,10 @@
 {#if users}
   <div class="header">
     <div class="left-part">
-      <span class="material-icons arrow-back" on:click={() => goto("/")}>
+      <ion-icon name="arrow-back-outline arrow-back" on:click={() => goto("/")}></ion-icon>
+      <!-- <span class="material-icons arrow-back" on:click={() => goto("/")}>
         chevron_left
-      </span>
+      </span> -->
       <div class="imgText">
         <div class="userimg">
           <img src={user.avatar} alt="" />
@@ -126,13 +128,25 @@
 </div>
 
 <div class="chatbox_input">
-  <span class="material-icons">insert_emoticon</span>
-  <span class="material-icons">attach_file</span>
+  <!-- <div class="image-wrapper">
+    <img src="/happy-outline.svg" alt="" >
+  </div>
+  <div class="image-wrapper">
+    <img src="/happy-outline.svg" alt="" >
+  </div> -->
+  <ion-icon name="happy-outline"></ion-icon>
+  <ion-icon name="document-attach-outline"></ion-icon>
   <input type="text" placeholder="Type a message" />
-  <span class="material-icons">mic_none</span>
+  <!-- <span class="material-icons">mic_none</span> -->
+  <ion-icon name="mic-outline" style:font-size='1.5em'></ion-icon>
 </div>
 
 <style>
+  .image-wrapper {
+    width: 15px;
+    height: 15px;
+  }
+  
   .arrow-back {
     display: none;
   }

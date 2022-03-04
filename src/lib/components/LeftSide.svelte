@@ -1,6 +1,12 @@
 <script>
   import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
-  import { keyword, showModal, showSettingsModal, mobile, showAddFriendModal } from "$lib/store";
+  import {
+    mobile,
+    keyword,
+    showThemeModal,
+    showSettingsModal,
+    showAddFriendModal,
+  } from "$lib/store";
   import { activeItem, bgColor, setBgColor } from "$lib/store";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
@@ -11,6 +17,7 @@
   import { fade } from "svelte/transition";
   import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
   import AddFriendModal from "$lib/components/Modal/AddFriendModal.svelte";
+  import ThemeModal from "$lib/components/Modal/ThemeModal.svelte";
 
   let q = null;
   let user = null;
@@ -77,11 +84,18 @@
       </div>
     {/if}
     {#if !$mobile}
-      <li on:click|stopPropagation={() => $showAddFriendModal = !$showAddFriendModal}>
-        <span class="material-icons">person_add_alt</span>
+      <li
+        on:click|stopPropagation={() =>
+          ($showAddFriendModal = !$showAddFriendModal)}
+      >
+        <!-- <span class="material-icons">person_add_alt</span> -->
+        <ion-icon name="person-add-outline"></ion-icon>
       </li>
     {/if}
   </ul>
+  {#if $showThemeModal}
+    <ThemeModal />
+  {/if}
   {#if $showSettingsModal}
     <SettingsModal />
   {/if}
@@ -103,12 +117,12 @@
         class:unread={user.unread}
         class:active={$activeItem === user.name}
         on:click={() => selectedUser(user)}
-        >
+      >
         <!-- style:border-bottom={$activeItem === user.name ? `2px solid ${$bgColor}` : ''}         -->
-        <div 
-          class="imgbx" 
+        <div
+          class="imgbx"
           class:active={$activeItem === user.name}
-          style:background={$activeItem === user.name ? $bgColor : ''}
+          style:background={$activeItem === user.name ? $bgColor : ""}
         >
           <img src={user.avatar} alt="" class="cover" />
           <div class={user.isOnline ? "status online" : "status offline"} />

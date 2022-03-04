@@ -2,10 +2,14 @@ import { session } from "$app/stores";
 import { writable, derived } from "svelte/store";
 import { browser } from "$app/env";
 
+export const mobile = writable(false)
 export const keyword = writable("");
-export const showModal = writable(false);
-export const showSettingsModal = writable(false);
 export const activeItem = writable(null);
+export const loginFormShow = writable(false)
+export const showModal = writable(false);
+export const showThemeModal = writable(false);
+export const showSettingsModal = writable(false);
+export const showAddFriendModal = writable(false)
 // let bgColor = null;
 
 export const connection = writable(
@@ -14,10 +18,6 @@ export const connection = writable(
 connection.subscribe(
   (val) => browser && localStorage.setItem("internet connection", val)
 );
-
-export const mobile = writable(false)
-export const loginFormShow = writable(false)
-export const showAddFriendModal = writable(false)
 
 export const bgColor = writable(
   browser && localStorage.getItem("background color")

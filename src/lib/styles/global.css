@@ -44,6 +44,10 @@ a {
   color: inherit;
 }
 
+ion-icon {
+  font-size: 1.3em;
+}
+
 .material-icons {
   font-family: "Material Icons";
   font-weight: normal;
@@ -148,7 +152,7 @@ a {
 .rightSide .header .imgText h4 {
   font-weight: 600;
   line-height: 1.2em;
-  color: var(--icon-add-color);
+  /* color: var(--icon-add-color); */
 }
 
 .left {
@@ -249,7 +253,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 15px;
+  padding: 10px 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   cursor: pointer;
 }
@@ -259,8 +263,8 @@ a {
 }
 
 .chatlist .block .imgbx {
-  min-width: 53px;
-  height: 53px;
+  min-width: 45px;
+  height: 45px;
   cursor: pointer;
   margin-right: 10px;
   border-radius: 50%;
