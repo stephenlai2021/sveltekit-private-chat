@@ -2,12 +2,13 @@
   import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import {
     mobile,
+    bgColor,
     keyword,
+    activeItem,
     showThemeModal,
     showSettingsModal,
     showAddFriendModal,
   } from "$lib/store";
-  import { activeItem, bgColor, setBgColor } from "$lib/store";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { page } from "$app/stores";

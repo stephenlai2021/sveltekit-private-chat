@@ -9,8 +9,8 @@
   import { page } from "$app/stores";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
-  import ThemeModal from '$lib/components/modal/ThemeModal.svelte'
-  import SettingsModal from '$lib/components/modal/SettingsModal.svelte'
+  // import ThemeModal from '$lib/components/modal/ThemeModal.svelte'
+  // import SettingsModal from '$lib/components/modal/SettingsModal.svelte'
   
   let user = null;
 
