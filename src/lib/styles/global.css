@@ -62,6 +62,7 @@ ion-icon {
   word-wrap: normal;
   word-spacing: nowrap;
   direction: 1tr;
+  /* border: 1px solid; */
 }
 
 .wrapper {

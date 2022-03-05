@@ -63,8 +63,8 @@
         ($showSettingsModal = !$showSettingsModal)}
     >
       <img src={user.photoURL} alt="" />
-      <!-- <span class="material-icons settings">settings</span> -->
-      <ion-icon name="settings-outline" class="settings"></ion-icon>
+      <span class="material-icons settings">settings</span>
+      <!-- <ion-icon name="settings-outline" class="settings"></ion-icon> -->
     </div>
   {/if}
 </div>

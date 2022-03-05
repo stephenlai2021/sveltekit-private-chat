@@ -41,11 +41,15 @@
 {#if users}
   <div class="header">
     <div class="left-part">
-      <ion-icon
+      <!-- <ion-icon
         name="arrow-back-outline"
         class="arrow-back"
         on:click={() => goto("/")}
-      />
+      /> -->
+      <span
+        class="material-icons arrow-back"
+        on:click={() => goto("/")}>arrow_back</span
+      >
       <div class="imgText">
         <div class="userimg">
           <img src={user.avatar} alt="" />
@@ -57,17 +61,17 @@
       </div>
     </div>
     <div class="right-part">
+      <!-- <span class="material-icons" style:margin-right="15px">location_on</span>
       <span class="material-icons" style:margin-right="15px">videocam</span>
       <span class="material-icons" style:margin-right="15px">photo_camera</span>
       <span class="material-icons" style:margin-right="15px">file_present</span>
-      <span class="material-icons" style:margin-right="15px">brush</span>
-      <span class="material-icons" style:margin-right="15px">location_on</span>
+      <span class="material-icons" style:margin-right="15px">brush</span> -->
 
-      <!-- <ion-icon name="create-outline" style:margin-right="15px" />
+      <ion-icon name="create-outline" style:margin-right="15px" />
       <ion-icon name="videocam-outline" style:margin-right="15px" />
       <ion-icon name="camera-outline" style:margin-right="15px" />
       <ion-icon name="document-attach-outline" style:margin-right="15px" />
-      <ion-icon name="location-outline" /> -->
+      <ion-icon name="location-outline" />
     </div>
     <!-- <ion-icon name="menu-outline" class="icon-menu" /> -->
     <span class="material-icons icon-menu"> menu </span>
