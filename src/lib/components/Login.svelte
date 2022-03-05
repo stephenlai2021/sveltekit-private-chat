@@ -87,7 +87,7 @@
           </label>
         </div>
         <div class="inputBx btn-submit">
-          <input type="submit" value="Sign in" style:background={$bgColor} />
+          <input type="submit" value={signup ? 'Sign up' : 'Sign in'} style:background={$bgColor} />
         </div>
         <div class="inputBx">
           <p>
