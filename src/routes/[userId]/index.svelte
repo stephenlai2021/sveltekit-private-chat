@@ -149,13 +149,13 @@
 
 <div class="chatbox_input">
   <div class="icon-wrapper icon-happy">
-    <!-- <ion-icon name="happy-outline" class="happy" /> -->
-    <span class="material-icons">sentiment_satisfied</span>
+    <ion-icon name="happy-outline" class="happy" />
+    <!-- <span class="material-icons">sentiment_satisfied</span> -->
   </div>
   <input type="text" placeholder="Type a message" />
   <div class="icon-wrapper icon-mic">
-    <!-- <ion-icon name="mic-outline" style:font-size="1.5em" /> -->
-    <span class="material-icons">mic_none</span>
+    <ion-icon name="mic-outline" style:font-size="1.5em" />
+    <!-- <span class="material-icons">mic_none</span> -->
   </div>
 </div>
 

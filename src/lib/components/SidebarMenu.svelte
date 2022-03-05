@@ -12,8 +12,8 @@
   import { page } from "$app/stores";
 
   let user = null;
-  let menuIcon = ["sms", "volunteer_activism", "movie"];
-  // let menuIcon = ["chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
+  // let menuIcon = ["sms", "volunteer_activism", "movie"];
+  let menuIcon = ["chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
   let activeMenu = menuIcon[0];
 
   onAuthStateChanged(auth, (_user) => (user = _user));
@@ -34,16 +34,19 @@
     }
   };
 </script>
+
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$bgColor}
-  style:display={$mobile && $page.url.pathname != "/" && $page.url.pathname != "/tinder" && $page.url.pathname != "/movie"
+  style:display={$mobile &&
+  $page.url.pathname != "/" &&
+  $page.url.pathname != "/tinder" &&
+  $page.url.pathname != "/movie"
     ? "none"
     : $page.url.pathname === "/login"
-    ? 'none'
-    : "flex"
-  }
+    ? "none"
+    : "flex"}
 >
   {#each menuIcon as item}
     <div
@@ -51,8 +54,8 @@
       class:active={item === activeMenu}
       on:click={() => switchRoute(item)}
     >
-    <!-- <ion-icon name={item}></ion-icon> -->
-      <span class="material-icons">{item}</span>
+      <ion-icon name={item} />
+      <!-- <span class="material-icons">{item}</span> -->
     </div>
   {/each}
 
@@ -63,8 +66,8 @@
         ($showSettingsModal = !$showSettingsModal)}
     >
       <img src={user.photoURL} alt="" />
-      <span class="material-icons settings">settings</span>
-      <!-- <ion-icon name="settings-outline" class="settings"></ion-icon> -->
+      <!-- <span class="material-icons settings">settings</span> -->
+      <ion-icon name="settings-outline" class="settings"></ion-icon>
     </div>
   {/if}
 </div>
