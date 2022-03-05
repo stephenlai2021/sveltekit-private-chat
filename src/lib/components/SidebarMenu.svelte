@@ -12,7 +12,8 @@
   import { page } from "$app/stores";
 
   let user = null;
-  let menuIcon = ["chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
+  let menuIcon = ["sms", "volunteer_activism", "movie"];
+  // let menuIcon = ["chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
   let activeMenu = menuIcon[0];
 
   onAuthStateChanged(auth, (_user) => (user = _user));
@@ -50,8 +51,8 @@
       class:active={item === activeMenu}
       on:click={() => switchRoute(item)}
     >
-    <ion-icon name={item}></ion-icon>
-      <!-- <span class="material-icons">{item}</span> -->
+    <!-- <ion-icon name={item}></ion-icon> -->
+      <span class="material-icons">{item}</span>
     </div>
   {/each}
 

@@ -57,13 +57,20 @@
       </div>
     </div>
     <div class="right-part">
-      <ion-icon name="create-outline" style:margin-right='15px'></ion-icon>
-      <ion-icon name="videocam-outline" style:margin-right='15px'></ion-icon>
-      <ion-icon name="camera-outline" style:margin-right='15px'></ion-icon>
-      <ion-icon name="document-attach-outline" style:margin-right='15px' />
-      <ion-icon name="location-outline"></ion-icon>
+      <span class="material-icons" style:margin-right="15px">videocam</span>
+      <span class="material-icons" style:margin-right="15px">photo_camera</span>
+      <span class="material-icons" style:margin-right="15px">file_present</span>
+      <span class="material-icons" style:margin-right="15px">brush</span>
+      <span class="material-icons" style:margin-right="15px">location_on</span>
+
+      <!-- <ion-icon name="create-outline" style:margin-right="15px" />
+      <ion-icon name="videocam-outline" style:margin-right="15px" />
+      <ion-icon name="camera-outline" style:margin-right="15px" />
+      <ion-icon name="document-attach-outline" style:margin-right="15px" />
+      <ion-icon name="location-outline" /> -->
     </div>
-    <ion-icon name="menu-outline" class="icon-menu"></ion-icon>
+    <!-- <ion-icon name="menu-outline" class="icon-menu" /> -->
+    <span class="material-icons icon-menu"> menu </span>
   </div>
 {/if}
 
@@ -138,11 +145,13 @@
 
 <div class="chatbox_input">
   <div class="icon-wrapper icon-happy">
-    <ion-icon name="happy-outline" class="happy" />
+    <!-- <ion-icon name="happy-outline" class="happy" /> -->
+    <span class="material-icons">sentiment_satisfied</span>
   </div>
   <input type="text" placeholder="Type a message" />
   <div class="icon-wrapper icon-mic">
-    <ion-icon name="mic-outline" style:font-size="1.5em" />
+    <!-- <ion-icon name="mic-outline" style:font-size="1.5em" /> -->
+    <span class="material-icons">mic_none</span>
   </div>
 </div>
 
@@ -303,7 +312,7 @@
     .chatbox_input input {
       width: 110%;
     }
-    
+
     .chatbox_input {
       padding: 20px 10px;
     }

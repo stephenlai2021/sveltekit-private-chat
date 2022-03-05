@@ -12,12 +12,16 @@
   on:click|stopPropagation={() => console.log("hi, there !")}
 >
   <div class="icon-arrow-wrapper">
-    <!-- <span class="material-icons">arrow_back</span> -->
-    <ion-icon
+    <span
+      class="material-icons icon-arrow-back"
+      on:click|stopPropagation={() => ($showThemeModal = false)}
+      >arrow_back</span
+    >
+    <!-- <ion-icon
       name="arrow-back-outline"
       class="icon-arrow-back"
       on:click|stopPropagation={() => ($showThemeModal = false)}
-    />
+    /> -->
   </div>
   <main>
     {#each themes as theme}

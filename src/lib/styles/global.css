@@ -50,7 +50,7 @@ ion-icon {
   /* border: 1px solid; */
 }
 
-/* .material-icons {
+.material-icons {
   font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
@@ -62,7 +62,7 @@ ion-icon {
   word-wrap: normal;
   word-spacing: nowrap;
   direction: 1tr;
-} */
+}
 
 .wrapper {
   position: relative;
