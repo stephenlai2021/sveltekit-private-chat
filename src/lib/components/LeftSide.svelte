@@ -15,9 +15,9 @@
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
   import { fade } from "svelte/transition";
-  import SettingsModal from "$lib/components/Modal/SettingsModal.svelte";
-  import AddFriendModal from "$lib/components/Modal/AddFriendModal.svelte";
-  import ThemeModal from "$lib/components/Modal/ThemeModal.svelte";
+  import SettingsModal from "$lib/components/modal/SettingsModal.svelte";
+  import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
+  import ThemeModal from "$lib/components/modal/ThemeModal.svelte";
 
   let q = null;
   let user = null;
