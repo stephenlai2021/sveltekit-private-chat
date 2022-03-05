@@ -32,7 +32,7 @@ section .imgBx:before {
   height: 100%;
   z-index: 2;
   mix-blend-mode: screen;
-  /* background: linear-gradient(225deg, var(--bg-red) 25%, var(--bg-purple)); */
+  background: linear-gradient(225deg, var(--bg-red) 25%, var(--bg-purple));
 }
 
 section .imgBx img {
@@ -65,7 +65,7 @@ section .contentBx .formBx h2 {
   font-size: 1.5em;
   text-transform: uppercase;
   margin-bottom: 20px;
-  /* border-bottom: 4px solid var(--btn-red); */
+  border-bottom: 4px solid var(--btn-red);
   display: inline-block;
   letter-spacing: 1px;
 }
@@ -119,8 +119,8 @@ section .contentBx .formBx .inputBx input[type="submit"] {
 
 section .contentBx .formBx .inputBx input[type="submit"]:hover {
   /* background: var(--btn-red-hover); */
-  opacity: 0.5;
-  backdrop-filter: blur(15px);
+  opacity: 0.8;
+  /* backdrop-filter: blur(15px); */
 }
 
 section .contentBx .formBx .remember {
