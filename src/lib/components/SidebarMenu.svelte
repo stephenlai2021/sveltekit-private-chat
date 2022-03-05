@@ -13,7 +13,7 @@
 
   let user = null;
   // let menuIcon = ["sms", "volunteer_activism", "movie"];
-  let menuIcon = ["chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
+  let menuIcon = ["home-outline", "chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
   let activeMenu = menuIcon[0];
 
   onAuthStateChanged(auth, (_user) => (user = _user));

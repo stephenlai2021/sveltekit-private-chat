@@ -90,8 +90,8 @@
         on:click|stopPropagation={() =>
           ($showAddFriendModal = !$showAddFriendModal)}
       >
-        <span class="material-icons">person_add_alt</span>
-        <!-- <ion-icon name="person-add-outline" /> -->
+        <!-- <span class="material-icons">person_add_alt</span> -->
+        <ion-icon name="person-add-outline" />
       </li>
     {/if}
   </ul>

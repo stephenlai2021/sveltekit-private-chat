@@ -2,26 +2,28 @@
   import { bgColor, showThemeModal } from "$lib/store";
   import themes from "$lib/data/themes.json";
   import { fly } from "svelte/transition";
+import { claim_component } from "svelte/internal";
 
   console.table(themes);
 </script>
 
+<!-- transition:fly={{ x: -60, duration: 100, delay: 100 }} -->
 <div
   class="modal-theme"
-  transition:fly={{ x: -60, duration: 100, delay: 100 }}
+  transition:fly={{ y: -60, duration: 100, delay: 100 }}
   on:click|stopPropagation={() => console.log("hi, there !")}
 >
   <div class="icon-arrow-wrapper">
-    <span
+    <!-- <span
       class="material-icons icon-arrow-back"
       on:click|stopPropagation={() => ($showThemeModal = false)}
       >arrow_back</span
-    >
-    <!-- <ion-icon
-      name="arrow-back-outline"
+    > -->
+    <ion-icon
+      name="arrow-up-outline"
       class="icon-arrow-back"
       on:click|stopPropagation={() => ($showThemeModal = false)}
-    /> -->
+    />
   </div>
   <main>
     {#each themes as theme}
@@ -41,8 +43,10 @@
   .icon-arrow-wrapper {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 5px;
     padding-top: 10px;
+    /* border: 1px solid; */
   }
 
   main {

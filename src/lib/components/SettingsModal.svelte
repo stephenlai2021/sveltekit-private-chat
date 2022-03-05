@@ -24,23 +24,23 @@
   });
 </script>
 
+<!-- style:background={$bgColor} -->
 <ul
   class="menu-settings"
-  style:background={$bgColor}
   on:click|stopPropagation={() => console.log("hi, there !")}
-  transition:fly={{ x: -60, duration: 200, delay: 200 }}
+  transition:fly={{ x: -60, duration: 100, delay: 100 }}
 >
   <!-- transition:fly={{ x: -70, duration: 200, delay: 200 }} -->
   <div class="icon-arrow">
-    <span
+    <!-- <span
       class="material-icons"
       on:click|stopPropagation={() => ($showSettingsModal = false)}>
       close
-    </span>
-    <!-- <ion-icon
-      name="close-outline"
+    </span> -->
+    <ion-icon
+      name="arrow-back-outline"
       on:click|stopPropagation={() => ($showSettingsModal = false)}
-    /> -->
+    />
   </div>
   <li class="theme" on:click={toggleTheme}>
     <div class="content">
@@ -127,7 +127,7 @@
     padding: 5px;
     padding-top: 10px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     /* border: 1px solid; */
   }
 
@@ -161,7 +161,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 333px;
+    width: 100%;
     height: 100vh;
     z-index: 200;
     background: rgba(189, 202, 202, 0.5);

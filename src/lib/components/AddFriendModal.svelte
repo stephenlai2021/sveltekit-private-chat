@@ -1,18 +1,30 @@
 <script>
 	import { fly } from 'svelte/transition';
 	import { bgColor } from '$lib/store'
+	import { showAddFriendModal } from '$lib/store'
 
 	let keyword = '';
   
 	const handleSubmit = () => {};
 </script>
 
+<!-- style:background={$bgColor} -->
 <div 
 	class="modal-addfriend" 
-	style:background={$bgColor}
 	on:click|stopPropagation={() => console.log("hi, there !")}
-	transition:fly={{ y: 50, duration: 50, delay: 50 }}	
+	transition:fly={{ y: 50, duration: 100, delay: 100 }}	
 >
+<div class="icon-arrow">
+	<!-- <span
+		class="material-icons"
+		on:click|stopPropagation={() => ($showAddFriendModal = false)}>
+		close
+	</span> -->
+	<ion-icon
+		name="close-outline"
+		on:click|stopPropagation={() => ($showAddFriendModal = false)}
+	/>
+</div>
 	<div class="form-container">
 		<div class="search_user">
 			<div>
@@ -24,6 +36,16 @@
 </div>
 
 <style>
+	.icon-arrow {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    /* border: 1px solid; */
+  }
+
 	.form-container {
 		width: 100%;
 		padding: 30px;
@@ -69,8 +91,9 @@
 		z-index: 200;
 		width: 100%;
 		height: 100vh;
-		display: flex;
-		justify-content: center;
+		padding: 10px;
+		/* display: flex;
+		justify-content: center; */
 		z-index: 100;
 		/* background: #e5ddd5; */
 		background: rgba(189, 202, 202, 0.5);

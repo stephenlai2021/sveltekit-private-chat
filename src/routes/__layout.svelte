@@ -46,9 +46,9 @@
       console.log("OOh, internet is disconnected 😮");
     });
     window.addEventListener("click", (e) => {
-      $showSettingsModal = false;
-      $showAddFriendModal = false;
-      $showThemeModal = false;
+      // $showSettingsModal = false;
+      // $showAddFriendModal = false;
+      // $showThemeModal = false;
     });
     window.addEventListener("resize", () => resizeWindow());
   }
