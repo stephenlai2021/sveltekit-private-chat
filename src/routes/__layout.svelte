@@ -1,17 +1,26 @@
 <script>
   import "$lib/styles/global.css";
-  import { connection, bgColor, mobile, loginFormShow, showSettingsModal, showAddFriendModal, showThemeModal } from "$lib/store";
+  import {
+    connection,
+    bgColor,
+    mobile,
+    loginFormShow,
+    showThemeModal,
+    showSettingsModal,
+    showAddFriendModal,
+  } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import { auth } from "$lib/firebase/client";  import LeftSide from "$lib/components/LeftSide.svelte";
+  import { auth } from "$lib/firebase/client";
   import { page } from "$app/stores";
+  import LeftSide from "$lib/components/LeftSide.svelte";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
   // import ThemeModal from '$lib/components/modal/ThemeModal.svelte'
   // import SettingsModal from '$lib/components/modal/SettingsModal.svelte'
-  
+
   let user = null;
 
   const resizeWindow = () => {
@@ -20,7 +29,7 @@
   };
 
   onMount(() => {
-    onAuthStateChanged(auth, (_user) => user = _user);
+    onAuthStateChanged(auth, (_user) => (user = _user));
     resizeWindow();
   });
 
@@ -28,18 +37,18 @@
   $: if (!user) $loginFormShow = true;
 
   $: if (browser) {
-    window.addEventListener("online", () => { 
-      $connection = true
+    window.addEventListener("online", () => {
+      $connection = true;
       console.log("internet is connected 😀");
     });
-    window.addEventListener("offline", () => { 
-      $connection = false
+    window.addEventListener("offline", () => {
+      $connection = false;
       console.log("OOh, internet is disconnected 😮");
     });
     window.addEventListener("click", (e) => {
-      $showSettingsModal = false
-      $showAddFriendModal = false
-      $showThemeModal = false
+      $showSettingsModal = false;
+      $showAddFriendModal = false;
+      $showThemeModal = false;
     });
     window.addEventListener("resize", () => resizeWindow());
   }

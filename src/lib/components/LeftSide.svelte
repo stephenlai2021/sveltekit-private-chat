@@ -16,9 +16,9 @@
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
   import { fade } from "svelte/transition";
-  // import SettingsModal from "$lib/components/modal/SettingsModal.svelte";
-  // import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
-  // import ThemeModal from "$lib/components/modal/ThemeModal.svelte";
+  import SettingsModal from "$lib/components/modal/SettingsModal.svelte";
+  import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
+  import ThemeModal from "$lib/components/modal/ThemeModal.svelte";
 
   let q = null;
   let user = null;
@@ -81,8 +81,8 @@
           ($showSettingsModal = !$showSettingsModal)}
       >
         <img src={user.photoURL} alt="" />
-        <span class="material-icons settings">settings</span>
-        <!-- <ion-icon name="settings-outline" class="settings"></ion-icon> -->
+        <!-- <span class="material-icons settings">settings</span> -->
+        <ion-icon name="settings-outline" class="settings"></ion-icon>
       </div>
     {/if}
     {#if !$mobile}
@@ -95,7 +95,7 @@
       </li>
     {/if}
   </ul>
-  <!-- {#if $showThemeModal}
+  {#if $showThemeModal}
     <ThemeModal />
   {/if}
   {#if $showSettingsModal}
@@ -103,7 +103,7 @@
   {/if}
   {#if $showAddFriendModal}
     <AddFriendModal />
-  {/if} -->
+  {/if}
 </div>
 <div class="search_user">
   <div>
