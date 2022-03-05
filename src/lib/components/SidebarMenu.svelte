@@ -2,10 +2,10 @@
   import { auth } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
   import {
-    bgColor,
-    showSettingsModal,
     mobile,
+    bgColor,
     loginFormShow,
+    showSettingsModal,
   } from "$lib/store";
   import { goto } from "$app/navigation";
   import { activeItem } from "$lib/store";

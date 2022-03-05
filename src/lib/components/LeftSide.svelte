@@ -1,5 +1,4 @@
 <script>
-  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import {
     mobile,
     bgColor,
@@ -9,16 +8,17 @@
     showSettingsModal,
     showAddFriendModal,
   } from "$lib/store";
-  import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
-  import { collection, onSnapshot, query, where } from "firebase/firestore";
+  import { goto } from "$app/navigation";
+  import { fade } from "svelte/transition";
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
-  import { fade } from "svelte/transition";
-  import SettingsModal from "$lib/components/modal/SettingsModal.svelte";
-  import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
   import ThemeModal from "$lib/components/modal/ThemeModal.svelte";
+  import SettingsModal from "$lib/components/modal/SettingsModal.svelte";
+  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
+  import AddFriendModal from "$lib/components/modal/AddFriendModal.svelte";
+  import { collection, onSnapshot, query, where } from "firebase/firestore";
 
   let q = null;
   let user = null;
@@ -95,7 +95,7 @@
       </li>
     {/if}
   </ul>
-  {#if $showThemeModal}
+  <!-- {#if $showThemeModal}
     <ThemeModal />
   {/if}
   {#if $showSettingsModal}
@@ -103,7 +103,7 @@
   {/if}
   {#if $showAddFriendModal}
     <AddFriendModal />
-  {/if}
+  {/if} -->
 </div>
 <div class="search_user">
   <div>
