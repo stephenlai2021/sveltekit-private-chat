@@ -98,9 +98,9 @@
     /* border: 1px solid; */
   }
 
-  span {
+  /* span {
     font-size: 1.5em;
-  }
+  } */
 
   .userimg img {
     width: 40px;
