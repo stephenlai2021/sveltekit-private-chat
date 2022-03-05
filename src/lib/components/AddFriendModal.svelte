@@ -11,7 +11,7 @@
 	class="modal-addfriend" 
 	style:background={$bgColor}
 	on:click|stopPropagation={() => console.log("hi, there !")}
-	transition:fly={{ y: 50, duration: 150, delay: 150 }}	
+	transition:fly={{ y: 50, duration: 50, delay: 50 }}	
 >
 	<div class="form-container">
 		<div class="search_user">

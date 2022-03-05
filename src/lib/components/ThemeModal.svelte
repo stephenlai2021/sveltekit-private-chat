@@ -8,7 +8,7 @@
 
 <div
   class="modal-theme"
-  transition:fly={{ x: 50, duration: 200, delay: 200 }}
+  transition:fly={{ x: -60, duration: 100, delay: 100 }}
   on:click|stopPropagation={() => console.log("hi, there !")}
 >
   <div class="icon-arrow-wrapper">
