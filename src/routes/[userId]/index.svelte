@@ -3,6 +3,7 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
+  import { mobile, showSettingsModal, showAddFriendModal, showThemeModal } from '$lib/store'
   import themeStore from "svelte-themes";
 
   let q = null;
@@ -23,6 +24,12 @@
       user = tempUsers[0];
       return () => unsub();
     });
+  }
+
+  $: if ($mobile) { 
+    $showThemeModal = false
+    $showSettingsModal = false
+    $showAddFriendModal = false
   }
 </script>
 

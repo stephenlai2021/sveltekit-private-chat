@@ -51,7 +51,23 @@
       // $showThemeModal = false;
     });
     window.addEventListener("resize", () => resizeWindow());
+
+    // if (
+    //   $page.url.pathname != "/" &&
+    //   $page.url.pathname != "/tinder" &&
+    //   $page.url.pathname != "/movie"
+    // ) {
+    //   $showSettingsModal = false;
+    // }
   }
+
+  // $: if (
+  //   $page.url.pathname != "/" &&
+  //   $page.url.pathname != "/tinder" &&
+  //   $page.url.pathname != "/movie"
+  // ) {
+  //   $showSettingsModal = false;
+  // }
 </script>
 
 <svelte:head>
