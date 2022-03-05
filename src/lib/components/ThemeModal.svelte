@@ -60,7 +60,9 @@
     z-index: 300;
     width: 100%;
     height: 100vh;
-    background: grey;
+    /* background: grey; */
+    background: rgba(189, 202, 202, 0.5);
+    backdrop-filter: blur(30px);
   }
 
   .theme-item {

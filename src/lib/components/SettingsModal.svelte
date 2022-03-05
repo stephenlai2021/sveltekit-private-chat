@@ -165,8 +165,7 @@
     height: 100vh;
     z-index: 200;
     background: rgba(189, 202, 202, 0.5);
-    /* background: red; */
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(30px);
   }
 
   li {

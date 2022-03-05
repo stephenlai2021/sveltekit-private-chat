@@ -14,11 +14,11 @@
   import { fade } from "svelte/transition";
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
+  import { collection, onSnapshot, query, where } from "firebase/firestore";
+  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import ThemeModal from "$lib/components/ThemeModal.svelte";
   import SettingsModal from "$lib/components/SettingsModal.svelte";
-  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import AddFriendModal from "$lib/components/AddFriendModal.svelte";
-  import { collection, onSnapshot, query, where } from "firebase/firestore";
 
   let q = null;
   let user = null;

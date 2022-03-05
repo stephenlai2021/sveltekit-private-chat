@@ -72,7 +72,9 @@
 		display: flex;
 		justify-content: center;
 		z-index: 100;
-		background: #e5ddd5;
+		/* background: #e5ddd5; */
+		background: rgba(189, 202, 202, 0.5);
+    backdrop-filter: blur(30px);
 		/* border: 1px solid green; */
 	}
 
