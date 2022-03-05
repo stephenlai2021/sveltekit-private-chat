@@ -13,28 +13,25 @@
 
   let user = null;
   let menuIcon = ["chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
-  // let menuIcon = ["chat_bubble_outline", "volunteer_activism", "movie"];
   let activeMenu = menuIcon[0];
 
   onAuthStateChanged(auth, (_user) => (user = _user));
 
   const switchRoute = (item) => {
-    if (item === "chat_bubble_outline") {
+    if (item === "chatbox-ellipses-outline") {
       activeMenu = menuIcon[0];
       if ($activeItem) goto(`/${$activeItem}`);
       if (!$activeItem) goto(`/`);
     }
-    if (item === "volunteer_activism") {
+    if (item === "heart-circle-outline") {
       activeMenu = menuIcon[1];
-      goto("tinder");
+      goto("/tinder");
     }
-    if (item === "movie") {
+    if (item === "film-outline") {
       activeMenu = menuIcon[2];
       goto("/movie");
     }
   };
-
-  // $: console.log('mobile | sidebar menu: ', $mobile)
 </script>
 <div
   class="sidebar-menu"
@@ -65,7 +62,8 @@
         ($showSettingsModal = !$showSettingsModal)}
     >
       <img src={user.photoURL} alt="" />
-      <span class="material-icons settings">settings</span>
+      <!-- <span class="material-icons settings">settings</span> -->
+      <ion-icon name="settings-outline" class="settings"></ion-icon>
     </div>
   {/if}
 </div>
@@ -93,6 +91,7 @@
     cursor: pointer;
     padding: 8px;
     border-radius: 10px;
+    /* border: 1px solid; */
   }
 
   span {
@@ -113,17 +112,17 @@
     position: relative;
     cursor: pointer;
     margin-top: auto;
+    /* margin: auto 10px 0 10px; */
+    /* border: 1px solid; */
   }
 
   .sidebar-menu {
-    min-width: 70px;
+    min-width: 60px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    /* backdrop-filter: blur(8px); */
-    /* opacity: 80%; */
   }
 
   @media (max-width: 800px) {
@@ -132,7 +131,7 @@
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 60px;
+      height: 50px;
       z-index: 200;
       justify-content: space-around;
       /* align-items: center; */

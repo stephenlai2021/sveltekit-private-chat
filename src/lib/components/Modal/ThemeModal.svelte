@@ -1,22 +1,27 @@
 <script>
   import { bgColor, showThemeModal } from "$lib/store";
   import themes from "$lib/data/themes.json";
-  import { fly } from 'svelte/transition'
-  
+  import { fly } from "svelte/transition";
+
   console.table(themes);
 </script>
 
-<div 
-  class="modal-theme" 
-  transition:fly="{{ x: 50, duration: 200, delay: 200 }}"
+<div
+  class="modal-theme"
+  transition:fly={{ x: 50, duration: 200, delay: 200 }}
   on:click|stopPropagation={() => console.log("hi, there !")}
 >
-  <div class="icon-arrow" on:click|stopPropagation={() => $showThemeModal = false}>
-    <span class="material-icons">arrow_back</span>
+  <div class="icon-arrow-wrapper">
+    <!-- <span class="material-icons">arrow_back</span> -->
+    <ion-icon
+      name="arrow-back-outline"
+      class="icon-arrow-back"
+      on:click|stopPropagation={() => ($showThemeModal = false)}
+    />
   </div>
   <main>
     {#each themes as theme}
-      <div class="theme-item" style:cursor='pointer'>
+      <div class="theme-item" style:cursor="pointer">
         <div class="theme-image" style:background={theme.background} />
         <span class="theme-title">{theme.title}</span>
       </div>
@@ -25,12 +30,15 @@
 </div>
 
 <style>
-  .icon-arrow {
+  .icon-arrow-back {
+    cursor: pointer;
+  }
+
+  .icon-arrow-wrapper {
     display: flex;
     align-items: center;
     padding: 5px;
     padding-top: 10px;
-    cursor: pointer;
   }
 
   main {

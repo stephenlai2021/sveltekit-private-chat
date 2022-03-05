@@ -80,7 +80,8 @@
           ($showSettingsModal = !$showSettingsModal)}
       >
         <img src={user.photoURL} alt="" />
-        <span class="material-icons settings">settings</span>
+        <!-- <span class="material-icons settings">settings</span> -->
+        <ion-icon name="settings-outline" class="settings"></ion-icon>
       </div>
     {/if}
     {#if !$mobile}
@@ -88,8 +89,7 @@
         on:click|stopPropagation={() =>
           ($showAddFriendModal = !$showAddFriendModal)}
       >
-        <!-- <span class="material-icons">person_add_alt</span> -->
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="person-add-outline" />
       </li>
     {/if}
   </ul>
@@ -106,7 +106,8 @@
 <div class="search_user">
   <div>
     <input type="text" placeholder="Find user" bind:value={$keyword} />
-    <span class="material-icons">search</span>
+    <!-- <span class="material-icons">search</span> -->
+    <ion-icon name="search-outline"></ion-icon>
   </div>
 </div>
 {#if users.length}
@@ -147,6 +148,10 @@
 {/if}
 
 <style>
+  /* .nav-icons .userimg span {
+    line-height: 60px;
+  } */
+
   .userimg {
     width: 35px;
     height: 35px;

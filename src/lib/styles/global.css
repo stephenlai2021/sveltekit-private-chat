@@ -45,10 +45,12 @@ a {
 }
 
 ion-icon {
-  font-size: 1.3em;
+  font-size: 24px;
+  cursor: pointer;
+  /* border: 1px solid; */
 }
 
-.material-icons {
+/* .material-icons {
   font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
@@ -60,21 +62,18 @@ ion-icon {
   word-wrap: normal;
   word-spacing: nowrap;
   direction: 1tr;
-}
+} */
 
 .wrapper {
   position: relative;
   display: flex;
   height: 100vh;
-  /* background: var(--bg-theme); */
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
   border-radius: 4px;
 }
 
 .header {
   width: 100%;
-  /* background: var(--bg-grey); */
-  /* background: black; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -87,7 +86,7 @@ ion-icon {
 }
 
 .leftSide .header {
-  height: 65px;
+  height: 60px;
 }
 
 .rightSide {
@@ -158,6 +157,7 @@ ion-icon {
 .left {
   display: flex;
   align-items: center;
+  /* align-items: center; */
 }
 
 .left .user-details {
@@ -203,11 +203,12 @@ ion-icon {
 .nav_icons li {
   list-style: none;
   margin-left: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .nav_icons li span {
   font-size: 1.5em;
-  line-height: 60px;
 }
 
 .search_user {
@@ -234,7 +235,7 @@ ion-icon {
   color: rgb(161, 161, 161);
 }
 
-.search_user .material-icons {
+.search_user ion-icon {
   position: absolute;
   left: 20px;
   top: 15px;

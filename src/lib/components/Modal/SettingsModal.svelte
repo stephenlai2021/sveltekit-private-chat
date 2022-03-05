@@ -28,22 +28,29 @@
   class="menu-settings"
   style:background={$bgColor}
   on:click|stopPropagation={() => console.log("hi, there !")}
-  transition:fly={{ x: -70, duration: 200, delay: 200 }}
+  transition:fly={{ x: -60, duration: 200, delay: 200 }}
 >
   <!-- transition:fly={{ x: -70, duration: 200, delay: 200 }} -->
-  <div
-    class="icon-arrow"
-    on:click|stopPropagation={() => ($showSettingsModal = false)}
-  >
-    <span class="material-icons">close</span>
+  <div class="icon-arrow">
+    <!-- <span
+      class="material-icons"
+      on:click|stopPropagation={() => ($showSettingsModal = false)}>
+      close
+    </span> -->
+    <ion-icon
+      name="close-outline"
+      on:click|stopPropagation={() => ($showSettingsModal = false)}
+    />
   </div>
   <li class="theme" on:click={toggleTheme}>
     <div class="content">
       {#if $themeStore.theme === "light"}
-        <span class="material-icons">dark_mode</span>
+        <!-- <span class="material-icons">dark_mode</span> -->
+        <ion-icon name="sunny-outline" />
         <span class="menu-item">黑暗模式</span>
       {:else}
-        <span class="material-icons">light_mode</span>
+        <!-- <span class="material-icons">light_mode</span> -->
+        <ion-icon name="sunny-outline" />
         <span class="menu-item">明亮模式</span>
       {/if}
     </div>
@@ -59,16 +66,16 @@
           style:width="0"
           style:opacity="0"
         />
-        <span class="material-icons icon-palette" style:cursor="pointer"
-          >palette</span
-        >
+        <!-- <span class="material-icons icon-palette" style:cursor="pointer">palette</span> -->
+        <ion-icon name="color-palette-outline" class="icon-palette" />
         <span class="menu-item bg-color" style:margin-left="5px">背景顏色</span>
       </label>
     </div>
   </li>
   <li>
     <div class="content">
-      <span class="material-icons">wallpaper</span>
+      <!-- <span class="material-icons">wallpaper</span> -->
+      <ion-icon name="image-outline" />
       <span
         class="menu-item"
         on:click|stopPropagation={() => ($showThemeModal = true)}>特色主題</span
@@ -77,7 +84,8 @@
   </li>
   <li>
     <div class="content">
-      <span class="material-icons">info</span>
+      <!-- <span class="material-icons">info</span> -->
+      <ion-icon name="information-circle-outline" />
       <div class="title-wrapper">
         <span class="menu-item">關於</span>
       </div>
@@ -85,7 +93,8 @@
   </li>
   <li on:click={signout}>
     <div class="content">
-      <span class="material-icons">logout</span>
+      <!-- <span class="material-icons">logout</span> -->
+      <ion-icon name="log-out-outline" />
       <div class="title-wrapper">
         <span class="menu-item">登出</span>
       </div>
@@ -99,6 +108,7 @@
     text-align: center;
     /* border: 1px solid red; */
   }
+
   .content {
     display: flex;
     align-items: center;
@@ -107,18 +117,23 @@
     /* border: 1px solid; */
   }
 
+  .icon-arrow span {
+    cursor: pointer;
+  }
+
   .icon-arrow {
     display: flex;
     align-items: center;
     padding: 5px;
     padding-top: 10px;
-    cursor: pointer;
     display: flex;
     justify-content: flex-end;
+    /* border: 1px solid; */
   }
 
   .icon-palette {
     margin-left: -3px;
+    margin-right: 3px;
   }
 
   label {

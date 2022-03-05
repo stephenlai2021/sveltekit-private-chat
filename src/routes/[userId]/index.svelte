@@ -30,7 +30,7 @@
 
 <svelte:head>
   {#if $page.params.userId}
-  <title>Chat</title>
+    <title>Chat</title>
   {/if}
 </svelte:head>
 
@@ -41,10 +41,11 @@
 {#if users}
   <div class="header">
     <div class="left-part">
-      <ion-icon name="arrow-back-outline arrow-back" on:click={() => goto("/")}></ion-icon>
-      <!-- <span class="material-icons arrow-back" on:click={() => goto("/")}>
-        chevron_left
-      </span> -->
+      <ion-icon
+        name="arrow-back-outline"
+        class="arrow-back"
+        on:click={() => goto("/")}
+      />
       <div class="imgText">
         <div class="userimg">
           <img src={user.avatar} alt="" />
@@ -55,6 +56,14 @@
         </div>
       </div>
     </div>
+    <div class="right-part">
+      <ion-icon name="create-outline" style:margin-right='15px'></ion-icon>
+      <ion-icon name="videocam-outline" style:margin-right='15px'></ion-icon>
+      <ion-icon name="camera-outline" style:margin-right='15px'></ion-icon>
+      <ion-icon name="document-attach-outline" style:margin-right='15px' />
+      <ion-icon name="location-outline"></ion-icon>
+    </div>
+    <ion-icon name="menu-outline" class="icon-menu"></ion-icon>
   </div>
 {/if}
 
@@ -128,25 +137,35 @@
 </div>
 
 <div class="chatbox_input">
-  <!-- <div class="image-wrapper">
-    <img src="/happy-outline.svg" alt="" >
+  <div class="icon-wrapper icon-happy">
+    <ion-icon name="happy-outline" class="happy" />
   </div>
-  <div class="image-wrapper">
-    <img src="/happy-outline.svg" alt="" >
-  </div> -->
-  <ion-icon name="happy-outline"></ion-icon>
-  <ion-icon name="document-attach-outline"></ion-icon>
   <input type="text" placeholder="Type a message" />
-  <!-- <span class="material-icons">mic_none</span> -->
-  <ion-icon name="mic-outline" style:font-size='1.5em'></ion-icon>
+  <div class="icon-wrapper icon-mic">
+    <ion-icon name="mic-outline" style:font-size="1.5em" />
+  </div>
 </div>
 
 <style>
-  .image-wrapper {
-    width: 15px;
-    height: 15px;
+  .icon-menu {
+    display: none;
   }
-  
+
+  .icon-mic {
+    justify-content: flex-end;
+  }
+
+  .icon-happy {
+    justify-content: flex-start;
+  }
+
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    width: 50px;
+    /* border: 1px solid; */
+  }
+
   .arrow-back {
     display: none;
   }
@@ -156,13 +175,9 @@
     align-items: center;
   }
 
-  .chatbox_input span:nth-child(1) {
-    margin-right: 15px;
-  }
-
   .chatbox_input input {
-    width: 90%;
-    margin: 0 20px;
+    width: 100%;
+    /* margin: 0 20px; */
     padding: 5px 20px;
     border: none;
     outline: none;
@@ -170,13 +185,6 @@
     font-size: 1em;
     background: white;
     color: black;
-  }
-
-  .chatbox_input span {
-    cursor: pointer;
-    font-size: 1.6em;
-    /* font-size: 26x; */
-    color: #51585c;
   }
 
   .chatbox_input {
@@ -187,7 +195,6 @@
     background: #f0f0f0;
     background: transparent;
     backdrop-filter: blur(15px);
-    /* background: linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%); */
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -197,13 +204,18 @@
   }
 
   .message.friend_message p {
+    /* background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(15px); */
     background: #f5f5f5;
+    /* opacity: 0.5; */
     justify-content: flex-start;
   }
 
   .my_message {
     justify-content: flex-end;
     text-align: right;
+    /* background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(15px); */
   }
 
   .message p span {
@@ -249,6 +261,9 @@
     max-width: 65%;
     padding: 12px;
     background: var(--lemon-green);
+    /* opacity: 0.5; */
+    /* background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(15px); */
     border-radius: 10px;
     font-size: 0.9em;
     font-weight: 600;
@@ -275,16 +290,32 @@
 
   .details {
     padding-left: 15px;
-  }  
-
-  
+  }
 
   @media (max-width: 800px) {
     .arrow-back {
       margin-right: 10px;
       display: block;
-      color: #51585c;
-      /* font-size: 1.5rem; */
+    }
+  }
+
+  @media (max-width: 575px) {
+    .chatbox_input input {
+      width: 110%;
+    }
+    
+    .chatbox_input {
+      padding: 20px 10px;
+    }
+  }
+
+  @media (max-width: 475px) {
+    .right-part {
+      display: none;
+    }
+
+    .icon-menu {
+      display: block;
     }
   }
 </style>
