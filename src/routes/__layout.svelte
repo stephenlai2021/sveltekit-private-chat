@@ -1,3 +1,17 @@
+<script context="module">
+  import { getAllDocs } from '$lib/functions/getAllDocs'
+
+  export const load = async () => {
+    const { docs } = await getAllDocs('whatzapp_users')
+
+    return {
+      props: {
+        users: docs
+      }
+    }
+  }
+</script>
+
 <script>
   import "$lib/styles/global.css";
   import {
@@ -22,18 +36,20 @@
   // import ThemeModal from '$lib/components/modal/ThemeModal.svelte'
   // import SettingsModal from '$lib/components/modal/SettingsModal.svelte'
 
+  export let users
+  
   let user = null;
-  let users = null;
+  // let users = null;
   let colRef = collection(db, "whatzapp_users");
 
-  const unsub = onSnapshot(colRef, (snapshot) => {
-    let tempUsers = [];
-    snapshot.docs.forEach((doc) => {
-      tempUsers.push({ ...doc.data() });
-    });
-    users = tempUsers;    
-    return () => unsub();
-  });
+  // const unsub = onSnapshot(colRef, (snapshot) => {
+  //   let tempUsers = [];
+  //   snapshot.docs.forEach((doc) => {
+  //     tempUsers.push({ ...doc.data() });
+  //   });
+  //   users = tempUsers;    
+  //   return () => unsub();
+  // });
 
   const resizeWindow = () => {
     if (window.innerWidth <= 800) { 
@@ -41,18 +57,22 @@
     }
     if (window.innerWidth > 800) {
       $mobile = false;
-      goto(`/${users[0].name}`)
+      // if (users) goto(`/${users[0].name}`)
     }
   };
   
   onMount(() => {
     onAuthStateChanged(auth, (_user) => (user = _user));
     resizeWindow();
+    goto(`/${users[0].name}`)
   });
 
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
-  $: if (users) console.log('users | layout', users)
+  // $: if (users) { 
+  //   console.log('users | layout', users)
+  //   goto(`/${users[0].name}`)
+  // }
 
   $: if (browser) {
     window.addEventListener("online", () => {
