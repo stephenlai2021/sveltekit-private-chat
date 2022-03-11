@@ -40,7 +40,7 @@
       } else {
         user = _user;
         q = query(colRef, where("contactList", "array-contains", user.uid));
-        console.log("user | booklist", user);
+        console.log("user", user);
         show = true;
       }
     });

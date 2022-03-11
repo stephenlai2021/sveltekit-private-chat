@@ -11,6 +11,7 @@
   import { fly } from "svelte/transition";
 
   let theme = true;
+  let bgColorLocal = ''
 
   const toggleTheme = () => {
     theme = !theme;
@@ -58,15 +59,17 @@
   <li>
     <div class="content">
       <label>
-        <!-- on:input={() => setBgColor($bgColor)} -->
         <input
-          type="color"
+        type="color"
           bind:value={$bgColor}
+          on:input|stopPropagation={() => setBgColor($bgColor)}
           style:height="0"
           style:width="0"
           style:opacity="0"
         />
-        <span class="material-icons icon-palette" style:cursor="pointer">palette</span>
+        <span class="material-icons icon-palette" style:cursor="pointer"
+          >palette</span
+        >
         <!-- <ion-icon name="color-palette-outline" class="icon-palette" /> -->
         <span class="menu-item bg-color" style:margin-left="5px">背景顏色</span>
       </label>

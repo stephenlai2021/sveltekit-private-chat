@@ -23,6 +23,10 @@
 	});
 </script>
 
+<svelte:head>
+  <title>Letschat | Login</title>
+</svelte:head>
+
 {#if show}
 	<Login />
 {/if}

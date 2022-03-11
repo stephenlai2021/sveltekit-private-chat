@@ -1,6 +1,7 @@
 <script>
-  import { auth } from "$lib/firebase/client";
+  import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
+  import { collection, onSnapshot } from "firebase/firestore";
   import {
     mobile,
     bgColor,
@@ -13,25 +14,32 @@
 
   let user = null;
   // let menuIcon = ["sms", "volunteer_activism", "movie"];
-  let menuIcon = ["home-outline", "chatbox-ellipses-outline", "heart-circle-outline", "film-outline"];
+  let menuIcon = [
+    "home-outline",
+    "chatbox-ellipses-outline",
+    "heart-circle-outline",
+    "film-outline",
+  ];
   let activeMenu = menuIcon[0];
 
   onAuthStateChanged(auth, (_user) => (user = _user));
 
+  let users = null;
+  let colRef = collection(db, "whatzapp_users");
+  const unsub = onSnapshot(colRef, (snapshot) => {
+    let tempUsers = [];
+    snapshot.docs.forEach((doc) => {
+      tempUsers.push({ ...doc.data() });
+    });
+    users = tempUsers;
+    return () => unsub();
+  });
+
   const switchRoute = (item) => {
-    if (item === "chatbox-ellipses-outline") {
-      activeMenu = menuIcon[0];
-      if ($activeItem) goto(`/${$activeItem}`);
-      if (!$activeItem) goto(`/`);
-    }
-    if (item === "heart-circle-outline") {
-      activeMenu = menuIcon[1];
-      goto("/tinder");
-    }
-    if (item === "film-outline") {
-      activeMenu = menuIcon[2];
-      goto("/movie");
-    }
+    if (item === "home-outline") goto(`/`);
+    if (item === "chatbox-ellipses-outline") goto(`/${users[0].name}`);
+    if (item === "heart-circle-outline") goto("/tinder");
+    if (item === "film-outline") goto("/movie");
   };
 </script>
 
@@ -39,25 +47,44 @@
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$bgColor}
-  style:display={$mobile &&
+  style:display={$mobile 
+    ? "none"
+    : "flex"}
+>
+<!-- style:display={$mobile &&
   $page.url.pathname != "/" &&
   $page.url.pathname != "/tinder" &&
   $page.url.pathname != "/movie"
     ? "none"
     : $page.url.pathname === "/login"
     ? "none"
-    : "flex"}
->
-  {#each menuIcon as item}
+    : "flex"} -->
+
+  <!-- {#each menuIcon as item}
     <div
       class="menu-item"
       class:active={item === activeMenu}
       on:click={() => switchRoute(item)}
     >
       <ion-icon name={item} />
-      <!-- <span class="material-icons">{item}</span> -->
     </div>
-  {/each}
+  {/each} -->
+
+  <!-- <div class="menu-item" on:click={() => goto("/")}>
+    <ion-icon name="home-outline" />
+  </div> -->
+  <!-- {#if !$mobile} -->
+  <!-- <div class="menu-item" on:click={() => goto(`/${users[0].name}`)}> -->
+
+  <!-- <div class="menu-item" on:click={() => $mobile ? goto(`/`) : goto(`/${users[0].name}`)}>
+    <ion-icon name="chatbox-ellipses-outline" />
+  </div>
+  <div class="menu-item" on:click={() => goto("/tinder")}>
+    <ion-icon name="heart-circle-outline" />
+  </div>
+  <div class="menu-item" on:click={() => goto("/movie")}>
+    <ion-icon name="film-outline" />
+  </div> -->
 
   {#if user}
     <div
@@ -67,7 +94,7 @@
     >
       <img src={user.photoURL} alt="" />
       <!-- <span class="material-icons settings">settings</span> -->
-      <ion-icon name="settings-outline" class="settings"></ion-icon>
+      <ion-icon name="settings-outline" class="settings" />
     </div>
   {/if}
 </div>
@@ -127,6 +154,8 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
+    opacity: 0.7;
+    /* background: rgba(0, 0, 0, 0.5); */
   }
 
   @media (max-width: 800px) {
@@ -138,7 +167,6 @@
       height: 50px;
       z-index: 200;
       justify-content: space-around;
-      /* align-items: center; */
     }
 
     .userimg {

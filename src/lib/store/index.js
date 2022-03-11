@@ -25,6 +25,7 @@ bgColor.subscribe(
   (val) => browser && localStorage.setItem("background color", val)
 );
 
+/* bgColor is derived from getSession hook function */
 // export const bgColor = derived(session, ($session, set) => {
 //   if ($session.bgColor) set($session.bgColor);
 // });
@@ -41,7 +42,7 @@ bgColor.subscribe(
 export const setBgColor = (bgColor) => {
   session.update(($session) => ({ ...$session, bgColor }))
 
-  fetch('/api/getbgcolor', {
+  fetch('/api/bg-color', {
     method: 'PUT',
     body: bgColor
   })

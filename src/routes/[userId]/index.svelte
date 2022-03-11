@@ -46,15 +46,15 @@
 {#if users}
   <div class="header">
     <div class="left-part">
-      <!-- <ion-icon
+      <ion-icon
         name="arrow-back-outline"
         class="arrow-back"
         on:click={() => goto("/")}
-      /> -->
-      <span
+      />
+      <!-- <span
         class="material-icons arrow-back"
         on:click={() => goto("/")}>arrow_back</span
-      >
+      > -->
       <div class="imgText">
         <div class="userimg">
           <img src={user.avatar} alt="" />
@@ -89,30 +89,6 @@
   </div>
   <div class="message friend_message">
     <p>Hello<br /><span>12:18</span></p>
-  </div>
-  <div class="message my_message">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-      /><span>12:15</span>
-    </p>
-  </div>
-  <div class="message friend_message">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
-      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
-    </p>
-  </div>
-  <div class="message my_message">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-      /><span>12:15</span>
-    </p>
-  </div>
-  <div class="message friend_message">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
-      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
-    </p>
   </div>
   <div class="message my_message">
     <p>
