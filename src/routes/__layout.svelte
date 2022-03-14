@@ -52,13 +52,8 @@
   // });
 
   const resizeWindow = () => {
-    if (window.innerWidth <= 800) { 
-      $mobile = true;
-    }
-    if (window.innerWidth > 800) {
-      $mobile = false;
-      // if (users) goto(`/${users[0].name}`)
-    }
+    if (window.innerWidth <= 800) $mobile = true;
+    if (window.innerWidth > 800) $mobile = false;
   };
   
   onMount(() => {
@@ -69,10 +64,6 @@
 
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
-  // $: if (users) { 
-  //   console.log('users | layout', users)
-  //   goto(`/${users[0].name}`)
-  // }
 
   $: if (browser) {
     window.addEventListener("online", () => {

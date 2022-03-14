@@ -10,9 +10,14 @@
   let user = {};
   let users = [];
   let logout = false;
+  let hideRightside = false
   let colRef = collection(db, "whatzapp_users");
 
-  // $: if (logout) goto("/login");
+  const changeUI = () => {
+    // hide right side
+    
+    // show left side
+  }
 
   $: if ($page.params.userId) {
     q = query(colRef, where("name", "==", $page.params.userId));
@@ -50,11 +55,8 @@
         name="arrow-back-outline"
         class="arrow-back"
         on:click={() => goto("/")}
-      />
-      <!-- <span
-        class="material-icons arrow-back"
-        on:click={() => goto("/")}>arrow_back</span
-      > -->
+        />
+        <!-- on:click={changeUI} -->
       <div class="imgText">
         <div class="userimg">
           <img src={user.avatar} alt="" />
@@ -66,20 +68,13 @@
       </div>
     </div>
     <div class="right-part">
-      <!-- <span class="material-icons" style:margin-right="15px">location_on</span>
-      <span class="material-icons" style:margin-right="15px">videocam</span>
-      <span class="material-icons" style:margin-right="15px">photo_camera</span>
-      <span class="material-icons" style:margin-right="15px">file_present</span>
-      <span class="material-icons" style:margin-right="15px">brush</span> -->
-
       <ion-icon name="create-outline" style:margin-right="15px" />
       <ion-icon name="videocam-outline" style:margin-right="15px" />
       <ion-icon name="camera-outline" style:margin-right="15px" />
       <ion-icon name="document-attach-outline" style:margin-right="15px" />
       <ion-icon name="location-outline" />
     </div>
-    <!-- <ion-icon name="menu-outline" class="icon-menu" /> -->
-    <span class="material-icons icon-menu"> menu </span>
+    <ion-icon name="menu-outline" class="icon-menu" />
   </div>
 {/if}
 

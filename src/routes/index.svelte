@@ -1,18 +1,41 @@
+<script>
+  import { bgColor } from '$lib/store'
+</script>
+
 <svelte:head>
   <title>Home</title>
 </svelte:head>
 
-<div class="movie">
-  <h1>Home</h1>
-  <p>Welcome to my website</p>
+<!-- <div class="home" style:background={$bgColor}> -->
+<div class="home">
+  <h1>Letschat</h1>
+  <p>Connect friends together</p>
+  <div class="image-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Ajux_loader.gif" alt="">
+  </div>
 </div>
 
 <style>
-  .movie {
+  h1, p {
+    color: rgb(43, 32, 32);
+  }
+  .home {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background: rgb(221, 212, 212);
+  }
+
+  .image-wrapper img {
+    width: 200px;
+    height: 200px;
+    opacity: 1;
+  }
+
+  .image-wrapper {
+    width: 200px;
+    height: 200px;
   }
 </style>

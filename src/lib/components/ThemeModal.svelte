@@ -7,18 +7,12 @@ import { claim_component } from "svelte/internal";
   console.table(themes);
 </script>
 
-<!-- transition:fly={{ x: -60, duration: 100, delay: 100 }} -->
 <div
   class="modal-theme"
   transition:fly={{ y: -60, duration: 100, delay: 100 }}
   on:click|stopPropagation={() => console.log("hi, there !")}
 >
   <div class="icon-arrow-wrapper">
-    <!-- <span
-      class="material-icons icon-arrow-back"
-      on:click|stopPropagation={() => ($showThemeModal = false)}
-      >arrow_back</span
-    > -->
     <ion-icon
       name="arrow-up-outline"
       class="icon-arrow-back"
@@ -27,7 +21,7 @@ import { claim_component } from "svelte/internal";
   </div>
   <main>
     {#each themes as theme}
-      <div class="theme-item" style:cursor="pointer">
+      <div class="theme-item" style:cursor="pointer" on:click={() => $bgColor = theme.background}>
         <div class="theme-image" style:background={theme.background} />
         <span class="theme-title">{theme.title}</span>
       </div>
@@ -46,7 +40,6 @@ import { claim_component } from "svelte/internal";
     justify-content: center;
     padding: 5px;
     padding-top: 10px;
-    /* border: 1px solid; */
   }
 
   main {

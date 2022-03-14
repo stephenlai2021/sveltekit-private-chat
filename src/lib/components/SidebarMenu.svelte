@@ -47,8 +47,10 @@
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$bgColor}
-  style:display={$mobile 
+  style:display={$mobile
     ? "none"
+    : $page.url.pathname === '/'
+    ? 'none'
     : "flex"}
 >
 <!-- style:display={$mobile &&
@@ -155,7 +157,6 @@
     align-items: center;
     padding: 20px 0;
     opacity: 0.7;
-    /* background: rgba(0, 0, 0, 0.5); */
   }
 
   @media (max-width: 800px) {

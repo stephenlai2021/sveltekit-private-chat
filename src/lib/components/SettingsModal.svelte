@@ -10,8 +10,10 @@
   import { signout } from "$lib/functions/auth/signout";
   import { fly } from "svelte/transition";
 
+  export let user;
+  console.log("user | settings modal", user);
+
   let theme = true;
-  let bgColorLocal = ''
 
   const toggleTheme = () => {
     theme = !theme;
@@ -25,33 +27,33 @@
   });
 </script>
 
-<!-- style:background={$bgColor} -->
 <ul
   class="menu-settings"
   on:click|stopPropagation={() => console.log("hi, there !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
 >
-  <!-- transition:fly={{ x: -70, duration: 200, delay: 200 }} -->
   <div class="icon-arrow">
-    <!-- <span
-      class="material-icons"
-      on:click|stopPropagation={() => ($showSettingsModal = false)}>
-      close
-    </span> -->
     <ion-icon
       name="arrow-back-outline"
       on:click|stopPropagation={() => ($showSettingsModal = false)}
     />
   </div>
+  <div class="user-profile">
+    <div class="avatar-wrapper">
+      <img src={user.photoURL} alt="" />
+    </div>
+    <h3>
+      {user.displayName}
+    </h3>
+    <p>{user.email}</p>
+  </div>
   <li class="theme" on:click={toggleTheme}>
     <div class="content">
       {#if $themeStore.theme === "light"}
-        <span class="material-icons">dark_mode</span>
-        <!-- <ion-icon name="sunny-outline" /> -->
+        <ion-icon name="moon-outline" />
         <span class="menu-item">黑暗模式</span>
       {:else}
-        <span class="material-icons">light_mode</span>
-        <!-- <ion-icon name="sunny-outline" /> -->
+        <ion-icon name="sunny-outline" />
         <span class="menu-item">明亮模式</span>
       {/if}
     </div>
@@ -60,25 +62,21 @@
     <div class="content">
       <label>
         <input
-        type="color"
+          type="color"
           bind:value={$bgColor}
           on:input|stopPropagation={() => setBgColor($bgColor)}
           style:height="0"
           style:width="0"
           style:opacity="0"
         />
-        <span class="material-icons icon-palette" style:cursor="pointer"
-          >palette</span
-        >
-        <!-- <ion-icon name="color-palette-outline" class="icon-palette" /> -->
+        <ion-icon name="color-palette-outline" class="icon-palette" />
         <span class="menu-item bg-color" style:margin-left="5px">背景顏色</span>
       </label>
     </div>
   </li>
   <li>
     <div class="content">
-      <span class="material-icons">wallpaper</span>
-      <!-- <ion-icon name="image-outline" /> -->
+      <ion-icon name="image-outline" />
       <span
         class="menu-item"
         on:click|stopPropagation={() => ($showThemeModal = true)}>特色主題</span
@@ -87,8 +85,7 @@
   </li>
   <li>
     <div class="content">
-      <span class="material-icons">info</span>
-      <!-- <ion-icon name="information-circle-outline" /> -->
+      <ion-icon name="information-circle-outline" />
       <div class="title-wrapper">
         <span class="menu-item">關於</span>
       </div>
@@ -96,8 +93,7 @@
   </li>
   <li on:click={signout}>
     <div class="content">
-      <span class="material-icons">logout</span>
-      <!-- <ion-icon name="log-out-outline" /> -->
+      <ion-icon name="log-out-outline" />
       <div class="title-wrapper">
         <span class="menu-item">登出</span>
       </div>
@@ -106,6 +102,23 @@
 </ul>
 
 <style>
+  h3, p {
+    text-align: center;
+  }
+
+  .user-profile .avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    /* border: 1px solid; */
+  }
+  
+  .user-profile {
+    margin-bottom: 30px;
+    /* border-bottom: 1px solid; */
+  }
+
   .title-wrapper {
     width: 100%;
     text-align: center;
@@ -151,7 +164,7 @@
   span.material-icons {
     margin-right: 10px;
     font-size: 18px;
-    /* border: 1px solid; */
+    border: 1px solid;
   }
 
   span.menu-item {

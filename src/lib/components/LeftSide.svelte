@@ -98,8 +98,8 @@
   {#if $showThemeModal}
     <ThemeModal />
   {/if}
-  {#if $showSettingsModal}
-    <SettingsModal />
+  {#if $showSettingsModal && user}
+    <SettingsModal {user} />
   {/if}
   {#if $showAddFriendModal}
     <AddFriendModal />
