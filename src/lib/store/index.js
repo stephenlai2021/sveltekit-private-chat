@@ -9,7 +9,9 @@ export const loginFormShow = writable(false)
 export const showThemeModal = writable(false);
 export const showSettingsModal = writable(false);
 export const showAddFriendModal = writable(false)
-// let bgColor = null;
+export const leftsideState = writable(true)
+export const rightsideState = writable(true)
+export const menubarState = writable(true)
 
 export const connection = writable(
   browser && localStorage.getItem("internet connection")

@@ -49,7 +49,7 @@
   style:background={$bgColor}
   style:display={$mobile
     ? "none"
-    : $page.url.pathname === '/'
+    : $page.url.pathname === '/' || $page.url.pathname === '/login'
     ? 'none'
     : "flex"}
 >

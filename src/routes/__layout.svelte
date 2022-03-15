@@ -36,34 +36,40 @@
   // import ThemeModal from '$lib/components/modal/ThemeModal.svelte'
   // import SettingsModal from '$lib/components/modal/SettingsModal.svelte'
 
-  export let users
+  // export let users
   
   let user = null;
-  // let users = null;
+  let users = null;
   let colRef = collection(db, "whatzapp_users");
 
-  // const unsub = onSnapshot(colRef, (snapshot) => {
-  //   let tempUsers = [];
-  //   snapshot.docs.forEach((doc) => {
-  //     tempUsers.push({ ...doc.data() });
-  //   });
-  //   users = tempUsers;    
-  //   return () => unsub();
-  // });
+  const unsub = onSnapshot(colRef, (snapshot) => {
+    let tempUsers = [];
+    snapshot.docs.forEach((doc) => {
+      tempUsers.push({ ...doc.data() });
+    });
+    users = tempUsers;    
+    return () => unsub();
+  });
 
   const resizeWindow = () => {
     if (window.innerWidth <= 800) $mobile = true;
-    if (window.innerWidth > 800) $mobile = false;
+    if (window.innerWidth > 800) { 
+      $mobile = false;
+      
+      if ($page.url.pathname === '/' && users) {
+        goto(`/${users[0].name}`)
+      }
+    }
   };
   
   onMount(() => {
     onAuthStateChanged(auth, (_user) => (user = _user));
-    resizeWindow();
-    goto(`/${users[0].name}`)
+    resizeWindow();    
   });
-
+  
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
+  $: if (users) goto(`/${users[0].name}`)
 
   $: if (browser) {
     window.addEventListener("online", () => {
@@ -99,12 +105,9 @@
     ? "0%"
     : $page.url.pathname != "/" && $page.url.pathname != "/movie" && $page.url.pathname != "/tinder"
     ? "450px"
-    : "0%"}
-   
+    : "0%"}   
   >
     <LeftSide />
-    <!-- <SettingsModal /> -->
-    <!-- <ThemeModal /> -->
   </div>
   <div
     class="rightSide"

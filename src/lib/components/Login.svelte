@@ -53,17 +53,19 @@
 </script>
 
 <section>
-  <style>
+  <!-- <style>
     .imgBx:before {
       background: var(--bg);
     }
-  </style>
-  <div class="imgBx" style="--bg: {$bgColor}">
+  </style> -->
+  <!-- <div class="imgBx" style="--bg: {$bgColor}"> -->
+  <div class="imgBx">
     <img src="/login-bg.jpg" alt="" />
   </div>
   <div class="contentBx">
     <div class="formBx">
-      <h2 style:border-bottom="4px solid {$bgColor}">
+      <!-- <h2 style:border-bottom="4px solid {$bgColor}"> -->
+      <h2>
         {signup ? "signup" : "login"}
       </h2>
       <form on:submit|preventDefault={handleSubmit}>
@@ -87,7 +89,8 @@
           </label>
         </div>
         <div class="inputBx btn-submit">
-          <input type="submit" value={signup ? 'Sign up' : 'Sign in'} style:background={$bgColor} />
+          <!-- <input type="submit" value={signup ? 'Sign up' : 'Sign in'} style:background={$bgColor} /> -->
+          <input type="submit" value={signup ? 'Sign up' : 'Sign in'} />
         </div>
         <div class="inputBx">
           <p>
@@ -120,8 +123,4 @@
 
 <style>
   @import url("$lib/styles/login.css");
-
-  .mt {
-    /* margin: 80px 0 10px; */
-  }
 </style>

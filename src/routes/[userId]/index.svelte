@@ -3,21 +3,35 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { mobile, showSettingsModal, showAddFriendModal, showThemeModal } from '$lib/store'
+  import {
+    mobile,
+    menubarState,
+    leftsideState,
+    rightsideState,
+    showSettingsModal,
+    showAddFriendModal,
+    showThemeModal,
+  } from "$lib/store";
   import themeStore from "svelte-themes";
+import SidebarMenu from "$lib/components/SidebarMenu.svelte";
 
   let q = null;
   let user = {};
   let users = [];
   let logout = false;
-  let hideRightside = false
+  let hideRightside = false;
   let colRef = collection(db, "whatzapp_users");
 
   const changeUI = () => {
-    // hide right side
-    
-    // show left side
-  }
+    if ($mobile) {
+      // hide right side && sidebar menu
+      $rightsideState = false
+      $menubarState = false
+
+      // show left side
+      $leftsideState = true
+    }
+  };
 
   $: if ($page.params.userId) {
     q = query(colRef, where("name", "==", $page.params.userId));
@@ -31,10 +45,10 @@
     });
   }
 
-  $: if ($mobile) { 
-    $showThemeModal = false
-    $showSettingsModal = false
-    $showAddFriendModal = false
+  $: if ($mobile) {
+    $showThemeModal = false;
+    $showSettingsModal = false;
+    $showAddFriendModal = false;
   }
 </script>
 
@@ -68,10 +82,10 @@
       </div>
     </div>
     <div class="right-part">
-      <ion-icon name="create-outline" style:margin-right="15px" />
-      <ion-icon name="videocam-outline" style:margin-right="15px" />
-      <ion-icon name="camera-outline" style:margin-right="15px" />
-      <ion-icon name="document-attach-outline" style:margin-right="15px" />
+      <ion-icon name="create-outline" />
+      <ion-icon name="videocam-outline" />
+      <ion-icon name="camera-outline" />
+      <ion-icon name="document-attach-outline" />
       <ion-icon name="location-outline" />
     </div>
     <ion-icon name="menu-outline" class="icon-menu" />
@@ -126,16 +140,22 @@
 <div class="chatbox_input">
   <div class="icon-wrapper icon-happy">
     <ion-icon name="happy-outline" class="happy" />
-    <!-- <span class="material-icons">sentiment_satisfied</span> -->
   </div>
   <input type="text" placeholder="Type a message" />
   <div class="icon-wrapper icon-mic">
     <ion-icon name="mic-outline" style:font-size="1.5em" />
-    <!-- <span class="material-icons">mic_none</span> -->
   </div>
 </div>
 
 <style>
+  .header {
+    padding-right: 0px;
+  }
+
+  .right-part ion-icon {
+    margin-right: 15px;
+  }
+
   .icon-menu {
     display: none;
   }
@@ -152,7 +172,6 @@
     display: flex;
     align-items: center;
     width: 50px;
-    /* border: 1px solid; */
   }
 
   .arrow-back {
@@ -166,7 +185,6 @@
 
   .chatbox_input input {
     width: 100%;
-    /* margin: 0 20px; */
     padding: 5px 20px;
     border: none;
     outline: none;
@@ -189,22 +207,16 @@
     justify-content: space-between;
     align-items: center;
     border-bottom-right-radius: 4px;
-    /* border: 2px solid blue; */
   }
 
   .message.friend_message p {
-    /* background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(15px); */
     background: #f5f5f5;
-    /* opacity: 0.5; */
     justify-content: flex-start;
   }
 
   .my_message {
     justify-content: flex-end;
     text-align: right;
-    /* background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(15px); */
   }
 
   .message p span {
@@ -250,9 +262,6 @@
     max-width: 65%;
     padding: 12px;
     background: var(--lemon-green);
-    /* opacity: 0.5; */
-    /* background-color: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(15px); */
     border-radius: 10px;
     font-size: 0.9em;
     font-weight: 600;
@@ -299,12 +308,18 @@
   }
 
   @media (max-width: 475px) {
-    .right-part {
-      display: none;
+    .left-part .details {
+      padding-left: 0px;
     }
 
-    .icon-menu {
-      display: block;
+    .left-part .details h4 {
+      display: none;
+    }
+  }
+
+  @media (max-width: 310px) {
+    .right-part ion-icon {
+      margin-right: 10px;
     }
   }
 </style>
