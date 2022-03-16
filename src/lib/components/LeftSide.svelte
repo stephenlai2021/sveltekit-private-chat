@@ -44,7 +44,6 @@
         show = true;
       }
     });
-
     if ($page.url.pathname === "/") activeItem.set(null);
     if ($page.url.pathname != "/") activeItem.set($page.params.userId);
     console.log("selected user | left side on mount: ", $activeItem);
@@ -81,8 +80,7 @@
           ($showSettingsModal = !$showSettingsModal)}
       >
         <img src={user.photoURL} alt="" />
-        <!-- <span class="material-icons settings">settings</span> -->
-        <ion-icon name="settings-outline" class="settings"></ion-icon>
+        <ion-icon name="settings-outline" class="settings" />
       </div>
     {/if}
     {#if !$mobile}
@@ -90,7 +88,6 @@
         on:click|stopPropagation={() =>
           ($showAddFriendModal = !$showAddFriendModal)}
       >
-        <!-- <span class="material-icons">person_add_alt</span> -->
         <ion-icon name="person-add-outline" />
       </li>
     {/if}
@@ -108,7 +105,6 @@
 <div class="search_user">
   <div>
     <input type="text" placeholder="Find user" bind:value={$keyword} />
-    <!-- <span class="material-icons">search</span> -->
     <ion-icon name="search-outline" />
   </div>
 </div>
@@ -121,7 +117,6 @@
         class:active={$activeItem === user.name}
         on:click={() => selectedUser(user)}
       >
-        <!-- style:border-bottom={$activeItem === user.name ? `2px solid ${$bgColor}` : ''}         -->
         <div
           class="imgbx"
           class:active={$activeItem === user.name}
@@ -143,6 +138,14 @@
       </div>
     {/each}
   </div>
+  {#if $mobile}
+    <div class="btn-add-friend"
+      on:click|stopPropagation={() =>
+        ($showAddFriendModal = !$showAddFriendModal)}
+    >
+      <ion-icon name="person-add-outline" />
+    </div>
+  {/if}
 {:else}
   <div class="loading">
     <Skeleton />
@@ -150,9 +153,16 @@
 {/if}
 
 <style>
-  /* .nav-icons .userimg span {
-    line-height: 60px;
-  } */
+  .btn-add-friend ion-icon {
+    font-size: 2rem;
+  }
+
+  .btn-add-friend {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    /* border: 1px solid; */
+  }
 
   .userimg {
     width: 35px;

@@ -8,18 +8,12 @@
 	const handleSubmit = () => {};
 </script>
 
-<!-- style:background={$bgColor} -->
 <div 
 	class="modal-addfriend" 
 	on:click|stopPropagation={() => console.log("hi, there !")}
 	transition:fly={{ y: 50, duration: 100, delay: 100 }}	
 >
 <div class="icon-arrow">
-	<!-- <span
-		class="material-icons"
-		on:click|stopPropagation={() => ($showAddFriendModal = false)}>
-		close
-	</span> -->
 	<ion-icon
 		name="close-outline"
 		on:click|stopPropagation={() => ($showAddFriendModal = false)}
@@ -43,7 +37,6 @@
     padding-top: 10px;
     display: flex;
     justify-content: flex-end;
-    /* border: 1px solid; */
   }
 
 	.form-container {
@@ -58,7 +51,6 @@
 		background: transparent;
 		padding: 0 15px;
 		line-height: 50px;
-		/* border: 1px solid; */
 	}
 
 	.search_user input {
@@ -92,18 +84,8 @@
 		width: 100%;
 		height: 100vh;
 		padding: 10px;
-		/* display: flex;
-		justify-content: center; */
 		z-index: 100;
-		/* background: #e5ddd5; */
 		background: rgba(189, 202, 202, 0.5);
     backdrop-filter: blur(30px);
-		/* border: 1px solid green; */
 	}
-
-	/* @media (max-width: 700px) {
-		.add-friend {
-			width: 122%;
-		}
-	} */
 </style>

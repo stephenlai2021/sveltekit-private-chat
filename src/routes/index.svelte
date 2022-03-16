@@ -1,5 +1,5 @@
 <script>
-  import { bgColor } from '$lib/store'
+  import { bgColor } from "$lib/store";
 </script>
 
 <svelte:head>
@@ -11,14 +11,19 @@
   <h1>Letschat</h1>
   <p>Connect friends together</p>
   <div class="image-wrapper">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Ajux_loader.gif" alt="">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/5/54/Ajux_loader.gif"
+      alt=""
+    />
   </div>
 </div>
 
 <style>
-  h1, p {
+  h1,
+  p {
     color: rgb(43, 32, 32);
   }
+
   .home {
     height: 100vh;
     display: flex;

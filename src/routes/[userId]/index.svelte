@@ -69,8 +69,7 @@ import SidebarMenu from "$lib/components/SidebarMenu.svelte";
         name="arrow-back-outline"
         class="arrow-back"
         on:click={() => goto("/")}
-        />
-        <!-- on:click={changeUI} -->
+      />
       <div class="imgText">
         <div class="userimg">
           <img src={user.avatar} alt="" />
