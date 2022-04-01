@@ -1,7 +1,6 @@
 <script>
   import {
     bgColor,
-    setBgColor,
     showThemeModal,
     showSettingsModal,
   } from "$lib/store";
@@ -9,6 +8,7 @@
   import { onMount } from "svelte";
   import { signout } from "$lib/functions/auth/signout";
   import { fly } from "svelte/transition";
+  import Cookies from 'js-cookie';
 
   export let user;
   console.log("user | settings modal", user);
@@ -64,7 +64,7 @@
         <input
           type="color"
           bind:value={$bgColor}
-          on:input|stopPropagation={() => setBgColor($bgColor)}
+          on:input|stopPropagation={() => Cookies.set('bgColor', $bgColor)}
           style:height="0"
           style:width="0"
           style:opacity="0"

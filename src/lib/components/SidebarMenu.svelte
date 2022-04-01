@@ -1,3 +1,14 @@
+<!-- <script context="module">
+  export const load = async ({ session }) => {
+    const { bgColor } = session;
+    return {
+      props: {
+        bgColor,
+      },
+    };
+  };
+</script> -->
+
 <script>
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
@@ -11,6 +22,8 @@
   import { goto } from "$app/navigation";
   import { activeItem } from "$lib/store";
   import { page } from "$app/stores";
+
+  // export let bgColor;
 
   let user = null;
   // let menuIcon = ["sms", "volunteer_activism", "movie"];
@@ -49,45 +62,10 @@
   style:background={$bgColor}
   style:display={$mobile
     ? "none"
-    : $page.url.pathname === '/' || $page.url.pathname === '/login'
-    ? 'none'
+    : $page.url.pathname === "/" || $page.url.pathname === "/login"
+    ? "none"
     : "flex"}
 >
-<!-- style:display={$mobile &&
-  $page.url.pathname != "/" &&
-  $page.url.pathname != "/tinder" &&
-  $page.url.pathname != "/movie"
-    ? "none"
-    : $page.url.pathname === "/login"
-    ? "none"
-    : "flex"} -->
-
-  <!-- {#each menuIcon as item}
-    <div
-      class="menu-item"
-      class:active={item === activeMenu}
-      on:click={() => switchRoute(item)}
-    >
-      <ion-icon name={item} />
-    </div>
-  {/each} -->
-
-  <!-- <div class="menu-item" on:click={() => goto("/")}>
-    <ion-icon name="home-outline" />
-  </div> -->
-  <!-- {#if !$mobile} -->
-  <!-- <div class="menu-item" on:click={() => goto(`/${users[0].name}`)}> -->
-
-  <!-- <div class="menu-item" on:click={() => $mobile ? goto(`/`) : goto(`/${users[0].name}`)}>
-    <ion-icon name="chatbox-ellipses-outline" />
-  </div>
-  <div class="menu-item" on:click={() => goto("/tinder")}>
-    <ion-icon name="heart-circle-outline" />
-  </div>
-  <div class="menu-item" on:click={() => goto("/movie")}>
-    <ion-icon name="film-outline" />
-  </div> -->
-
   {#if user}
     <div
       class="userimg"
@@ -95,7 +73,6 @@
         ($showSettingsModal = !$showSettingsModal)}
     >
       <img src={user.photoURL} alt="" />
-      <!-- <span class="material-icons settings">settings</span> -->
       <ion-icon name="settings-outline" class="settings" />
     </div>
   {/if}

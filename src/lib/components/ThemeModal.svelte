@@ -2,9 +2,12 @@
   import { bgColor, showThemeModal } from "$lib/store";
   import themes from "$lib/data/themes.json";
   import { fly } from "svelte/transition";
-import { claim_component } from "svelte/internal";
+  import Cookies from "js-cookie";
 
-  console.table(themes);
+  const setBgColor = (val) => {
+    $bgColor = val
+    Cookies.set('bgColor', $bgColor)
+  }
 </script>
 
 <div
@@ -21,7 +24,7 @@ import { claim_component } from "svelte/internal";
   </div>
   <main>
     {#each themes as theme}
-      <div class="theme-item" style:cursor="pointer" on:click={() => $bgColor = theme.background}>
+      <div class="theme-item" style:cursor="pointer" on:click={() => setBgColor(theme.background)}>
         <div class="theme-image" style:background={theme.background} />
         <span class="theme-title">{theme.title}</span>
       </div>

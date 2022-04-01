@@ -6,8 +6,7 @@
   <title>Home</title>
 </svelte:head>
 
-<!-- <div class="home" style:background={$bgColor}> -->
-<div class="home">
+<div class="home" style:background={$bgColor}>
   <h1>Letschat</h1>
   <p>Connect friends together</p>
   <div class="image-wrapper">

@@ -1,22 +1,21 @@
 <script context="module">
-  import { getAllDocs } from '$lib/functions/getAllDocs'
+  import { bgColor } from '$lib/store'
 
-  export const load = async () => {
-    const { docs } = await getAllDocs('whatzapp_users')
-
-    return {
-      props: {
-        users: docs
-      }
-    }
-  }
+  export const load = ({ session }) => {
+    const locals = session
+    const bgColor_preference = locals.bgColor
+    
+    if (bgColor_preference) {
+      bgColor.set(bgColor_preference)
+    }        
+    return {};
+  };
 </script>
 
 <script>
   import "$lib/styles/global.css";
   import {
     connection,
-    bgColor,
     mobile,
     loginFormShow,
     showThemeModal,
@@ -33,11 +32,7 @@
   import LeftSide from "$lib/components/LeftSide.svelte";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
-  // import ThemeModal from '$lib/components/modal/ThemeModal.svelte'
-  // import SettingsModal from '$lib/components/modal/SettingsModal.svelte'
-
-  // export let users
-  
+ 
   let user = null;
   let users = null;
   let colRef = collection(db, "whatzapp_users");
@@ -47,29 +42,29 @@
     snapshot.docs.forEach((doc) => {
       tempUsers.push({ ...doc.data() });
     });
-    users = tempUsers;    
+    users = tempUsers;
     return () => unsub();
   });
 
   const resizeWindow = () => {
     if (window.innerWidth <= 800) $mobile = true;
-    if (window.innerWidth > 800) { 
+    if (window.innerWidth > 800) {
       $mobile = false;
-      
-      if ($page.url.pathname === '/' && users) {
-        goto(`/${users[0].name}`)
+
+      if ($page.url.pathname === "/" && users) {
+        goto(`/${users[0].name}`);
       }
     }
   };
-  
+
   onMount(() => {
     onAuthStateChanged(auth, (_user) => (user = _user));
-    resizeWindow();    
+    resizeWindow();
   });
-  
+
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
-  $: if (users) goto(`/${users[0].name}`)
+  $: if (users) goto(`/${users[0].name}`);
 
   $: if (browser) {
     window.addEventListener("online", () => {
@@ -100,19 +95,21 @@
     class="leftSide"
     class:loginform-hide={$loginFormShow}
     style:width={$mobile && $page.url.pathname === "/"
-    ? "100%"
-    : $mobile && $page.url.pathname != "/"
-    ? "0%"
-    : $page.url.pathname != "/" && $page.url.pathname != "/movie" && $page.url.pathname != "/tinder"
-    ? "450px"
-    : "0%"}   
+      ? "100%"
+      : $mobile && $page.url.pathname != "/"
+      ? "0%"
+      : $page.url.pathname != "/" &&
+        $page.url.pathname != "/movie" &&
+        $page.url.pathname != "/tinder"
+      ? "450px"
+      : "0%"}
   >
     <LeftSide />
-  </div>
+  </div>  
   <div
     class="rightSide"
     style:background={$bgColor}
-    style:display={$mobile && $page.url.pathname === "/" ? 'none' : 'block'}
+    style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
     style:width={$mobile && $page.url.pathname === "/"
       ? "0%"
       : $mobile && $page.url.pathname != "/"

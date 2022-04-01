@@ -3,7 +3,7 @@
 	import { bgColor } from '$lib/store'
 	import { showAddFriendModal } from '$lib/store'
 
-	let keyword = '';
+	let inputValue = '';
   
 	const handleSubmit = () => {};
 </script>
@@ -22,7 +22,7 @@
 	<div class="form-container">
 		<div class="search_user">
 			<div>
-				<input type="text" placeholder="Search user" bind:value={keyword} />
+				<input type="text" placeholder="Search user" bind:value={inputValue} />
 				<span class="material-icons">search</span>
 			</div>		
 		</div>

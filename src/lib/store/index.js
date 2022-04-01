@@ -1,5 +1,4 @@
-import { session } from "$app/stores";
-import { writable, derived } from "svelte/store";
+import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
 export const mobile = writable(false)
@@ -12,6 +11,7 @@ export const showAddFriendModal = writable(false)
 export const leftsideState = writable(true)
 export const rightsideState = writable(true)
 export const menubarState = writable(true)
+export const bgColor = writable('linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%)');
 
 export const connection = writable(
   browser && localStorage.getItem("internet connection")
@@ -19,35 +19,3 @@ export const connection = writable(
 connection.subscribe(
   (val) => browser && localStorage.setItem("internet connection", val)
 );
-
-export const bgColor = writable(
-  browser && localStorage.getItem("background color")
-);
-bgColor.subscribe(
-  (val) => browser && localStorage.setItem("background color", val)
-);
-
-/* bgColor is derived from getSession hook function */
-// export const bgColor = derived(session, ($session, set) => {
-//   if ($session.bgColor) set($session.bgColor);
-// });
-
-// if (browser) {
-//   bgColor = writable(localStorage.getItem("background color"));
-//   bgColor.subscribe((val) => localStorage.setItem("background color", val));
-// } else {
-//   bgColor = derived(session, ($session, set) => {
-//     if ($session.bgColor) set($session.bgColor);
-//   });
-// }
-
-export const setBgColor = (bgColor) => {
-  session.update(($session) => ({ ...$session, bgColor }))
-
-  fetch('/api/bg-color', {
-    method: 'PUT',
-    body: bgColor
-  })
-}
-
-// export { bgColor };

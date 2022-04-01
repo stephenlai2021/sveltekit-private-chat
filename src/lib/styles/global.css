@@ -96,11 +96,11 @@ ion-icon {
   height: 100%;
   border-bottom-right-radius: 4px;
   
-  background: #e5ddd5;
-  background: linear-gradient(225deg, var(--logo-green) 25%, var(--logo-purple));
+  /* background: #e5ddd5; */
+  /* background: linear-gradient(225deg, var(--logo-green) 25%, var(--logo-purple)); */
   /* background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%); */
 
-  background: linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%);
+  /* background: linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%); */
   /* background: linear-gradient(225deg, #00C9FF 0%, #92FE9D 100%); */
   /* background: linear-gradient(225deg, #d53369 0%, #daae51 100%); */
   /* background: linear-gradient(225deg, #efd5ff 0%, #515ada 100%); */
