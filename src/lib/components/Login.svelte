@@ -57,15 +57,15 @@
     .imgBx:before {
       background: var(--bg);
     }
-  </style> -->
-  <!-- <div class="imgBx" style="--bg: {$bgColor}"> -->
+  </style>
+  <div class="imgBx" style="--bg: {$bgColor}"> -->
   <div class="imgBx">
     <img src="/login-bg.jpg" alt="" />
   </div>
   <div class="contentBx">
     <div class="formBx">
-      <!-- <h2 style:border-bottom="4px solid {$bgColor}"> -->
-      <h2>
+      <h2 style:border-bottom="4px solid {$bgColor}">
+      <!-- <h2> -->
         {signup ? "signup" : "login"}
       </h2>
       <form on:submit|preventDefault={handleSubmit}>

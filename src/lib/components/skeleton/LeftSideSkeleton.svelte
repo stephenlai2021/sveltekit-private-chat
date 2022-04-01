@@ -20,7 +20,7 @@
           <b>1</b>
         </div>
       </div>
-      <!-- <Shimmer /> -->
+      <Shimmer />
     </div>
   {/each}
 </ul>
@@ -33,23 +33,25 @@
 	.skeleton .block {
 		display: flex;
     padding: 15px;
-    /* background: var(--skeleton-bg-color); */
     position: relative;
-		/* border: 1px solid red; */
+    overflow: hidden;
   }
 
 	.skeleton .block .details {
 		width: 100%;
-		/* border: 1px solid green; */
 	}
 
-	.skeleton .imgbx,
+	.skeleton .imgbx {
+    background: #d6d8dc;
+		color: transparent;
+  }
+
   .skeleton .block .details .listHead .title,
   .skeleton .block .details .listHead .time,
   .skeleton .block .details .message_p p {
     background: #d6d8dc;
 		color: transparent;
-    /* overflow: hidden; */
+    border-radius: 2px;
   }
 
   .skeleton .block .details .listHead {
@@ -59,17 +61,17 @@
   }
 
 	.skeleton .block .details .listHead .time {
-		height: 18px;
+		height: 16px;
   }  
 	
 	.skeleton .block .details .listHead .title {
-		height: 22px;
+		height: 18px;
     max-width: 200px;
+    margin-bottom: 5px;
   }
 	
 	.skeleton .block .details .listHead .message_p p {
     height: 18px;
-    /* max-width: 200px; */
 		width: 100%;
   }
 

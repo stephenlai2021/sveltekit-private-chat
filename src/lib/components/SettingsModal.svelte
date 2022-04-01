@@ -21,6 +21,10 @@
     if (!theme) setTheme("light");
   };
 
+  const switchLang = () => {
+    // alert('hi, there !')
+  }
+
   onMount(() => {
     if ($themeStore.theme === "light") theme = false;
     if ($themeStore.theme === "dark") theme = true;
@@ -47,14 +51,26 @@
     </h3>
     <p>{user.email}</p>
   </div>
+  <li>
+    <div class="content" on:click={switchLang}>
+      <ion-icon name="language-outline"></ion-icon>
+      <div class="title-wrapper">
+        <span class="menu-item">Lang</span>
+      </div>
+    </div>
+  </li>
   <li class="theme" on:click={toggleTheme}>
     <div class="content">
       {#if $themeStore.theme === "light"}
         <ion-icon name="moon-outline" />
-        <span class="menu-item">黑暗模式</span>
+        <div class="title-wrapper">
+          <span class="menu-item">Dark</span>
+        </div>
       {:else}
         <ion-icon name="sunny-outline" />
-        <span class="menu-item">明亮模式</span>
+        <div class="title-wrapper">
+          <span class="menu-item">Light</span>
+        </div>
       {/if}
     </div>
   </li>
@@ -70,24 +86,28 @@
           style:opacity="0"
         />
         <ion-icon name="color-palette-outline" class="icon-palette" />
-        <span class="menu-item bg-color" style:margin-left="5px">背景顏色</span>
+        <div class="title-wrapper" style:cursor='pointer'>
+          <span class="menu-item">Color</span>
+        </div>
       </label>
     </div>
   </li>
   <li>
     <div class="content">
       <ion-icon name="image-outline" />
-      <span
-        class="menu-item"
-        on:click|stopPropagation={() => ($showThemeModal = true)}>特色主題</span
-      >
+      <div class="title-wrapper">
+        <span
+          class="menu-item"
+          on:click|stopPropagation={() => ($showThemeModal = true)}>Theme</span
+        >
+      </div>
     </div>
   </li>
   <li>
     <div class="content">
       <ion-icon name="information-circle-outline" />
       <div class="title-wrapper">
-        <span class="menu-item">關於</span>
+        <span class="menu-item">About</span>
       </div>
     </div>
   </li>
@@ -95,7 +115,7 @@
     <div class="content">
       <ion-icon name="log-out-outline" />
       <div class="title-wrapper">
-        <span class="menu-item">登出</span>
+        <span class="menu-item">Logout</span>
       </div>
     </div>
   </li>
@@ -129,12 +149,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-width: 96px;
-    /* border: 1px solid; */
-  }
-
-  .icon-arrow span {
+    /* min-width: 96px; */
+    width: 100px;
     cursor: pointer;
+    /* border: 1px solid; */
   }
 
   .icon-arrow {
@@ -155,21 +173,12 @@
   label {
     display: flex;
     align-items: center;
+    width: 100px;
   }
 
-  span {
-    color: white;
-  }
-
-  span.material-icons {
-    margin-right: 10px;
-    font-size: 18px;
-    border: 1px solid;
-  }
-
-  span.menu-item {
+  /* span.menu-item {
     cursor: pointer;
-  }
+  } */
 
   ul {
     list-style: none;
@@ -189,7 +198,6 @@
     align-items: baseline;
     justify-content: center;
     padding: 10px 20px;
-    cursor: pointer;
-    /* border: 1px solid; */
+    /* cursor: pointer; */
   }
 </style>

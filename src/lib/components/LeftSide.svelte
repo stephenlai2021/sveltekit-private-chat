@@ -70,7 +70,7 @@
 
 <div class="header">
   <div class="left">
-    <h3 class="user-title">Chat</h3>
+    <h3 class="user-title">LetsChat</h3>
   </div>
   <ul class="nav_icons">
     {#if $mobile && user}

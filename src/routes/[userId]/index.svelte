@@ -3,6 +3,7 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
+  import { onMount } from 'svelte'
   import {
     mobile,
     menubarState,
@@ -12,8 +13,6 @@
     showAddFriendModal,
     showThemeModal,
   } from "$lib/store";
-  import themeStore from "svelte-themes";
-import SidebarMenu from "$lib/components/SidebarMenu.svelte";
 
   let q = null;
   let user = {};
@@ -32,6 +31,10 @@ import SidebarMenu from "$lib/components/SidebarMenu.svelte";
       $leftsideState = true
     }
   };
+
+  onMount(() => {
+
+  })
 
   $: if ($page.params.userId) {
     q = query(colRef, where("name", "==", $page.params.userId));

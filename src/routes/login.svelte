@@ -1,32 +1,9 @@
 <script>
-	import { onAuthStateChanged } from 'firebase/auth';
-	import { auth } from '$lib/firebase/client';
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import Login from '$lib/components/Login.svelte';
-
-	let show = false;
-
-	onMount(() => {
-		const unsub = onAuthStateChanged(auth, (user) => {
-			if (user) {
-				show = false
-				goto('/');
-			} else {
-				show = true;
-			}
-
-			// if (user) goto('/')
-			// if (!user) show = true
-			return () => unsub;
-		});
-	});
+  import Login from "$lib/components/Login.svelte";
 </script>
 
 <svelte:head>
   <title>Letschat | Login</title>
 </svelte:head>
 
-{#if show}
-	<Login />
-{/if}
+<Login />

@@ -58,13 +58,13 @@
   };
 
   onMount(() => {
-    onAuthStateChanged(auth, (_user) => (user = _user));
+    onAuthStateChanged(auth, (_user) => (user = _user ));
     resizeWindow();
   });
 
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
-  $: if (users) goto(`/${users[0].name}`);
+  $: if (user && users) goto(`/${users[0].name}`);
 
   $: if (browser) {
     window.addEventListener("online", () => {
@@ -98,9 +98,7 @@
       ? "100%"
       : $mobile && $page.url.pathname != "/"
       ? "0%"
-      : $page.url.pathname != "/" &&
-        $page.url.pathname != "/movie" &&
-        $page.url.pathname != "/tinder"
+      : $page.url.pathname != "/" 
       ? "450px"
       : "0%"}
   >
