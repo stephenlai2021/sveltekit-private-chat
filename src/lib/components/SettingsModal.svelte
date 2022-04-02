@@ -10,6 +10,7 @@
   import { signout } from "$lib/functions/auth/signout";
   import { fly } from "svelte/transition";
   import Cookies from "js-cookie";
+  import { page } from '$app/stores'
 
   export let user;
   console.log("user | settings modal", user);
@@ -77,7 +78,7 @@
         {/if}
       </div>
     </li>
-    {#if !$mobile}
+    {#if !$mobile && $page.url.pathname != '/'}
       <li>
         <div class="content">
           <label>

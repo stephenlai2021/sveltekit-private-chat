@@ -3,12 +3,8 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
   import {
     mobile,
-    menubarState,
-    leftsideState,
-    rightsideState,
     showThemeModal,
     showSettingsModal,
     showAddFriendModal,
@@ -19,20 +15,6 @@
   let q = null;
   let user = {};
   let colRef = collection(db, "whatzapp_users");
-  // let showBgSettingsModal = false
-
-  // const changeUI = () => {
-  //   if ($mobile) {
-  //     // hide right side && sidebar menu
-  //     $rightsideState = false;
-  //     $menubarState = false;
-
-  //     // show left side
-  //     $leftsideState = true;
-  //   }
-  // };
-
-  // onMount(() => {});
 
   $: if ($page.params.userId) {
     q = query(colRef, where("name", "==", $page.params.userId));

@@ -23,6 +23,7 @@
   let q = null;
   let user = null;
   let users = [];
+  let loading = false;
   let filteredUsers = [];
   let colRef = collection(db, "whatzapp_users");
 
@@ -69,15 +70,12 @@
   });
 
   $: if ($page.url.pathname === "/login") $showSettingsModal = false;
+
+  $: setTimeout(() => {
+    if (!users.length) loading = true;
+  }, 3000);
 </script>
 
-<!-- style:width={$mobile && $page.url.pathname === "/"
-    ? "100%"
-    : $mobile && $page.url.pathname != "/"
-    ? "0%"
-    : $page.url.pathname != "/" && $page.url.pathname != "/login"
-    ? "450px"
-    : "0%"} -->
 <div
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
@@ -89,7 +87,7 @@
     : "0%"}
 >
   <div class="header">
-    <div class="left">
+    <div class="left" on:click={() => goto('/')} style:cursor='pointer'>
       <h3 class="user-title">LetsChat</h3>
     </div>
     <ul class="nav_icons">
@@ -164,9 +162,15 @@
         </div>
       {/each}
     </div>
-  {:else}
+  {:else if !loading}
     <div class="loading">
       <Skeleton />
+    </div>
+  {:else}
+    <div class="warning">
+      <img src="https://images.vexels.com/media/users/3/134884/isolated/lists/48e6880a62eaa4c1da1cbbc0880804ec-worry-sad-emoji-emoticon.png" alt="">
+      <br>
+      <p>Sorry, you don't have any friends</p>
     </div>
   {/if}
 
@@ -183,14 +187,22 @@
 </div>
 
 <style>
-  /* .block {
-    border: 1px solid red;
-  } */
+  .warning img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .warning {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+  }
 
   .btn-add-friend {
     display: flex;
     align-items: flex-end;
-    /* border: 1px solid red; */
   }
 
   .userimg {

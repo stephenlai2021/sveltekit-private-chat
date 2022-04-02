@@ -7,25 +7,38 @@
 <ul class="skeleton">
   {#each users as user}
     <div class="block">
-      <div class="imgbx">
+      <div class="imgbx animation">
         <img src="" alt="" class="cover" />
       </div>
       <div class="details">
         <div class="listHead">
-          <h4 class="title">Stephen Lai</h4>
-          <p class="time">10:56</p>
+          <h4 class="title animation">Stephen Lai</h4>
+          <p class="time animation">10:56</p>
         </div>
         <div class="message_p">
-          <p>How to make Whatsapp clone using html and css</p>
+          <p class="animation">How to make Whatsapp clone using html and css</p>
           <b>1</b>
         </div>
       </div>
-      <!-- <Shimmer /> -->
     </div>
   {/each}
 </ul>
 
 <style>
+  .animation {
+    animation: skeleton-loading 1s linear infinite alternate;
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      background-color: hsl(200, 20%, 70%);
+    }
+
+    100% {
+      background-color: hsl(200, 20%, 95%);
+    }    
+  }
+
   .skeleton {
 		height: 100vh;
   }
