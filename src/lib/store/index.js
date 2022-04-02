@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const users = writable([])
 export const mobile = writable(false)
 export const keyword = writable("");
 export const activeItem = writable(null);

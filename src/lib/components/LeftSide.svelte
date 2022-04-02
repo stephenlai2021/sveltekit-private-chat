@@ -1,5 +1,6 @@
 <script>
   import {
+    users,
     mobile,
     bgColor,
     keyword,
@@ -22,7 +23,7 @@
 
   let q = null;
   let user = null;
-  let users = [];
+  // let users = [];
   let loading = false;
   let filteredUsers = [];
   let colRef = collection(db, "whatzapp_users");
@@ -57,12 +58,12 @@
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
       });
-      users = tempUsers;
+      $users = tempUsers;
       return () => unsub();
     });
   }
 
-  $: filteredUsers = users.filter((item) => {
+  $: filteredUsers = $users.filter((item) => {
     return (
       item.name.toUpperCase().includes($keyword) ||
       item.name.toLowerCase().includes($keyword)
@@ -132,7 +133,8 @@
       />
     </div>
   </div>
-  {#if user && users.length}
+  <!-- {#if user && users.length} -->
+  {#if $users.length}
     <div class="chatlist" transition:fade={{ duration: 100 }}>
       {#each filteredUsers as user}
         <div
