@@ -73,7 +73,7 @@
 
   $: setTimeout(() => {
     if (!users.length) loading = true;
-  }, 3000);
+  }, 5000);
 </script>
 
 <div
