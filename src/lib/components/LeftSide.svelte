@@ -59,6 +59,7 @@
         tempUsers.push({ ...doc.data() });
       });
       $users = tempUsers;
+      // if (!$users.length) loading = true
       return () => unsub();
     });
   }
@@ -73,7 +74,8 @@
   $: if ($page.url.pathname === "/login") $showSettingsModal = false;
 
   $: setTimeout(() => {
-    if (!users.length) loading = true;
+    // if (!$users.length) loading = false;
+    if ($users.length) loading = true;
   }, 5000);
 </script>
 
@@ -133,7 +135,7 @@
       />
     </div>
   </div>
-  <!-- {#if user && users.length} -->
+
   {#if $users.length}
     <div class="chatlist" transition:fade={{ duration: 100 }}>
       {#each filteredUsers as user}
