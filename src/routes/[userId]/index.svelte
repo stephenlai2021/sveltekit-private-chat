@@ -3,38 +3,36 @@
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { onMount } from 'svelte'
+  import { onMount } from "svelte";
   import {
     mobile,
     menubarState,
     leftsideState,
     rightsideState,
+    showThemeModal,
     showSettingsModal,
     showAddFriendModal,
-    showThemeModal,
+    showBgSettingsModal,
   } from "$lib/store";
+  import BgSettingsModal from '$lib/components/BgSettingsModal.svelte'
 
   let q = null;
   let user = {};
-  let users = [];
-  let logout = false;
-  let hideRightside = false;
   let colRef = collection(db, "whatzapp_users");
+  // let showBgSettingsModal = false
 
-  const changeUI = () => {
-    if ($mobile) {
-      // hide right side && sidebar menu
-      $rightsideState = false
-      $menubarState = false
+  // const changeUI = () => {
+  //   if ($mobile) {
+  //     // hide right side && sidebar menu
+  //     $rightsideState = false;
+  //     $menubarState = false;
 
-      // show left side
-      $leftsideState = true
-    }
-  };
+  //     // show left side
+  //     $leftsideState = true;
+  //   }
+  // };
 
-  onMount(() => {
-
-  })
+  // onMount(() => {});
 
   $: if ($page.params.userId) {
     q = query(colRef, where("name", "==", $page.params.userId));
@@ -48,6 +46,7 @@
     });
   }
 
+  $: if (!$mobile) $showBgSettingsModal = false;
   $: if ($mobile) {
     $showThemeModal = false;
     $showSettingsModal = false;
@@ -65,7 +64,7 @@
   src="https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
   alt=""
 />
-{#if users}
+{#if user}
   <div class="header">
     <div class="left-part">
       <ion-icon
@@ -84,11 +83,14 @@
       </div>
     </div>
     <div class="right-part">
-      <ion-icon name="create-outline" />
+      <!-- <ion-icon name="create-outline" /> -->
       <ion-icon name="videocam-outline" />
       <ion-icon name="camera-outline" />
       <ion-icon name="document-attach-outline" />
       <ion-icon name="location-outline" />
+      {#if $mobile}
+        <ion-icon name="settings-outline" on:click|stopPropagation={() => $showBgSettingsModal = !$showBgSettingsModal} />
+      {/if}
     </div>
     <ion-icon name="menu-outline" class="icon-menu" />
   </div>
@@ -148,6 +150,10 @@
     <ion-icon name="mic-outline" style:font-size="1.5em" />
   </div>
 </div>
+
+{#if $showBgSettingsModal}
+  <BgSettingsModal />
+{/if}
 
 <style>
   .header {

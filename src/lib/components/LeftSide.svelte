@@ -23,7 +23,6 @@
   let q = null;
   let user = null;
   let users = [];
-  let show = false;
   let filteredUsers = [];
   let colRef = collection(db, "whatzapp_users");
 
@@ -41,7 +40,6 @@
         user = _user;
         q = query(colRef, where("contactList", "array-contains", user.uid));
         console.log("user", user);
-        show = true;
       }
     });
     if ($page.url.pathname === "/") activeItem.set(null);
@@ -66,110 +64,123 @@
       item.name.toLowerCase().includes($keyword)
     );
   });
+
+  $: if ($page.url.pathname === '/login') $showSettingsModal = false
 </script>
 
-<div class="header">
-  <div class="left">
-    <h3 class="user-title">LetsChat</h3>
-  </div>
-  <ul class="nav_icons">
-    {#if $mobile && user}
-      <div
-        class="userimg"
-        on:click|stopPropagation={() =>
-          ($showSettingsModal = !$showSettingsModal)}
-      >
-        <img src={user.photoURL} alt="" />
-        <ion-icon name="settings-outline" class="settings" />
-      </div>
-    {/if}
-    {#if !$mobile}
-      <li
-        on:click|stopPropagation={() =>
-          ($showAddFriendModal = !$showAddFriendModal)}
-      >
-        <ion-icon name="person-add-outline" />
-      </li>
-    {/if}
-  </ul>
-  {#if $showThemeModal}
-    <ThemeModal />
-  {/if}
-  {#if $showSettingsModal && user}
-    <SettingsModal {user} />
-  {/if}
-  {#if $showAddFriendModal}
-    <AddFriendModal />
-  {/if}
-</div>
-<div class="search_user">
-  <div>
-    <input type="text" placeholder="Find user" bind:value={$keyword} />
-    <ion-icon name="search-outline" />
-  </div>
-</div>
-{#if users.length}
-  <div class="chatlist" transition:fade={{ duration: 100 }}>
-    {#each filteredUsers as user}
-      <div
-        class="block"
-        class:unread={user.unread}
-        class:active={$activeItem === user.name}
-        on:click={() => selectedUser(user)}
-      >
+<div
+  class="leftSide"
+  style:width={$mobile && $page.url.pathname === "/"
+    ? "100%"
+    : $mobile && $page.url.pathname != "/"
+    ? "0%"
+    : $page.url.pathname != "/" && $page.url.pathname != "/login"
+    ? "450px"
+    : "0%"}
+>
+  <div class="header">
+    <div class="left">
+      <h3 class="user-title">LetsChat</h3>
+    </div>
+    <ul class="nav_icons">
+      {#if $mobile}
         <div
-          class="imgbx"
-          class:active={$activeItem === user.name}
-          style:background={$activeItem === user.name ? $bgColor : ""}
+          class="btn-add-friend"
+          on:click|stopPropagation={() =>
+            ($showAddFriendModal = !$showAddFriendModal)}
         >
-          <img src={user.avatar} alt="" class="cover" />
-          <div class={user.isOnline ? "status online" : "status offline"} />
+          <ion-icon name="person-add-outline" />
         </div>
-        <div class="details">
-          <div class="listHead">
-            <h4>{user.name}</h4>
-            <p class="time">10:56</p>
-          </div>
-          <div class="message_p">
-            <p>How to make Whatsapp clone using html and css</p>
-            <b>1</b>
-          </div>
-        </div>
-      </div>
-    {/each}
+      {/if}
+
+      {#if !$mobile}
+        <li
+          on:click|stopPropagation={() =>
+            ($showAddFriendModal = !$showAddFriendModal)}
+        >
+          <ion-icon name="person-add-outline" />
+        </li>
+      {/if}
+    </ul>
+    {#if $showThemeModal}
+      <ThemeModal />
+    {/if}
+    {#if $showSettingsModal && user}
+      <SettingsModal {user} />
+    {/if}
+    {#if $showAddFriendModal}
+      <AddFriendModal />
+    {/if}
   </div>
-  {#if $mobile}
-    <div class="btn-add-friend"
-      on:click|stopPropagation={() =>
-        ($showAddFriendModal = !$showAddFriendModal)}
-    >
-      <ion-icon name="person-add-outline" />
+  <div class="search_user">
+    <div>
+      <input type="text" placeholder="Find user" bind:value={$keyword} />
+      <ion-icon name="search-outline" />
+    </div>
+  </div>
+  {#if users.length}
+    <div class="chatlist" transition:fade={{ duration: 100 }}>
+      {#each filteredUsers as user}
+        <div
+          class="block"
+          class:unread={user.unread}
+          class:active={$activeItem === user.name}
+          on:click={() => selectedUser(user)}
+        >
+          <div
+            class="imgbx"
+            class:active={$activeItem === user.name}
+            style:background={$activeItem === user.name ? $bgColor : ""}
+          >
+            <img src={user.avatar} alt="" class="cover" />
+            <div class={user.isOnline ? "status online" : "status offline"} />
+          </div>
+          <div class="details">
+            <div class="listHead">
+              <h4>{user.name}</h4>
+              <p class="time">10:56</p>
+            </div>
+            <div class="message_p">
+              <p>How to make Whatsapp clone using html and css</p>
+              <b>1</b>
+            </div>
+          </div>
+        </div>
+      {/each}
+    </div>
+  {:else}
+    <div class="loading">
+      <Skeleton />
     </div>
   {/if}
-{:else}
-  <div class="loading">
-    <Skeleton />
-  </div>
-{/if}
+
+  {#if $mobile && user}
+    <div
+      class="userimg"
+      on:click|stopPropagation={() =>
+        ($showSettingsModal = !$showSettingsModal)}
+    >
+      <img src={user.photoURL} alt="" />
+      <ion-icon name="settings-outline" class="settings" />
+    </div>
+  {/if}
+</div>
 
 <style>
-  .btn-add-friend ion-icon {
-    font-size: 2rem;
-  }
-
   .btn-add-friend {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    /* border: 1px solid; */
+    display: flex;
+    align-items: flex-end;
+    /* border: 1px solid red; */
   }
 
   .userimg {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
     width: 35px;
     height: 35px;
     display: flex;
     align-items: center;
-    position: relative;
     cursor: pointer;
   }
 

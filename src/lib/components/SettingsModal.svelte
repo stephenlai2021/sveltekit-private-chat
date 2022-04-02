@@ -1,5 +1,6 @@
 <script>
   import {
+    mobile,
     bgColor,
     showThemeModal,
     showSettingsModal,
@@ -8,7 +9,7 @@
   import { onMount } from "svelte";
   import { signout } from "$lib/functions/auth/signout";
   import { fly } from "svelte/transition";
-  import Cookies from 'js-cookie';
+  import Cookies from "js-cookie";
 
   export let user;
   console.log("user | settings modal", user);
@@ -21,8 +22,9 @@
     if (!theme) setTheme("light");
   };
 
-  const switchLang = () => {
-    // alert('hi, there !')
+  const logout = () => {
+    $showSettingsModal = false
+    signout()
   }
 
   onMount(() => {
@@ -31,6 +33,11 @@
   });
 </script>
 
+  <!-- style:width={$mobile && $page.url.pathname === "/"
+    ? "100%"
+    : $page.url.pathname != "/" && $page.url.pathname != "/login"
+    ? "450px"
+    : "0%"} -->
 <ul
   class="menu-settings"
   on:click|stopPropagation={() => console.log("hi, there !")}
@@ -52,8 +59,8 @@
     <p>{user.email}</p>
   </div>
   <li>
-    <div class="content" on:click={switchLang}>
-      <ion-icon name="language-outline"></ion-icon>
+    <div class="content">
+      <ion-icon name="language-outline" />
       <div class="title-wrapper">
         <span class="menu-item">Lang</span>
       </div>
@@ -74,35 +81,38 @@
       {/if}
     </div>
   </li>
-  <li>
-    <div class="content">
-      <label>
-        <input
-          type="color"
-          bind:value={$bgColor}
-          on:input|stopPropagation={() => Cookies.set('bgColor', $bgColor)}
-          style:height="0"
-          style:width="0"
-          style:opacity="0"
-        />
-        <ion-icon name="color-palette-outline" class="icon-palette" />
-        <div class="title-wrapper" style:cursor='pointer'>
-          <span class="menu-item">Color</span>
-        </div>
-      </label>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <ion-icon name="image-outline" />
-      <div class="title-wrapper">
-        <span
-          class="menu-item"
-          on:click|stopPropagation={() => ($showThemeModal = true)}>Theme</span
-        >
+  {#if !$mobile}
+    <li>
+      <div class="content">
+        <label>
+          <input
+            type="color"
+            bind:value={$bgColor}
+            on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
+            style:height="0"
+            style:width="0"
+            style:opacity="0"
+          />
+          <ion-icon name="color-palette-outline" class="icon-palette" />
+          <div class="title-wrapper" style:cursor="pointer">
+            <span class="menu-item">Color</span>
+          </div>
+        </label>
       </div>
-    </div>
-  </li>
+    </li>
+    <li>
+      <div class="content">
+        <ion-icon name="image-outline" />
+        <div class="title-wrapper">
+          <span
+            class="menu-item"
+            on:click|stopPropagation={() => ($showThemeModal = true)}
+            >Theme</span
+          >
+        </div>
+      </div>
+    </li>
+  {/if}
   <li>
     <div class="content">
       <ion-icon name="information-circle-outline" />
@@ -111,7 +121,7 @@
       </div>
     </div>
   </li>
-  <li on:click={signout}>
+  <li on:click={logout}>
     <div class="content">
       <ion-icon name="log-out-outline" />
       <div class="title-wrapper">
@@ -122,7 +132,8 @@
 </ul>
 
 <style>
-  h3, p {
+  h3,
+  p {
     text-align: center;
   }
 
@@ -133,10 +144,9 @@
     margin-bottom: 15px;
     /* border: 1px solid; */
   }
-  
+
   .user-profile {
     margin-bottom: 30px;
-    /* border-bottom: 1px solid; */
   }
 
   .title-wrapper {
@@ -149,7 +159,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* min-width: 96px; */
     width: 100px;
     cursor: pointer;
     /* border: 1px solid; */
@@ -175,10 +184,6 @@
     align-items: center;
     width: 100px;
   }
-
-  /* span.menu-item {
-    cursor: pointer;
-  } */
 
   ul {
     list-style: none;

@@ -1,14 +1,3 @@
-<!-- <script context="module">
-  export const load = async ({ session }) => {
-    const { bgColor } = session;
-    return {
-      props: {
-        bgColor,
-      },
-    };
-  };
-</script> -->
-
 <script>
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
@@ -19,41 +8,39 @@
     loginFormShow,
     showSettingsModal,
   } from "$lib/store";
-  import { goto } from "$app/navigation";
-  import { activeItem } from "$lib/store";
   import { page } from "$app/stores";
-
-  // export let bgColor;
+  // import { goto } from "$app/navigation";
+  // import { activeItem } from "$lib/store";
 
   let user = null;
+  let users = null;
+  let colRef = collection(db, "whatzapp_users");
+  // let activeMenu = menuIcon[0];
   // let menuIcon = ["sms", "volunteer_activism", "movie"];
-  let menuIcon = [
-    "home-outline",
-    "chatbox-ellipses-outline",
-    "heart-circle-outline",
-    "film-outline",
-  ];
-  let activeMenu = menuIcon[0];
+  // let menuIcon = [
+  //   "home-outline",
+  //   "chatbox-ellipses-outline",
+  //   "heart-circle-outline",
+  //   "film-outline",
+  // ];
 
   onAuthStateChanged(auth, (_user) => (user = _user));
 
-  let users = null;
-  let colRef = collection(db, "whatzapp_users");
-  const unsub = onSnapshot(colRef, (snapshot) => {
-    let tempUsers = [];
-    snapshot.docs.forEach((doc) => {
-      tempUsers.push({ ...doc.data() });
-    });
-    users = tempUsers;
-    return () => unsub();
-  });
+  // const unsub = onSnapshot(colRef, (snapshot) => {
+  //   let tempUsers = [];
+  //   snapshot.docs.forEach((doc) => {
+  //     tempUsers.push({ ...doc.data() });
+  //   });
+  //   users = tempUsers;
+  //   return () => unsub();
+  // });
 
-  const switchRoute = (item) => {
-    if (item === "home-outline") goto(`/`);
-    if (item === "chatbox-ellipses-outline") goto(`/${users[0].name}`);
-    if (item === "heart-circle-outline") goto("/tinder");
-    if (item === "film-outline") goto("/movie");
-  };
+  // const switchRoute = (item) => {
+  //   if (item === "home-outline") goto(`/`);
+  //   if (item === "chatbox-ellipses-outline") goto(`/${users[0].name}`);
+  //   if (item === "heart-circle-outline") goto("/tinder");
+  //   if (item === "film-outline") goto("/movie");
+  // };
 </script>
 
 <div
@@ -64,7 +51,7 @@
     ? "none"
     : $page.url.pathname === "/" || $page.url.pathname === "/login"
     ? "none"
-    : "flex"}
+    : "flex"}  
 >
   {#if user}
     <div
@@ -86,7 +73,7 @@
     font-size: 1.2em;
   }
 
-  .menu-item:active {
+  /* .menu-item:active {
     background: rgba(0, 0, 0, 0.1);
   }
 
@@ -101,19 +88,18 @@
     cursor: pointer;
     padding: 8px;
     border-radius: 10px;
-    /* border: 1px solid; */
-  }
+  } */
 
   /* span {
     font-size: 1.5em;
   } */
-
+  
   .userimg img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
   }
-
+  
   .userimg {
     width: 40px;
     height: 40px;
@@ -125,7 +111,7 @@
     /* margin: auto 10px 0 10px; */
     /* border: 1px solid; */
   }
-
+  
   .sidebar-menu {
     min-width: 60px;
     height: 100vh;
@@ -135,7 +121,7 @@
     padding: 20px 0;
     opacity: 0.7;
   }
-
+  
   @media (max-width: 800px) {
     .sidebar-menu {
       flex-direction: row;
@@ -146,11 +132,9 @@
       z-index: 200;
       justify-content: space-around;
     }
-
     .userimg {
       display: none;
     }
-
     .menu-item {
       margin-bottom: 0;
     }

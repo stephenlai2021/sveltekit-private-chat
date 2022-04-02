@@ -1,13 +1,12 @@
 <script context="module">
-  import { bgColor } from '$lib/store'
-
+  import { bgColor } from "$lib/store";
   export const load = ({ session }) => {
-    const locals = session
-    const bgColor_preference = locals.bgColor
-    
+    const locals = session;
+    const bgColor_preference = locals.bgColor;
+
     if (bgColor_preference) {
-      bgColor.set(bgColor_preference)
-    }        
+      bgColor.set(bgColor_preference);
+    }
     return {};
   };
 </script>
@@ -32,7 +31,7 @@
   import LeftSide from "$lib/components/LeftSide.svelte";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
- 
+
   let user = null;
   let users = null;
   let colRef = collection(db, "whatzapp_users");
@@ -50,7 +49,6 @@
     if (window.innerWidth <= 800) $mobile = true;
     if (window.innerWidth > 800) {
       $mobile = false;
-
       if ($page.url.pathname === "/" && users) {
         goto(`/${users[0].name}`);
       }
@@ -58,14 +56,13 @@
   };
 
   onMount(() => {
-    onAuthStateChanged(auth, (_user) => (user = _user ));
+    onAuthStateChanged(auth, (_user) => (user = _user));
     resizeWindow();
   });
 
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
   $: if (user && users) goto(`/${users[0].name}`);
-
   $: if (browser) {
     window.addEventListener("online", () => {
       $connection = true;
@@ -91,19 +88,7 @@
 <SvelteTheme />
 <div class="wrapper">
   <SidebarMenu />
-  <div
-    class="leftSide"
-    class:loginform-hide={$loginFormShow}
-    style:width={$mobile && $page.url.pathname === "/"
-      ? "100%"
-      : $mobile && $page.url.pathname != "/"
-      ? "0%"
-      : $page.url.pathname != "/" 
-      ? "450px"
-      : "0%"}
-  >
-    <LeftSide />
-  </div>  
+  <LeftSide />
   <div
     class="rightSide"
     style:background={$bgColor}
