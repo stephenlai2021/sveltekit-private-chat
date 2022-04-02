@@ -10,7 +10,7 @@
 <!-- on:click|stopPropagation={() => console.log("hi, there !")} -->
 <ul
   class="menu-settings"
-  transition:fly={{ y: -60, duration: 100, delay: 100 }}
+  transition:fly={{ x: 60, duration: 100, delay: 100 }}
 >
   <li>
     <div class="content">

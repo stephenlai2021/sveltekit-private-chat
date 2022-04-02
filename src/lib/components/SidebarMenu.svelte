@@ -43,13 +43,18 @@
   // };
 </script>
 
+<!-- style:display={$mobile
+  ? "none"
+  : $page.url.pathname === "/" || $page.url.pathname === "/login"
+  ? "none"
+  : "flex"}   -->
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
-  style:background={$bgColor}
+  style:background={$page.url.pathname === '/' ? '#F8F8F8' : $bgColor}
   style:display={$mobile
     ? "none"
-    : $page.url.pathname === "/" || $page.url.pathname === "/login"
+    : $page.url.pathname === "/login"
     ? "none"
     : "flex"}  
 >

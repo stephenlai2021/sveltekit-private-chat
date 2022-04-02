@@ -1,5 +1,12 @@
 <script>
   import Login from "$lib/components/Login.svelte";
+  import { auth, db } from "$lib/firebase/client";
+  import { onAuthStateChanged } from "firebase/auth";
+  import { goto } from '$app/navigation'
+
+  onAuthStateChanged(auth, user => { 
+    if (user) goto('/')
+  })
 </script>
 
 <svelte:head>

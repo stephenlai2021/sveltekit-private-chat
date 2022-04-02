@@ -1,5 +1,6 @@
 <script>
   import {
+    flag,
     mobile,
     bgColor,
     keyword,
@@ -38,7 +39,10 @@
         goto("/login");
       } else {
         user = _user;
-        q = query(colRef, where("contactList", "array-contains", user.displayName));
+        q = query(
+          colRef,
+          where("contactList", "array-contains", user.displayName)
+        );
         console.log("user", user);
       }
     });
@@ -65,16 +69,23 @@
     );
   });
 
-  $: if ($page.url.pathname === '/login') $showSettingsModal = false
+  $: if ($page.url.pathname === "/login") $showSettingsModal = false;
 </script>
 
+<!-- style:width={$mobile && $page.url.pathname === "/"
+    ? "100%"
+    : $mobile && $page.url.pathname != "/"
+    ? "0%"
+    : $page.url.pathname != "/" && $page.url.pathname != "/login"
+    ? "450px"
+    : "0%"} -->
 <div
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
     ? "100%"
     : $mobile && $page.url.pathname != "/"
     ? "0%"
-    : $page.url.pathname != "/" && $page.url.pathname != "/login"
+    : $page.url.pathname != "/login"
     ? "450px"
     : "0%"}
 >
@@ -115,7 +126,13 @@
   <div class="search_user">
     <div>
       <input type="text" placeholder="Find user" bind:value={$keyword} />
-      <ion-icon name="search-outline" style:left='22px' style:top='17px' style:width='18px' style:height='18px' />
+      <ion-icon
+        name="search-outline"
+        style:left="22px"
+        style:top="17px"
+        style:width="18px"
+        style:height="18px"
+      />
     </div>
   </div>
   {#if users.length}
@@ -150,7 +167,7 @@
     </div>
   {:else}
     <div class="loading">
-      <!-- <Skeleton /> -->
+      <Skeleton />
     </div>
   {/if}
 
@@ -167,6 +184,10 @@
 </div>
 
 <style>
+  /* .block {
+    border: 1px solid red;
+  } */
+
   .btn-add-friend {
     display: flex;
     align-items: flex-end;

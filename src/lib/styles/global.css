@@ -246,8 +246,11 @@ ion-icon {
 .chatlist {
   overflow-y: auto;
   overflow-x: hidden;
-  padding-bottom: 120px;
-  /* height: calc(100vh - 156px); */
+  padding-bottom: 70px;
+  
+  /* background: red; */
+  /* border: 1px solid red; */
+  height: calc(100vh - 156px);
 }
 
 .chatlist .block {

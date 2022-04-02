@@ -5,6 +5,7 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import {
+    flag,
     mobile,
     menubarState,
     leftsideState,
@@ -71,7 +72,7 @@
         name="arrow-back-outline"
         class="arrow-back"
         on:click={() => goto("/")}
-      />
+        />
       <div class="imgText">
         <div class="userimg">
           <img src={user.avatar} alt="" />

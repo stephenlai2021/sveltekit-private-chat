@@ -1,7 +1,7 @@
 <script>
   import Shimmer from "$lib/components/skeleton/Shimmer.svelte";
 
-  let users = [1, 1, 1, 1, 1, 1, 1, 1];
+  let users = [1, 1, 1, 1, 1, 1, 1];
 </script>
 
 <ul class="skeleton">
@@ -20,7 +20,7 @@
           <b>1</b>
         </div>
       </div>
-      <Shimmer />
+      <!-- <Shimmer /> -->
     </div>
   {/each}
 </ul>
