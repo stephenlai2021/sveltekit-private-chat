@@ -1,5 +1,5 @@
 <script>
-  import { doc, setDoc } from "firebase/firestore";
+  import { doc, setDoc, updateDoc } from "firebase/firestore";
   import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -9,30 +9,53 @@
   import { loginWithGoogle } from "$lib/functions/auth/google";
   import { bgColor } from "$lib/store";
 
-  let displayName = "";
+  let name = "";
   let email = "";
   let password = "";
   let error = null;
   let signup = false;
   let isPending = false;
   let result = null;
+  let userRef = null
+
+  /*
+    collection = whatzapp_users
+    document = uid
+    field = {
+      avatar,         (not available)
+      avatarPath,     (not available)
+      contactList: [],
+      createdAt,
+      email,
+      isOnline,
+      name,
+      uid
+    }
+  */
 
   const handleSubmit = async () => {
     try {
       if (signup) {
         result = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("user | signup", result);
-        let userRef = doc(db, "whatzapp_users", result.user.displayName);
+        console.log("signup", result);
+        result.user.displayName = name
+        userRef = doc(db, "whatzapp_users", result.user.displayName);
         await setDoc(userRef, {
-          uid: result.user.uid,
-          displayName,
-          email,
-          // createdAt: Date.now().toLocaleString(),
-          isOnline: true,
           avatar: result.user.photoURL,
+          avatarPath: null,
+          contactList: [],
+          createdAt: Date.now().toLocaleString(),
+          email: result.user.email,
+          isOnline: true,
+          name: result.user.displayName,
+          uid: result.user.uid
         });
       } else {
         result = await signInWithEmailAndPassword(auth, email, password);
+        console.log("signin", result);
+        await updateDoc(userRef, {
+          isOnline: false,
+        })
       }
       if (!result) {
         if (signup) {
@@ -71,7 +94,7 @@
         {#if signup}
           <div class="inputBx">
             <span>Username</span>
-            <input type="text" bind:value={displayName} />
+            <input type="text" bind:value={name} />
           </div>
         {/if}
         <div class="inputBx">
@@ -88,7 +111,7 @@
           </label>
         </div>
         <div class="inputBx btn-submit">
-          <input type="submit" value={signup ? 'Sign up' : 'Sign in'} />
+          <input type="submit" value={signup ? 'Sign up' : 'Login in'} />
         </div>
         <div class="inputBx">
           <p>

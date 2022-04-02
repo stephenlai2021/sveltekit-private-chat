@@ -5,8 +5,8 @@ export const loginWithGoogle = () => {
   signInWithPopup(auth, google)
     .then((result) => {
       let user = result.user;
-      console.log("current loggedin user", user);
-      console.log("current loggedin user id ", auth.currentUser.uid);
+      // console.log("current loggedin user", user);
+      console.log("current loggedin user name ", auth.currentUser.displayName);
     })
     .catch((err) => {
       console.log(err.message);

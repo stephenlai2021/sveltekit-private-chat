@@ -38,7 +38,8 @@
         goto("/login");
       } else {
         user = _user;
-        q = query(colRef, where("contactList", "array-contains", user.uid));
+        q = query(colRef, where("contactList", "array-contains", user.displayName));
+        // if (!q) return
         console.log("user", user);
       }
     });
@@ -47,12 +48,14 @@
     console.log("selected user | left side on mount: ", $activeItem);
   });
 
+  // $: if (!q) return
   $: if (q) {
     const unsub = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
       });
+      // if (!users) return
       users = tempUsers;
       return () => unsub();
     });
@@ -150,7 +153,7 @@
     </div>
   {:else}
     <div class="loading">
-      <Skeleton />
+      <!-- <Skeleton /> -->
     </div>
   {/if}
 
