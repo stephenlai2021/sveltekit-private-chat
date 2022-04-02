@@ -60,9 +60,13 @@
     resizeWindow();
   });
 
-  $: if (user) $loginFormShow = false;
+  // $: if (user) $loginFormShow = false;
+  $: if (user) { 
+    $loginFormShow = false;
+    goto('/')
+  }
   $: if (!user) $loginFormShow = true;
-  $: if (user && users) goto(`/${users[0].name}`);
+  // $: if (user && users) goto(`/${users[0].name}`);
   $: if (browser) {
     window.addEventListener("online", () => {
       $connection = true;

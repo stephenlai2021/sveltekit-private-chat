@@ -39,7 +39,6 @@
       } else {
         user = _user;
         q = query(colRef, where("contactList", "array-contains", user.displayName));
-        // if (!q) return
         console.log("user", user);
       }
     });
@@ -48,14 +47,12 @@
     console.log("selected user | left side on mount: ", $activeItem);
   });
 
-  // $: if (!q) return
   $: if (q) {
     const unsub = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
       });
-      // if (!users) return
       users = tempUsers;
       return () => unsub();
     });
@@ -118,7 +115,7 @@
   <div class="search_user">
     <div>
       <input type="text" placeholder="Find user" bind:value={$keyword} />
-      <ion-icon name="search-outline" />
+      <ion-icon name="search-outline" style:left='22px' style:top='17px' style:width='18px' style:height='18px' />
     </div>
   </div>
   {#if users.length}

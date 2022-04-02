@@ -29,7 +29,8 @@
       email,
       isOnline,
       name,
-      uid
+      uid,
+      unread
     }
   */
 
