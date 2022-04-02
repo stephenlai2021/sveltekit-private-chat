@@ -75,7 +75,7 @@
 
   $: setTimeout(() => {
     // if (!$users.length) loading = false;
-    if ($users.length) loading = true;
+    if (!$users.length) loading = true;
   }, 5000);
 </script>
 
