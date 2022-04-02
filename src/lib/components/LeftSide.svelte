@@ -132,7 +132,7 @@
       />
     </div>
   </div>
-  {#if users.length}
+  {#if user && users.length}
     <div class="chatlist" transition:fade={{ duration: 100 }}>
       {#each filteredUsers as user}
         <div
