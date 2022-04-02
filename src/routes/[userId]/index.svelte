@@ -5,7 +5,6 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import {
-    flag,
     mobile,
     menubarState,
     leftsideState,

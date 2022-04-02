@@ -14,7 +14,6 @@
 <script>
   import "$lib/styles/global.css";
   import {
-    flag,
     mobile,
     connection,
     loginFormShow,
@@ -48,30 +47,18 @@
 
   const resizeWindow = () => {
     if (window.innerWidth <= 800) $mobile = true;
-    if (window.innerWidth > 800) {
-      $mobile = false;
-      // if ($page.url.pathname === "/" && users) goto(`/${users[0].name}`);
-    }
+    if (window.innerWidth > 800) $mobile = false;
   };
 
   onMount(() => {
     onAuthStateChanged(auth, (_user) => { 
       user = _user
-      // if ($page.url.pathname === '/' && $page.url.pathname === '/login') goto('/')
-      // if ($page.url.pathname === '/' && user) goto('/')
-      // else goto('')
     });
     resizeWindow();
   });
 
-  // $: if (user) $loginFormShow = false;
-  // $: if (user && $page.url.pathname === '/') {
-  $: if (user) {
-    $loginFormShow = false;
-    // goto('/')
-  }
+  $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
-  // $: if (user && users) goto(`/${users[0].name}`);
   $: if (browser) {
     window.addEventListener("online", () => {
       $connection = true;

@@ -1,6 +1,5 @@
 <script>
   import {
-    flag,
     mobile,
     bgColor,
     keyword,
