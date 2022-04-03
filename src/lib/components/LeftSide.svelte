@@ -150,7 +150,6 @@
             {#if user.avatar}
               <img src={user.avatar} alt="" class="cover" />
             {:else}
-              <!-- <img src="/joke.png" alt="" class="cover" /> -->
               <img src="/happy.png" alt="" class="cover" />
             {/if}
             <div class={user.isOnline ? "status online" : "status offline"} />
@@ -189,7 +188,11 @@
       on:click|stopPropagation={() =>
         ($showSettingsModal = !$showSettingsModal)}
     >
-      <img src={user.photoURL} alt="" />
+      {#if user.avatar}
+        <img src={user.avatar} alt="" class="cover" />
+      {:else}
+        <img src="/joke.png" alt="" class="cover" />
+      {/if}
       <ion-icon name="settings-outline" class="settings" />
     </div>
   {/if}
