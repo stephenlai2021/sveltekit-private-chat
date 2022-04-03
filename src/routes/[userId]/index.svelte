@@ -58,7 +58,11 @@
     {#if ready}
       <div class="imgText">
         <div class="userimg">
-          <img src={user.avatar} alt="" />
+          {#if user.avatar}
+            <img src={user.avatar} alt="" />
+          {:else}
+            <img src="/happy.png" alt="" />
+          {/if}
           <div class={user.isOnline ? "status online" : "status offline"} />
         </div>
         <div class="details">
@@ -68,9 +72,7 @@
     {:else}
       <div class="imgText">
         <div class="userimg">
-          <!-- <img src={user.avatar} alt="" /> -->
-          <div class="user-avatar animation"></div>
-          <!-- <div class={user.isOnline ? "status online" : "status offline"} /> -->
+          <div class="user-avatar animation" />
         </div>
         <div class="details">
           <h4 class="user-name animation">Bao Yang</h4>
@@ -159,7 +161,8 @@
     --bg-color: #d6d8dc;
   }
 
-  .user-avatar, .user-name {
+  .user-avatar,
+  .user-name {
     background: var(--bg-color);
   }
 

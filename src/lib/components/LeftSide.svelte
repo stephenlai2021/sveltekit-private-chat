@@ -87,7 +87,7 @@
     : "0%"}
 >
   <div class="header">
-    <div class="left" on:click={() => goto('/')} style:cursor='pointer'>
+    <div class="left" on:click={() => goto("/")} style:cursor="pointer">
       <h3 class="user-title">LetsChat</h3>
     </div>
     <ul class="nav_icons">
@@ -147,7 +147,12 @@
             class:active={$activeItem === user.name}
             style:background={$activeItem === user.name ? $bgColor : ""}
           >
-            <img src={user.avatar} alt="" class="cover" />
+            {#if user.avatar}
+              <img src={user.avatar} alt="" class="cover" />
+            {:else}
+              <!-- <img src="/joke.png" alt="" class="cover" /> -->
+              <img src="/happy.png" alt="" class="cover" />
+            {/if}
             <div class={user.isOnline ? "status online" : "status offline"} />
           </div>
           <div class="details">
@@ -169,8 +174,11 @@
     </div>
   {:else}
     <div class="warning">
-      <img src="https://images.vexels.com/media/users/3/134884/isolated/lists/48e6880a62eaa4c1da1cbbc0880804ec-worry-sad-emoji-emoticon.png" alt="">
-      <br>
+      <img
+        src="https://images.vexels.com/media/users/3/134884/isolated/lists/48e6880a62eaa4c1da1cbbc0880804ec-worry-sad-emoji-emoticon.png"
+        alt=""
+      />
+      <br />
       <p>Sorry, you don't have any friends</p>
     </div>
   {/if}
