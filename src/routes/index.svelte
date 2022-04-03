@@ -6,15 +6,10 @@
   <title>Home</title>
 </svelte:head>
 
-<!-- <div class="home" style:background={$bgColor}> -->
 <div class="home">
   <!-- <h1>Letschat</h1> -->
-  <!-- <p>Connect friends together</p> -->
-  <div class="image-wrapper">
-    <!-- <img
-      src="https://upload.wikimedia.org/wikipedia/commons/5/54/Ajux_loader.gif"
-      alt=""
-    /> -->
+  <!-- <p>Connect friends together</p> --> 
+  <div class="image-wrapper">    
     <img src="/whatsapp_cover.png" alt="">
   </div>
 </div>
@@ -30,8 +25,8 @@
     /* display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    background: rgb(221, 212, 212); */
+    flex-direction: column; */
+    background: rgb(248, 248, 248);
   }
 
   .image-wrapper {

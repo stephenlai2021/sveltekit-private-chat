@@ -1,7 +1,7 @@
 <script>
-  import { auth, db } from "$lib/firebase/client";
+  import { auth } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
-  import { collection, onSnapshot } from "firebase/firestore";
+  // import { collection, onSnapshot } from "firebase/firestore";
   import {
     mobile,
     bgColor,
@@ -13,8 +13,8 @@
   // import { activeItem } from "$lib/store";
 
   let user = null;
-  let users = null;
-  let colRef = collection(db, "whatzapp_users");
+  // let users = null;
+  // let colRef = collection(db, "whatzapp_users");
   // let activeMenu = menuIcon[0];
   // let menuIcon = ["sms", "volunteer_activism", "movie"];
   // let menuIcon = [
@@ -43,21 +43,17 @@
   // };
 </script>
 
-<!-- style:display={$mobile
-  ? "none"
-  : $page.url.pathname === "/" || $page.url.pathname === "/login"
-  ? "none"
-  : "flex"}   -->
-<div
+  <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
-  style:background={$page.url.pathname === "/" ? "#F8F8F8" : $bgColor}
+  style:background={$bgColor}
   style:display={$mobile
     ? "none"
     : $page.url.pathname === "/login"
     ? "none"
     : "flex"}
 >
+<!-- style:background={$page.url.pathname === "/" ? "#F8F8F8" : $bgColor} -->
   {#if user}
     <div
       class="userimg"
