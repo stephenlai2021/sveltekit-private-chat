@@ -25,18 +25,8 @@
 </ul>
 
 <style>
-  .animation {
-    animation: skeleton-loading 1s linear infinite alternate;
-  }
-
-  @keyframes skeleton-loading {
-    0% {
-      background-color: hsl(200, 20%, 70%);
-    }
-
-    100% {
-      background-color: hsl(200, 20%, 95%);
-    }    
+  :root {
+    --bg-color: #d6d8dc;
   }
 
   .skeleton {
@@ -55,14 +45,14 @@
 	}
 
 	.skeleton .imgbx {
-    background: #d6d8dc;
+    background: var(--bg-color);
 		color: transparent;
   }
 
   .skeleton .block .details .listHead .title,
   .skeleton .block .details .listHead .time,
   .skeleton .block .details .message_p p {
-    background: #d6d8dc;
+    background: var(--bg-color);
 		color: transparent;
     border-radius: 2px;
   }

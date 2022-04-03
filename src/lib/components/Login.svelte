@@ -2,16 +2,19 @@
   import { doc, setDoc, updateDoc } from "firebase/firestore";
   import {
     createUserWithEmailAndPassword,
+    onAuthStateChanged,
     signInWithEmailAndPassword,
   } from "firebase/auth";
   import { auth, db } from "$lib/firebase/client";
   import { fly } from "svelte/transition";
   import { loginWithGoogle } from "$lib/functions/auth/google";
   import { bgColor } from "$lib/store";
+  import { updateProfile } from 'firebase/auth'
 
   let name = "";
   let email = "";
   let password = "";
+  let user = null
   let error = null;
   let signup = false;
   let isPending = false;
@@ -34,13 +37,20 @@
     }
   */
 
+  // onAuthStateChanged(auth, _user => { 
+  //   user = _user
+  //   console.log('login', user)
+  // })
+
   const handleSubmit = async () => {
     try {
       if (signup) {
-        result = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("signup", result);
-        result.user.displayName = name
-        userRef = doc(db, "whatzapp_users", result.user.displayName);
+        result = await createUserWithEmailAndPassword(auth, email, password);        
+        updateProfile(auth.currentUser, {
+            displayName: name
+        })
+        console.log('user profile', auth.currentUser)
+        userRef = doc(db, "whatzapp_users", name);
         await setDoc(userRef, {
           avatar: result.user.photoURL,
           avatarPath: null,
@@ -48,7 +58,7 @@
           createdAt: Date.now().toLocaleString(),
           email: result.user.email,
           isOnline: true,
-          name: result.user.displayName,
+          name,
           uid: result.user.uid
         });
       } else {

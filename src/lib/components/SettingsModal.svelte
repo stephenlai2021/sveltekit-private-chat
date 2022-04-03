@@ -10,7 +10,7 @@
   import { signout } from "$lib/functions/auth/signout";
   import { fly } from "svelte/transition";
   import Cookies from "js-cookie";
-  import { page } from '$app/stores'
+  import { page } from "$app/stores";
 
   export let user;
   console.log("user | settings modal", user);
@@ -45,10 +45,17 @@
       on:click|stopPropagation={() => ($showSettingsModal = false)}
     />
   </div>
-  <div class="body-scroll" style:overflow-y={!$mobile ? 'hidden' : 'auto'}>
+  <div class="body-scroll" style:overflow-y={!$mobile ? "hidden" : "auto"}>
     <div class="user-profile">
-      <div class="avatar-wrapper">
-        <img src={user.photoURL} alt="" />
+      <div class="avatar-section">
+        <div class="image-wrapper">
+          {#if user.photoURL}
+            <img src={user.photoURL} alt="" />
+          {:else}
+            <img src="/joke.png" alt="" width="96" height="96" />
+          {/if}
+          <ion-icon name="camera-outline" class="icon-camera" />
+        </div>
       </div>
       <h3>
         {user.displayName}
@@ -78,7 +85,7 @@
         {/if}
       </div>
     </li>
-    {#if !$mobile && $page.url.pathname != '/'}
+    {#if !$mobile && $page.url.pathname != "/"}
       <li>
         <div class="content">
           <label>
@@ -130,6 +137,18 @@
 </ul>
 
 <style>
+  .icon-camera {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  .image-wrapper {
+    position: relative;
+  }
+
   .body-scroll {
     height: 80vh;
   }
@@ -139,11 +158,11 @@
     text-align: center;
   }
 
-  .user-profile .avatar-wrapper {
-    display: flex;
+  .user-profile .avatar-section {
     justify-content: center;
     align-items: center;
     margin-bottom: 15px;
+    display: flex;
     /* border: 1px solid; */
   }
 

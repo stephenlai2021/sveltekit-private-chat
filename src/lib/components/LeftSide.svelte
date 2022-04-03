@@ -23,7 +23,6 @@
 
   let q = null;
   let user = null;
-  // let users = [];
   let loading = false;
   let filteredUsers = [];
   let colRef = collection(db, "whatzapp_users");
@@ -59,7 +58,6 @@
         tempUsers.push({ ...doc.data() });
       });
       $users = tempUsers;
-      // if (!$users.length) loading = true
       return () => unsub();
     });
   }
@@ -74,7 +72,6 @@
   $: if ($page.url.pathname === "/login") $showSettingsModal = false;
 
   $: setTimeout(() => {
-    // if (!$users.length) loading = false;
     if (!$users.length) loading = true;
   }, 5000);
 </script>

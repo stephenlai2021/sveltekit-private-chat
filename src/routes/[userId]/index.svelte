@@ -10,10 +10,11 @@
     showAddFriendModal,
     showBgSettingsModal,
   } from "$lib/store";
-  import BgSettingsModal from '$lib/components/BgSettingsModal.svelte'
+  import BgSettingsModal from "$lib/components/BgSettingsModal.svelte";
 
   let q = null;
   let user = {};
+  let ready = false;
   let colRef = collection(db, "whatzapp_users");
 
   $: if ($page.params.userId) {
@@ -24,6 +25,7 @@
         tempUsers.push({ ...doc.data() });
       });
       user = tempUsers[0];
+      ready = true;
       return () => unsub();
     });
   }
@@ -46,14 +48,14 @@
   src="https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
   alt=""
 />
-{#if user}
-  <div class="header">
-    <div class="left-part">
-      <ion-icon
-        name="arrow-back-outline"
-        class="arrow-back"
-        on:click={() => goto("/")}
-        />
+<div class="header">
+  <div class="left-part">
+    <ion-icon
+      name="arrow-back-outline"
+      class="arrow-back"
+      on:click={() => goto("/")}
+    />
+    {#if ready}
       <div class="imgText">
         <div class="userimg">
           <img src={user.avatar} alt="" />
@@ -63,20 +65,35 @@
           <h4>{user.name}</h4>
         </div>
       </div>
-    </div>
-    <div class="right-part">
-      <!-- <ion-icon name="create-outline" /> -->
-      <ion-icon name="videocam-outline" />
-      <ion-icon name="camera-outline" />
-      <ion-icon name="document-attach-outline" />
-      <ion-icon name="location-outline" />
-      {#if $mobile}
-        <ion-icon name="settings-outline" on:click|stopPropagation={() => $showBgSettingsModal = !$showBgSettingsModal} />
-      {/if}
-    </div>
-    <ion-icon name="menu-outline" class="icon-menu" />
+    {:else}
+      <div class="imgText">
+        <div class="userimg">
+          <!-- <img src={user.avatar} alt="" /> -->
+          <div class="user-avatar animation"></div>
+          <!-- <div class={user.isOnline ? "status online" : "status offline"} /> -->
+        </div>
+        <div class="details">
+          <h4 class="user-name animation">Bao Yang</h4>
+        </div>
+      </div>
+    {/if}
   </div>
-{/if}
+  <div class="right-part">
+    <!-- <ion-icon name="create-outline" /> -->
+    <ion-icon name="videocam-outline" />
+    <ion-icon name="camera-outline" />
+    <ion-icon name="document-attach-outline" />
+    <ion-icon name="location-outline" />
+    {#if $mobile}
+      <ion-icon
+        name="settings-outline"
+        on:click|stopPropagation={() =>
+          ($showBgSettingsModal = !$showBgSettingsModal)}
+      />
+    {/if}
+  </div>
+  <ion-icon name="menu-outline" class="icon-menu" />
+</div>
 
 <div class="chatBox">
   <div class="message my_message">
@@ -138,6 +155,27 @@
 {/if}
 
 <style>
+  :root {
+    --bg-color: #d6d8dc;
+  }
+
+  .user-avatar, .user-name {
+    background: var(--bg-color);
+  }
+
+  .user-name {
+    width: 80px;
+    /* opacity: 0; */
+    color: transparent;
+    border-radius: 2px;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
   .header {
     padding-right: 0px;
   }

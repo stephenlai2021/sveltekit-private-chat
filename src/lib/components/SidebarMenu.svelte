@@ -51,12 +51,12 @@
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
-  style:background={$page.url.pathname === '/' ? '#F8F8F8' : $bgColor}
+  style:background={$page.url.pathname === "/" ? "#F8F8F8" : $bgColor}
   style:display={$mobile
     ? "none"
     : $page.url.pathname === "/login"
     ? "none"
-    : "flex"}  
+    : "flex"}
 >
   {#if user}
     <div
@@ -64,7 +64,11 @@
       on:click|stopPropagation={() =>
         ($showSettingsModal = !$showSettingsModal)}
     >
-      <img src={user.photoURL} alt="" />
+      {#if user.photoURL}
+        <img src={user.photoURL} alt="" />
+      {:else}
+        <img src="/joke.png" alt="" />
+      {/if}
       <ion-icon name="settings-outline" class="settings" />
     </div>
   {/if}
@@ -98,13 +102,13 @@
   /* span {
     font-size: 1.5em;
   } */
-  
+
   .userimg img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
   }
-  
+
   .userimg {
     width: 40px;
     height: 40px;
@@ -116,7 +120,7 @@
     /* margin: auto 10px 0 10px; */
     /* border: 1px solid; */
   }
-  
+
   .sidebar-menu {
     min-width: 60px;
     height: 100vh;
@@ -126,7 +130,7 @@
     padding: 20px 0;
     opacity: 0.7;
   }
-  
+
   @media (max-width: 800px) {
     .sidebar-menu {
       flex-direction: row;
