@@ -12,7 +12,6 @@ export const signout = async () => {
   })
 
   signOut(auth).then(() => {
-    // console.log('logout successfully !')
     console.log(`${tempEmail} is logged out 😃`)
     activeItem.set(null)
   });

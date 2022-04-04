@@ -241,8 +241,8 @@
   }
 
   .userimg img {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
   }
 

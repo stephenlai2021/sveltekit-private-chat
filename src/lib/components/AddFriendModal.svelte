@@ -14,8 +14,6 @@
 
   onAuthStateChanged(auth, (_user) => (user = _user));
 
-  // $: if (user) console.log("current user", user);
-
   const getUser = async () => {
     const { docs } = await getAllDocs("whatzapp_users", [
       "name",
@@ -23,7 +21,6 @@
       username,
     ]);
     users = docs;
-    // console.log("found user", users);
     console.log(`${users[0].name} is found`);
     if (!users.length) {
       username = null;

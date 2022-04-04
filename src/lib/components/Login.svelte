@@ -1,5 +1,5 @@
 <script>
-  import { doc, setDoc, updateDoc } from "firebase/firestore";
+  import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
   import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
@@ -38,49 +38,86 @@
     }
   */
 
-  const initialUserList = (email) => {
-    let maskmanRef = doc(db, "whatzapp_users", "stephenlai2015@gmail.com");
+  const initialUserList = async (email) => {
+    const maskmanRef = doc(db, "whatzapp_users", "stephenlai2015@gmail.com");
+    const maskmanSnap = await getDoc(maskmanRef);
+    console.log("maskman profile", maskmanSnap.data());
     updateDoc(maskmanRef, {
-      contactList: [email],
+      contactList: [...maskmanSnap.data().contactList, email],
     });
   };
 
   const handleSubmit = async () => {
     try {
       if (signup) {
-        result = await createUserWithEmailAndPassword(auth, email, password);
-
-        updateProfile(auth.currentUser, {
-          displayName: name,
-        })
-          .then(() => {
-            console.log("user profile updated !");
-            $profileUpdate = true;
-          })
-          .catch((error) => {
-            console.log("OOH, something went wrong ! 😱", error);
-          });
-
+        // result = await createUserWithEmailAndPassword(auth, email, password);
         // initialUserList(email);
 
-        userRef = doc(db, "whatzapp_users", email);
-        setDoc(userRef, {
-          avatar: result.user.photoURL,
-          avatarPath: null,
-          contactList: [],
-          createdAt: Date.now().toLocaleString(),
-          email: result.user.email,
-          isOnline: true,
-          name: name,
-          uid: result.user.uid,
-          unread: true,
-        });
+        // updateProfile(auth.currentUser, {
+        //   displayName: name,
+        // })
+        //   .then(() => {
+        //     console.log("user profile updated !");
+        //     $profileUpdate = true;
+        //   })
+        //   .catch((error) => {
+        //     console.log("OOH, something went wrong ! 😱", error);
+        //   });
+
+        // userRef = doc(db, "whatzapp_users", email);
+        // setDoc(userRef, {
+        //   avatar: result.user.photoURL,
+        //   avatarPath: null,
+        //   contactList: [],
+        //   createdAt: Date.now().toLocaleString(),
+        //   email: result.user.email,
+        //   isOnline: true,
+        //   name: name,
+        //   uid: result.user.uid,
+        //   unread: true,
+        // });
+
+        const maskmanRef = doc(
+          db,
+          "whatzapp_users",
+          "stephenlai2015@gmail.com"
+        );
+        const maskmanSnap = await getDoc(maskmanRef);
+        updateDoc(maskmanRef, {
+          contactList: [...maskmanSnap.data().contactList, email],
+        }).then(() => {
+          createUserWithEmailAndPassword(auth, email, password)
+          .then((result) => {
+            updateProfile(auth.currentUser, {
+              displayName: name,
+            })
+              .then(() => {
+                console.log("user profile updated !");
+                $profileUpdate = true;
+              })
+              .catch((error) => {
+                console.log("OOH, something went wrong ! 😱", error);
+              });    
+            userRef = doc(db, "whatzapp_users", email);
+            setDoc(userRef, {
+              avatar: result.user.photoURL,
+              avatarPath: null,
+              contactList: [],
+              createdAt: Date.now().toLocaleString(),
+              email: result.user.email,
+              isOnline: true,
+              name: name,
+              uid: result.user.uid,
+              unread: true,
+            });
+          })
+        })
       } else {
         result = await signInWithEmailAndPassword(auth, email, password);
         userRef = doc(db, "whatzapp_users", auth.currentUser.email);
         await updateDoc(userRef, {
           isOnline: true,
-        })
+        });
       }
       if (!result) {
         if (signup) {
@@ -100,18 +137,11 @@
 </script>
 
 <section>
-  <!-- <style>
-    .imgBx:before {
-      background: var(--bg);
-    }
-  </style>
-  <div class="imgBx" style="--bg: {$bgColor}"> -->
   <div class="imgBx">
     <img src="/login-bg.jpg" alt="" />
   </div>
   <div class="contentBx">
     <div class="formBx">
-      <!-- <h2 style:border-bottom="4px solid {$bgColor}"> -->
       <h2>
         {signup ? "signup" : "login"}
       </h2>
