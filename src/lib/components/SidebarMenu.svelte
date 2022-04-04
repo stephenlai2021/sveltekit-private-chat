@@ -53,14 +53,14 @@
     font-size: 1.2em;
   }
   .userimg img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
   }
 
   .userimg {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     display: flex;
     align-items: center;
     position: relative;
@@ -69,7 +69,8 @@
   }
 
   .sidebar-menu {
-    min-width: 60px;
+    /* min-width: 50px; */
+    width: 50px;
     height: 100vh;
     display: flex;
     flex-direction: column;

@@ -233,8 +233,8 @@
     position: absolute;
     bottom: 20px;
     right: 20px;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     cursor: pointer;
