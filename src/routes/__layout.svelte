@@ -52,7 +52,7 @@
 
   onMount(() => {
     onAuthStateChanged(auth, (_user) => { 
-      user = _user
+      user = _user      
     });
     resizeWindow();
   });

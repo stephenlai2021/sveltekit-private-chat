@@ -218,6 +218,7 @@ ion-icon {
   width: 100%;
   padding: 0 15px;
   line-height: 50px;
+  /* border: 1px solid; */
 }
 
 .search_user input {
@@ -226,7 +227,7 @@ ion-icon {
   border: none;
   color: black;
   padding: 6px;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 14px;
   padding-left: 35px;
   background: rgb(236, 235, 235);
@@ -236,7 +237,7 @@ ion-icon {
   color: rgb(161, 161, 161);
 }
 
-.search_user ion-icon {
+.search_user .icon-finduser {
   position: absolute;
   left: 20px;
   top: 15px;

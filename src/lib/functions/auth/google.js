@@ -6,7 +6,7 @@ export const loginWithGoogle = () => {
     .then((result) => {
       let user = result.user;
       // console.log("current loggedin user", user);
-      console.log("current loggedin user name ", auth.currentUser.displayName);
+      console.log(`${auth.currentUser.displayName} is logged in 😎`);
     })
     .catch((err) => {
       console.log(err.message);

@@ -8,64 +8,78 @@
   import { auth, db } from "$lib/firebase/client";
   import { fly } from "svelte/transition";
   import { loginWithGoogle } from "$lib/functions/auth/google";
-  import { bgColor } from "$lib/store";
-  import { updateProfile } from 'firebase/auth'
+  import { bgColor, userList } from "$lib/store";
+  import { updateProfile } from "firebase/auth";
+  import { profileUpdate } from "$lib/store";
 
   let name = "";
   let email = "";
   let password = "";
-  let user = null
+  let user = null;
   let error = null;
   let signup = false;
   let isPending = false;
   let result = null;
-  let userRef = null
+  let userRef = null;
 
   /*
     collection = whatzapp_users
-    document = uid
+    document id = stephenlai2015@gmail.com    
     field = {
-      avatar,         (not available)
-      avatarPath,     (not available)
-      contactList: [],
-      createdAt,
-      email,
-      isOnline,
-      name,
-      uid,
-      unread
+      avatar: "https://lh3.googleusercontent.com/a-/AOh14GgSxu4x8DUiNMF2s_d5ih3PmIt62v75f1af5iIpow=s96-c"
+      avatarPath: null,
+      contactList: ["batman@mail.com"],
+      createdAt: xxx,
+      email: "stephenlai2015@gmail.com",
+      isOnline: true,
+      name: "Mask Man",
+      uid: "IYZK6CoIcKb8CEpr5sJMgMTF8BK2",
+      unread: true
     }
   */
 
-  // onAuthStateChanged(auth, _user => { 
-  //   user = _user
-  //   console.log('login', user)
-  // })
+  const initialUserList = (email) => {
+    let maskmanRef = doc(db, "whatzapp_users", "stephenlai2015@gmail.com");
+    updateDoc(maskmanRef, {
+      contactList: [email],
+    });
+  };
 
   const handleSubmit = async () => {
     try {
       if (signup) {
-        result = await createUserWithEmailAndPassword(auth, email, password);        
+        result = await createUserWithEmailAndPassword(auth, email, password);
+
         updateProfile(auth.currentUser, {
-            displayName: name
+          displayName: name,
         })
-        console.log('user profile', auth.currentUser)
-        userRef = doc(db, "whatzapp_users", name);
-        await setDoc(userRef, {
+          .then(() => {
+            console.log("user profile updated !");
+            $profileUpdate = true;
+          })
+          .catch((error) => {
+            console.log("OOH, something went wrong ! 😱", error);
+          });
+
+        // initialUserList(email);
+
+        userRef = doc(db, "whatzapp_users", email);
+        setDoc(userRef, {
           avatar: result.user.photoURL,
           avatarPath: null,
           contactList: [],
           createdAt: Date.now().toLocaleString(),
           email: result.user.email,
           isOnline: true,
-          name,
-          uid: result.user.uid
+          name: name,
+          uid: result.user.uid,
+          unread: true,
         });
       } else {
         result = await signInWithEmailAndPassword(auth, email, password);
-        console.log("signin", result);
+        userRef = doc(db, "whatzapp_users", auth.currentUser.email);
         await updateDoc(userRef, {
-          isOnline: false,
+          isOnline: true,
         })
       }
       if (!result) {
@@ -122,7 +136,7 @@
           </label>
         </div>
         <div class="inputBx btn-submit">
-          <input type="submit" value={signup ? 'Sign up' : 'Login in'} />
+          <input type="submit" value={signup ? "Sign up" : "Login in"} />
         </div>
         <div class="inputBx">
           <p>

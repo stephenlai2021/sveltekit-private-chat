@@ -1,14 +1,16 @@
 <script>
   import {
-    users,
     mobile,
     bgColor,
     keyword,
     activeItem,
+    profileUpdate,
+    // logginedUser,
     showThemeModal,
     showSettingsModal,
     showAddFriendModal,
   } from "$lib/store";
+  import { browser } from "$app/env";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
@@ -23,46 +25,47 @@
 
   let q = null;
   let user = null;
+  let users = [];
   let loading = false;
   let filteredUsers = [];
   let colRef = collection(db, "whatzapp_users");
 
   const selectedUser = (user) => {
-    console.log("selected user | left side: ", user.name);
+    console.log(`${user.name} is selected`);
     activeItem.set(user.name);
     goto(`/${user.name}`);
   };
 
   onMount(() => {
-    onAuthStateChanged(auth, (_user) => {
+    const unsubAuth = onAuthStateChanged(auth, (_user) => {
       if (!_user) {
+        users = [];
+        console.log("user is logged out 😥");
         goto("/login");
+        // return unsubAuth;
       } else {
         user = _user;
+        console.log(`${user.email} is logged in 😀`);
+
         q = query(
           colRef,
-          where("contactList", "array-contains", user.displayName)
+          where("contactList", "array-contains", user.email)
         );
-        console.log("user", user);
+
+        const unsub = onSnapshot(q, (snapshot) => {
+          let tempUsers = [];
+          snapshot.docs.forEach((doc) => {
+            tempUsers.push({ ...doc.data() });
+          });
+          users = tempUsers;
+          return () => unsub();
+        });
+        // return unsubAuth;
       }
     });
-    if ($page.url.pathname === "/") activeItem.set(null);
-    if ($page.url.pathname != "/") activeItem.set($page.params.userId);
-    console.log("selected user | left side on mount: ", $activeItem);
   });
 
-  $: if (q) {
-    const unsub = onSnapshot(q, (snapshot) => {
-      let tempUsers = [];
-      snapshot.docs.forEach((doc) => {
-        tempUsers.push({ ...doc.data() });
-      });
-      $users = tempUsers;
-      return () => unsub();
-    });
-  }
-
-  $: filteredUsers = $users.filter((item) => {
+  $: filteredUsers = users.filter((item) => {
     return (
       item.name.toUpperCase().includes($keyword) ||
       item.name.toLowerCase().includes($keyword)
@@ -72,10 +75,15 @@
   $: if ($page.url.pathname === "/login") $showSettingsModal = false;
 
   $: setTimeout(() => {
-    if (!$users.length) loading = true;
-  }, 5000);
+    if (!users.length) loading = true;
+  }, 3000);
 </script>
 
+  <!-- style:width={$mobile && $page.url.pathname === "/"
+    ? "100%"
+    : $mobile && $page.url.pathname != "/"
+    ? "0%"
+    : "450px"} -->
 <div
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
@@ -110,21 +118,14 @@
         </li>
       {/if}
     </ul>
-    {#if $showThemeModal}
-      <ThemeModal />
-    {/if}
-    {#if $showSettingsModal && user}
-      <SettingsModal {user} />
-    {/if}
-    {#if $showAddFriendModal}
-      <AddFriendModal />
-    {/if}
   </div>
+
   <div class="search_user">
     <div>
       <input type="text" placeholder="Find user" bind:value={$keyword} />
       <ion-icon
         name="search-outline"
+        class="icon-finduser"
         style:left="22px"
         style:top="17px"
         style:width="18px"
@@ -133,7 +134,8 @@
     </div>
   </div>
 
-  {#if $users.length}
+  <!-- {#if $userList.length} -->
+  {#if user && users.length}
     <div class="chatlist" transition:fade={{ duration: 100 }}>
       {#each filteredUsers as user}
         <div
@@ -180,6 +182,16 @@
       <br />
       <p>Sorry, you don't have any friends</p>
     </div>
+  {/if}
+
+  {#if $showThemeModal}
+    <ThemeModal />
+  {/if}
+  {#if $showSettingsModal && user}
+    <SettingsModal {user} />
+  {/if}
+  {#if $showAddFriendModal}
+    <AddFriendModal />
   {/if}
 
   {#if $mobile && user}

@@ -13,7 +13,7 @@
   import { page } from "$app/stores";
 
   export let user;
-  console.log("user | settings modal", user);
+  // console.log("user | settings modal", user);
 
   let theme = true;
 
@@ -36,7 +36,7 @@
 
 <ul
   class="menu-settings"
-  on:click|stopPropagation={() => console.log("hi, there !")}
+  on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
 >
   <div class="icon-arrow">

@@ -14,8 +14,12 @@
   onAuthStateChanged(auth, (_user) => (user = _user));
 </script>
 
-<!-- style:background={$bgColor} -->
-  <div
+
+
+  <!-- style:display={$mobile
+    ? "none"
+    : "flex"} -->
+<div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor}
@@ -84,7 +88,7 @@
       z-index: 200;
       justify-content: space-around;
     }
-    
+
     .userimg {
       display: none;
     }
