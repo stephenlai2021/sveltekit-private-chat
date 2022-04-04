@@ -134,7 +134,6 @@
     </div>
   </div>
 
-  <!-- {#if $userList.length} -->
   {#if user && users.length}
     <div class="chatlist" transition:fade={{ duration: 100 }}>
       {#each filteredUsers as user}
@@ -200,8 +199,8 @@
       on:click|stopPropagation={() =>
         ($showSettingsModal = !$showSettingsModal)}
     >
-      {#if user.avatar}
-        <img src={user.avatar} alt="" class="cover" />
+      {#if user.photoURL}
+        <img src={user.photoURL} alt="" class="cover" />
       {:else}
         <img src="/joke.png" alt="" class="cover" />
       {/if}

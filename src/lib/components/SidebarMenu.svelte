@@ -14,8 +14,6 @@
   onAuthStateChanged(auth, (_user) => (user = _user));
 </script>
 
-
-
   <!-- style:display={$mobile
     ? "none"
     : "flex"} -->

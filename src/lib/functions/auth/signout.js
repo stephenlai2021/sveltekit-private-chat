@@ -1,8 +1,7 @@
 import { auth, db } from '$lib/firebase/client'
 import { signOut } from 'firebase/auth'
 import { activeItem } from '$lib/store'
-import { doc, setDoc, updateDoc } from "firebase/firestore";
-import { goto } from '$app/navigation'
+import { doc, updateDoc } from "firebase/firestore";
 
 export const signout = async () => {
   let tempEmail = auth.currentUser.email
