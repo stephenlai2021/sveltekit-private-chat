@@ -129,7 +129,8 @@
       error = null;
       isPending = false;
     } catch (err) {
-      console.log(err.message);
+      console.log('Error Code: ', err.code);
+      console.log('Error Message: ', err.message);
       error = err.message;
       isPending = false;
     }
@@ -149,16 +150,16 @@
         {#if signup}
           <div class="inputBx">
             <span>Username</span>
-            <input type="text" bind:value={name} />
+            <input type="text" bind:value={name} required />
           </div>
         {/if}
         <div class="inputBx">
           <span>Email</span>
-          <input type="email" bind:value={email} />
+          <input type="email" bind:value={email} required />
         </div>
         <div class="inputBx">
           <span>Password</span>
-          <input type="password" bind:value={password} />
+          <input type="password" bind:value={password} required />
         </div>
         <div class="remember">
           <label>

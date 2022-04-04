@@ -11,8 +11,11 @@
   let users = [];
   let username = null;
   let notFound = false;
+  let sameUser = false;
 
-  onAuthStateChanged(auth, (_user) => (user = _user));
+  onAuthStateChanged(auth, (_user) => { 
+    user = _user
+  });
 
   const getUser = async () => {
     const { docs } = await getAllDocs("whatzapp_users", [
@@ -21,12 +24,24 @@
       username,
     ]);
     users = docs;
-    console.log(`${users[0].name} is found`);
     if (!users.length) {
       username = null;
       notFound = true;
     }
   };
+
+  $: if (user && users && !notFound) {
+    console.log(`${users[0].name} is found`);
+    console.log(`loggedin user name is ${user.displayName}`);
+
+     if (users[0].name === user.displayName) {
+      console.log("this is your name 🤗");
+      users = [];
+      sameUser = true;
+    }
+  } else {
+    console.log(`user cannot be found ! 😥`);
+  }
 
   const handleSearch = (e) => {
     if (e.charCode === 13) getUser();
@@ -39,14 +54,17 @@
       contactList: users[0].contactList.includes(user.email)
         ? [...users[0].contactList]
         : [...users[0].contactList, user.email],
-      // contactList: [...users[0].contactList, user.displayName],
     });
-    console.log(`${users[0].name} is successfully added to contact list 😁}`)
+    console.log(`${users[0].name} is successfully added to contact list 😁}`);
   };
 
-  $: if (users && users.length) { 
+  const closeDialog = () => {
+    sameUser = false;
+    username = null
+  };
+
+  $: if (users && users.length) {
     url = users[0].avatar;
-    console.log(`show ${users[0].name} avatar`)
   }
 
   $: if (!username) users = null;
@@ -114,6 +132,21 @@
       />
     </div>
   {/if}
+
+  {#if sameUser}
+    <div class="surprise">
+      <img
+        src="https://images.vexels.com/media/users/3/134485/isolated/lists/bcde859a8ad3a45cb93aed78d8a63686-cool-emoji-emoticon.png"
+        alt=""
+        width="120"
+        height="120"
+      />
+      <p class="error-message" style:text-align="center">
+        You can't add yourself to contact list !
+      </p>
+      <ion-icon name="close-outline" class="btn-close" on:click={closeDialog} />
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -127,6 +160,12 @@
     top: 5px;
   }
 
+  .surprise {
+    z-index: 350;
+    background: rgb(192, 189, 192);
+  }
+
+  .surprise,
   .warning {
     position: absolute;
     top: 120px;
