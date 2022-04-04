@@ -69,8 +69,7 @@
   }
 
   .sidebar-menu {
-    /* min-width: 50px; */
-    width: 50px;
+    min-width: 50px;
     height: 100vh;
     display: flex;
     flex-direction: column;
