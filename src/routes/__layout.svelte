@@ -52,7 +52,8 @@
 
   onMount(() => {
     onAuthStateChanged(auth, (_user) => { 
-      user = _user      
+      if (!_user) goto('/login')
+      else user = _user      
     });
     resizeWindow();
   });

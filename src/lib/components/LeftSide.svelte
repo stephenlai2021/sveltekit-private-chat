@@ -4,8 +4,8 @@
     bgColor,
     keyword,
     activeItem,
-    profileUpdate,
-    // logginedUser,
+    loginState,
+    loginUserEmail,
     showThemeModal,
     showSettingsModal,
     showAddFriendModal,
@@ -22,12 +22,16 @@
   import ThemeModal from "$lib/components/ThemeModal.svelte";
   import SettingsModal from "$lib/components/SettingsModal.svelte";
   import AddFriendModal from "$lib/components/AddFriendModal.svelte";
+  // import { signinState } from "$lib/functions/auth/signin";
 
   let q = null;
   let user = null;
   let users = [];
+  let ready = false;
+  let tempUser = null;
   let loading = false;
   let filteredUsers = [];
+  let tempUserEmail = null;
   let colRef = collection(db, "whatzapp_users");
 
   const selectedUser = (user) => {
@@ -37,33 +41,50 @@
   };
 
   onMount(() => {
-    const unsubAuth = onAuthStateChanged(auth, (_user) => {
+    const unsubAuth = onAuthStateChanged(auth, async (_user) => {
       if (!_user) {
         users = [];
-        console.log("user is logged out 😥");
-        goto("/login");
-        // return unsubAuth;
+        console.log(`auth state changed-> ${tempUserEmail} is not present 😥`);
+        tempUserEmail = null;
+        return unsubAuth;
       } else {
         user = _user;
-        console.log(`${user.email} is logged in 😀`);
+        tempUserEmail = user.email;
+        console.log(`auth state changed-> ${user.email} is present 😀`);
 
-        q = query(
-          colRef,
-          where("contactList", "array-contains", user.email)
-        );
-
+        q = query(colRef, where("contactList", "array-contains", user.email));
         const unsub = onSnapshot(q, (snapshot) => {
           let tempUsers = [];
           snapshot.docs.forEach((doc) => {
             tempUsers.push({ ...doc.data() });
           });
           users = tempUsers;
+          console.log("user list", users);
           return () => unsub();
         });
-        // return unsubAuth;
+        return unsubAuth;
       }
     });
   });
+
+  $: if ($loginState && $loginUserEmail) {
+    console.log("login state && login user email is ready !");
+    ready = true;
+  }
+
+  $: if (ready) {
+    query(colRef, where("contactList", "array-contains", $loginUserEmail));
+    const unsub = onSnapshot(q, (snapshot) => {
+      let tempUsers = [];
+      snapshot.docs.forEach((doc) => {
+        tempUsers.push({ ...doc.data() });
+      });
+      users = tempUsers;
+      console.log("initialzie user list", users);
+      return () => unsub();
+    });
+    ready = false;
+  }
 
   $: filteredUsers = users.filter((item) => {
     return (
@@ -72,27 +93,30 @@
     );
   });
 
-  $: if ($page.url.pathname === "/login") $showSettingsModal = false;
+  $: if ($page.url.pathname === "/login") {
+    $showSettingsModal = false;
+    console.log("settings modal state: ", $showSettingsModal);
+  }
 
   $: setTimeout(() => {
     if (!users.length) loading = true;
   }, 3000);
 </script>
 
-  <!-- style:width={$mobile && $page.url.pathname === "/"
-    ? "100%"
-    : $mobile && $page.url.pathname != "/"
-    ? "0%"
-    : "450px"} -->
+<!-- style:width={$mobile && $page.url.pathname === "/"
+? "100%"
+: $mobile && $page.url.pathname != "/"
+? "0%"
+: $page.url.pathname != "/login"
+? "450px"
+: "0%"} -->
 <div
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
     ? "100%"
     : $mobile && $page.url.pathname != "/"
     ? "0%"
-    : $page.url.pathname != "/login"
-    ? "450px"
-    : "0%"}
+    : "450px"}
 >
   <div class="header">
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
@@ -134,7 +158,9 @@
     </div>
   </div>
 
-  {#if user && users.length}
+  <!-- {#if user && users.length} -->
+  <!-- {#if users.length} -->
+  {#if filteredUsers.length}
     <div class="chatlist" transition:fade={{ duration: 100 }}>
       {#each filteredUsers as user}
         <div
@@ -187,6 +213,7 @@
     <ThemeModal />
   {/if}
   {#if $showSettingsModal && user}
+    <!-- {#if $showSettingsModal} -->
     <SettingsModal {user} />
   {/if}
   {#if $showAddFriendModal}

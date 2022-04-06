@@ -14,16 +14,16 @@
   onAuthStateChanged(auth, (_user) => (user = _user));
 </script>
 
-  <!-- style:display={$mobile
-    ? "none"
-    : "flex"} -->
+<!-- style:display={$mobile
+  ? "none"
+  : $page.url.pathname === "/login"
+  ? "none"
+  : "flex"} -->
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor}
   style:display={$mobile
-    ? "none"
-    : $page.url.pathname === "/login"
     ? "none"
     : "flex"}
 >

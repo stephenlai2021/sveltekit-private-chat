@@ -10,7 +10,8 @@
   import { loginWithGoogle } from "$lib/functions/auth/google";
   import { bgColor, userList } from "$lib/store";
   import { updateProfile } from "firebase/auth";
-  import { profileUpdate } from "$lib/store";
+//   import { profileUpdate, userDocCreated } from "$lib/store";
+  import { loginState, loginUserEmail } from "../store";
 
   let name = "";
   let email = "";
@@ -38,86 +39,100 @@
     }
   */
 
-  const initialUserList = async (email) => {
-    const maskmanRef = doc(db, "whatzapp_users", "stephenlai2015@gmail.com");
-    const maskmanSnap = await getDoc(maskmanRef);
-    console.log("maskman profile", maskmanSnap.data());
-    updateDoc(maskmanRef, {
-      contactList: [...maskmanSnap.data().contactList, email],
-    });
-  };
+  // const initialUserList = async (email) => {
+  //   const maskmanRef = doc(db, "whatzapp_users", "stephenlai2015@gmail.com");
+  //   const maskmanSnap = await getDoc(maskmanRef);
+  //   console.log("maskman profile", maskmanSnap.data());
+  //   await updateDoc(maskmanRef, {
+  //     contactList: [...maskmanSnap.data().contactList, email],
+  //   });
+  // };
 
   const handleSubmit = async () => {
     try {
       if (signup) {
-        // result = await createUserWithEmailAndPassword(auth, email, password);
-        // initialUserList(email);
-
-        // updateProfile(auth.currentUser, {
-        //   displayName: name,
-        // })
-        //   .then(() => {
-        //     console.log("user profile updated !");
-        //     $profileUpdate = true;
-        //   })
-        //   .catch((error) => {
-        //     console.log("OOH, something went wrong ! 😱", error);
-        //   });
-
-        // userRef = doc(db, "whatzapp_users", email);
-        // setDoc(userRef, {
-        //   avatar: result.user.photoURL,
-        //   avatarPath: null,
-        //   contactList: [],
-        //   createdAt: Date.now().toLocaleString(),
-        //   email: result.user.email,
-        //   isOnline: true,
-        //   name: name,
-        //   uid: result.user.uid,
-        //   unread: true,
-        // });
-
         const maskmanRef = doc(
           db,
           "whatzapp_users",
           "stephenlai2015@gmail.com"
         );
         const maskmanSnap = await getDoc(maskmanRef);
-        updateDoc(maskmanRef, {
-          contactList: [...maskmanSnap.data().contactList, email],
-        }).then(() => {
-          createUserWithEmailAndPassword(auth, email, password)
-          .then((result) => {
-            updateProfile(auth.currentUser, {
-              displayName: name,
-            })
-              .then(() => {
-                console.log("user profile updated !");
-                $profileUpdate = true;
-              })
-              .catch((error) => {
-                console.log("OOH, something went wrong ! 😱", error);
-              });    
-            userRef = doc(db, "whatzapp_users", email);
-            setDoc(userRef, {
-              avatar: result.user.photoURL,
-              avatarPath: null,
-              contactList: [],
-              createdAt: Date.now().toLocaleString(),
-              email: result.user.email,
-              isOnline: true,
-              name: name,
-              uid: result.user.uid,
-              unread: true,
-            });
-          })
-        })
+
+        try {
+          await updateDoc(maskmanRef, {
+            contactList: [...maskmanSnap.data().contactList, email],
+          });
+          console.log('maskman is added to user contact list')
+        } catch (err) {
+          console.log(err.code, err.message);
+        }
+
+        try {
+          result = await createUserWithEmailAndPassword(auth, email, password);
+          console.log(`${result.user.email} signed up successfully 🙂`);
+        } catch (err) {
+          console.log(err.code, err.message);
+        }
+
+        try {
+          await updateProfile(auth.currentUser, {
+            displayName: name,
+          });
+          console.log(`${auth.currentUser.email} displayName is updated 🙂`);
+        } catch (err) {
+          console.log(err.code, err.message);
+        }
+
+        let userRef = doc(db, "whatzapp_users", email);
+        try {
+          await setDoc(userRef, {
+            avatar: result.user.photoURL,
+            avatarPath: null,
+            contactList: ["stephenlai2015@gmail.com"],
+            createdAt: Date.now().toLocaleString(),
+            email: result.user.email,
+            isOnline: true,
+            name: name,
+            uid: result.user.uid,
+            unread: true,
+          });
+          console.log(`${result.user.email} document is created 🥰`);
+        } catch (err) {
+          console.log(err.code, err.message);
+        }
       } else {
-        result = await signInWithEmailAndPassword(auth, email, password);
-        userRef = doc(db, "whatzapp_users", auth.currentUser.email);
-        await updateDoc(userRef, {
-          isOnline: true,
-        });
+        try {
+          result = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          console.log(`${result.user.email} signed in successfully 😙`);
+          $loginState = true
+          console.log('set login state: ', $loginState)
+          $loginUserEmail = result.user.email
+          console.log('set login user email: ', $loginUserEmail)
+
+          userRef = doc(db, "whatzapp_users", result.user.email);
+          await updateDoc(userRef, {
+            isOnline: true,
+          });
+          console.log(`update ${result.user.email}'s status -> 🟢`);
+        } catch (err) {
+          console.log(err.code, err.message);
+        }
+
+        // signInWithEmailAndPassword(auth, email, password).then((result) => {
+        //   console.log(`${result.user.email} is signed in 😙`);
+
+        //   let userRef = doc(db, "whatzapp_users", result.user.email);
+        //   updateDoc(userRef, {
+        //     isOnline: true,
+        //   }).then(() => {
+        //     console.log(`update ${result.user.displayName}'s status -> 🟢`);
+        //   });
+        // });
+        // result = await signInWithEmailAndPassword(auth, email, password);
       }
       if (!result) {
         if (signup) {
@@ -129,8 +144,8 @@
       error = null;
       isPending = false;
     } catch (err) {
-      console.log('Error Code: ', err.code);
-      console.log('Error Message: ', err.message);
+      console.log("Error Code: ", err.code);
+      console.log("Error Message: ", err.message);
       error = err.message;
       isPending = false;
     }

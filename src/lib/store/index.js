@@ -1,12 +1,18 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
-export const profileUpdate = writable(false);
+
+export const loginState = writable(false)
+export const loginUserEmail = writable(null)
+export const user = writable(null)
+export const userLogout = writable(false)
+export const userDocCreated = writable(false)
 export const userList = writable([])
 export const mobile = writable(false)
 export const keyword = writable("");
 export const activeItem = writable(null);
 export const loginFormShow = writable(false)
+export const profileUpdate = writable(false);
 export const showThemeModal = writable(false);
 export const showSettingsModal = writable(false);
 export const showAddFriendModal = writable(false)

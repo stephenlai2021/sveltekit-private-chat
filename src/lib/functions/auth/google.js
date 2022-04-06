@@ -6,12 +6,13 @@ export const loginWithGoogle = () => {
   signInWithPopup(auth, google)
     .then((result) => {
       let user = result.user;
-      console.log('sign in with Google successfully ! 😀', user)
+      console.log(`${user.displayName} signed in with Google 😀`)
       let userRef = doc(db, "whatzapp_users", user.email);
       updateDoc(userRef, {
         isOnline: true
+      }).then(() => {
+        console.log(`update ${user.displayName}'s status -> 🟢`);
       })
-      console.log(`${user.displayName} is logged in 😎`);
     })
     .catch((err) => {
       console.log(err.message);
