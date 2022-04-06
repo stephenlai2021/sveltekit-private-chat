@@ -123,19 +123,19 @@
 </script>
 
 <!-- style:width={$mobile && $page.url.pathname === "/"
-? "100%"
-: $mobile && $page.url.pathname != "/"
-? "0%"
-: $page.url.pathname != "/login"
-? "450px"
-: "0%"}   -->
+    ? "100%"
+    : $mobile && $page.url.pathname != "/"
+    ? "0%"
+    : "450px"} -->
 <div
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
     ? "100%"
     : $mobile && $page.url.pathname != "/"
     ? "0%"
-    : "450px"}
+    : $page.url.pathname != "/login"
+    ? "450px"
+    : "0%"}   
 >
   <div class="header">
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
