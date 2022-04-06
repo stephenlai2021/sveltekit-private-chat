@@ -8,7 +8,7 @@ export const loginWithGoogle = () => {
     .then((result) => {
       let user = result.user;
       console.log(`${user.displayName} signed in with Google successfully 😀`)
-      loginState.set(false)
+      loginState.set(true)
       loginUserEmail.set(user.email)
 
       let userRef = doc(db, "whatzapp_users", user.email);

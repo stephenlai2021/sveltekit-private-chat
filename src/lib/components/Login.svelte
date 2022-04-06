@@ -70,6 +70,8 @@
         try {
           result = await createUserWithEmailAndPassword(auth, email, password);
           console.log(`${result.user.email} signed up successfully 🙂`);
+          $loginState = true
+          $loginUserEmail = result.user.email
         } catch (err) {
           console.log(err.code, err.message);
         }
@@ -109,9 +111,7 @@
           );
           console.log(`${result.user.email} signed in successfully 😙`);
           $loginState = true
-          console.log('set login state: ', $loginState)
           $loginUserEmail = result.user.email
-          console.log('set login user email: ', $loginUserEmail)
 
           userRef = doc(db, "whatzapp_users", result.user.email);
           await updateDoc(userRef, {
@@ -121,18 +121,6 @@
         } catch (err) {
           console.log(err.code, err.message);
         }
-
-        // signInWithEmailAndPassword(auth, email, password).then((result) => {
-        //   console.log(`${result.user.email} is signed in 😙`);
-
-        //   let userRef = doc(db, "whatzapp_users", result.user.email);
-        //   updateDoc(userRef, {
-        //     isOnline: true,
-        //   }).then(() => {
-        //     console.log(`update ${result.user.displayName}'s status -> 🟢`);
-        //   });
-        // });
-        // result = await signInWithEmailAndPassword(auth, email, password);
       }
       if (!result) {
         if (signup) {
@@ -197,7 +185,7 @@
           </p>
         </div>
       </form>
-      <h3 class:mt={!signup}>Login with social media</h3>
+      <!-- <h3 class:mt={!signup}>Login with social media</h3>
       <ul class="sci">
         <li on:click={loginWithGoogle}>
           <img src="/google.png" alt="" />
@@ -208,7 +196,7 @@
         <li>
           <img src="/instagram.png" alt="" />
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </section>

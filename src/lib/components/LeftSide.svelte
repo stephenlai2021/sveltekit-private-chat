@@ -10,7 +10,6 @@
     showSettingsModal,
     showAddFriendModal,
   } from "$lib/store";
-  import { browser } from "$app/env";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
@@ -22,13 +21,10 @@
   import ThemeModal from "$lib/components/ThemeModal.svelte";
   import SettingsModal from "$lib/components/SettingsModal.svelte";
   import AddFriendModal from "$lib/components/AddFriendModal.svelte";
-  // import { signinState } from "$lib/functions/auth/signin";
 
-  let q = null;
   let user = null;
   let users = [];
   let ready = false;
-  let tempUser = null;
   let loading = false;
   let filteredUsers = [];
   let tempUserEmail = null;
@@ -52,7 +48,10 @@
         tempUserEmail = user.email;
         console.log(`auth state changed-> ${user.email} is present 😀`);
 
-        q = query(colRef, where("contactList", "array-contains", user.email));
+        const q = query(
+          colRef,
+          where("contactList", "array-contains", user.email)
+        );
         const unsub = onSnapshot(q, (snapshot) => {
           let tempUsers = [];
           snapshot.docs.forEach((doc) => {
@@ -70,10 +69,28 @@
   $: if ($loginState && $loginUserEmail) {
     console.log("login state && login user email is ready !");
     ready = true;
+    // const q = query(
+    //   colRef,
+    //   where("contactList", "array-contains", $loginUserEmail)
+    // );
+    // const unsub = onSnapshot(q, (snapshot) => {
+    //   let tempUsers = [];
+    //   snapshot.docs.forEach((doc) => {
+    //     tempUsers.push({ ...doc.data() });
+    //   });
+    //   users = tempUsers;
+    //   console.log("initialzie user list", users);
+    //   return () => unsub();
+    // });
+    // $loginState = false
+    // $loginUserEmail = null
   }
 
   $: if (ready) {
-    query(colRef, where("contactList", "array-contains", $loginUserEmail));
+    const q = query(
+      colRef,
+      where("contactList", "array-contains", $loginUserEmail)
+    );
     const unsub = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
@@ -84,6 +101,8 @@
       return () => unsub();
     });
     ready = false;
+    $loginState = false
+    $loginUserEmail = null
   }
 
   $: filteredUsers = users.filter((item) => {
@@ -95,7 +114,7 @@
 
   $: if ($page.url.pathname === "/login") {
     $showSettingsModal = false;
-    console.log("settings modal state: ", $showSettingsModal);
+    // console.log("settings modal state: ", $showSettingsModal);
   }
 
   $: setTimeout(() => {
@@ -107,16 +126,16 @@
 ? "100%"
 : $mobile && $page.url.pathname != "/"
 ? "0%"
-: "450px"} -->
+: $page.url.pathname != "/login"
+? "450px"
+: "0%"}   -->
 <div
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
     ? "100%"
     : $mobile && $page.url.pathname != "/"
     ? "0%"
-    : $page.url.pathname != "/login"
-    ? "450px"
-    : "0%"}
+    : "450px"}
 >
   <div class="header">
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
@@ -159,8 +178,9 @@
   </div>
 
   <!-- {#if user && users.length} -->
-  <!-- {#if users.length} -->
-  {#if filteredUsers.length}
+  {#if users.length}
+    <!-- {#if filteredUsers.length} -->
+    <!-- {#if $loginState} -->
     <div class="chatlist" transition:fade={{ duration: 100 }}>
       {#each filteredUsers as user}
         <div
