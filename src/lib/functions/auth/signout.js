@@ -1,8 +1,7 @@
 import { auth, db } from "$lib/firebase/client";
 import { signOut } from "firebase/auth";
-import { activeItem, user } from "$lib/store";
 import { doc, updateDoc } from "firebase/firestore";
-import { userLogout, loginState, loginUserEmail } from "../../store";
+import { loginState, loginUserEmail } from "$lib/store";
 
 export const signout = async () => {
   let userRef = doc(db, "whatzapp_users", auth.currentUser.email);

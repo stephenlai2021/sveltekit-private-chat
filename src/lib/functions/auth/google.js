@@ -1,12 +1,16 @@
 import { auth, db, google } from "$lib/firebase/client";
 import { signInWithPopup } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
+import { loginState, loginUserEmail } from "$lib/store";
 
 export const loginWithGoogle = () => {
   signInWithPopup(auth, google)
     .then((result) => {
       let user = result.user;
-      console.log(`${user.displayName} signed in with Google 😀`)
+      console.log(`${user.displayName} signed in with Google successfully 😀`)
+      loginState.set(false)
+      loginUserEmail.set(user.email)
+
       let userRef = doc(db, "whatzapp_users", user.email);
       updateDoc(userRef, {
         isOnline: true
