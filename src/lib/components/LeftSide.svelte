@@ -37,42 +37,53 @@
     goto(`/${user.name}`);
   };
 
-  onMount(() => {
-    const unsubAuth = onAuthStateChanged(auth, async (_user) => {
-      if (!_user) {
-        users = [];
-        console.log(`auth state changed-> ${tempUserEmail} is not present 😥`);
-        tempUserEmail = null;
-        return unsubAuth;
-      } else {
-        user = _user;
-        tempUserEmail = user.email;
-        console.log(`auth state changed-> ${user.email} is present 😀`);
+  onMount(() => onAuthStateChanged(auth, _user => user = _user))
 
-        const q = query(
-          colRef,
-          where("contactList", "array-contains", user.email)
-        );
-        const unsub = onSnapshot(q, (snapshot) => {
-          let tempUsers = [];
-          snapshot.docs.forEach((doc) => {
-            tempUsers.push({ ...doc.data() });
-          });
-          users = tempUsers;
-          console.log("user list", users);
-          return () => unsub();
-        });
-        return unsubAuth;
-      }
-    });
-  });
-
-  $: if ($loginState && $loginUserEmail) {
-    console.log("login state && login user email is ready !");
-    ready = true;
+  $: if (user) {
+    ready = true
+    console.log('user is ready')
+    console.log('user', user)
   }
 
-  $: if (ready) {
+  $: if (!user) console.log('user is logged out')
+
+  // onMount(() => {
+  //   const unsubAuth = onAuthStateChanged(auth, async (_user) => {
+  //     if (!_user) {
+  //       users = [];
+  //       console.log(`auth state changed-> ${tempUserEmail} is not present 😥`);
+  //       tempUserEmail = null;
+  //       return unsubAuth;
+  //     } else {
+  //       user = _user;
+  //       tempUserEmail = user.email;
+  //       console.log(`auth state changed-> ${user.email} is present 😀`);
+
+  //       const q = query(
+  //         colRef,
+  //         where("contactList", "array-contains", user.email)
+  //       );
+  //       const unsub = onSnapshot(q, (snapshot) => {
+  //         let tempUsers = [];
+  //         snapshot.docs.forEach((doc) => {
+  //           tempUsers.push({ ...doc.data() });
+  //         });
+  //         users = tempUsers;
+  //         console.log("user list", users);
+  //         return () => unsub();
+  //       });
+  //       return unsubAuth;
+  //     }
+  //   });
+  // });
+
+  // $: if ($loginState && $loginUserEmail) {
+  //   console.log("login state && login user email is ready !");
+  //   ready = true;
+  // }
+
+  $: if (ready && $loginUserEmail) {
+  // $: if (ready) {
     const q = query(
       colRef,
       where("contactList", "array-contains", $loginUserEmail)
@@ -84,11 +95,11 @@
       });
       users = tempUsers;
       console.log("initialzie user list", users);
+      ready = false;
       return () => unsub();
     });
-    ready = false;
-    $loginState = false;
-    $loginUserEmail = null;
+    // $loginState = false;
+    // $loginUserEmail = null;
   }
 
   $: filteredUsers = users.filter((item) => {

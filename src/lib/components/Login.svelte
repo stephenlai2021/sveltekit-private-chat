@@ -186,7 +186,7 @@
       errorMsg = err.code;
     } 
   };
-  
+
   const clearUsername = () => warningMsg = null;
 
   $: if (errorMsg) {
@@ -251,9 +251,6 @@
             <p class="error-msg" style:color="red">{passwordErrMsg}</p>
           {/if}
         </div>
-        <!-- {#if errorMsg}
-          <p style:color="red">{errorMsg}</p>
-        {/if} -->
         <div class="remember">
           <label>
             <input type="checkbox" />Remember me
@@ -275,7 +272,7 @@
           </p>
         </div>
       </form>
-      <!-- <h3 class:mt={!signup}>Login with social media</h3>
+      <h3 class:mt={!signup}>Login with social media</h3>
       <ul class="sci">
         <li on:click={loginWithGoogle}>
           <img src="/google.png" alt="" />
@@ -286,16 +283,11 @@
         <li>
           <img src="/instagram.png" alt="" />
         </li>
-      </ul> -->
+      </ul>
     </div>
   </div>
 </section>
 
 <style>
   @import url("$lib/styles/login.css");
-
-  .error-msg {
-    /* color: red; */
-    /* border: 1px solid; */
-  }
 </style>
