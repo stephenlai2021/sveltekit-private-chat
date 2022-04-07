@@ -21,6 +21,7 @@
   import ThemeModal from "$lib/components/ThemeModal.svelte";
   import SettingsModal from "$lib/components/SettingsModal.svelte";
   import AddFriendModal from "$lib/components/AddFriendModal.svelte";
+  import Navbar from "$lib/components/Navbar.svelte";
 
   let user = null;
   let users = [];
@@ -69,21 +70,6 @@
   $: if ($loginState && $loginUserEmail) {
     console.log("login state && login user email is ready !");
     ready = true;
-    // const q = query(
-    //   colRef,
-    //   where("contactList", "array-contains", $loginUserEmail)
-    // );
-    // const unsub = onSnapshot(q, (snapshot) => {
-    //   let tempUsers = [];
-    //   snapshot.docs.forEach((doc) => {
-    //     tempUsers.push({ ...doc.data() });
-    //   });
-    //   users = tempUsers;
-    //   console.log("initialzie user list", users);
-    //   return () => unsub();
-    // });
-    // $loginState = false
-    // $loginUserEmail = null
   }
 
   $: if (ready) {
@@ -101,8 +87,8 @@
       return () => unsub();
     });
     ready = false;
-    $loginState = false
-    $loginUserEmail = null
+    $loginState = false;
+    $loginUserEmail = null;
   }
 
   $: filteredUsers = users.filter((item) => {
@@ -114,7 +100,6 @@
 
   $: if ($page.url.pathname === "/login") {
     $showSettingsModal = false;
-    // console.log("settings modal state: ", $showSettingsModal);
   }
 
   $: setTimeout(() => {
@@ -135,10 +120,24 @@
     ? "0%"
     : $page.url.pathname != "/login"
     ? "450px"
-    : "0%"}   
+    : "0%"}
 >
   <div class="header">
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
+      {#if $mobile && user}
+        <div
+          class="userimg"
+          on:click|stopPropagation={() =>
+            ($showSettingsModal = !$showSettingsModal)}
+        >
+          {#if user.photoURL}
+            <img src={user.photoURL} alt="" class="cover" />
+          {:else}
+            <img src="/joke.png" alt="" class="cover" />
+          {/if}
+          <ion-icon name="settings-outline" class="settings" />
+        </div>
+      {/if}
       <h3 class="user-title">LetsChat</h3>
     </div>
     <ul class="nav_icons">
@@ -177,11 +176,12 @@
     </div>
   </div>
 
-  <!-- {#if user && users.length} -->
   {#if users.length}
-    <!-- {#if filteredUsers.length} -->
-    <!-- {#if $loginState} -->
-    <div class="chatlist" transition:fade={{ duration: 100 }}>
+    <div
+      class="chatlist"
+      style:height="calc(100vh - 170px)"
+      transition:fade={{ duration: 100 }}
+    >
       {#each filteredUsers as user}
         <div
           class="block"
@@ -225,7 +225,7 @@
         alt=""
       />
       <br />
-      <p>Sorry, you don't have any friends</p>
+      <p>Sorry, you don't have any friends yet</p>
     </div>
   {/if}
 
@@ -240,7 +240,7 @@
     <AddFriendModal />
   {/if}
 
-  {#if $mobile && user}
+  <!-- {#if $mobile && user}
     <div
       class="userimg"
       on:click|stopPropagation={() =>
@@ -253,6 +253,9 @@
       {/if}
       <ion-icon name="settings-outline" class="settings" />
     </div>
+  {/if} -->
+  {#if $mobile}
+    <Navbar />
   {/if}
 </div>
 
@@ -276,19 +279,23 @@
   }
 
   .userimg {
-    position: absolute;
+    /* position: absolute;
     bottom: 20px;
     right: 20px;
     width: 40px;
-    height: 40px;
+    height: 40px; */
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     cursor: pointer;
+    margin-right: 5px;
+    /* border: 1px solid; */
   }
 
   .userimg img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
   }
 
