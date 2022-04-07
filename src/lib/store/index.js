@@ -1,9 +1,7 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
-
 export const loginState = writable(false)
-export const loginUserEmail = writable(null)
 export const user = writable(null)
 export const userLogout = writable(false)
 export const userDocCreated = writable(false)
@@ -21,6 +19,13 @@ export const leftsideState = writable(true)
 export const rightsideState = writable(true)
 export const menubarState = writable(true)
 export const bgColor = writable('linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%)');
+
+export const loginUserEmail = writable(
+  browser && localStorage.getItem("loggedin user email")
+);
+loginUserEmail.subscribe(
+  (val) => browser && localStorage.setItem("loggedin user email", val)
+);
 
 export const connection = writable(
   browser && localStorage.getItem("internet connection")
