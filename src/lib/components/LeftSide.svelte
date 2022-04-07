@@ -46,8 +46,6 @@
   $: if (!user) console.log("user is logged out");
 
   $: if (ready && $loginUserEmail) {
-    // $: if (ready) {
-
     let colRef = collection(db, "whatzapp_users");
     const q = query(
       colRef,
@@ -63,8 +61,6 @@
       ready = false;
       return () => unsub();
     });
-    // $loginState = false;
-    // $loginUserEmail = null;
   }
 
   $: filteredUsers = users.filter((item) => {
@@ -111,7 +107,6 @@
           {:else}
             <img src="/joke.png" alt="" class="cover" />
           {/if}
-          <ion-icon name="settings-outline" class="settings" />
         </div>
       {/if}
       <h3 class="user-title">LetsChat</h3>
