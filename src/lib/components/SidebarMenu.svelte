@@ -5,6 +5,7 @@
     mobile,
     bgColor,
     loginFormShow,
+    profileUpdated,
     showSettingsModal,
   } from "$lib/store";
   import { page } from "$app/stores";
@@ -12,6 +13,14 @@
   let user = null;
 
   onAuthStateChanged(auth, (_user) => (user = _user));
+
+  $: if ($profileUpdated) {
+    user = auth.currentUser
+    console.log('user profile updated detected !') 
+    // $profileUpdated = false
+  }
+
+  $: if (user) console.log('user is present !')
 </script>
 
 <!-- style:display={$mobile

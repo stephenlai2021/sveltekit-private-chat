@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const profileUpdated = writable(false)
 export const loginState = writable(false)
 export const user = writable(null)
 export const userLogout = writable(false)

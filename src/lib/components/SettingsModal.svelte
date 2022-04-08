@@ -2,6 +2,7 @@
   import {
     mobile,
     bgColor,
+    profileUpdated,
     showThemeModal,
     showSettingsModal,
   } from "$lib/store";
@@ -11,11 +12,19 @@
   import { fly } from "svelte/transition";
   import Cookies from "js-cookie";
   import { page } from "$app/stores";
+  import { auth, storage } from '$lib/firebase/client'
+  import { onAuthStateChanged, updateProfile } from "firebase/auth";
+  import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
+  import { v4 } from 'uuid'
 
   export let user;
-  // console.log("user | settings modal", user);
 
+  let url = null
+  let file = null
   let theme = true;
+  let fileError = null
+
+  // onAuthStateChanged(auth, _user => user = _user)
 
   const toggleTheme = () => {
     theme = !theme;
@@ -27,6 +36,51 @@
     $showSettingsModal = false;
     signout();
   };
+
+  const handleFileChange = (e) => {
+    const types = ['image/png', 'image/jpg', 'image/jpeg']    
+    
+    let selectedFile = e.target.files[0]
+
+    if (selectedFile && types.includes(selectedFile.type)) {
+      file = selectedFile
+      console.log(`${file.name} is selected`)
+      fileError = null
+    } else {
+      file = null
+      fileError = 'Please select an image file (png or jpg)'
+    }
+  };
+
+  // $: if (user) {
+  //   name = user.displayName
+  //   email = user.Email
+  //   imageURL = user.photoURL
+  // }
+
+  $: if (file) {
+    const imageRef = ref(storage, `letschat/images/${file.name + v4()}}`)
+
+    uploadBytes(imageRef, file)
+    .then(() => {
+      console.log('image upload completed !')
+      getDownloadURL(imageRef)
+      .then(_url => {
+        url = _url
+      })
+    })
+  }
+
+  $: if (url) {
+    console.log('image url: ', url)
+
+    updateProfile(user, {
+      photoURL: url
+    }).then(() => {
+      $profileUpdated = true
+      console.log('use profile uupdated successfully !')
+    })
+  }
 
   onMount(() => {
     if ($themeStore.theme === "light") theme = false;
@@ -50,11 +104,14 @@
       <div class="avatar-section">
         <div class="image-wrapper">
           {#if user.photoURL}
-            <img src={user.photoURL} alt="" />
+            <img src={user.photoURL} alt="" width="96" height="96" />
           {:else}
             <img src="/joke.png" alt="" width="96" height="96" />
           {/if}
-          <ion-icon name="camera-outline" class="icon-camera" />
+          <label>
+            <input type="file" on:change={handleFileChange} accept="image/png, image/jpg, image/jpeg" />
+            <ion-icon name="camera-outline" class="icon-camera" />
+          </label>
         </div>
       </div>
       <h3>
@@ -137,6 +194,11 @@
 </ul>
 
 <style>
+  label input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
   .icon-camera {
     width: 28px;
     height: 28px;

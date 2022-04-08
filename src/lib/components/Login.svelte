@@ -51,16 +51,7 @@
       unread: true
     }
   */
-
-  // const initialUserList = async (email) => {
-  //   const maskmanRef = doc(db, "whatzapp_users", "stephenlai2015@gmail.com");
-  //   const maskmanSnap = await getDoc(maskmanRef);
-  //   console.log("maskman profile", maskmanSnap.data());
-  //   await updateDoc(maskmanRef, {
-  //     contactList: [...maskmanSnap.data().contactList, email],
-  //   });
-  // };
-
+ 
   /*
     firebase auth error
     signup

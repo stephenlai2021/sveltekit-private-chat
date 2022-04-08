@@ -6,6 +6,7 @@
     activeItem,
     loginState,
     loginUserEmail,
+    profileUpdated,
     showThemeModal,
     showSettingsModal,
     showAddFriendModal,
@@ -29,14 +30,21 @@
   let loading = false;
   let filteredUsers = [];
 
+  // onMount(() => onAuthStateChanged(auth, (_user) => (user = _user)));
+  onAuthStateChanged(auth, (_user) => (user = _user))
+
   const selectedUser = (user) => {
     console.log(`${user.name} is selected`);
     activeItem.set(user.name);
     goto(`/${user.name}`);
   };
 
-  onMount(() => onAuthStateChanged(auth, (_user) => (user = _user)));
-
+  $: if ($profileUpdated) { 
+    console.log('user profile updated detected !') 
+    user = auth.currentUser
+    // $profileUpdated = false
+  }
+  
   $: if (user) {
     ready = true;
     console.log("user is ready");
@@ -58,9 +66,9 @@
       });
       users = tempUsers;
       console.log("initialzie user list", users);
-      ready = false;
       return () => unsub();
     });
+    ready = false
   }
 
   $: filteredUsers = users.filter((item) => {
@@ -111,6 +119,7 @@
       {/if}
       <h3 class="user-title">LetsChat</h3>
     </div>
+
     <ul class="nav_icons">
       {#if $mobile}
         <div
@@ -204,7 +213,7 @@
     <ThemeModal />
   {/if}
   {#if $showSettingsModal && user}
-    <!-- {#if $showSettingsModal} -->
+  <!-- {#if user} -->
     <SettingsModal {user} />
   {/if}
   {#if $showAddFriendModal}
@@ -250,11 +259,6 @@
   }
 
   .userimg {
-    /* position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px; */
     width: 30px;
     height: 30px;
     display: flex;
@@ -268,13 +272,5 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-  }
-
-  .settings {
-    position: absolute;
-    bottom: -8px;
-    right: -5px;
-    font-size: 1.2em;
-    /* color: white; */
   }
 </style>
