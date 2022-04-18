@@ -35,9 +35,10 @@
   const selectUser = (selectedUser) => {
     console.log(`${selectedUser.name} is selected`);
     $username = selectedUser.name;
+    goto(`/${$username}`)
   };
 
-  $: if ($username) goto(`/${$username}`);
+  // $: if ($username) goto(`/${$username}`);
 
   $: if ($profileUpdated) {
     console.log("user profile updated detected !");
