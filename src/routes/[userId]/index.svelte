@@ -16,39 +16,25 @@
 
   let q = null;
   let user = {};
-  let ready = false
-  let matched = false
+  let ready = false;
+  let matched = false;
   let colRef = collection(db, "whatzapp_users");
 
-  // onMount(() => {
-  //   q = query(colRef, where("name", "==", $page.params.userId));
-  //   const unsub = onSnapshot(q, (snapshot) => {
-  //     let tempUsers = [];
-  //     snapshot.docs.forEach((doc) => {
-  //       tempUsers.push({ ...doc.data() });
-  //     });
-  //     user = tempUsers[0];
-  //     console.log("ger user name | onMount: ", user.name);
-  //     return () => unsub();
-  //   });
-  // });
-
-  $: if ($page.params.userId === $username) matched = true
+  $: if ($page.params.userId === $username) matched = true;
 
   $: if (matched) {
     q = query(colRef, where("name", "==", $username));
-    // q = query(colRef, where("name", "==", $page.params.userId));
     const unsub = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
       });
       user = tempUsers[0];
-      ready = true
+      ready = true;
       console.log("ger user name | snapshot", user.name);
       return () => unsub();
     });
-    matched = false
+    matched = false;
   }
 
   $: if (!$mobile) $showBgSettingsModal = false;
@@ -77,8 +63,6 @@
       class="arrow-back"
       on:click={() => goto("/")}
     />
-
-    <!-- {#if user} -->
     {#if ready}
       <div class="imgText">
         <div class="userimg">

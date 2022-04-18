@@ -1,14 +1,8 @@
 <script>
   import {
-    active,
     mobile,
-    bgColor,
     keyword,
     username,
-    // activeItem,
-    loginState,
-    // getUser,
-    // username,
     loginUserEmail,
     profileUpdated,
     showThemeModal,
@@ -40,19 +34,18 @@
 
   const selectUser = (selectedUser) => {
     console.log(`${selectedUser.name} is selected`);
-    $username = selectedUser.name; 
+    $username = selectedUser.name;
   };
 
-  $: if ($username) goto(`/${$username}`)
-  
+  $: if ($username) goto(`/${$username}`);
+
   $: if ($profileUpdated) {
     console.log("user profile updated detected !");
     user = auth.currentUser;
-    // $profileUpdated = false
   }
-  
+
   $: if (!user) console.log("user is not ready");
-  
+
   $: if (user) {
     ready = true;
     console.log("user is ready");
@@ -165,7 +158,7 @@
   {#if users.length}
     <div
       class="chatlist"
-      style:height="calc(100vh - 170px)"
+      style:height="calc(100vh - 120px)"
       transition:fade={{ duration: 100 }}
     >
       {#each filteredUsers as user}
@@ -173,11 +166,9 @@
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          >
+        >
           <!-- class:active={$activeItem === user.name} -->
-          <div
-            class="imgbx"
-            >
+          <div class="imgbx">
             <!-- class:active={$activeItem === user.name}
             style:background={$activeItem === user.name ? $bgColor : ""} -->
             {#if user.avatar}
@@ -243,6 +234,7 @@
       <ion-icon name="settings-outline" class="settings" />
     </div>
   {/if} -->
+
   {#if $mobile}
     <Navbar />
   {/if}
