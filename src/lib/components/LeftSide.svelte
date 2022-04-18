@@ -159,6 +159,7 @@
     <div
       class="chatlist"
       style:height="calc(100vh - 120px)"
+      style:padding-bottom={$mobile ? '60px' : '0px'}
       transition:fade={{ duration: 100 }}
     >
       {#each filteredUsers as user}
