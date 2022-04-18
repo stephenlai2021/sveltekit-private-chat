@@ -150,6 +150,10 @@
 </div>
 
 <style>
+  .content {
+    margin-top: 10px;
+  }
+
   .error-message {
     margin-top: 10px;
   }
@@ -207,8 +211,17 @@
     border-radius: 50%;
   }
 
+  .avatar-wrapper img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
   .avatar-wrapper {
     position: relative;
+    width: 120px;
+    height: 120px;
   }
 
   .users {

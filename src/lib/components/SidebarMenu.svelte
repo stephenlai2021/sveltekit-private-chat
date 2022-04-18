@@ -20,7 +20,7 @@
     // $profileUpdated = false
   }
 
-  $: if (user) console.log('user is present !')
+  // $: if (user) console.log('user is present !')
 </script>
 
 <!-- style:display={$mobile

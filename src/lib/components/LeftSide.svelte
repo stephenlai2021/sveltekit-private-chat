@@ -1,13 +1,18 @@
 <script>
   import {
+    active,
     mobile,
     bgColor,
     keyword,
-    activeItem,
+    username,
+    // activeItem,
     loginState,
+    // getUser,
+    // username,
     loginUserEmail,
     profileUpdated,
     showThemeModal,
+    showCameraModal,
     showSettingsModal,
     showAddFriendModal,
   } from "$lib/store";
@@ -23,6 +28,7 @@
   import SettingsModal from "$lib/components/SettingsModal.svelte";
   import AddFriendModal from "$lib/components/AddFriendModal.svelte";
   import Navbar from "$lib/components/Navbar.svelte";
+  import CameraModal from "$lib/components/CameraModal.svelte";
 
   let user = null;
   let users = [];
@@ -30,28 +36,28 @@
   let loading = false;
   let filteredUsers = [];
 
-  // onMount(() => onAuthStateChanged(auth, (_user) => (user = _user)));
-  onAuthStateChanged(auth, (_user) => (user = _user))
+  onAuthStateChanged(auth, (_user) => (user = _user));
 
-  const selectedUser = (user) => {
-    console.log(`${user.name} is selected`);
-    activeItem.set(user.name);
-    goto(`/${user.name}`);
+  const selectUser = (selectedUser) => {
+    console.log(`${selectedUser.name} is selected`);
+    $username = selectedUser.name; 
   };
 
-  $: if ($profileUpdated) { 
-    console.log('user profile updated detected !') 
-    user = auth.currentUser
+  $: if ($username) goto(`/${$username}`)
+  
+  $: if ($profileUpdated) {
+    console.log("user profile updated detected !");
+    user = auth.currentUser;
     // $profileUpdated = false
   }
+  
+  $: if (!user) console.log("user is not ready");
   
   $: if (user) {
     ready = true;
     console.log("user is ready");
     console.log("user", user);
   }
-
-  $: if (!user) console.log("user is logged out");
 
   $: if (ready && $loginUserEmail) {
     let colRef = collection(db, "whatzapp_users");
@@ -65,10 +71,10 @@
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
-      console.log("initialzie user list", users);
+      console.log("initialzie user list | snapshot", users);
       return () => unsub();
     });
-    ready = false
+    ready = false;
   }
 
   $: filteredUsers = users.filter((item) => {
@@ -166,18 +172,18 @@
         <div
           class="block"
           class:unread={user.unread}
-          class:active={$activeItem === user.name}
-          on:click={() => selectedUser(user)}
-        >
+          on:click={() => selectUser(user)}
+          >
+          <!-- class:active={$activeItem === user.name} -->
           <div
             class="imgbx"
-            class:active={$activeItem === user.name}
-            style:background={$activeItem === user.name ? $bgColor : ""}
-          >
+            >
+            <!-- class:active={$activeItem === user.name}
+            style:background={$activeItem === user.name ? $bgColor : ""} -->
             {#if user.avatar}
               <img src={user.avatar} alt="" class="cover" />
             {:else}
-              <img src="/happy.png" alt="" class="cover" />
+              <img src="/joke.png" alt="" class="cover" />
             {/if}
             <div class={user.isOnline ? "status online" : "status offline"} />
           </div>
@@ -213,12 +219,15 @@
     <ThemeModal />
   {/if}
   {#if $showSettingsModal && user}
-  <!-- {#if user} -->
+    <!-- {#if user} -->
     <SettingsModal {user} />
   {/if}
   {#if $showAddFriendModal}
     <AddFriendModal />
   {/if}
+  <!-- {#if showCameraModal}
+    <CameraModal />
+  {/if} -->
 
   <!-- {#if $mobile && user}
     <div
@@ -269,8 +278,8 @@
   }
 
   .userimg img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
   }
 </style>

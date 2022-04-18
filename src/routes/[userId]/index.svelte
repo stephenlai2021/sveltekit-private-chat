@@ -5,32 +5,54 @@
   import { goto } from "$app/navigation";
   import {
     mobile,
+    username,
     showThemeModal,
     showSettingsModal,
     showAddFriendModal,
     showBgSettingsModal,
   } from "$lib/store";
   import BgSettingsModal from "$lib/components/BgSettingsModal.svelte";
+  import { onMount } from "svelte";
 
   let q = null;
   let user = {};
-  let ready = false;
+  let ready = false
+  let matched = false
   let colRef = collection(db, "whatzapp_users");
 
-  $: if ($page.params.userId) {
-    q = query(colRef, where("name", "==", $page.params.userId));
+  // onMount(() => {
+  //   q = query(colRef, where("name", "==", $page.params.userId));
+  //   const unsub = onSnapshot(q, (snapshot) => {
+  //     let tempUsers = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       tempUsers.push({ ...doc.data() });
+  //     });
+  //     user = tempUsers[0];
+  //     console.log("ger user name | onMount: ", user.name);
+  //     return () => unsub();
+  //   });
+  // });
+
+  $: if ($page.params.userId === $username) matched = true
+
+  $: if (matched) {
+    q = query(colRef, where("name", "==", $username));
+    // q = query(colRef, where("name", "==", $page.params.userId));
     const unsub = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
       });
       user = tempUsers[0];
-      ready = true;
+      ready = true
+      console.log("ger user name | snapshot", user.name);
       return () => unsub();
     });
+    matched = false
   }
 
   $: if (!$mobile) $showBgSettingsModal = false;
+
   $: if ($mobile) {
     $showThemeModal = false;
     $showSettingsModal = false;
@@ -55,13 +77,15 @@
       class="arrow-back"
       on:click={() => goto("/")}
     />
+
+    <!-- {#if user} -->
     {#if ready}
       <div class="imgText">
         <div class="userimg">
           {#if user.avatar}
             <img src={user.avatar} alt="" />
           {:else}
-            <img src="/happy.png" alt="" />
+            <img src="/joke.png" alt="" />
           {/if}
           <div class={user.isOnline ? "status online" : "status offline"} />
         </div>

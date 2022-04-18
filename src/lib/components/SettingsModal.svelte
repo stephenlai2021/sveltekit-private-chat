@@ -4,6 +4,7 @@
     bgColor,
     profileUpdated,
     showThemeModal,
+    showCameraModal,
     showSettingsModal,
   } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
@@ -12,10 +13,12 @@
   import { fly } from "svelte/transition";
   import Cookies from "js-cookie";
   import { page } from "$app/stores";
-  import { auth, storage } from '$lib/firebase/client'
+  import { auth, db, storage } from '$lib/firebase/client'
   import { onAuthStateChanged, updateProfile } from "firebase/auth";
+  import { doc, updateDoc } from "firebase/firestore";
   import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { v4 } from 'uuid'
+  import CameraModal from '$lib/components/CameraModal.svelte'
 
   export let user;
 
@@ -41,9 +44,11 @@
     const types = ['image/png', 'image/jpg', 'image/jpeg']    
     
     let selectedFile = e.target.files[0]
-
+    console.log(selectedFile)
+    
     if (selectedFile && types.includes(selectedFile.type)) {
       file = selectedFile
+      console.log(file)
       console.log(`${file.name} is selected`)
       fileError = null
     } else {
@@ -52,15 +57,15 @@
     }
   };
 
-  // $: if (user) {
-  //   name = user.displayName
-  //   email = user.Email
-  //   imageURL = user.photoURL
-  // }
+  const takePhoto = () => {
+    $showCameraModal = true
+  }
 
-  $: if (file) {
-    const imageRef = ref(storage, `letschat/images/${file.name + v4()}}`)
-
+  $: if (file) {    
+    let blob = file.slice(0, file.size, 'image/png')
+    let newFile = new File([blob], 'avatar.png', { type: 'image/png' })
+    let imageRef = ref(storage, `letschat/profile/${user.displayName}/${newFile.name}`)
+    
     uploadBytes(imageRef, file)
     .then(() => {
       console.log('image upload completed !')
@@ -80,6 +85,14 @@
       $profileUpdated = true
       console.log('use profile uupdated successfully !')
     })
+
+    // update user avatar
+    let userRef = doc(db, 'whatzapp_users', user.email)
+    updateDoc(userRef, {
+      avatar: url
+    }).then(() => {
+      console.log('user avatar updated successfully !')
+    })
   }
 
   onMount(() => {
@@ -89,7 +102,7 @@
 </script>
 
 <ul
-  class="menu-settings"
+  class="modal-settings"
   on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
 >
@@ -108,6 +121,7 @@
           {:else}
             <img src="/joke.png" alt="" width="96" height="96" />
           {/if}
+          <!-- <ion-icon name="camera-outline" class="icon-camera" on:click|stopPropagation={() => $showCameraModal = true} /> -->
           <label>
             <input type="file" on:change={handleFileChange} accept="image/png, image/jpg, image/jpeg" />
             <ion-icon name="camera-outline" class="icon-camera" />
@@ -191,6 +205,9 @@
       </div>
     </li>
   </div>
+  <!-- {#if showCameraModal}
+    <CameraModal />
+  {/if} -->
 </ul>
 
 <style>
@@ -199,12 +216,17 @@
     height: 0;
     opacity: 0;
   }
+
   .icon-camera {
     width: 28px;
     height: 28px;
     position: absolute;
     right: 0;
     bottom: 0;
+  }
+
+  .image-wrapper img {
+    object-fit: cover;
   }
 
   .image-wrapper {
