@@ -84,7 +84,7 @@
 
   $: setTimeout(() => {
     if (!users.length) loading = true;
-  }, 3000);
+  }, 8000);
 </script>
 
 <!-- style:width={$mobile && $page.url.pathname === "/"
