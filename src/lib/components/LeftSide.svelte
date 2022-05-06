@@ -2,7 +2,7 @@
   import {
     mobile,
     keyword,
-    username,
+    selectedUsername,
     loginUserEmail,
     profileUpdated,
     showThemeModal,
@@ -34,11 +34,9 @@
 
   const selectUser = (selectedUser) => {
     console.log(`${selectedUser.name} is selected`);
-    $username = selectedUser.name;
-    goto(`/${$username}`)
+    $selectedUsername = selectedUser.name;
+    goto(`/${$selectedUsername}`)
   };
-
-  // $: if ($username) goto(`/${$username}`);
 
   $: if ($profileUpdated) {
     console.log("user profile updated detected !");

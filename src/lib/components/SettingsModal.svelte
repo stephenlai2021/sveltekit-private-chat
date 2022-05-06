@@ -19,8 +19,11 @@
   import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { v4 } from 'uuid'
   import CameraModal from '$lib/components/CameraModal.svelte'
+  // import { handleFileChange } from '$lib/functions/handleFileChange'
 
   export let user;
+
+  // const { file, fileError } = handleFileChange()
 
   let url = null
   let file = null
@@ -62,6 +65,7 @@
   }
 
   $: if (file) {    
+    // change file type to .png
     let blob = file.slice(0, file.size, 'image/png')
     let newFile = new File([blob], 'avatar.png', { type: 'image/png' })
     let imageRef = ref(storage, `letschat/profile/${user.displayName}/${newFile.name}`)
@@ -156,7 +160,7 @@
         {/if}
       </div>
     </li>
-    {#if !$mobile && $page.url.pathname != "/"}
+    <!-- {#if !$mobile && $page.url.pathname != "/"} -->
       <li>
         <div class="content">
           <label>
@@ -187,7 +191,7 @@
           </div>
         </div>
       </li>
-    {/if}
+    <!-- {/if} -->
     <li>
       <div class="content">
         <ion-icon name="information-circle-outline" />
@@ -226,7 +230,8 @@
   }
 
   .image-wrapper img {
-    object-fit: cover;
+    border-radius: 8px;
+    object-fit: contain;
   }
 
   .image-wrapper {

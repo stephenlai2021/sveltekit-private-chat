@@ -1,6 +1,20 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const audioURL = writable(null)
+export const audioBlob = writable(null)
+export const audioConfirmed = writable(null)
+export const audioFile = writable(null)
+export const pictureConfirmed = writable(false)
+export const videoStream = writable(null)
+export const pictureBlob = writable(null)
+export const showAudioPlayerModal = writable(false)
+export const showAudioRecordingModal = writable(false)
+export const showPhotoModal = writable(false)
+export const showCameraPreviewModal = writable(false)
+export const pictureFile = writable(null)
+export const pictureURI = writable(null)
+export const selectedImg = writable(null)
 export const active = writable(false);
 export const profileUpdated = writable(false);
 export const loginState = writable(false);
@@ -13,6 +27,7 @@ export const keyword = writable("");
 export const activeItem = writable(null)
 export const loginFormShow = writable(false);
 export const profileUpdate = writable(false);
+export const showPicModal = writable(false)
 export const showThemeModal = writable(false);
 export const showCameraModal = writable(false);
 export const showSettingsModal = writable(false);
@@ -27,11 +42,18 @@ export const bgColor = writable(
 
 // export const activeItem = writable(null);
 
-export const username = writable(
-  browser && localStorage.getItem("selected user")
+export const selectedUsername = writable(
+  browser && localStorage.getItem("selected user name")
 );
-username.subscribe(
-  (val) => browser && localStorage.setItem("selected user", val)
+selectedUsername.subscribe(
+  (val) => browser && localStorage.setItem("selected user name", val)
+);
+
+export const loggedinUser = writable(
+  browser && JSON.parse(localStorage.getItem("loggedin user"))
+);
+loggedinUser.subscribe(
+  (val) => browser && localStorage.setItem("loggedin user", JSON.stringify(val))
 );
 
 export const loginUserEmail = writable(
