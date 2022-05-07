@@ -15,7 +15,7 @@
   import { goto } from "$app/navigation";
   import {
     mobile,
-    // message,
+    message,
     selectedImg,
     pictureFile,
     pictureBlob,
@@ -42,7 +42,7 @@
   console.log("selfie", $pictureFile);
 
   let q = null;
-  let message = "";
+  // let message = "";
   let sentMessage = "";
   let loggedinUser = {};
   let selectedUser = {};
@@ -107,8 +107,8 @@
 
   const handleSubmit = async () => {
     $showEmojiMenu = false;
-    sentMessage = message;
-    message = "";
+    sentMessage = $message;
+    $message = "";
 
     // let imgPath =
     //   loggedinUser.displayName > $selectedUsername
@@ -415,15 +415,15 @@
 
   <div class="chatbox_input">
     <div class="icon-wrapper icon-happy">
-      <!-- <ion-icon
-      name="happy-outline"
-      class="happy"
-      on:click|stopPropagation={() => ($showEmojiMenu = true)}
-    /> -->
-      <span
+      <ion-icon
+        name="happy-outline"
+        class="happy"
+        on:click|stopPropagation={() => ($showEmojiMenu = true)}
+      />
+      <!-- <span
         class="happy"
         on:click|stopPropagation={() => ($showEmojiMenu = true)}>Emoji</span
-      >
+      > -->
     </div>
     <form on:submit|preventDefault={handleSubmit} class="messageBox">
       <input type="text" placeholder="Type a message" bind:value={message} />
@@ -437,8 +437,8 @@
       class="icon-wrapper icon-mic"
       on:click={() => ($showAudioRecordingModal = true)}
     >
-      <!-- <ion-icon name="mic-outline" style:font-size="1.5em" /> -->
-      <span class="material-symbols-outlined" style:cursor="pointer">mic</span>
+      <ion-icon name="mic-outline" style:font-size="1.5em" />
+      <!-- <span class="material-symbols-outlined" style:cursor="pointer">mic</span> -->
     </div>
   </div>
 </div>
@@ -474,7 +474,6 @@
 <!-- {#if $showBgSettingsModal}
   <BgSettingsModal />
 {/if} -->
-
 <style>
   :root {
     --bg-color: #d6d8dc;
