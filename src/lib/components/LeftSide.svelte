@@ -1,5 +1,6 @@
 <script>
   import {
+    leftSide,
     mobile,
     keyword,
     selectedUsername,
@@ -9,6 +10,8 @@
     showCameraModal,
     showSettingsModal,
     showAddFriendModal,
+    showAudioPlayerModal,
+    showAudioRecordingModal
   } from "$lib/store";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
@@ -94,7 +97,7 @@
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
     ? "100%"
-    : $mobile && $page.url.pathname != "/"
+    : $mobile && $page.url.pathname != "/" || $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "0%"
     : $page.url.pathname != "/login"
     ? "450px"

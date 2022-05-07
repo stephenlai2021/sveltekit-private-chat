@@ -6,7 +6,10 @@
     bgColor,
     loginFormShow,
     profileUpdated,
+    showCameraModal,
     showSettingsModal,
+    showAudioPlayerModal,
+    showAudioRecordingModal
   } from "$lib/store";
   import { page } from "$app/stores";
 
@@ -30,7 +33,7 @@
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor}
-  style:display={$mobile
+  style:display={$mobile || $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "none"
     : $page.url.pathname === "/login"
     ? "none"

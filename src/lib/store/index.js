@@ -1,6 +1,9 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const message = writable('')
+export const showEmojiMenu = writable(false)
+export const leftSide = writable(null)
 export const audioURL = writable(null)
 export const audioBlob = writable(null)
 export const audioConfirmed = writable(null)

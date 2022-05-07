@@ -19,8 +19,8 @@
   };
 </script>
 
-<div class="image-modal">
-  <div class="image-wrapper">
+<div class="cameraPreview-modal">
+  <div class="cameraPreview-wrapper">
     <img src={$pictureURI} alt="" class="selfie" />
     <div class="menu-option">
       <ion-icon name="checkmark-outline" on:click={handleConfirm} />
@@ -33,6 +33,11 @@
 </div>
 
 <style>
+  ion-icon {
+    /* font-size: clamp(2em, 3em, 4em); */
+    font-size: 2em;
+  }
+
   .menu-option {
     width: 100%;
     display: flex;
@@ -42,7 +47,7 @@
     bottom: 20px;
   }
 
-  .image-wrapper {
+  .cameraPreview-wrapper {
     position: relative;
     width: 600px;
     max-height: 100vh;
@@ -54,7 +59,7 @@
     object-fit: contain;
   }
 
-  .image-modal {
+  .cameraPreview-modal {
     display: flex;
     justify-content: center;
     align-items: center;

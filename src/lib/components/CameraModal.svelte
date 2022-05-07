@@ -52,6 +52,8 @@
     });
     $pictureFile = file;
     console.log("selfie", $pictureFile);
+
+    $showCameraPreviewModal = true
   };
 
   onMount(async () => {
@@ -86,23 +88,25 @@
     <video bind:this={video} autoplay>
       <track kind="captions" />
     </video>
-    {#if videoReady}
-      <canvas bind:this={canvas} on:click={() => ($showCameraPreviewModal = true)} />
-      <ion-icon
-        name="aperture-outline"
-        class="icon-shoot"
-        on:click={takePicture}
-      />
-    {/if}
   </div>
+  {#if videoReady}
+    <!-- <canvas bind:this={canvas} on:click={() => ($showCameraPreviewModal = true)} /> -->
+    <canvas bind:this={canvas} />
+    <ion-icon
+      name="aperture-outline"
+      class="icon-shoot"
+      on:click={takePicture}
+    />
+    {/if}
 </div>
 
 <style>
-  canvas {
+  /* canvas {
     bottom: 25px;
     border-radius: 50%;
     border: 1px solid;
-  }
+    display: none;
+  } */
 
   canvas {
     position: absolute;
@@ -113,6 +117,10 @@
     background-size: contain;
     color: white;
     cursor: pointer;
+    bottom: 25px;
+    border-radius: 50%;
+    border: 1px solid;
+    display: none;
   }
 
   .video-wrapper {
@@ -125,15 +133,17 @@
 
   video {
     width: 100%;
+    /* height: 100%; */
     background: center no-repeat
       url("https://www.freeiconspng.com/uploads/camera-icon-android-camera-shutter-icon-5.png");
-    background-size: contain;
+    background-size: 300px 300px;
   }
 
   .icon-close {
     position: absolute;
     right: 10px;
     top: 10px;
+    z-index: 500;
   }
 
   .icon-shoot {
@@ -167,4 +177,10 @@
       bottom: 20px;
     }
   }
+
+  /* @media (orientation: landscape) { 
+    video {
+      height: 100vh;      
+    }
+  } */
 </style>

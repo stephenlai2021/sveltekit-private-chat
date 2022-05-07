@@ -83,7 +83,7 @@
 </svelte:head>
 
 <SvelteTheme />
-<div class="wrapper">
+<div class="wrapper" on:click|stopPropagation>
   <SidebarMenu />
   <LeftSide />
   <div

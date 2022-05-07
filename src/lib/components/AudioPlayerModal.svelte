@@ -1,6 +1,7 @@
 <script>
   import {
     showAudioPlayerModal,
+    showAudioRecordingModal,
     audioFile,
     audioURL,
     audioConfirmed,
@@ -13,6 +14,7 @@
   };
 
   const handleDelete = () => {
+    $showAudioRecordingModal = false;
     $showAudioPlayerModal = false;
     $audioFile = null;
   };

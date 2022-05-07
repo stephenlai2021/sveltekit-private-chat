@@ -15,6 +15,7 @@
   import { goto } from "$app/navigation";
   import {
     mobile,
+    message,
     selectedImg,
     pictureFile,
     pictureBlob,
@@ -29,17 +30,19 @@
     showCameraModal,
     showSettingsModal,
     showAddFriendModal,
+    showEmojiMenu,
     pictureConfirmed,
   } from "$lib/store";
   import CameraModal from "$lib/components/CameraModal.svelte";
   import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
   import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
+  import EmojiMenu from "$lib/components/EmojiMenu.svelte";
 
   console.log("selfie", $pictureFile);
 
   let q = null;
-  let message = "";
+  // let message = "";
   let sentMessage = "";
   let loggedinUser = {};
   let selectedUser = {};
@@ -49,6 +52,7 @@
   let file = null;
   let fileError = null;
   let imageRef = null;
+  // let showEmojiMenu = true;
   let colRef = collection(db, "whatzapp_users");
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
@@ -89,7 +93,7 @@
             from: loggedinUser.displayName,
             to: $selectedUsername,
             createdAt: Timestamp.fromDate(new Date()),
-            image: url || "",
+            imageURL: url || "",
           }).then(() => {
             console.log("document added successfully 😎");
           });
@@ -102,67 +106,87 @@
   };
 
   const handleSubmit = async () => {
-    sentMessage = message;
-    message = "";
-    let imgPath =
+    $showEmojiMenu = false
+    sentMessage = $message;
+    $message = "";
+
+    // let imgPath =
+    //   loggedinUser.displayName > $selectedUsername
+    //     ? `${loggedinUser.displayName} & ${$selectedUsername}`
+    //     : `${$selectedUsername} & ${loggedinUser.displayName}`;
+
+    // if ($selectedImg) {
+    //   imageRef = ref(
+    //     storage,
+    //     `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+    //       $selectedImg.name
+    //     }`
+    //   );
+    //   try {
+    //     await uploadBytes(imageRef, $selectedImg);
+    //     console.log("image upload completed !");
+    //     $selectedImg = null;
+    //   } catch (err) {
+    //     console.log("image uploaded failed");
+    //   }
+    // }
+
+    // if ($pictureFile) {
+    //   imageRef = ref(
+    //     storage,
+    //     `letschat/messages/camera/${imgPath}/${$pictureFile.name}`
+    //   );
+    //   try {
+    //     await uploadBytes(imageRef, $pictureBlob);
+    //     console.log("picture upload completed !");
+    //     $pictureFile = null;
+    //   } catch (err) {
+    //     console.log("picture uploaded failed");
+    //   }
+    // }
+
+    // try {
+    //   const url = await getDownloadURL(imageRef);
+    //   console.log("get downloaded url: ", url);
+
+    //   let msgId =
+    //     loggedinUser.displayName > $selectedUsername
+    //       ? `${loggedinUser.displayName} & ${$selectedUsername}`
+    //       : `${$selectedUsername} & ${loggedinUser.displayName}`;
+    //   let msgRef = collection(db, "messages", msgId, "chat");
+    //   try {
+    //     await addDoc(msgRef, {
+    //       message: sentMessage,
+    //       from: loggedinUser.displayName,
+    //       to: $selectedUsername,
+    //       createdAt: Timestamp.fromDate(new Date()),
+    //       image: url || "",
+    //     });
+    //     sentMessage = "";
+    //     console.log("message created successfully 😁");
+    //   } catch (error) {
+    //     console.log("ooh, something went wrong 😥", error);
+    //   }
+    // } catch (err) {
+    //   console.log(err.message);
+    // }
+
+    let msgId =
       loggedinUser.displayName > $selectedUsername
         ? `${loggedinUser.displayName} & ${$selectedUsername}`
         : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-    if ($selectedImg) {
-      imageRef = ref(
-        storage,
-        `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-          $selectedImg.name
-        }`
-      );
-      try {
-        await uploadBytes(imageRef, $selectedImg);
-        console.log("image upload completed !");
-        $selectedImg = null;
-      } catch (err) {
-        console.log("image uploaded failed");
-      }
-    }
-
-    if ($pictureFile) {
-      imageRef = ref(
-        storage,
-        `letschat/messages/camera/${imgPath}/${$pictureFile.name}`
-      );
-      try {
-        await uploadBytes(imageRef, $pictureBlob);
-        console.log("picture upload completed !");
-        $pictureFile = null;
-      } catch (err) {
-        console.log("picture uploaded failed");
-      }
-    }
-
+    let msgRef = collection(db, "messages", msgId, "chat");
     try {
-      const url = await getDownloadURL(imageRef);
-      console.log("get downloaded url: ", url);
-
-      let msgId =
-        loggedinUser.displayName > $selectedUsername
-          ? `${loggedinUser.displayName} & ${$selectedUsername}`
-          : `${$selectedUsername} & ${loggedinUser.displayName}`;
-      let msgRef = collection(db, "messages", msgId, "chat");
-      try {
-        await addDoc(msgRef, {
-          message: sentMessage,
-          from: loggedinUser.displayName,
-          to: $selectedUsername,
-          createdAt: Timestamp.fromDate(new Date()),
-          image: url || "",
-        });
-        message = "";
-        console.log("message submitted successfully 😁");
-      } catch (error) {
-        console.log("ooh, something went wrong 😥", error);
-      }
-    } catch (err) {
-      console.log(err.message);
+      await addDoc(msgRef, {
+        message: sentMessage,
+        from: loggedinUser.displayName,
+        to: $selectedUsername,
+        createdAt: Timestamp.fromDate(new Date()),
+      });
+      sentMessage = "";
+      console.log("message created successfully 😁");
+    } catch (error) {
+      console.log("ooh, something went wrong 😥", error);
     }
   };
 
@@ -208,7 +232,7 @@
           from: loggedinUser.displayName,
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
-          image: url || "",
+          pictureURL: url || "",
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -241,7 +265,7 @@
           from: loggedinUser.displayName,
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
-          audio: url || "",
+          audioURL: url || "",
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -267,139 +291,152 @@
   {/if}
 </svelte:head>
 
-<img
-  src="https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
-  alt=""
-/>
-<div class="header">
-  <div class="left-part">
-    <ion-icon
-      name="arrow-back-outline"
-      class="arrow-back"
-      on:click={() => goto("/")}
-    />
-    {#if ready}
-      <div class="imgText">
-        <div class="userimg">
-          {#if selectedUser.avatar}
-            <img src={selectedUser.avatar} alt="" />
-          {:else}
-            <img src="/joke.png" alt="" />
-          {/if}
-          <div
-            class={selectedUser.isOnline ? "status online" : "status offline"}
-          />
-        </div>
-        <div class="details">
-          <h4>{selectedUser.name}</h4>
-        </div>
-      </div>
-    {:else}
-      <div class="imgText">
-        <div class="userimg">
-          <div class="user-avatar animation" />
-        </div>
-        <div class="details">
-          <h4 class="user-name animation">Bao Yang</h4>
-        </div>
-      </div>
-    {/if}
-  </div>
-  <div class="right-part">
-    <!-- <ion-icon name="create-outline" /> -->
-    <ion-icon name="videocam-outline" />
-    {#if $mobile}
-      <label>
-        <input
-          type="file"
-          on:change={handleFileChange}
-          accept="image/png, image/jpg, image/jpeg"
-        />
-        <ion-icon name="document-attach-outline" />
-      </label>
-    {:else}
+<!-- <div on:click|stopPropagation />> -->
+  <img
+    src="https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
+    alt=""
+  />
+  <div class="header">
+    <div class="left-part">
       <ion-icon
-        name="camera-outline"
-        on:click={() => ($showCameraModal = true)}
+        name="arrow-back-outline"
+        class="arrow-back"
+        on:click={() => goto("/")}
       />
-      <label>
-        <input
-          type="file"
-          on:change={handleFileChange}
-          accept="image/png, image/jpg, image/jpeg"
+      {#if ready}
+        <div class="imgText">
+          <div class="userimg">
+            {#if selectedUser.avatar}
+              <img src={selectedUser.avatar} alt="" />
+            {:else}
+              <img src="/joke.png" alt="" />
+            {/if}
+            <div
+              class={selectedUser.isOnline ? "status online" : "status offline"}
+            />
+          </div>
+          <div class="details">
+            <h4>{selectedUser.name}</h4>
+          </div>
+        </div>
+      {:else}
+        <div class="imgText">
+          <div class="userimg">
+            <div class="user-avatar animation" />
+          </div>
+          <div class="details">
+            <h4 class="user-name animation">Bao Yang</h4>
+          </div>
+        </div>
+      {/if}
+    </div>
+    <div class="right-part">
+      <ion-icon name="videocam-outline" />
+      {#if $mobile}
+        <label>
+          <input
+            type="file"
+            on:change={handleFileChange}
+            accept="image/png, image/jpg, image/jpeg"
+          />
+          <ion-icon name="document-attach-outline" />
+        </label>
+      {:else}
+        <ion-icon
+          name="camera-outline"
+          on:click={() => ($showCameraModal = true)}
         />
-        <ion-icon name="image-outline" />
-        <!-- <img src="/icon-image.png" alt="" width="24" height="24"> -->
-      </label>
-    {/if}
-    <ion-icon name="location-outline" />
+        <label>
+          <input
+            type="file"
+            on:change={handleFileChange}
+            accept="image/png, image/jpg, image/jpeg"
+          />
+          <ion-icon name="image-outline" />
+          <!-- <img src="/icon-image.png" alt="" width="24" height="24"> -->
+        </label>
+      {/if}
+      <ion-icon name="create-outline" />
+      <ion-icon name="location-outline" />
+    </div>
+    <ion-icon name="menu-outline" class="icon-menu" />
   </div>
-  <ion-icon name="menu-outline" class="icon-menu" />
-</div>
 
-<div class="chatBox">
-  <div class="message my_message">
-    <p>Hi<br /><span>12:15</span></p>
+  <div class="chatBox">
+    <div class="message my_message">
+      <p>Hi<br /><span>12:15</span></p>
+    </div>
+    <div class="message friend_message">
+      <p>Hello<br /><span>12:18</span></p>
+    </div>
+    <div class="message my_message">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+        /><span>12:15</span>
+      </p>
+    </div>
+    <div class="message friend_message">
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
+        accusantium alias, optio quas voluptas consequuntur.<br /><span
+          >12:18</span
+        >
+      </p>
+    </div>
+    <div class="message my_message">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+        /><span>12:15</span>
+      </p>
+    </div>
+    <div class="message friend_message">
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
+        accusantium alias, optio quas voluptas consequuntur.<br /><span
+          >12:18</span
+        >
+      </p>
+    </div>
+    <div class="message my_message">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+        /><span>12:15</span>
+      </p>
+    </div>
+    <div class="message friend_message">
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
+        accusantium alias, optio quas voluptas consequuntur.<br /><span
+          >12:18</span
+        >
+      </p>
+    </div>
   </div>
-  <div class="message friend_message">
-    <p>Hello<br /><span>12:18</span></p>
-  </div>
-  <div class="message my_message">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-      /><span>12:15</span>
-    </p>
-  </div>
-  <div class="message friend_message">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
-      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
-    </p>
-  </div>
-  <div class="message my_message">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-      /><span>12:15</span>
-    </p>
-  </div>
-  <div class="message friend_message">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
-      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
-    </p>
-  </div>
-  <div class="message my_message">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-      /><span>12:15</span>
-    </p>
-  </div>
-  <div class="message friend_message">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
-      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
-    </p>
-  </div>
-</div>
 
-<div class="chatbox_input">
-  <div class="icon-wrapper icon-happy">
-    <ion-icon name="happy-outline" class="happy" />
-    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="ionicon happy" viewBox="0 0 512 512"><title>Happy</title><circle cx="184" cy="232" r="24"/><path d="M256.05 384c-45.42 0-83.62-29.53-95.71-69.83a8 8 0 017.82-10.17h175.69a8 8 0 017.82 10.17c-11.99 40.3-50.2 69.83-95.62 69.83z"/><circle cx="328" cy="232" r="24"/><circle cx="256" cy="256" r="208" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/></svg> -->
+  <div class="chatbox_input">
+    <div class="icon-wrapper icon-happy">
+      <ion-icon name="happy-outline" class="happy" on:click={() => $showEmojiMenu = true} />
+      <!-- <span class="happy" on:click={() => ($showEmojiMenu = true)}>Emoji</span> -->
+    </div>
+    <form on:submit|preventDefault={handleSubmit} class="messageBox">
+      <input type="text" placeholder="Type a message" bind:value={$message} />
+      <ion-icon
+        name="paper-plane-outline"
+        class="icon-submit"
+        on:click|preventDefault={handleSubmit}
+      />
+    </form>
+    <div
+      class="icon-wrapper icon-mic"
+      on:click={() => ($showAudioRecordingModal = true)}
+    >
+      <!-- <ion-icon name="mic-outline" style:font-size="1.5em" /> -->
+      <span class="material-symbols-outlined" style:cursor="pointer">
+        mic
+      </span>
+    </div>
   </div>
-  <form on:submit|preventDefault={handleSubmit} class="messageBox">
-    <input type="text" placeholder="Type a message" bind:value={message} />
-    <ion-icon
-      name="paper-plane-outline"
-      class="icon-submit"
-      on:click|preventDefault={handleSubmit}
-    />
-  </form>
-  <div class="icon-wrapper icon-mic" on:click={() => ($showAudioRecordingModal = true)}>
-    <!-- <ion-icon name="mic-outline" style:font-size="1.5em" /> -->
-    <span class="material-symbols-outlined"> mic </span>
-  </div>
-</div>
+<!-- </div> -->
 
 {#if $showAudioPlayerModal}
   <AudioPlayerModal />
@@ -417,6 +454,10 @@
   <CameraPreviewModal />
 {/if}
 
+{#if $showEmojiMenu}
+  <EmojiMenu />
+{/if}
+
 <!-- {#if $showPicModal}
   <PicModal />
 {/if} -->
@@ -428,7 +469,6 @@
 <!-- {#if $showBgSettingsModal}
   <BgSettingsModal />
 {/if} -->
-
 <style>
   :root {
     --bg-color: #d6d8dc;

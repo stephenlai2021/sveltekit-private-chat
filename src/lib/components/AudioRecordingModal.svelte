@@ -49,7 +49,7 @@
       track.stop();
     });
     active = false;
-    $showAudioRecordingModal = false;
+    // $showAudioRecordingModal = false;
   };
 
   onMount(() => {
@@ -66,11 +66,11 @@
 </script>
 
 <div class="audio-modal">
-  <ion-icon
+  <!-- <ion-icon
     name="close-outline"
     class="icon-close"
     on:click={() => ($showAudioRecordingModal = false)}
-  />
+  /> -->
   <div class="audio-wrapper">
     <div class="circle" class:active>
       <ion-icon name="mic-outline" class="icon-mic" on:click={stopRecording} />
@@ -96,7 +96,7 @@
 
   .circle.active::before {
     background: gray;
-    animation: bounce 0.8s ease-in-out infinite 0.5s;
+    /* animation: bounce 0.8s ease-in-out infinite 0.5s; */
   }
 
   .circle.active .icon-mic {
