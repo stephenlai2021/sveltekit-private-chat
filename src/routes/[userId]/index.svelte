@@ -426,7 +426,7 @@
       > -->
     </div>
     <form on:submit|preventDefault={handleSubmit} class="messageBox">
-      <input type="text" placeholder="Type a message" bind:value={message} />
+      <input type="text" placeholder="Type a message" bind:value={$message} />
       <ion-icon
         name="paper-plane-outline"
         class="icon-submit"
