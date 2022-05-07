@@ -15,7 +15,7 @@
   import { goto } from "$app/navigation";
   import {
     mobile,
-    message,
+    // message,
     selectedImg,
     pictureFile,
     pictureBlob,
@@ -42,7 +42,7 @@
   console.log("selfie", $pictureFile);
 
   let q = null;
-  // let message = "";
+  let message = "";
   let sentMessage = "";
   let loggedinUser = {};
   let selectedUser = {};
@@ -106,9 +106,9 @@
   };
 
   const handleSubmit = async () => {
-    $showEmojiMenu = false
-    sentMessage = $message;
-    $message = "";
+    $showEmojiMenu = false;
+    sentMessage = message;
+    message = "";
 
     // let imgPath =
     //   loggedinUser.displayName > $selectedUsername
@@ -291,7 +291,7 @@
   {/if}
 </svelte:head>
 
-<!-- <div on:click|stopPropagation />> -->
+<div>
   <img
     src="https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
     alt=""
@@ -415,11 +415,18 @@
 
   <div class="chatbox_input">
     <div class="icon-wrapper icon-happy">
-      <ion-icon name="happy-outline" class="happy" on:click={() => $showEmojiMenu = true} />
-      <!-- <span class="happy" on:click={() => ($showEmojiMenu = true)}>Emoji</span> -->
+      <!-- <ion-icon
+      name="happy-outline"
+      class="happy"
+      on:click|stopPropagation={() => ($showEmojiMenu = true)}
+    /> -->
+      <span
+        class="happy"
+        on:click|stopPropagation={() => ($showEmojiMenu = true)}>Emoji</span
+      >
     </div>
     <form on:submit|preventDefault={handleSubmit} class="messageBox">
-      <input type="text" placeholder="Type a message" bind:value={$message} />
+      <input type="text" placeholder="Type a message" bind:value={message} />
       <ion-icon
         name="paper-plane-outline"
         class="icon-submit"
@@ -431,12 +438,10 @@
       on:click={() => ($showAudioRecordingModal = true)}
     >
       <!-- <ion-icon name="mic-outline" style:font-size="1.5em" /> -->
-      <span class="material-symbols-outlined" style:cursor="pointer">
-        mic
-      </span>
+      <span class="material-symbols-outlined" style:cursor="pointer">mic</span>
     </div>
   </div>
-<!-- </div> -->
+</div>
 
 {#if $showAudioPlayerModal}
   <AudioPlayerModal />
@@ -469,6 +474,7 @@
 <!-- {#if $showBgSettingsModal}
   <BgSettingsModal />
 {/if} -->
+
 <style>
   :root {
     --bg-color: #d6d8dc;

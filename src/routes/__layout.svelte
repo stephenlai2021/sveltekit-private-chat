@@ -31,7 +31,7 @@
   import LeftSide from "$lib/components/LeftSide.svelte";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
-
+  
   let user = null;
   let users = null;
   let colRef = collection(db, "whatzapp_users");

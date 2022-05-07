@@ -1,5 +1,5 @@
 <script>
-  import { showEmojiMenu, message } from '$lib/store'
+  import { showEmojiMenu, message } from "$lib/store";
 
   let emojis = [];
   let selectedSet = 0;
@@ -18,7 +18,7 @@
   const chooseEmojiSet = (e) => {
     selectedSet = Number(e.target.dataset.id);
     clearEmojiMenu();
-  };  
+  };
 
   const addEmoji = (e) => {
     $message += e.target.textContent;
@@ -40,7 +40,7 @@
       </div>
     {/each}
     <!-- <div class="icon-close" on:click|stopPropagation={() => ($showEmojiMenu = false)}>X</div> -->
-    <ion-icon name="close-outline" class="icon-close" on:click|self={() => ($showEmojiMenu = false)} />
+    <ion-icon name="close-outline" class="icon-close" on:click={() => ($showEmojiMenu = false)} />
   </header>
 
   {#each emojis as emoji}
@@ -72,7 +72,6 @@
     align-items: center;
     justify-content: space-around;
     background: #fff;
-    /* border-bottom: 1px solid gray; */
   }
 
   .emoji-menu header div {
@@ -82,7 +81,6 @@
   span {
     font-size: 1.5rem;
     padding: 0.3rem;
-    /* 		border: 1px solid gray; */
     background: #eee;
     cursor: pointer;
   }
