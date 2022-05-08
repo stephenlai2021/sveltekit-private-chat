@@ -33,9 +33,11 @@
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor}
-  style:display={$mobile || $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
+  style:display={$mobile
     ? "none"
     : $page.url.pathname === "/login"
+    ? "none"
+    : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "none"
     : "flex"}
 >

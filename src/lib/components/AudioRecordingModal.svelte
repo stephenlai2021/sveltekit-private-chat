@@ -1,46 +1,73 @@
 <script>
   import { onMount } from "svelte";
-  import {
-    showAudioRecordingModal,
-    audioFile
-  } from "$lib/store";
+  import { audioFile } from "$lib/store";
 
   let active = false;
   let second = 0;
   let mediaStream = null;
   let mediaRecorder = null;
   let zero = "0";
+  let volumeMeter = null;
 
   const timer = setInterval(() => {
     second++;
   }, 1000);
 
+  const mediaConstraints = {
+    audio: {
+      echoCancellation: true,
+    },
+  };
+
   const handleRecording = async () => {
     active = true;
     try {
-      mediaStream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-      });
-      mediaRecorder = new MediaRecorder(mediaStream);
-      mediaRecorder.start();
-
-      let chuck = [];
-      mediaRecorder.addEventListener("dataavailable", (e) => {
-        chuck.push(e.data);
-      });
-
-      mediaRecorder.addEventListener("stop", (e) => {
-        let blob = new Blob(chuck, {
-          type: "audio/wav",
-        });
-        $audioFile = new File([blob], `${new Date().getTime()}.wav`, {
-          type: blob.type,
-        });
-        console.log("audio file:", $audioFile);
-      });
+      mediaStream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+      measureMicVolume();
+      recordVoice()
     } catch (err) {
       console.log(err.message);
     }
+  };
+
+  const recordVoice = () => {
+    mediaRecorder = new MediaRecorder(mediaStream);
+    mediaRecorder.start();
+
+    let chuck = [];
+    mediaRecorder.addEventListener("dataavailable", (e) => {
+      chuck.push(e.data);
+    });
+
+    mediaRecorder.addEventListener("stop", (e) => {
+      let blob = new Blob(chuck, {
+        type: "audio/wav",
+      });
+      $audioFile = new File([blob], `${new Date().getTime()}.wav`, {
+        type: blob.type,
+      });
+      console.log("audio file:", $audioFile);
+    });
+  };
+
+  const measureMicVolume = () => {
+    const audioContext = new AudioContext();
+    const mediaStreamAudioSourceNode =
+      audioContext.createMediaStreamSource(mediaStream);
+    const analyserNode = audioContext.createAnalyser();
+    mediaStreamAudioSourceNode.connect(analyserNode);
+
+    const pcmData = new Float32Array(analyserNode.fftSize);
+    const onFrame = () => {
+      analyserNode.getFloatTimeDomainData(pcmData);
+      let sumSquares = 0.0;
+      for (const amplitude of pcmData) {
+        sumSquares += amplitude * amplitude;
+      }
+      volumeMeter.value = Math.sqrt(sumSquares / pcmData.length);
+      window.requestAnimationFrame(onFrame);
+    };
+    window.requestAnimationFrame(onFrame);
   };
 
   const stopRecording = () => {
@@ -49,7 +76,7 @@
       track.stop();
     });
     active = false;
-    // $showAudioRecordingModal = false;
+    // volumeMeter.value = 0
   };
 
   onMount(() => {
@@ -61,27 +88,36 @@
     zero = "";
     setTimeout(() => {
       stopRecording();
-    }, 1000)
+    }, 1000);
   }
 </script>
 
 <div class="audio-modal">
-  <!-- <ion-icon
-    name="close-outline"
-    class="icon-close"
-    on:click={() => ($showAudioRecordingModal = false)}
-  /> -->
   <div class="audio-wrapper">
     <div class="circle" class:active>
       <ion-icon name="mic-outline" class="icon-mic" on:click={stopRecording} />
     </div>
-    <div class="timer-wrapper">
-      <span class="timer">{zero}{second}</span>
-    </div>
+  </div>
+  <meter
+    class="volume-meter"
+    bind:this={volumeMeter}
+    high="0.25"
+    max="1"
+    value="0.0045595006073966"
+    />
+  <div class="timer-wrapper">
+    <span class="timer">{zero}{second}</span>
   </div>
 </div>
 
 <style>
+  meter {
+    appearance: auto;
+    width: 200px;
+    height: 50px;
+    margin: 30px 0 20px 0;
+  }
+
   .timer-wrapper {
     width: 100%;
     display: flex;
@@ -89,14 +125,13 @@
   }
 
   .timer {
-    margin-top: 20px;
     color: #b2b1b1;
     font-size: 3.5em;
   }
 
   .circle.active::before {
     background: gray;
-    /* animation: bounce 0.8s ease-in-out infinite 0.5s; */
+    animation: bounce 0.8s ease-in-out infinite 0.5s;
   }
 
   .circle.active .icon-mic {
@@ -167,6 +202,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     position: absolute;
     top: 0;
     left: 0;

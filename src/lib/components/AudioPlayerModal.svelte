@@ -10,6 +10,7 @@
 
   const handleConfirm = () => {
     $audioConfirmed = true;
+    $showAudioRecordingModal = false;
     $showAudioPlayerModal = false;
   };
 

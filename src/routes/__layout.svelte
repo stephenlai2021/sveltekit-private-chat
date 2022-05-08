@@ -17,6 +17,7 @@
     mobile,
     connection,
     loginFormShow,
+    showEmojiMenu,
     showThemeModal,
     showSettingsModal,
     showAddFriendModal,
@@ -83,7 +84,7 @@
 </svelte:head>
 
 <SvelteTheme />
-<div class="wrapper" on:click|stopPropagation>
+<div class="wrapper" on:click={() => $showEmojiMenu = false}>
   <SidebarMenu />
   <LeftSide />
   <div

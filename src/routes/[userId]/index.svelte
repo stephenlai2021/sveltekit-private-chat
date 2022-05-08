@@ -275,6 +275,7 @@
 
   $: if ($audioFile) {
     $audioURL = window.URL.createObjectURL($audioFile);
+    console.log('audio url', $audioURL)
     $showAudioPlayerModal = true;
   }
 
@@ -356,7 +357,8 @@
           <!-- <img src="/icon-image.png" alt="" width="24" height="24"> -->
         </label>
       {/if}
-      <ion-icon name="create-outline" />
+      <!-- <ion-icon name="create-outline" /> -->
+      <ion-icon name="color-palette-outline"></ion-icon>
       <ion-icon name="location-outline" />
     </div>
     <ion-icon name="menu-outline" class="icon-menu" />
@@ -422,7 +424,7 @@
       />
       <!-- <span
         class="happy"
-        on:click|stopPropagation={() => ($showEmojiMenu = true)}>Emoji</span
+        on:click|stopPropagation={() => ($showEmojiMenu = true)}>Emo</span
       > -->
     </div>
     <form on:submit|preventDefault={handleSubmit} class="messageBox">

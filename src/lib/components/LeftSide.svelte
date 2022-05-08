@@ -97,7 +97,9 @@
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
     ? "100%"
-    : $mobile && $page.url.pathname != "/" || $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
+    : $mobile && $page.url.pathname != "/" 
+    ? "0%"
+    : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "0%"
     : $page.url.pathname != "/login"
     ? "450px"

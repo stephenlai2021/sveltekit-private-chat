@@ -1,5 +1,5 @@
 <script>
-  import { showEmojiMenu, message } from "$lib/store";
+  import { message } from "$lib/store";
 
   let emojis = [];
   let selectedSet = 0;
@@ -32,15 +32,13 @@
   $: max = emojiSets[selectedSet].maxVal;
 </script>
 
-<div class="emoji-menu">
+<div class="emoji-menu" on:click|stopPropagation>
   <header>
     {#each setIcons as icon, i}
-      <div data-id={i} on:click={chooseEmojiSet}>
+      <div data-id={i} on:click={chooseEmojiSet} class="menu-icon">
         {String.fromCodePoint(icon)}
       </div>
     {/each}
-    <!-- <div class="icon-close" on:click|stopPropagation={() => ($showEmojiMenu = false)}>X</div> -->
-    <ion-icon name="close-outline" class="icon-close" on:click={() => ($showEmojiMenu = false)} />
   </header>
 
   {#each emojis as emoji}
@@ -53,10 +51,15 @@
     box-sizing: border-box;
   }
 
+  .menu-icon {
+    width: 42.56px;
+    text-align: center;
+  }
+
   .emoji-menu {
     position: absolute;
     bottom: 60px;
-    width: 300px;
+    width: 280px;
     height: 248px;
     overflow: scroll;
     display: flex;
@@ -64,14 +67,19 @@
     justify-content: flex-start;
     margin-left: 10px;
     background: #eee;
+    overflow-x: hidden;
   }
 
   .emoji-menu header {
-    width: 98%;
+    width: 300px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
     background: #fff;
+    margin: 3px 0;
+  }
+
+  .emoji-menu header div:hover {
+    border-bottom: 1px solid gray;
   }
 
   .emoji-menu header div {
@@ -87,12 +95,5 @@
 
   span:active {
     background: #fff;
-  }
-
-  .icon-close {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: right;
-    color: black;
   }
 </style>
