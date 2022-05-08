@@ -93,9 +93,9 @@
 </script>
 
 <div class="audio-modal">
-  <div class="audio-wrapper">
+  <div class="audio-wrapper" on:click={stopRecording}>
     <div class="circle" class:active>
-      <ion-icon name="mic-outline" class="icon-mic" on:click={stopRecording} />
+      <ion-icon name="mic-outline" class="icon-mic" />
     </div>
   </div>
   <meter
@@ -131,7 +131,7 @@
 
   .circle.active::before {
     background: gray;
-    animation: bounce 0.8s ease-in-out infinite 0.5s;
+    /* animation: bounce 0.8s ease-in-out infinite 0.5s; */
   }
 
   .circle.active .icon-mic {

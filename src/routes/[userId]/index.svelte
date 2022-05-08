@@ -439,8 +439,8 @@
       class="icon-wrapper icon-mic"
       on:click={() => ($showAudioRecordingModal = true)}
     >
-      <ion-icon name="mic-outline" style:font-size="1.5em" />
-      <!-- <span class="material-symbols-outlined" style:cursor="pointer">mic</span> -->
+      <!-- <ion-icon name="mic-outline" style:font-size="1.5em" /> -->
+      <span class="material-symbols-outlined" style:cursor="pointer">mic</span>
     </div>
   </div>
 </div>
@@ -491,7 +491,6 @@
     position: absolute;
     right: 15px;
     top: 7px;
-    /* font-size: 0.9em; */
     width: 20px;
     height: 20px;
     color: gray;
@@ -509,7 +508,6 @@
 
   .user-name {
     width: 80px;
-    /* opacity: 0; */
     color: transparent;
     border-radius: 2px;
   }
@@ -535,7 +533,6 @@
   .icon-mic {
     justify-content: flex-end;
     z-index: 500;
-    /* border: 1px solid; */
   }
 
   .icon-happy {
