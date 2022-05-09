@@ -38,6 +38,8 @@
   import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
+  import { browser } from "$app/env";
+  import { onMount } from "svelte";
 
   console.log("selfie", $pictureFile);
 
@@ -53,7 +55,13 @@
   let fileError = null;
   let imageRef = null;
   // let showEmojiMenu = true;
+  let background = null;
   let colRef = collection(db, "whatzapp_users");
+  let device = "";
+
+  const defaultBg =
+    "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
+  let defaultBgStyle = "0.06";
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
@@ -66,39 +74,41 @@
       console.log(file);
       console.log(`${file.name} is selected`);
       $selectedImg = file;
+      background.src = window.URL.createObjectURL($selectedImg);
+      defaultBgStyle = "0.3";
       fileError = null;
 
-      let imgPath =
-        loggedinUser.displayName > $selectedUsername
-          ? `${loggedinUser.displayName} & ${$selectedUsername}`
-          : `${$selectedUsername} & ${loggedinUser.displayName}`;
+      // let imgPath =
+      //   loggedinUser.displayName > $selectedUsername
+      //     ? `${loggedinUser.displayName} & ${$selectedUsername}`
+      //     : `${$selectedUsername} & ${loggedinUser.displayName}`;
 
-      let imageRef = ref(
-        storage,
-        `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-          file.name
-        }`
-      );
+      // let imageRef = ref(
+      //   storage,
+      //   `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+      //     file.name
+      //   }`
+      // );
 
-      uploadBytes(imageRef, file).then(() => {
-        console.log("image upload completed !");
-        getDownloadURL(imageRef).then((_url) => {
-          url = _url;
-          let msgId =
-            loggedinUser.displayName > $selectedUsername
-              ? `${loggedinUser.displayName} & ${$selectedUsername}`
-              : `${$selectedUsername} & ${loggedinUser.displayName}`;
-          let msgRef = collection(db, "messages", msgId, "chat");
-          addDoc(msgRef, {
-            from: loggedinUser.displayName,
-            to: $selectedUsername,
-            createdAt: Timestamp.fromDate(new Date()),
-            imageURL: url || "",
-          }).then(() => {
-            console.log("document added successfully 😎");
-          });
-        });
-      });
+      // uploadBytes(imageRef, file).then(() => {
+      //   console.log("image upload completed !");
+      //   getDownloadURL(imageRef).then((_url) => {
+      //     url = _url;
+      //     let msgId =
+      //       loggedinUser.displayName > $selectedUsername
+      //         ? `${loggedinUser.displayName} & ${$selectedUsername}`
+      //         : `${$selectedUsername} & ${loggedinUser.displayName}`;
+      //     let msgRef = collection(db, "messages", msgId, "chat");
+      //     addDoc(msgRef, {
+      //       from: loggedinUser.displayName,
+      //       to: $selectedUsername,
+      //       createdAt: Timestamp.fromDate(new Date()),
+      //       imageURL: url || "",
+      //     }).then(() => {
+      //       console.log("document added successfully 😎");
+      //     });
+      //   });
+      // });
     } else {
       file = null;
       fileError = "Please select an image file (png or jpg)";
@@ -190,6 +200,24 @@
     }
   };
 
+  onMount(() => {
+    background.src = defaultBg;
+
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+      device = "tablet";
+    } else if (
+      /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+        ua
+      )
+    ) {
+      device = "mobile";
+    }
+    device = "desktop";
+
+    console.log("device type: ", device);
+  });
+
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
   $: if (matched) {
@@ -275,7 +303,7 @@
 
   $: if ($audioFile) {
     $audioURL = window.URL.createObjectURL($audioFile);
-    console.log('audio url', $audioURL)
+    console.log("audio url", $audioURL);
     $showAudioPlayerModal = true;
   }
 
@@ -293,10 +321,8 @@
 </svelte:head>
 
 <div>
-  <img
-    src="https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
-    alt=""
-  />
+  <!-- <img bind:this={background} src={defaultBg} style:opacity={defaultBgStyle} alt="" /> -->
+  <img bind:this={background} style:opacity={defaultBgStyle} alt="" />
   <div class="header">
     <div class="left-part">
       <ion-icon
@@ -333,7 +359,7 @@
     </div>
     <div class="right-part">
       <ion-icon name="videocam-outline" />
-      {#if $mobile}
+      {#if device === "tablet" || device === "mobile"}
         <label>
           <input
             type="file"
@@ -358,7 +384,7 @@
         </label>
       {/if}
       <!-- <ion-icon name="create-outline" /> -->
-      <ion-icon name="color-palette-outline"></ion-icon>
+      <ion-icon name="color-palette-outline" />
       <ion-icon name="location-outline" />
     </div>
     <ion-icon name="menu-outline" class="icon-menu" />
@@ -439,8 +465,8 @@
       class="icon-wrapper icon-mic"
       on:click={() => ($showAudioRecordingModal = true)}
     >
-      <!-- <ion-icon name="mic-outline" style:font-size="1.5em" /> -->
-      <span class="material-symbols-outlined" style:cursor="pointer">mic</span>
+      <ion-icon name="mic-outline" style:font-size="1.5em" />
+      <!-- <span class="material-symbols-outlined" style:cursor="pointer">mic</span> -->
     </div>
   </div>
 </div>
@@ -524,6 +550,7 @@
 
   .right-part ion-icon {
     margin-right: 15px;
+    /* box-shadow: 2px 2px 2px gray; */
   }
 
   .icon-menu {
@@ -582,6 +609,8 @@
 
   .message.friend_message p {
     background: #f5f5f5;
+    /* opacity: 0.5;
+    backdrop-filter: blur(8px); */
     justify-content: flex-start;
   }
 

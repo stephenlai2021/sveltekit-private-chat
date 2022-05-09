@@ -17,7 +17,7 @@ export const showPhotoModal = writable(false)
 export const showCameraPreviewModal = writable(false)
 export const pictureFile = writable(null)
 export const pictureURI = writable(null)
-export const selectedImg = writable(null)
+// export const selectedImg = writable(null)
 export const active = writable(false);
 export const profileUpdated = writable(false);
 export const loginState = writable(false);
@@ -43,7 +43,16 @@ export const bgColor = writable(
   "linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%)"
 );
 
+// export const bgColor = writable("")
+
 // export const activeItem = writable(null);
+
+export const selectedImg = writable(
+  browser && localStorage.getItem("selected image")
+);
+selectedImg.subscribe(
+  (val) => browser && localStorage.setItem("selected image", val)
+);
 
 export const selectedUsername = writable(
   browser && localStorage.getItem("selected user name")
