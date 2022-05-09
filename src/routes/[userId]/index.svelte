@@ -58,10 +58,10 @@
   let background = null;
   let colRef = collection(db, "whatzapp_users");
   let device = "";
+  let defaultBgStyle = "0.06";
 
   const defaultBg =
     "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
-  let defaultBgStyle = "0.06";
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
@@ -206,11 +206,8 @@
     const ua = navigator.userAgent;
     if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
       device = "tablet";
-    } else if (
-      /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
-        ua
-      )
-    ) {
+    } 
+    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
       device = "mobile";
     }
     device = "desktop";
