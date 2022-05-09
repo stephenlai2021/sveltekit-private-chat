@@ -213,6 +213,7 @@
     device = "desktop";
 
     console.log("device type: ", device);
+    alert('device type: ', device)
   });
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
@@ -356,7 +357,7 @@
     </div>
     <div class="right-part">
       <ion-icon name="videocam-outline" />
-      {#if device === "tablet" || device === "mobile"}
+      {#if device != "desktop"}
         <label>
           <input
             type="file"
