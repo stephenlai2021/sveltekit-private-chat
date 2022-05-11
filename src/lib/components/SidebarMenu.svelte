@@ -32,7 +32,7 @@
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
-  style:background={$bgColor}
+  style:background="#cccccc"
   style:display={$mobile
     ? "none"
     : $page.url.pathname === "/login"
