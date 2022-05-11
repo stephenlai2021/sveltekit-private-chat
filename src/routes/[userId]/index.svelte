@@ -66,7 +66,16 @@
     file = e.target.files[0];
     $imageURL = await readURL(file);
     background.src = $imageURL;
-    $bgOpacity = 1;    
+    $bgOpacity = 0.6;    
+  };
+
+  const readURL = (file) => {
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload = (e) => res(e.target.result);
+      reader.onerror = (e) => rej(e);
+      reader.readAsDataURL(file);
+    });
   };
 
   // const handleFileChange = async (e) => {
@@ -201,15 +210,6 @@
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
-  };
-
-  const readURL = (file) => {
-    return new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.onload = (e) => res(e.target.result);
-      reader.onerror = (e) => rej(e);
-      reader.readAsDataURL(file);
-    });
   };
 
   onMount(() => {
