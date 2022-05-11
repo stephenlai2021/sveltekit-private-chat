@@ -42,7 +42,7 @@
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
   import { onMount } from "svelte";
-  import { browser } from '$app/env'
+  import { browser } from "$app/env";
 
   console.log("selfie", $pictureFile);
 
@@ -64,9 +64,9 @@
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
-    // $imageURL = await readURL(file);
+    $imageURL = await readURL(file);
     // background.src = $imageURL;
-    // $bgOpacity = 0.6;    
+    // $bgOpacity = 0.6;
   };
 
   const readURL = (file) => {
@@ -77,13 +77,6 @@
       reader.readAsDataURL(file);
     });
   };
-
-  $: if (file) {
-    $imageURL = readURL(file).then(() => {
-      background.src = $imageURL;
-      $bgOpacity = 0.6;    
-    })
-  }
 
   // const handleFileChange = async (e) => {
   //   const types = ["image/png", "image/jpg", "image/jpeg"];
@@ -220,7 +213,7 @@
   };
 
   onMount(() => {
-    background.src = $imageURL
+    background.src = $imageURL;
 
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
@@ -231,8 +224,13 @@
       )
     )
       $isMobile = true;
-      console.log("device type: ", $isMobile ? "mobile" : "desktop");
+    console.log("device type: ", $isMobile ? "mobile" : "desktop");
   });
+
+  $: if ($imageURL) {
+    background.src = $imageURL;
+    $bgOpacity = 0.6;
+  }
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
@@ -401,7 +399,7 @@
       <ion-icon name="color-palette-outline" />
       <ion-icon name="location-outline" />
       <!-- <ion-icon name="settings-outline" /> -->
-      <ion-icon name="hammer-outline"></ion-icon>
+      <ion-icon name="hammer-outline" />
     </div>
     <!-- <ion-icon name="menu-outline" class="icon-menu" /> -->
   </div>
