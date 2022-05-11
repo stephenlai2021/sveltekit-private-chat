@@ -4,9 +4,7 @@
     const locals = session;
     const bgColor_preference = locals.bgColor;
 
-    if (bgColor_preference) {
-      bgColor.set(bgColor_preference);
-    }
+    if (bgColor_preference) bgColor.set(bgColor_preference);
     return {};
   };
 </script>
@@ -56,7 +54,7 @@
       if (!_user) goto('/login')
       else user = _user      
     });
-    resizeWindow();
+    resizeWindow();   
   });
 
   $: if (user) $loginFormShow = false;

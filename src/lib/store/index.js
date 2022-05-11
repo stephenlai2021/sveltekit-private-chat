@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const isMobile = writable(false)
 export const message = writable('')
 export const showEmojiMenu = writable(false)
 export const leftSide = writable(null)
@@ -17,7 +18,6 @@ export const showPhotoModal = writable(false)
 export const showCameraPreviewModal = writable(false)
 export const pictureFile = writable(null)
 export const pictureURI = writable(null)
-// export const selectedImg = writable(null)
 export const active = writable(false);
 export const profileUpdated = writable(false);
 export const loginState = writable(false);
@@ -43,9 +43,19 @@ export const bgColor = writable(
   "linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%)"
 );
 
-// export const bgColor = writable("")
+export const bgOpacity = writable(
+  browser && (localStorage.getItem("backround opacity") || 0.06)
+);
+bgOpacity.subscribe(
+  (val) => browser && localStorage.setItem("backround opacity", val)
+);
 
-// export const activeItem = writable(null);
+export const imageURL = writable(
+  browser && (localStorage.getItem("image url") || 'https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg')
+);
+imageURL.subscribe(
+  (val) => browser && localStorage.setItem("image url", val)
+);
 
 export const selectedImg = writable(
   browser && localStorage.getItem("selected image")

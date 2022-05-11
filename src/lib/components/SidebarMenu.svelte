@@ -32,7 +32,7 @@
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
-  style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor}
+  style:background={$bgColor}
   style:display={$mobile
     ? "none"
     : $page.url.pathname === "/login"
@@ -41,6 +41,7 @@
     ? "none"
     : "flex"}
 >
+<!-- style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor} -->
   {#if user}
     <div
       class="userimg"
