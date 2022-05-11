@@ -40,7 +40,8 @@ export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
 export const bgColor = writable(
-  "linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%)"
+  // "linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%)"
+  '#e5ddd5'
 );
 // export const imageURL = writable(
 //   "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"

@@ -13,8 +13,9 @@
 <div
   class="modal-theme"
   transition:fly={{ y: -60, duration: 100, delay: 100 }}
-  on:click|stopPropagation={() => console.log("hi, there !")}
->
+  on:click|stopPropagation
+  >
+  <!-- on:click|stopPropagation={() => console.log("hi, there !")} -->
   <div class="icon-arrow-wrapper">
     <ion-icon
       name="arrow-up-outline"

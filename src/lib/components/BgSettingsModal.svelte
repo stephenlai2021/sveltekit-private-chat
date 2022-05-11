@@ -7,7 +7,6 @@
   import Cookies from 'js-cookie';  
 </script>
 
-<!-- on:click|stopPropagation={() => console.log("hi, there !")} -->
 <ul
   class="menu-settings"
   transition:fly={{ x: 60, duration: 100, delay: 100 }}

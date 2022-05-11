@@ -16,6 +16,7 @@
   import {
     mobile,
     message,
+    bgColor,
     imageURL,
     isMobile,
     selectedImg,
@@ -43,6 +44,7 @@
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
   import { onMount } from "svelte";
   import { browser } from "$app/env";
+  import themeStore, { setTheme } from "svelte-themes";
 
   console.log("selfie", $pictureFile);
 
@@ -59,6 +61,7 @@
   let background = null;
   let colRef = collection(db, "whatzapp_users");
   // let isMobile = false;
+  let header = null;
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
@@ -216,7 +219,9 @@
     if ($imageURL) background.src = $imageURL;
     if (!$imageURL) {
       $bgOpacity = 0.06
+      $bgColor = '#e5ddd5'
       background.src = 'https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg';
+      setTheme("light");
     }
 
     if (
@@ -228,7 +233,7 @@
       )
     )
       $isMobile = true;
-    console.log("device type: ", $isMobile ? "mobile" : "desktop");
+      console.log("device type: ", $isMobile ? "mobile" : "desktop");
   });
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
@@ -335,7 +340,7 @@
 
 <div>
   <img bind:this={background} style:opacity={$bgOpacity} alt="" />
-  <div class="header">
+  <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
