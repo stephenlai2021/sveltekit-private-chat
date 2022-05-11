@@ -54,7 +54,8 @@ bgOpacity.subscribe(
 );
 
 export const imageURL = writable(
-  browser && (localStorage.getItem("image url") || 'https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg')
+  // browser && (localStorage.getItem("image url") || 'https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg')
+  browser && (localStorage.getItem("image url"))
 );
 imageURL.subscribe(
   (val) => browser && localStorage.setItem("image url", val)
