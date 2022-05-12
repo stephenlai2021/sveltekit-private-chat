@@ -68,12 +68,12 @@
   const handleFileChange = async (e) => {
     file = e.target.files[0];
 
-    const reader = new FileReader();
-    reader.onload = (e) => { 
-      background.src = $imageURL = e.target.result 
-      $bgOpacity = 0.6;
-    }
-    reader.readAsDataURL(file);
+    // const reader = new FileReader();
+    // reader.onload = (e) => { 
+    //   background.src = $imageURL = e.target.result 
+    //   $bgOpacity = 0.6;
+    // }
+    // reader.readAsDataURL(file);
 
     // $imageURL = await readURL(file);
     // background.src = $imageURL;
@@ -88,6 +88,17 @@
       reader.readAsDataURL(file);
     });
   };
+
+  $: if (file) {
+    readURL(file).then(url => {
+      $imageURL = url;
+      background.src = $imageURL;
+      $bgOpacity = 0.6;
+      file = null
+    }).catch(err => { 
+      console.log('something went wrong', err.message )
+    })
+  }
 
   // const handleFileChange = async (e) => {
   //   const types = ["image/png", "image/jpg", "image/jpeg"];
