@@ -67,9 +67,17 @@
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
-    $imageURL = await readURL(file);
-    background.src = $imageURL;
-    $bgOpacity = 0.6;
+
+    const reader = new FileReader();
+    reader.onload = (e) => { 
+      background.src = $imageURL = e.target.result 
+      $bgOpacity = 0.6;
+    }
+    reader.readAsDataURL(file);
+
+    // $imageURL = await readURL(file);
+    // background.src = $imageURL;
+    // $bgOpacity = 0.6;
   };
 
   const readURL = (file) => {
