@@ -117,10 +117,17 @@ ion-icon {
   object-fit: cover;
 }
 
+/* ion-icon {
+  border: 1px solid;
+} */
+
 .rightSide .header {
   position: absolute;
   top: 0px;
-  height: 60px;
+  height: 50px;
+  /* line-height: 50px; */
+  /* display: flex;
+  align-items: center; */
   background: transparent;
   backdrop-filter: blur(15px);
   border-top-right-radius: 4px;

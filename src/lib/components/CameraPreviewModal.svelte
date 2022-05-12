@@ -9,13 +9,13 @@
   } from "$lib/store";
 
   const handleConfirm = () => {
+    $videoStream.getTracks().forEach(track => {
+      track.stop();
+    });
     $showCameraPreviewModal = false;
     $showCameraModal = false;
     $showPhotoModal = true;
     $pictureConfirmed = true
-    $videoStream.getTracks().forEach(function (track) {
-      track.stop();
-    });
   };
 </script>
 

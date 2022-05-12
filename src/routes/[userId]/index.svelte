@@ -68,13 +68,6 @@
   const handleFileChange = async (e) => {
     file = e.target.files[0];
 
-    // const reader = new FileReader();
-    // reader.onload = (e) => { 
-    //   background.src = $imageURL = e.target.result 
-    //   $bgOpacity = 0.6;
-    // }
-    // reader.readAsDataURL(file);
-
     // $imageURL = await readURL(file);
     // background.src = $imageURL;
     // $bgOpacity = 0.6;
@@ -92,7 +85,7 @@
   $: if (file) {
     readURL(file).then(url => {
       $imageURL = url;
-      background.src = $imageURL;
+      background.src = url;
       $bgOpacity = 0.6;
       file = null
     }).catch(err => { 
@@ -419,7 +412,7 @@
         </label>
       {/if}
       <!-- <ion-icon name="create-outline" /> -->
-      <ion-icon name="color-palette-outline" />
+      <!-- <ion-icon name="color-palette-outline" /> -->
       <ion-icon name="location-outline" />
       <!-- <ion-icon name="settings-outline" /> -->
       <ion-icon name="hammer-outline" />
@@ -567,6 +560,10 @@
     --bg-color: #d6d8dc;
   }
 
+  label {
+    display: flex;
+  }
+
   label input {
     width: 0;
     height: 0;
@@ -641,8 +638,15 @@
     padding-right: 0px;
   }
 
+  .right-part {
+    display: flex;
+    align-items: center;
+    /* border: 1px solid; */
+  }
+
   .right-part ion-icon {
     margin-right: 15px;
+    /* border: 1px solid; */
     /* box-shadow: 2px 2px 2px gray; */
   }
 
