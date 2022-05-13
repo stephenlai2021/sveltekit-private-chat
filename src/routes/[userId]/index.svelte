@@ -83,12 +83,16 @@
   };
 
   const handleFileChange = async (e) => {
-    const types = ["image/png", "image/jpg", "image/jpeg"];
+    const types = ["image/png", "image/jpg"];
 
     let selectedFile = e.target.files[0];
 
     if (selectedFile && types.includes(selectedFile.type)) {
       file = selectedFile;
+      $imageURL = await readURL(file);
+      background.src = $imageURL;
+      $bgOpacity = 0.6;
+      
       console.log(file);
       console.log(`${file.name} is selected`);
       $selectedImg = file;
@@ -132,16 +136,16 @@
     }
   };
 
-  $: if (file) {
-    readURL(file).then(url => {
-      $imageURL = url;
-      background.src = url;
-      $bgOpacity = 0.6;
-      file = null
-    }).catch(err => { 
-      console.log('something went wrong', err.message )
-    })
-  }
+  // $: if (file) {
+  //   readURL(file).then(url => {
+  //     $imageURL = url;
+  //     background.src = url;
+  //     $bgOpacity = 0.6;
+  //     file = null
+  //   }).catch(err => { 
+  //     console.log('something went wrong', err.message )
+  //   })
+  // }
 
   const handleSubmit = async () => {
     $showEmojiMenu = false;
@@ -394,7 +398,7 @@
           <input
             type="file"
             on:change={handleFileChange}
-            accept="image/png, image/jpg, image/jpeg"
+            accept="image/png, image/jpg"
           />
           <ion-icon name="document-attach-outline" />
         </label>
