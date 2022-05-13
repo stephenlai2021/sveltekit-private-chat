@@ -83,7 +83,7 @@
   };
 
   const handleFileChange = async (e) => {
-    const types = ["image/png", "image/jpg", "image/jpeg"];
+    const types = ["image/png", "image/jpg"];
 
     let selectedFile = e.target.files[0];
 
@@ -398,7 +398,7 @@
           <input
             type="file"
             on:change={handleFileChange}
-            accept="image/png, image/jpg, image/jpeg"
+            accept="image/png, image/jpg"
           />
           <ion-icon name="document-attach-outline" />
         </label>
@@ -411,7 +411,7 @@
           <input
             type="file"
             on:change={handleFileChange}
-            accept="image/png, image/jpg, image/jpeg"
+            accept="image/png, image/jpg"
           />
           <ion-icon name="image-outline" />
         </label>
