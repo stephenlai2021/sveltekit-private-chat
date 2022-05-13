@@ -128,6 +128,7 @@
     } else {
       file = null;
       fileError = "Please select an image file (png or jpg)";
+      alert(fileError)
     }
   };
 
