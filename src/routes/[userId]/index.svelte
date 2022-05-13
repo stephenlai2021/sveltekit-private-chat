@@ -67,7 +67,8 @@
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
-    alert('file name: ', file.name)
+    console.log(file.name)
+    // alert('file name: ', file.name)
 
     $imageURL = await readURL(file);
     background.src = $imageURL;
@@ -399,7 +400,7 @@
           <input
             type="file"
             on:change={handleFileChange}
-            accept="image/png, image/jpg"
+            accept="image/png, image/jpeg"
           />
           <ion-icon name="document-attach-outline" />
         </label>
@@ -412,7 +413,7 @@
           <input
             type="file"
             on:change={handleFileChange}
-            accept="image/png, image/jpg"
+            accept="image/png, image/jpeg"
           />
           <ion-icon name="image-outline" />
         </label>
