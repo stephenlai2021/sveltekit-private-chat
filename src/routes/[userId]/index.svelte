@@ -65,13 +65,13 @@
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
-  const handleFileChange = async (e) => {
-    file = e.target.files[0];
+  // const handleFileChange = async (e) => {
+  //   file = e.target.files[0];
 
-    // $imageURL = await readURL(file);
-    // background.src = $imageURL;
-    // $bgOpacity = 0.6;
-  };
+  //   // $imageURL = await readURL(file);
+  //   // background.src = $imageURL;
+  //   // $bgOpacity = 0.6;
+  // };
 
   const readURL = (file) => {
     return new Promise((res, rej) => {
@@ -80,6 +80,55 @@
       reader.onerror = (e) => rej(e);
       reader.readAsDataURL(file);
     });
+  };
+
+  const handleFileChange = async (e) => {
+    const types = ["image/png", "image/jpg", "image/jpeg"];
+
+    let selectedFile = e.target.files[0];
+
+    if (selectedFile && types.includes(selectedFile.type)) {
+      file = selectedFile;
+      console.log(file);
+      console.log(`${file.name} is selected`);
+      $selectedImg = file;
+      fileError = null;
+
+      // let imgPath =
+      //   loggedinUser.displayName > $selectedUsername
+      //     ? `${loggedinUser.displayName} & ${$selectedUsername}`
+      //     : `${$selectedUsername} & ${loggedinUser.displayName}`;
+
+      // let imageRef = ref(
+      //   storage,
+      //   `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+      //     file.name
+      //   }`
+      // );
+
+      // uploadBytes(imageRef, file).then(() => {
+      //   console.log("image upload completed !");
+      //   getDownloadURL(imageRef).then((_url) => {
+      //     url = _url;
+      //     let msgId =
+      //       loggedinUser.displayName > $selectedUsername
+      //         ? `${loggedinUser.displayName} & ${$selectedUsername}`
+      //         : `${$selectedUsername} & ${loggedinUser.displayName}`;
+      //     let msgRef = collection(db, "messages", msgId, "chat");
+      //     addDoc(msgRef, {
+      //       from: loggedinUser.displayName,
+      //       to: $selectedUsername,
+      //       createdAt: Timestamp.fromDate(new Date()),
+      //       imageURL: url || "",
+      //     }).then(() => {
+      //       console.log("document added successfully 😎");
+      //     });
+      //   });
+      // });
+    } else {
+      file = null;
+      fileError = "Please select an image file (png or jpg)";
+    }
   };
 
   $: if (file) {
@@ -92,55 +141,6 @@
       console.log('something went wrong', err.message )
     })
   }
-
-  // const handleFileChange = async (e) => {
-  //   const types = ["image/png", "image/jpg", "image/jpeg"];
-
-  //   let selectedFile = e.target.files[0];
-
-  //   if (selectedFile && types.includes(selectedFile.type)) {
-  //     file = selectedFile;
-  //     console.log(file);
-  //     console.log(`${file.name} is selected`);
-  //     $selectedImg = file;
-  //     fileError = null;
-
-  //     // let imgPath =
-  //     //   loggedinUser.displayName > $selectedUsername
-  //     //     ? `${loggedinUser.displayName} & ${$selectedUsername}`
-  //     //     : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-  //     // let imageRef = ref(
-  //     //   storage,
-  //     //   `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-  //     //     file.name
-  //     //   }`
-  //     // );
-
-  //     // uploadBytes(imageRef, file).then(() => {
-  //     //   console.log("image upload completed !");
-  //     //   getDownloadURL(imageRef).then((_url) => {
-  //     //     url = _url;
-  //     //     let msgId =
-  //     //       loggedinUser.displayName > $selectedUsername
-  //     //         ? `${loggedinUser.displayName} & ${$selectedUsername}`
-  //     //         : `${$selectedUsername} & ${loggedinUser.displayName}`;
-  //     //     let msgRef = collection(db, "messages", msgId, "chat");
-  //     //     addDoc(msgRef, {
-  //     //       from: loggedinUser.displayName,
-  //     //       to: $selectedUsername,
-  //     //       createdAt: Timestamp.fromDate(new Date()),
-  //     //       imageURL: url || "",
-  //     //     }).then(() => {
-  //     //       console.log("document added successfully 😎");
-  //     //     });
-  //     //   });
-  //     // });
-  //   } else {
-  //     file = null;
-  //     fileError = "Please select an image file (png or jpg)";
-  //   }
-  // };
 
   const handleSubmit = async () => {
     $showEmojiMenu = false;
