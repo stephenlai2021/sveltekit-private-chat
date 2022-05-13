@@ -67,6 +67,7 @@
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
+    alert('file name: ', file.name)
 
     $imageURL = await readURL(file);
     background.src = $imageURL;
