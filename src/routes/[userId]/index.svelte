@@ -237,7 +237,7 @@
           createdAt: Timestamp.fromDate(new Date()),
           audioURL: url || "",
         }).then(() => {
-          console.log("document added successfully 😎");
+          // console.log("document added successfully 😎");
         });
       });
     });
@@ -302,8 +302,8 @@
     {/if}
   </div>
 
-  <div class="right-part">
-    <ion-icon name="videocam-outline" />
+  <!-- <div class="right-part"> -->
+    <ion-icon name="videocam-outline" style:margin-left="auto" />
     {#if $isMobile}
       <label>
         <input
@@ -313,11 +313,6 @@
         />
         <ion-icon name="document-attach-outline" />
       </label>
-      <ion-icon name="location-outline" />
-      <ion-icon
-        name="hammer-outline"
-        on:click|stopPropagation={() => ($showToolModal = true)}
-      />
     {/if}
     {#if !$isMobile}
       <ion-icon
@@ -332,11 +327,6 @@
         />
         <ion-icon name="image-outline" />
       </label>
-      <ion-icon name="location-outline" />
-      <ion-icon
-        name="hammer-outline"
-        on:click|stopPropagation={() => ($showToolModal = true)}
-      />
     {/if}
     <!-- <ion-icon name="location-outline" />
     <ion-icon
@@ -344,7 +334,7 @@
       on:click|stopPropagation={() => ($showToolModal = true)}
     /> -->
   </div>
-</div>
+<!-- </div> -->
 
 <div class="chatBox">
   <div class="message my_message">
