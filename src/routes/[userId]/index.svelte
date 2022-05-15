@@ -278,8 +278,8 @@
     style:opacity={$isMobile ? '0.06' : $bgOpacity}
     alt=""
   />
-  <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
-    <!-- <div class="header" style:background={!$isMobile ? "transparent" : "#ededed"}> -->
+  <!-- <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}> -->
+    <div class="header" style:background={!$isMobile ? "transparent" : "#ededed"}>
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
@@ -401,7 +401,7 @@
 
   <div
     class="chatbox_input"
-    style:background={$imageURL ? "transparent" : "#ededed"}
+    style:background={!$isMobile ? "transparent" : "#ededed"}
   >
     <div class="icon-wrapper icon-happy">
       <ion-icon
