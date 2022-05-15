@@ -6,7 +6,8 @@
     console.log($file);
 
     $imageURL = await readURL($file);
-    $background.src = $imageURL;
+    console.log('image url: ', $imageURL)
+    // $background.src = $imageURL;
     $bgOpacity = 0.6;
   };
 

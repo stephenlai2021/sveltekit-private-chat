@@ -59,59 +59,47 @@
   let matched = false;
   let url = null;
   let file = null;
-  let fileError = null;
   let colRef = collection(db, "whatzapp_users");
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
   const handleFileChange = async (e) => {
-    const types = ["image/png", "image/jpg", "image/jpeg"];
+    file = e.target.files[0];
+    console.log(file);
+    console.log(`${file.name} is selected`);
+    // $selectedImg = file;
 
-    let selectedFile = e.target.files[0];
+    let imgPath =
+      loggedinUser.displayName > $selectedUsername
+        ? `${loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${loggedinUser.displayName}`;
 
-    if (selectedFile && types.includes(selectedFile.type)) {
-      file = selectedFile;
-      console.log(file);
-      console.log(`${file.name} is selected`);
-      $selectedImg = file;
-      fileError = null;
+    let imageRef = ref(
+      storage,
+      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+        file.name
+      }`
+    );
 
-      let imgPath =
-        loggedinUser.displayName > $selectedUsername
-          ? `${loggedinUser.displayName} & ${$selectedUsername}`
-          : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-      let imageRef = ref(
-        storage,
-        `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-          file.name
-        }`
-      );
-
-      uploadBytes(imageRef, file).then(() => {
-        console.log("image upload completed !");
-        getDownloadURL(imageRef).then((_url) => {
-          url = _url;
-          let msgId =
-            loggedinUser.displayName > $selectedUsername
-              ? `${loggedinUser.displayName} & ${$selectedUsername}`
-              : `${$selectedUsername} & ${loggedinUser.displayName}`;
-          let msgRef = collection(db, "messages", msgId, "chat");
-          addDoc(msgRef, {
-            from: loggedinUser.displayName,
-            to: $selectedUsername,
-            createdAt: Timestamp.fromDate(new Date()),
-            imageURL: url || "",
-          }).then(() => {
-            console.log("document added successfully 😎");
-          });
+    uploadBytes(imageRef, file).then(() => {
+      console.log("image upload completed !");
+      getDownloadURL(imageRef).then((_url) => {
+        url = _url;
+        let msgId =
+          loggedinUser.displayName > $selectedUsername
+            ? `${loggedinUser.displayName} & ${$selectedUsername}`
+            : `${$selectedUsername} & ${loggedinUser.displayName}`;
+        let msgRef = collection(db, "messages", msgId, "chat");
+        addDoc(msgRef, {
+          from: loggedinUser.displayName,
+          to: $selectedUsername,
+          createdAt: Timestamp.fromDate(new Date()),
+          imageURL: url || "",
+        }).then(() => {
+          console.log("document added successfully 😎");
         });
       });
-    } else {
-      file = null;
-      fileError = "Please select an image file (png or jpg)";
-      alert(fileError)
-    }
+    });
   };
 
   // $: if (file) {
@@ -120,7 +108,7 @@
   //     background.src = url;
   //     $bgOpacity = 0.6;
   //     file = null
-  //   }).catch(err => { 
+  //   }).catch(err => {
   //     console.log('something went wrong', err.message )
   //   })
   // }
@@ -128,13 +116,14 @@
   const handleSubmit = async () => {
     $showEmojiMenu = false;
     messageSent = $message;
-    $message = "";
+    // $message = "";
 
     let msgId =
       loggedinUser.displayName > $selectedUsername
         ? `${loggedinUser.displayName} & ${$selectedUsername}`
         : `${$selectedUsername} & ${loggedinUser.displayName}`;
     let msgRef = collection(db, "messages", msgId, "chat");
+    
     try {
       await addDoc(msgRef, {
         message: messageSent,
@@ -150,11 +139,12 @@
   };
 
   onMount(() => {
-    if ($imageURL) $background.src = $imageURL;
+    // if ($imageURL) $background.src = $imageURL;
     if (!$imageURL) {
-      $bgOpacity = 0.06
-      $bgColor = '#e5ddd5'
-      $background.src = 'https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg';
+      $bgOpacity = 0.06;
+      $bgColor = "#e5ddd5";
+      // $background.src =
+      //   "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
       setTheme("light");
     }
 
@@ -167,7 +157,7 @@
       )
     )
       $isMobile = true;
-      console.log("device type: ", $isMobile ? "mobile" : "desktop");
+    console.log("device type: ", $isMobile ? "mobile" : "desktop");
   });
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
@@ -264,6 +254,10 @@
     $showSettingsModal = false;
     $showAddFriendModal = false;
   }
+
+  $: if ($imageURL) {
+
+  }
 </script>
 
 <svelte:head>
@@ -273,7 +267,8 @@
 </svelte:head>
 
 <div>
-  <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
+<!-- <div style:background-image={$imageURL ? `url($imageURL)` : `url('https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg')`}> -->
+  <!-- <img bind:this={$background} style:opacity={$bgOpacity} alt="" /> -->
   <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
     <div class="left-part">
       <ion-icon
@@ -314,9 +309,9 @@
         <label>
           <input
             type="file"
-            accept="image/png, image/jpeg"
+            accept="image/png, image/jpg, image/jpeg"
             on:change={handleFileChange}
-            />
+          />
           <ion-icon name="document-attach-outline" />
         </label>
       {:else}
@@ -327,9 +322,9 @@
         <label>
           <input
             type="file"
-            accept="image/png, image/jpeg"
+            accept="image/png, image/jpg, image/jpeg"
             on:change={handleFileChange}
-            />
+          />
           <ion-icon name="image-outline" />
         </label>
       {/if}
@@ -337,7 +332,10 @@
       <!-- <ion-icon name="color-palette-outline" /> -->
       <ion-icon name="location-outline" />
       <!-- <ion-icon name="settings-outline" /> -->
-      <ion-icon name="hammer-outline" on:click|stopPropagation={() => $showToolModal = true} />
+      <ion-icon
+        name="hammer-outline"
+        on:click|stopPropagation={() => ($showToolModal = true)}
+      />
     </div>
     <!-- <ion-icon name="menu-outline" class="icon-menu" /> -->
   </div>
@@ -481,6 +479,7 @@
 <!-- {#if $showBgSettingsModal}
   <BgSettingsModal />
 {/if} -->
+
 <style>
   :root {
     --bg-color: #d6d8dc;
@@ -881,4 +880,3 @@
     console.log("ooh, something went wrong 😥", error);
   }
 }; -->
-

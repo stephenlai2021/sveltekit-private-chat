@@ -96,19 +96,14 @@ ion-icon {
   height: 100%;
   border-bottom-right-radius: 4px;
   
+  /* opacity: 0.7; */
   background: #e5ddd5;
+  background-image: url('https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   /* background: linear-gradient(225deg, var(--logo-green) 25%, var(--logo-purple)); */
-  /* background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%); */
-
-  /* background: linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%); */
-  /* background: linear-gradient(225deg, #00C9FF 0%, #92FE9D 100%); */
-  /* background: linear-gradient(225deg, #d53369 0%, #daae51 100%); */
-  /* background: linear-gradient(225deg, #efd5ff 0%, #515ada 100%); */
-  /* background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%); */
-  /* background: linear-gradient(225deg, #FDBB2D 0%, #22C1C3 100%); */
-  /* background: linear-gradient(225deg, #00d2ff 0%, #3a47d5 100%); */
-  /* background: linear-gradient(225deg, #e3ffe7 0%, #d9e7ff 100%); */
-}
+  }
 
 .rightSide img {
   width: 100%;

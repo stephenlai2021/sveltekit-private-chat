@@ -1,5 +1,5 @@
 <script context="module">
-  import { bgColor, imageURL } from "$lib/store";
+  import { bgColor } from "$lib/store";
   export const load = ({ session }) => {
     const locals = session;
     const bgColor_preference = locals.bgColor;
@@ -15,6 +15,7 @@
   import "$lib/styles/global.css";
   import {
     mobile,
+    imageURL,
     connection,
     loginFormShow,
     showToolModal,
@@ -33,7 +34,7 @@
   import LeftSide from "$lib/components/LeftSide.svelte";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
-  
+
   let user = null;
   let users = null;
   let colRef = collection(db, "whatzapp_users");
@@ -53,16 +54,16 @@
   };
 
   const closeModal = () => {
-    $showEmojiMenu = false
-    $showToolModal = false
-  }
+    $showEmojiMenu = false;
+    $showToolModal = false;
+  };
 
   onMount(() => {
-    onAuthStateChanged(auth, (_user) => { 
-      if (!_user) goto('/login')
-      else user = _user      
+    onAuthStateChanged(auth, (_user) => {
+      if (!_user) goto("/login");
+      else user = _user;
     });
-    resizeWindow();   
+    resizeWindow();
   });
 
   $: if (user) $loginFormShow = false;
@@ -93,9 +94,13 @@
 <div class="wrapper" on:click={closeModal}>
   <SidebarMenu />
   <LeftSide />
+  <!-- style:background-image={`url(${$imageURL})`} -->
   <div
     class="rightSide"
     style:background={$bgColor}
+    style:background-image={$imageURL ? `url(${$imageURL})` : ''}
+    style:background-size="cover"
+    style:background-repeat="no-repeat"
     style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
     style:width={$mobile && $page.url.pathname === "/"
       ? "0%"
@@ -103,7 +108,7 @@
       ? "100%"
       : "100%"}
   >
-  <!-- : $mobile && $page.url.pathname != "/"
+    <!-- : $mobile && $page.url.pathname != "/"
   ? "100%" -->
     <slot />
   </div>
