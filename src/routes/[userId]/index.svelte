@@ -265,7 +265,8 @@
 
 <div>
   <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
-  <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
+  <!-- <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}> -->
+  <div class="header" style:background={!$isMobile ? "transparent" : "#ededed"}>
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
