@@ -123,7 +123,7 @@
         ? `${loggedinUser.displayName} & ${$selectedUsername}`
         : `${$selectedUsername} & ${loggedinUser.displayName}`;
     let msgRef = collection(db, "messages", msgId, "chat");
-    
+
     try {
       await addDoc(msgRef, {
         message: messageSent,
@@ -256,7 +256,6 @@
   }
 
   $: if ($imageURL) {
-
   }
 </script>
 
@@ -267,179 +266,149 @@
 </svelte:head>
 
 <!-- <div> -->
-  <!-- <img bind:this={$background} style:opacity={$bgOpacity} alt="" /> -->
-  <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
-    <div class="left-part">
-      <ion-icon
-        name="arrow-back-outline"
-        class="arrow-back"
-        on:click={() => goto("/")}
-      />
-      {#if ready}
-        <div class="imgText">
-          <div class="userimg">
-            {#if selectedUser.avatar}
-              <img src={selectedUser.avatar} alt="" />
-            {:else}
-              <img src="/joke.png" alt="" />
-            {/if}
-            <div
-              class={selectedUser.isOnline ? "status online" : "status offline"}
-            />
-          </div>
-          <div class="details">
-            <h4>{selectedUser.name}</h4>
-          </div>
+<!-- <img bind:this={$background} style:opacity={$bgOpacity} alt="" /> -->
+<div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
+  <div class="left-part">
+    <ion-icon
+      name="arrow-back-outline"
+      class="arrow-back"
+      on:click={() => goto("/")}
+    />
+    {#if ready}
+      <div class="imgText">
+        <div class="userimg">
+          {#if selectedUser.avatar}
+            <img src={selectedUser.avatar} alt="" />
+          {:else}
+            <img src="/joke.png" alt="" />
+          {/if}
+          <div
+            class={selectedUser.isOnline ? "status online" : "status offline"}
+          />
         </div>
-      {:else}
-        <div class="imgText">
-          <div class="userimg">
-            <div class="user-avatar animation" />
-          </div>
-          <div class="details">
-            <h4 class="user-name animation">Bao Yang</h4>
-          </div>
+        <div class="details">
+          <h4>{selectedUser.name}</h4>
         </div>
-      {/if}
-    </div>
-
-    <div class="right-part">
-      <ion-icon name="videocam-outline" />
-      {#if $isMobile}
-        <label>
-          <input
-            type="file"
-            accept="image/png, image/jpg, image/jpeg"
-            on:change={handleFileChange}
-          />
-          <ion-icon name="document-attach-outline" />
-        </label>
-      {/if}
-      {#if !$isMobile}
-        <ion-icon
-          name="camera-outline"
-          on:click={() => ($showCameraModal = true)}
-        />
-        <label>
-          <input
-            type="file"
-            accept="image/png, image/jpg, image/jpeg"
-            on:change={handleFileChange}
-          />
-          <ion-icon name="image-outline" />
-        </label>
-      {/if}
-      <ion-icon name="location-outline" />
-      <ion-icon
-        name="hammer-outline"
-        on:click|stopPropagation={() => ($showToolModal = true)}
-      />
-    </div>
-
-  </div>
-
-  <div class="chatBox">
-    <div class="message my_message">
-      <p>Hi<br /><span>12:15</span></p>
-    </div>
-    <div class="message friend_message">
-      <p>Hello<br /><span>12:18</span></p>
-    </div>
-    <div class="message my_message">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-        /><span>12:15</span>
-      </p>
-    </div>
-    <div class="message friend_message">
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
-        accusantium alias, optio quas voluptas consequuntur.<br /><span
-          >12:18</span
-        >
-      </p>
-    </div>
-    <div class="message my_message">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-        /><span>12:15</span>
-      </p>
-    </div>
-    <div class="message friend_message">
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
-        accusantium alias, optio quas voluptas consequuntur.<br /><span
-          >12:18</span
-        >
-      </p>
-    </div>
-    <div class="message my_message">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-        /><span>12:15</span>
-      </p>
-    </div>
-    <div class="message friend_message">
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
-        accusantium alias, optio quas voluptas consequuntur.<br /><span
-          >12:18</span
-        >
-      </p>
-    </div>
-  </div>
-
-  <div class="chatbox_input">
-    <div class="icon-wrapper icon-happy">
-      <ion-icon
-        name="happy-outline"
-        class="happy"
-        on:click|stopPropagation={() => ($showEmojiMenu = true)}
-      />
-    </div>
-    <form on:submit|preventDefault={handleSubmit} class="messageBox">
-      <!-- {#if isMobile}
-        <label>
-          <input
-            type="file"
-            on:change={handleFileChange}
-            accept="image/png, image/jpg, image/jpeg"
-          />
-          <ion-icon name="document-attach-outline" class="icon-attach" />
-        </label>
-      {:else}
-        <ion-icon
-          name="camera-outline"
-          on:click={() => ($showCameraModal = true)}
-        />
-        <label>
-          <input
-            type="file"
-            on:change={handleFileChange}
-            accept="image/png, image/jpg, image/jpeg"
-          />
-          <ion-icon name="image-outline" class="icon-image" />
-        </label>
-      {/if} -->
-      {#if isMobile}
-        <ion-icon name="menu-outline" class="icon-menu" />
-      {/if}
-      <input type="text" placeholder="Type a message" bind:value={$message} />
-      <div class="icon-submit-wrapper">
-        <ion-icon
-          name="paper-plane-outline"
-          class="icon-submit"
-          on:click|preventDefault={handleSubmit}
-        />
       </div>
-    </form>
-    <div
-      class="icon-wrapper icon-mic"
-      on:click={() => ($showAudioRecordingModal = true)}
-    >
-      <ion-icon name="mic-outline" style:font-size="1.5em" />
-    </div>
+    {:else}
+      <div class="imgText">
+        <div class="userimg">
+          <div class="user-avatar animation" />
+        </div>
+        <div class="details">
+          <h4 class="user-name animation">Bao Yang</h4>
+        </div>
+      </div>
+    {/if}
   </div>
+
+  <div class="right-part">
+    <ion-icon name="videocam-outline" />
+    {#if $isMobile}
+      <label>
+        <input
+          type="file"
+          accept="image/png, image/jpg, image/jpeg"
+          on:change={handleFileChange}
+        />
+        <ion-icon name="document-attach-outline" />
+      </label>
+    {/if}
+    {#if !$isMobile}
+      <ion-icon
+        name="camera-outline"
+        on:click={() => ($showCameraModal = true)}
+      />
+      <label>
+        <input
+          type="file"
+          accept="image/png, image/jpg, image/jpeg"
+          on:change={handleFileChange}
+        />
+        <ion-icon name="image-outline" />
+      </label>
+    {/if}
+    <ion-icon name="location-outline" />
+    <ion-icon
+      name="hammer-outline"
+      on:click|stopPropagation={() => ($showToolModal = true)}
+    />
+  </div>
+</div>
+
+<div class="chatBox">
+  <div class="message my_message">
+    <p>Hi<br /><span>12:15</span></p>
+  </div>
+  <div class="message friend_message">
+    <p>Hello<br /><span>12:18</span></p>
+  </div>
+  <div class="message my_message">
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+      /><span>12:15</span>
+    </p>
+  </div>
+  <div class="message friend_message">
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
+      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
+    </p>
+  </div>
+  <div class="message my_message">
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+      /><span>12:15</span>
+    </p>
+  </div>
+  <div class="message friend_message">
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
+      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
+    </p>
+  </div>
+  <div class="message my_message">
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+      /><span>12:15</span>
+    </p>
+  </div>
+  <div class="message friend_message">
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
+      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
+    </p>
+  </div>
+</div>
+
+<div class="chatbox_input">
+  <div class="icon-wrapper icon-happy">
+    <ion-icon
+      name="happy-outline"
+      class="happy"
+      on:click|stopPropagation={() => ($showEmojiMenu = true)}
+    />
+  </div>
+  <form on:submit|preventDefault={handleSubmit} class="messageBox">
+    {#if isMobile}
+      <ion-icon name="menu-outline" class="icon-menu" />
+    {/if}
+    <input type="text" placeholder="Type a message" bind:value={$message} />
+    <div class="icon-submit-wrapper">
+      <ion-icon
+        name="paper-plane-outline"
+        class="icon-submit"
+        on:click|preventDefault={handleSubmit}
+      />
+    </div>
+  </form>
+  <div
+    class="icon-wrapper icon-mic"
+    on:click={() => ($showAudioRecordingModal = true)}
+  >
+    <ion-icon name="mic-outline" style:font-size="1.5em" />
+  </div>
+</div>
 <!-- </div> -->
 
 {#if $showToolModal}
@@ -477,7 +446,6 @@
 <!-- {#if $showBgSettingsModal}
   <BgSettingsModal />
 {/if} -->
-
 <style>
   :root {
     --bg-color: #d6d8dc;
@@ -562,8 +530,8 @@
   }
 
   .right-part {
-    /* display: flex;
-    align-items: center; */
+    display: flex;
+    /* align-items: center; */
     /* border: 1px solid; */
   }
 
@@ -744,7 +712,8 @@
   }
 </style>
 
-<!-- const handleFileChange = async (e) => {
+<!-- 
+const handleFileChange = async (e) => {
   const types = ["image/png", "image/jpg", "image/jpeg"];
 
   let selectedFile = e.target.files[0];
@@ -792,9 +761,9 @@
     fileError = "Please select an image file (png or jpg)";
     alert(fileError)
   }
-}; -->
+}; 
 
-<!-- const handleSubmit = async () => {
+const handleSubmit = async () => {
   $showEmojiMenu = false;
   messageSent = $message;
   $message = "";
@@ -877,4 +846,5 @@
   } catch (error) {
     console.log("ooh, something went wrong 😥", error);
   }
-}; -->
+};
+ -->
