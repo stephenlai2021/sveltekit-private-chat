@@ -51,7 +51,7 @@
 
   label {
     /* padding: 0; */
-    display: flex;
+    /* display: flex; */
     /* appearance: none; */
     cursor: pointer;
     /* border: 1px solid; */
