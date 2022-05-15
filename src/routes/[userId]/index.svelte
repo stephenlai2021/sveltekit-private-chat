@@ -145,7 +145,7 @@
       $bgColor = "#e5ddd5";
       $background.src =
         "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
-      // setTheme("light");
+      setTheme("light");
     }
 
     if (
@@ -396,7 +396,7 @@
     </div>
   </div>
 
-  <div class="chatbox_input">
+  <div class="chatbox_input" style:background={$imageURL ? "transparent" : $isMobile ? "#ededed" : "#ededed"}>
     <div class="icon-wrapper icon-happy">
       <ion-icon
         name="happy-outline"
