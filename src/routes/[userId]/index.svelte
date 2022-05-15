@@ -265,7 +265,7 @@
   {/if}
 </svelte:head>
 
-<!-- <div> -->
+<div>
 <!-- <img bind:this={$background} style:opacity={$bgOpacity} alt="" /> -->
 <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
   <div class="left-part">
@@ -395,9 +395,6 @@
     />
   </div>
   <form on:submit|preventDefault={handleSubmit} class="messageBox">
-    <!-- {#if isMobile}
-      <ion-icon name="menu-outline" class="icon-menu" />
-    {/if} -->
     <input type="text" placeholder="Type a message" bind:value={$message} />
     <div class="icon-submit-wrapper">
       <ion-icon
@@ -414,7 +411,7 @@
     <ion-icon name="mic-outline" style:font-size="1.5em" />
   </div>
 </div>
-<!-- </div> -->
+</div>
 
 {#if $showToolModal}
   <ToolModal />
