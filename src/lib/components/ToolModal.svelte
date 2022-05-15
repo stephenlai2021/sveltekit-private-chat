@@ -1,12 +1,20 @@
 <script>
-  import { imageURL, bgOpacity, background, file, isMobile } from "$lib/store";
+  import {
+    file,
+    isMobile,
+    imageURL,
+    bgOpacity,
+    background,
+    showToolModal,
+  } from "$lib/store";
 
   const handleFileChange = async (e) => {
     $file = e.target.files[0];
     console.log($file);
+    $showToolModal = false;
 
     $imageURL = await readURL($file);
-    console.log('image url: ', $imageURL)
+    console.log("image url: ", $imageURL);
     $background.src = $imageURL;
     $bgOpacity = 0.6;
   };
@@ -22,9 +30,6 @@
 </script>
 
 <div class="tool-modal" on:click|stopPropagation>
-  <!-- <div class="icon-wrapper">
-    <ion-icon name="close-outline"></ion-icon>
-  </div> -->
   <ul>
     {#if !$isMobile}
       <li>
@@ -51,10 +56,12 @@
 
   label {
     /* padding: 0; */
-    display: flex;
+    /* display: flex; */
     /* width: auto; */
     /* appearance: none; */
     /* display: grid; */
+    /* padding-left: -3px; */
+    margin-left: -5px;
     cursor: pointer;
     /* border: 1px solid; */
   }
