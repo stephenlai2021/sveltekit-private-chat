@@ -1,9 +1,9 @@
 <script>
-  import { imageURL, bgOpacity, background, file } from '$lib/store'
+  import { imageURL, bgOpacity, background, file, isMobile } from "$lib/store";
 
   const handleFileChange = async (e) => {
     $file = e.target.files[0];
-    console.log($file)
+    console.log($file);
 
     $imageURL = await readURL($file);
     $background.src = $imageURL;
@@ -18,7 +18,6 @@
       reader.readAsDataURL(file);
     });
   };
-
 </script>
 
 <div class="tool-modal" on:click|stopPropagation>
@@ -26,16 +25,18 @@
     <ion-icon name="close-outline"></ion-icon>
   </div> -->
   <ul>
-    <li>
-      <label>
-        <input
-          type="file"
-          on:change={handleFileChange}
-          accept="image/png, image/jpeg"
-        />
-        背景圖片
-      </label>
-    </li>
+    {#if !$isMobile}
+      <li>
+        <label>
+          <input
+            type="file"
+            on:change={handleFileChange}
+            accept="image/png, image/jpeg"
+          />
+          背景圖片
+        </label>
+      </li>
+    {/if}
     <li>背景顏色</li>
     <li>背景漸層</li>
   </ul>

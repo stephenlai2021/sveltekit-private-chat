@@ -99,8 +99,8 @@
     style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
     style:width={$mobile && $page.url.pathname === "/"
       ? "0%"
-      // : $mobile && $page.url.pathname != "/"
-      // ? "100%"
+      : $mobile && $page.url.pathname != "/"
+      ? "100%"
       : "100%"}
   >
   <!-- : $mobile && $page.url.pathname != "/"

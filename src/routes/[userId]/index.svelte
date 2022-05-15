@@ -52,33 +52,25 @@
   console.log("selfie", $pictureFile);
 
   let q = null;
-  let sentMessage = "";
+  let messageSent = "";
   let loggedinUser = {};
   let selectedUser = {};
   let ready = false;
   let matched = false;
   let url = null;
-  // let file = null;
+  let file = null;
   let fileError = null;
-  let imageRef = null;
-  // let background = null;
   let colRef = collection(db, "whatzapp_users");
-  // let isMobile = false;
-  let header = null;
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
   const handleFileChange = async (e) => {
-    const types = ["image/png", "image/jpeg"];
+    const types = ["image/png", "image/jpg", "image/jpeg"];
 
     let selectedFile = e.target.files[0];
 
     if (selectedFile && types.includes(selectedFile.type)) {
       file = selectedFile;
-      $imageURL = await readURL(file);
-      background.src = $imageURL;
-      $bgOpacity = 0.6;
-
       console.log(file);
       console.log(`${file.name} is selected`);
       $selectedImg = file;
@@ -135,69 +127,8 @@
 
   const handleSubmit = async () => {
     $showEmojiMenu = false;
-    sentMessage = $message;
+    messageSent = $message;
     $message = "";
-
-    // let imgPath =
-    //   loggedinUser.displayName > $selectedUsername
-    //     ? `${loggedinUser.displayName} & ${$selectedUsername}`
-    //     : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-    // if ($selectedImg) {
-    //   imageRef = ref(
-    //     storage,
-    //     `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-    //       $selectedImg.name
-    //     }`
-    //   );
-    //   try {
-    //     await uploadBytes(imageRef, $selectedImg);
-    //     console.log("image upload completed !");
-    //     $selectedImg = null;
-    //   } catch (err) {
-    //     console.log("image uploaded failed");
-    //   }
-    // }
-
-    // if ($pictureFile) {
-    //   imageRef = ref(
-    //     storage,
-    //     `letschat/messages/camera/${imgPath}/${$pictureFile.name}`
-    //   );
-    //   try {
-    //     await uploadBytes(imageRef, $pictureBlob);
-    //     console.log("picture upload completed !");
-    //     $pictureFile = null;
-    //   } catch (err) {
-    //     console.log("picture uploaded failed");
-    //   }
-    // }
-
-    // try {
-    //   const url = await getDownloadURL(imageRef);
-    //   console.log("get downloaded url: ", url);
-
-    //   let msgId =
-    //     loggedinUser.displayName > $selectedUsername
-    //       ? `${loggedinUser.displayName} & ${$selectedUsername}`
-    //       : `${$selectedUsername} & ${loggedinUser.displayName}`;
-    //   let msgRef = collection(db, "messages", msgId, "chat");
-    //   try {
-    //     await addDoc(msgRef, {
-    //       message: sentMessage,
-    //       from: loggedinUser.displayName,
-    //       to: $selectedUsername,
-    //       createdAt: Timestamp.fromDate(new Date()),
-    //       image: url || "",
-    //     });
-    //     sentMessage = "";
-    //     console.log("message created successfully 😁");
-    //   } catch (error) {
-    //     console.log("ooh, something went wrong 😥", error);
-    //   }
-    // } catch (err) {
-    //   console.log(err.message);
-    // }
 
     let msgId =
       loggedinUser.displayName > $selectedUsername
@@ -206,12 +137,12 @@
     let msgRef = collection(db, "messages", msgId, "chat");
     try {
       await addDoc(msgRef, {
-        message: sentMessage,
+        message: messageSent,
         from: loggedinUser.displayName,
         to: $selectedUsername,
         createdAt: Timestamp.fromDate(new Date()),
       });
-      sentMessage = "";
+      messageSent = "";
       console.log("message created successfully 😁");
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
@@ -384,8 +315,8 @@
           <input
             type="file"
             accept="image/png, image/jpeg"
+            on:change={handleFileChange}
             />
-            <!-- on:change={handleFileChange} -->
           <ion-icon name="document-attach-outline" />
         </label>
       {:else}
@@ -397,8 +328,8 @@
           <input
             type="file"
             accept="image/png, image/jpeg"
+            on:change={handleFileChange}
             />
-            <!-- on:change={handleFileChange} -->
           <ion-icon name="image-outline" />
         </label>
       {/if}
@@ -815,3 +746,139 @@
     }
   }
 </style>
+
+<!-- const handleFileChange = async (e) => {
+  const types = ["image/png", "image/jpg", "image/jpeg"];
+
+  let selectedFile = e.target.files[0];
+
+  if (selectedFile && types.includes(selectedFile.type)) {
+    file = selectedFile;
+    console.log(file);
+    console.log(`${file.name} is selected`);
+    $selectedImg = file;
+    fileError = null;
+
+    let imgPath =
+      loggedinUser.displayName > $selectedUsername
+        ? `${loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${loggedinUser.displayName}`;
+
+    let imageRef = ref(
+      storage,
+      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+        file.name
+      }`
+    );
+
+    uploadBytes(imageRef, file).then(() => {
+      console.log("image upload completed !");
+      getDownloadURL(imageRef).then((_url) => {
+        url = _url;
+        let msgId =
+          loggedinUser.displayName > $selectedUsername
+            ? `${loggedinUser.displayName} & ${$selectedUsername}`
+            : `${$selectedUsername} & ${loggedinUser.displayName}`;
+        let msgRef = collection(db, "messages", msgId, "chat");
+        addDoc(msgRef, {
+          from: loggedinUser.displayName,
+          to: $selectedUsername,
+          createdAt: Timestamp.fromDate(new Date()),
+          imageURL: url || "",
+        }).then(() => {
+          console.log("document added successfully 😎");
+        });
+      });
+    });
+  } else {
+    file = null;
+    fileError = "Please select an image file (png or jpg)";
+    alert(fileError)
+  }
+}; -->
+
+<!-- const handleSubmit = async () => {
+  $showEmojiMenu = false;
+  messageSent = $message;
+  $message = "";
+
+  let imgPath =
+    loggedinUser.displayName > $selectedUsername
+      ? `${loggedinUser.displayName} & ${$selectedUsername}`
+      : `${$selectedUsername} & ${loggedinUser.displayName}`;
+
+  if ($selectedImg) {
+    imageRef = ref(
+      storage,
+      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+        $selectedImg.name
+      }`
+    );
+    try {
+      await uploadBytes(imageRef, $selectedImg);
+      console.log("image upload completed !");
+      $selectedImg = null;
+    } catch (err) {
+      console.log("image uploaded failed");
+    }
+  }
+
+  if ($pictureFile) {
+    imageRef = ref(
+      storage,
+      `letschat/messages/camera/${imgPath}/${$pictureFile.name}`
+    );
+    try {
+      await uploadBytes(imageRef, $pictureBlob);
+      console.log("picture upload completed !");
+      $pictureFile = null;
+    } catch (err) {
+      console.log("picture uploaded failed");
+    }
+  }
+
+  try {
+    const url = await getDownloadURL(imageRef);
+    console.log("get downloaded url: ", url);
+
+    let msgId =
+      loggedinUser.displayName > $selectedUsername
+        ? `${loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${loggedinUser.displayName}`;
+    let msgRef = collection(db, "messages", msgId, "chat");
+    try {
+      await addDoc(msgRef, {
+        message: messageSent,
+        from: loggedinUser.displayName,
+        to: $selectedUsername,
+        createdAt: Timestamp.fromDate(new Date()),
+        image: url || "",
+      });
+      messageSent = "";
+      console.log("message created successfully 😁");
+    } catch (error) {
+      console.log("ooh, something went wrong 😥", error);
+    }
+  } catch (err) {
+    console.log(err.message);
+  }
+
+  let msgId =
+    loggedinUser.displayName > $selectedUsername
+      ? `${loggedinUser.displayName} & ${$selectedUsername}`
+      : `${$selectedUsername} & ${loggedinUser.displayName}`;
+  let msgRef = collection(db, "messages", msgId, "chat");
+  try {
+    await addDoc(msgRef, {
+      message: messageSent,
+      from: loggedinUser.displayName,
+      to: $selectedUsername,
+      createdAt: Timestamp.fromDate(new Date()),
+    });
+    messageSent = "";
+    console.log("message created successfully 😁");
+  } catch (error) {
+    console.log("ooh, something went wrong 😥", error);
+  }
+}; -->
+
