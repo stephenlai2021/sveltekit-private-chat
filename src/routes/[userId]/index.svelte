@@ -331,7 +331,7 @@
       <ion-icon name="location-outline" />
       <ion-icon
         name="hammer-outline"
-        on:click|stopPropagation={() => ($showToolModal = true)}
+        on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
       />
     </div>
   </div>
