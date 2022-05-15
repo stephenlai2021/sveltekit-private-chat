@@ -302,12 +302,12 @@
     {/if}
   </div>
 
-  <!-- <div class="right-part"> -->
-  <div style:display="flex">
+  <div class="right-part">
+  <!-- <div style:display="flex"> -->
     <ion-icon name="videocam-outline" />
     <!-- {#if $isMobile} -->
     <!-- <div> -->
-      {#if $mobile}
+      <!-- {#if $mobile}
         <label>
           <input
             type="file"
@@ -316,9 +316,9 @@
           />
           <ion-icon name="document-attach-outline" />
         </label>
-      {/if}
+      {/if} -->
       <!-- {#if !$isMobile} -->
-      {#if !$mobile}
+      <!-- {#if !$mobile} -->
         <ion-icon
           name="camera-outline"
           on:click={() => ($showCameraModal = true)}
@@ -331,7 +331,7 @@
           />
           <ion-icon name="image-outline" />
         </label>
-      {/if}
+      <!-- {/if} -->
     <!-- </div> -->
     <ion-icon name="location-outline" />
     <ion-icon
