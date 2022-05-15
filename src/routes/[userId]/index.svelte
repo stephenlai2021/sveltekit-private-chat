@@ -139,12 +139,12 @@
   };
 
   onMount(() => {
-    // if ($imageURL) $background.src = $imageURL;
+    if ($imageURL) $background.src = $imageURL;
     if (!$imageURL) {
       $bgOpacity = 0.06;
       $bgColor = "#e5ddd5";
-      // $background.src =
-      //   "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
+      $background.src =
+        "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
       setTheme("light");
     }
 
@@ -237,7 +237,7 @@
           createdAt: Timestamp.fromDate(new Date()),
           audioURL: url || "",
         }).then(() => {
-          // console.log("document added successfully 😎");
+          console.log("document added successfully 😎");
         });
       });
     });
@@ -266,48 +266,45 @@
 </svelte:head>
 
 <div>
-<!-- <img bind:this={$background} style:opacity={$bgOpacity} alt="" /> -->
-<div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
-  <div class="left-part">
-    <ion-icon
-      name="arrow-back-outline"
-      class="arrow-back"
-      on:click={() => goto("/")}
-    />
-    {#if ready}
-      <div class="imgText">
-        <div class="userimg">
-          {#if selectedUser.avatar}
-            <img src={selectedUser.avatar} alt="" />
-          {:else}
-            <img src="/joke.png" alt="" />
-          {/if}
-          <div
-            class={selectedUser.isOnline ? "status online" : "status offline"}
-          />
+  <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
+  <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
+    <div class="left-part">
+      <ion-icon
+        name="arrow-back-outline"
+        class="arrow-back"
+        on:click={() => goto("/")}
+      />
+      {#if ready}
+        <div class="imgText">
+          <div class="userimg">
+            {#if selectedUser.avatar}
+              <img src={selectedUser.avatar} alt="" />
+            {:else}
+              <img src="/joke.png" alt="" />
+            {/if}
+            <div
+              class={selectedUser.isOnline ? "status online" : "status offline"}
+            />
+          </div>
+          <div class="details">
+            <h4>{selectedUser.name}</h4>
+          </div>
         </div>
-        <div class="details">
-          <h4>{selectedUser.name}</h4>
+      {:else}
+        <div class="imgText">
+          <div class="userimg">
+            <div class="user-avatar animation" />
+          </div>
+          <div class="details">
+            <h4 class="user-name animation">Bao Yang</h4>
+          </div>
         </div>
-      </div>
-    {:else}
-      <div class="imgText">
-        <div class="userimg">
-          <div class="user-avatar animation" />
-        </div>
-        <div class="details">
-          <h4 class="user-name animation">Bao Yang</h4>
-        </div>
-      </div>
-    {/if}
-  </div>
+      {/if}
+    </div>
 
-  <div class="right-part">
-  <!-- <div style:display="flex"> -->
-    <ion-icon name="videocam-outline" />
-    <!-- {#if $isMobile} -->
-    <!-- <div> -->
-      <!-- {#if $mobile}
+    <div class="right-part">
+      <ion-icon name="videocam-outline" />
+      {#if $isMobile}
         <label>
           <input
             type="file"
@@ -316,9 +313,8 @@
           />
           <ion-icon name="document-attach-outline" />
         </label>
-      {/if} -->
-      <!-- {#if !$isMobile} -->
-      <!-- {#if !$mobile} -->
+      {/if}
+      {#if !$isMobile}
         <ion-icon
           name="camera-outline"
           on:click={() => ($showCameraModal = true)}
@@ -331,86 +327,91 @@
           />
           <ion-icon name="image-outline" />
         </label>
-      <!-- {/if} -->
-    <!-- </div> -->
-    <ion-icon name="location-outline" />
-    <ion-icon
-      name="hammer-outline"
-      on:click|stopPropagation={() => ($showToolModal = true)}
-    />
-  </div>
-</div>
-
-<div class="chatBox">
-  <div class="message my_message">
-    <p>Hi<br /><span>12:15</span></p>
-  </div>
-  <div class="message friend_message">
-    <p>Hello<br /><span>12:18</span></p>
-  </div>
-  <div class="message my_message">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-      /><span>12:15</span>
-    </p>
-  </div>
-  <div class="message friend_message">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
-      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
-    </p>
-  </div>
-  <div class="message my_message">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-      /><span>12:15</span>
-    </p>
-  </div>
-  <div class="message friend_message">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
-      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
-    </p>
-  </div>
-  <div class="message my_message">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-      /><span>12:15</span>
-    </p>
-  </div>
-  <div class="message friend_message">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure accusantium
-      alias, optio quas voluptas consequuntur.<br /><span>12:18</span>
-    </p>
-  </div>
-</div>
-
-<div class="chatbox_input">
-  <div class="icon-wrapper icon-happy">
-    <ion-icon
-      name="happy-outline"
-      class="happy"
-      on:click|stopPropagation={() => ($showEmojiMenu = true)}
-    />
-  </div>
-  <form on:submit|preventDefault={handleSubmit} class="messageBox">
-    <input type="text" placeholder="Type a message" bind:value={$message} />
-    <div class="icon-submit-wrapper">
+      {/if}
+      <ion-icon name="location-outline" />
       <ion-icon
-        name="paper-plane-outline"
-        class="icon-submit"
-        on:click|preventDefault={handleSubmit}
+        name="hammer-outline"
+        on:click|stopPropagation={() => ($showToolModal = true)}
       />
     </div>
-  </form>
-  <div
-    class="icon-wrapper icon-mic"
-    on:click={() => ($showAudioRecordingModal = true)}
-  >
-    <ion-icon name="mic-outline" style:font-size="1.5em" />
   </div>
-</div>
+
+  <div class="chatBox">
+    <div class="message my_message">
+      <p>Hi<br /><span>12:15</span></p>
+    </div>
+    <div class="message friend_message">
+      <p>Hello<br /><span>12:18</span></p>
+    </div>
+    <div class="message my_message">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+        /><span>12:15</span>
+      </p>
+    </div>
+    <div class="message friend_message">
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
+        accusantium alias, optio quas voluptas consequuntur.<br /><span
+          >12:18</span
+        >
+      </p>
+    </div>
+    <div class="message my_message">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+        /><span>12:15</span>
+      </p>
+    </div>
+    <div class="message friend_message">
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
+        accusantium alias, optio quas voluptas consequuntur.<br /><span
+          >12:18</span
+        >
+      </p>
+    </div>
+    <div class="message my_message">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
+        /><span>12:15</span>
+      </p>
+    </div>
+    <div class="message friend_message">
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
+        accusantium alias, optio quas voluptas consequuntur.<br /><span
+          >12:18</span
+        >
+      </p>
+    </div>
+  </div>
+
+  <div class="chatbox_input">
+    <div class="icon-wrapper icon-happy">
+      <ion-icon
+        name="happy-outline"
+        class="happy"
+        on:click|stopPropagation={() => ($showEmojiMenu = true)}
+      />
+    </div>
+    <form on:submit|preventDefault={handleSubmit} class="messageBox">
+      <input type="text" placeholder="Type a message" bind:value={$message} />
+      <div class="icon-submit-wrapper">
+        <ion-icon
+          name="paper-plane-outline"
+          class="icon-submit"
+          on:click|preventDefault={handleSubmit}
+        />
+      </div>
+    </form>
+    <div
+      class="icon-wrapper icon-mic"
+      on:click={() => ($showAudioRecordingModal = true)}
+    >
+      <ion-icon name="mic-outline" style:font-size="1.5em" />
+    </div>
+  </div>
 </div>
 
 {#if $showToolModal}
@@ -444,6 +445,143 @@
 <!-- {#if $showPhotoModal}
   <PhotoModal />
 {/if} -->
+
+<!-- 
+const handleFileChange = async (e) => {
+  const types = ["image/png", "image/jpg", "image/jpeg"];
+
+  let selectedFile = e.target.files[0];
+
+  if (selectedFile && types.includes(selectedFile.type)) {
+    file = selectedFile;
+    console.log(file);
+    console.log(`${file.name} is selected`);
+    $selectedImg = file;
+    fileError = null;
+
+    let imgPath =
+      loggedinUser.displayName > $selectedUsername
+        ? `${loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${loggedinUser.displayName}`;
+
+    let imageRef = ref(
+      storage,
+      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+        file.name
+      }`
+    );
+
+    uploadBytes(imageRef, file).then(() => {
+      console.log("image upload completed !");
+      getDownloadURL(imageRef).then((_url) => {
+        url = _url;
+        let msgId =
+          loggedinUser.displayName > $selectedUsername
+            ? `${loggedinUser.displayName} & ${$selectedUsername}`
+            : `${$selectedUsername} & ${loggedinUser.displayName}`;
+        let msgRef = collection(db, "messages", msgId, "chat");
+        addDoc(msgRef, {
+          from: loggedinUser.displayName,
+          to: $selectedUsername,
+          createdAt: Timestamp.fromDate(new Date()),
+          imageURL: url || "",
+        }).then(() => {
+          console.log("document added successfully 😎");
+        });
+      });
+    });
+  } else {
+    file = null;
+    fileError = "Please select an image file (png or jpg)";
+    alert(fileError)
+  }
+}; 
+
+const handleSubmit = async () => {
+  $showEmojiMenu = false;
+  messageSent = $message;
+  $message = "";
+
+  let imgPath =
+    loggedinUser.displayName > $selectedUsername
+      ? `${loggedinUser.displayName} & ${$selectedUsername}`
+      : `${$selectedUsername} & ${loggedinUser.displayName}`;
+
+  if ($selectedImg) {
+    imageRef = ref(
+      storage,
+      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+        $selectedImg.name
+      }`
+    );
+    try {
+      await uploadBytes(imageRef, $selectedImg);
+      console.log("image upload completed !");
+      $selectedImg = null;
+    } catch (err) {
+      console.log("image uploaded failed");
+    }
+  }
+
+  if ($pictureFile) {
+    imageRef = ref(
+      storage,
+      `letschat/messages/camera/${imgPath}/${$pictureFile.name}`
+    );
+    try {
+      await uploadBytes(imageRef, $pictureBlob);
+      console.log("picture upload completed !");
+      $pictureFile = null;
+    } catch (err) {
+      console.log("picture uploaded failed");
+    }
+  }
+
+  try {
+    const url = await getDownloadURL(imageRef);
+    console.log("get downloaded url: ", url);
+
+    let msgId =
+      loggedinUser.displayName > $selectedUsername
+        ? `${loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${loggedinUser.displayName}`;
+    let msgRef = collection(db, "messages", msgId, "chat");
+    try {
+      await addDoc(msgRef, {
+        message: messageSent,
+        from: loggedinUser.displayName,
+        to: $selectedUsername,
+        createdAt: Timestamp.fromDate(new Date()),
+        image: url || "",
+      });
+      messageSent = "";
+      console.log("message created successfully 😁");
+    } catch (error) {
+      console.log("ooh, something went wrong 😥", error);
+    }
+  } catch (err) {
+    console.log(err.message);
+  }
+
+  let msgId =
+    loggedinUser.displayName > $selectedUsername
+      ? `${loggedinUser.displayName} & ${$selectedUsername}`
+      : `${$selectedUsername} & ${loggedinUser.displayName}`;
+  let msgRef = collection(db, "messages", msgId, "chat");
+  try {
+    await addDoc(msgRef, {
+      message: messageSent,
+      from: loggedinUser.displayName,
+      to: $selectedUsername,
+      createdAt: Timestamp.fromDate(new Date()),
+    });
+    messageSent = "";
+    console.log("message created successfully 😁");
+  } catch (error) {
+    console.log("ooh, something went wrong 😥", error);
+  }
+};
+ -->
 
 <!-- {#if $showBgSettingsModal}
   <BgSettingsModal />
@@ -524,17 +662,11 @@
   }
 
   .right-part {
-    /* margin-left: auto; */
     display: flex;
-    /* align-items: center; */
-    /* width: 100%; */
-    /* border: 1px solid; */
   }
 
   .right-part ion-icon {
     margin-right: 15px;
-    /* border: 1px solid; */
-    /* box-shadow: 2px 2px 2px gray; */
   }
 
   .icon-mic {
@@ -704,140 +836,3 @@
     }
   }
 </style>
-
-<!-- 
-const handleFileChange = async (e) => {
-  const types = ["image/png", "image/jpg", "image/jpeg"];
-
-  let selectedFile = e.target.files[0];
-
-  if (selectedFile && types.includes(selectedFile.type)) {
-    file = selectedFile;
-    console.log(file);
-    console.log(`${file.name} is selected`);
-    $selectedImg = file;
-    fileError = null;
-
-    let imgPath =
-      loggedinUser.displayName > $selectedUsername
-        ? `${loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-    let imageRef = ref(
-      storage,
-      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-        file.name
-      }`
-    );
-
-    uploadBytes(imageRef, file).then(() => {
-      console.log("image upload completed !");
-      getDownloadURL(imageRef).then((_url) => {
-        url = _url;
-        let msgId =
-          loggedinUser.displayName > $selectedUsername
-            ? `${loggedinUser.displayName} & ${$selectedUsername}`
-            : `${$selectedUsername} & ${loggedinUser.displayName}`;
-        let msgRef = collection(db, "messages", msgId, "chat");
-        addDoc(msgRef, {
-          from: loggedinUser.displayName,
-          to: $selectedUsername,
-          createdAt: Timestamp.fromDate(new Date()),
-          imageURL: url || "",
-        }).then(() => {
-          console.log("document added successfully 😎");
-        });
-      });
-    });
-  } else {
-    file = null;
-    fileError = "Please select an image file (png or jpg)";
-    alert(fileError)
-  }
-}; 
-
-const handleSubmit = async () => {
-  $showEmojiMenu = false;
-  messageSent = $message;
-  $message = "";
-
-  let imgPath =
-    loggedinUser.displayName > $selectedUsername
-      ? `${loggedinUser.displayName} & ${$selectedUsername}`
-      : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-  if ($selectedImg) {
-    imageRef = ref(
-      storage,
-      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-        $selectedImg.name
-      }`
-    );
-    try {
-      await uploadBytes(imageRef, $selectedImg);
-      console.log("image upload completed !");
-      $selectedImg = null;
-    } catch (err) {
-      console.log("image uploaded failed");
-    }
-  }
-
-  if ($pictureFile) {
-    imageRef = ref(
-      storage,
-      `letschat/messages/camera/${imgPath}/${$pictureFile.name}`
-    );
-    try {
-      await uploadBytes(imageRef, $pictureBlob);
-      console.log("picture upload completed !");
-      $pictureFile = null;
-    } catch (err) {
-      console.log("picture uploaded failed");
-    }
-  }
-
-  try {
-    const url = await getDownloadURL(imageRef);
-    console.log("get downloaded url: ", url);
-
-    let msgId =
-      loggedinUser.displayName > $selectedUsername
-        ? `${loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${loggedinUser.displayName}`;
-    let msgRef = collection(db, "messages", msgId, "chat");
-    try {
-      await addDoc(msgRef, {
-        message: messageSent,
-        from: loggedinUser.displayName,
-        to: $selectedUsername,
-        createdAt: Timestamp.fromDate(new Date()),
-        image: url || "",
-      });
-      messageSent = "";
-      console.log("message created successfully 😁");
-    } catch (error) {
-      console.log("ooh, something went wrong 😥", error);
-    }
-  } catch (err) {
-    console.log(err.message);
-  }
-
-  let msgId =
-    loggedinUser.displayName > $selectedUsername
-      ? `${loggedinUser.displayName} & ${$selectedUsername}`
-      : `${$selectedUsername} & ${loggedinUser.displayName}`;
-  let msgRef = collection(db, "messages", msgId, "chat");
-  try {
-    await addDoc(msgRef, {
-      message: messageSent,
-      from: loggedinUser.displayName,
-      to: $selectedUsername,
-      createdAt: Timestamp.fromDate(new Date()),
-    });
-    messageSent = "";
-    console.log("message created successfully 😁");
-  } catch (error) {
-    console.log("ooh, something went wrong 😥", error);
-  }
-};
- -->

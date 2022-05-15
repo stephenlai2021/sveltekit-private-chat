@@ -7,7 +7,7 @@
 
     $imageURL = await readURL($file);
     console.log('image url: ', $imageURL)
-    // $background.src = $imageURL;
+    $background.src = $imageURL;
     $bgOpacity = 0.6;
   };
 
@@ -26,7 +26,7 @@
     <ion-icon name="close-outline"></ion-icon>
   </div> -->
   <ul>
-    {#if !$isMobile}
+    <!-- {#if !$isMobile} -->
       <li>
         <label>
           <input
@@ -37,7 +37,7 @@
           背景圖片
         </label>
       </li>
-    {/if}
+    <!-- {/if} -->
     <li>背景顏色</li>
     <li>背景漸層</li>
   </ul>

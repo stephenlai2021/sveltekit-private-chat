@@ -94,13 +94,12 @@
 <div class="wrapper" on:click={closeModal}>
   <SidebarMenu />
   <LeftSide />
-  <!-- style:background-image={`url(${$imageURL})`} -->
+  <!-- style:background-image={$imageURL ? `url(${$imageURL})` : ''}
+  style:background-size="cover"
+  style:background-repeat="no-repeat" -->
   <div
     class="rightSide"
     style:background={$bgColor}
-    style:background-image={$imageURL ? `url(${$imageURL})` : ''}
-    style:background-size="cover"
-    style:background-repeat="no-repeat"
     style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
     style:width={$mobile && $page.url.pathname === "/"
       ? "0%"
