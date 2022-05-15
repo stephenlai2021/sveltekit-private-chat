@@ -53,6 +53,7 @@
     /* padding: 0; */
     /* display: flex; */
     /* appearance: none; */
+    display: grid;
     cursor: pointer;
     /* border: 1px solid; */
   }
