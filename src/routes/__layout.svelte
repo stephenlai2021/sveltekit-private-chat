@@ -17,6 +17,7 @@
     mobile,
     connection,
     loginFormShow,
+    showToolModal,
     showEmojiMenu,
     showThemeModal,
     showSettingsModal,
@@ -51,6 +52,11 @@
     if (window.innerWidth > 800) $mobile = false;
   };
 
+  const closeModal = () => {
+    $showEmojiMenu = false
+    $showToolModal = false
+  }
+
   onMount(() => {
     onAuthStateChanged(auth, (_user) => { 
       if (!_user) goto('/login')
@@ -84,7 +90,7 @@
 </svelte:head>
 
 <SvelteTheme />
-<div class="wrapper" on:click={() => $showEmojiMenu = false}>
+<div class="wrapper" on:click={closeModal}>
   <SidebarMenu />
   <LeftSide />
   <div

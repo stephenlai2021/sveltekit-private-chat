@@ -1,6 +1,9 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const file = writable(null)
+export const background = writable(null)
+export const showToolModal = writable(false)
 export const isMobile = writable(false);
 export const message = writable("");
 export const showEmojiMenu = writable(false);

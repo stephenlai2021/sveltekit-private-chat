@@ -19,6 +19,7 @@
     bgColor,
     imageURL,
     isMobile,
+    background,
     selectedImg,
     pictureFile,
     pictureBlob,
@@ -30,6 +31,7 @@
     showAudioPlayerModal,
     showAudioRecordingModal,
     showCameraPreviewModal,
+    showToolModal,
     showThemeModal,
     showCameraModal,
     showSettingsModal,
@@ -41,6 +43,7 @@
   import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
   import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
+  import ToolModal from "$lib/components/ToolModal.svelte";
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
   import { onMount } from "svelte";
   import { browser } from "$app/env";
@@ -55,10 +58,10 @@
   let ready = false;
   let matched = false;
   let url = null;
-  let file = null;
+  // let file = null;
   let fileError = null;
   let imageRef = null;
-  let background = null;
+  // let background = null;
   let colRef = collection(db, "whatzapp_users");
   // let isMobile = false;
   let header = null;
@@ -66,77 +69,58 @@
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
   const handleFileChange = async (e) => {
-    file = e.target.files[0];
-    console.log(file.name)
-    // alert('file name: ', file.name)
+    const types = ["image/png", "image/jpeg"];
 
-    $imageURL = await readURL(file);
-    background.src = $imageURL;
-    $bgOpacity = 0.6;
+    let selectedFile = e.target.files[0];
+
+    if (selectedFile && types.includes(selectedFile.type)) {
+      file = selectedFile;
+      $imageURL = await readURL(file);
+      background.src = $imageURL;
+      $bgOpacity = 0.6;
+
+      console.log(file);
+      console.log(`${file.name} is selected`);
+      $selectedImg = file;
+      fileError = null;
+
+      let imgPath =
+        loggedinUser.displayName > $selectedUsername
+          ? `${loggedinUser.displayName} & ${$selectedUsername}`
+          : `${$selectedUsername} & ${loggedinUser.displayName}`;
+
+      let imageRef = ref(
+        storage,
+        `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
+          file.name
+        }`
+      );
+
+      uploadBytes(imageRef, file).then(() => {
+        console.log("image upload completed !");
+        getDownloadURL(imageRef).then((_url) => {
+          url = _url;
+          let msgId =
+            loggedinUser.displayName > $selectedUsername
+              ? `${loggedinUser.displayName} & ${$selectedUsername}`
+              : `${$selectedUsername} & ${loggedinUser.displayName}`;
+          let msgRef = collection(db, "messages", msgId, "chat");
+          addDoc(msgRef, {
+            from: loggedinUser.displayName,
+            to: $selectedUsername,
+            createdAt: Timestamp.fromDate(new Date()),
+            imageURL: url || "",
+          }).then(() => {
+            console.log("document added successfully 😎");
+          });
+        });
+      });
+    } else {
+      file = null;
+      fileError = "Please select an image file (png or jpg)";
+      alert(fileError)
+    }
   };
-
-  const readURL = (file) => {
-    return new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.onload = (e) => res(e.target.result);
-      reader.onerror = (e) => rej(e);
-      reader.readAsDataURL(file);
-    });
-  };
-
-  // const handleFileChange = async (e) => {
-  //   const types = ["image/png", "image/jpg"];
-
-  //   let selectedFile = e.target.files[0];
-
-  //   if (selectedFile && types.includes(selectedFile.type)) {
-  //     file = selectedFile;
-  //     $imageURL = await readURL(file);
-  //     background.src = $imageURL;
-  //     $bgOpacity = 0.6;
-
-  //     console.log(file);
-  //     console.log(`${file.name} is selected`);
-  //     $selectedImg = file;
-  //     fileError = null;
-
-  //     // let imgPath =
-  //     //   loggedinUser.displayName > $selectedUsername
-  //     //     ? `${loggedinUser.displayName} & ${$selectedUsername}`
-  //     //     : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-  //     // let imageRef = ref(
-  //     //   storage,
-  //     //   `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-  //     //     file.name
-  //     //   }`
-  //     // );
-
-  //     // uploadBytes(imageRef, file).then(() => {
-  //     //   console.log("image upload completed !");
-  //     //   getDownloadURL(imageRef).then((_url) => {
-  //     //     url = _url;
-  //     //     let msgId =
-  //     //       loggedinUser.displayName > $selectedUsername
-  //     //         ? `${loggedinUser.displayName} & ${$selectedUsername}`
-  //     //         : `${$selectedUsername} & ${loggedinUser.displayName}`;
-  //     //     let msgRef = collection(db, "messages", msgId, "chat");
-  //     //     addDoc(msgRef, {
-  //     //       from: loggedinUser.displayName,
-  //     //       to: $selectedUsername,
-  //     //       createdAt: Timestamp.fromDate(new Date()),
-  //     //       imageURL: url || "",
-  //     //     }).then(() => {
-  //     //       console.log("document added successfully 😎");
-  //     //     });
-  //     //   });
-  //     // });
-  //   } else {
-  //     file = null;
-  //     fileError = "Please select an image file (png or jpg)";
-  //     alert(fileError)
-  //   }
-  // };
 
   // $: if (file) {
   //   readURL(file).then(url => {
@@ -235,11 +219,11 @@
   };
 
   onMount(() => {
-    if ($imageURL) background.src = $imageURL;
+    if ($imageURL) $background.src = $imageURL;
     if (!$imageURL) {
       $bgOpacity = 0.06
       $bgColor = '#e5ddd5'
-      background.src = 'https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg';
+      $background.src = 'https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg';
       setTheme("light");
     }
 
@@ -358,7 +342,7 @@
 </svelte:head>
 
 <div>
-  <img bind:this={background} style:opacity={$bgOpacity} alt="" />
+  <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
   <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
     <div class="left-part">
       <ion-icon
@@ -399,9 +383,9 @@
         <label>
           <input
             type="file"
-            on:change={handleFileChange}
             accept="image/png, image/jpeg"
-          />
+            />
+            <!-- on:change={handleFileChange} -->
           <ion-icon name="document-attach-outline" />
         </label>
       {:else}
@@ -412,9 +396,9 @@
         <label>
           <input
             type="file"
-            on:change={handleFileChange}
             accept="image/png, image/jpeg"
-          />
+            />
+            <!-- on:change={handleFileChange} -->
           <ion-icon name="image-outline" />
         </label>
       {/if}
@@ -422,7 +406,7 @@
       <!-- <ion-icon name="color-palette-outline" /> -->
       <ion-icon name="location-outline" />
       <!-- <ion-icon name="settings-outline" /> -->
-      <ion-icon name="hammer-outline" />
+      <ion-icon name="hammer-outline" on:click|stopPropagation={() => $showToolModal = true} />
     </div>
     <!-- <ion-icon name="menu-outline" class="icon-menu" /> -->
   </div>
@@ -530,6 +514,10 @@
     </div>
   </div>
 </div>
+
+{#if $showToolModal}
+  <ToolModal />
+{/if}
 
 {#if $showAudioPlayerModal}
   <AudioPlayerModal />
