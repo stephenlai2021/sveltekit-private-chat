@@ -540,6 +540,7 @@
   }
 
   .right-part {
+    margin-left: auto;
     display: flex;
     /* align-items: center; */
     /* width: 100%; */
