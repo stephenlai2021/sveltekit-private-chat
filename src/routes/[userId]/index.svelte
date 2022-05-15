@@ -302,7 +302,7 @@
         </div>
       {/if}
     </div>
-    <div class="right-part">
+    <!-- <div class="right-part">
       <ion-icon name="videocam-outline" />
       {#if $isMobile}
         <label>
@@ -328,16 +328,12 @@
           <ion-icon name="image-outline" />
         </label>
       {/if}
-      <!-- <ion-icon name="create-outline" /> -->
-      <!-- <ion-icon name="color-palette-outline" /> -->
       <ion-icon name="location-outline" />
-      <!-- <ion-icon name="settings-outline" /> -->
       <ion-icon
         name="hammer-outline"
         on:click|stopPropagation={() => ($showToolModal = true)}
       />
-    </div>
-    <!-- <ion-icon name="menu-outline" class="icon-menu" /> -->
+    </div> -->
   </div>
 
   <div class="chatBox">
