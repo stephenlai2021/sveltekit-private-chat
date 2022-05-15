@@ -454,7 +454,7 @@
   }
 
   label {
-    display: flex;
+    /* display: flex; */
   }
 
   label input {
