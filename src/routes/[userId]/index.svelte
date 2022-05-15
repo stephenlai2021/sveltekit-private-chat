@@ -562,6 +562,7 @@
   .left-part {
     display: flex;
     align-items: center;
+    margin-right: auto;
   }
 
   .chatbox_input input {

@@ -121,7 +121,7 @@ ion-icon {
   top: 0px;
   height: 50px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   background: transparent;
   backdrop-filter: blur(15px);
