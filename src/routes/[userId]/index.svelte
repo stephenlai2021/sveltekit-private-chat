@@ -532,12 +532,13 @@
   .right-part {
     display: flex;
     /* align-items: center; */
-    /* border: 1px solid; */
+    /* width: 100%; */
+    border: 1px solid;
   }
 
   .right-part ion-icon {
     margin-right: 15px;
-    /* border: 1px solid; */
+    border: 1px solid;
     /* box-shadow: 2px 2px 2px gray; */
   }
 
