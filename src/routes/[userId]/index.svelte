@@ -302,9 +302,10 @@
     {/if}
   </div>
 
-  <!-- <div class="right-part"> -->
-    <ion-icon name="videocam-outline" style:margin-left="auto" />
-    {#if $isMobile}
+  <div class="right-part">
+    <ion-icon name="videocam-outline" />
+    <!-- {#if $isMobile} -->
+    {#if $mobile}
       <label>
         <input
           type="file"
@@ -314,7 +315,8 @@
         <ion-icon name="document-attach-outline" />
       </label>
     {/if}
-    {#if !$isMobile}
+    <!-- {#if !$isMobile} -->
+    {#if !$mobile}
       <ion-icon
         name="camera-outline"
         on:click={() => ($showCameraModal = true)}
@@ -328,13 +330,13 @@
         <ion-icon name="image-outline" />
       </label>
     {/if}
-    <!-- <ion-icon name="location-outline" />
+    <ion-icon name="location-outline" />
     <ion-icon
       name="hammer-outline"
       on:click|stopPropagation={() => ($showToolModal = true)}
-    /> -->
+    />
   </div>
-<!-- </div> -->
+</div>
 
 <div class="chatBox">
   <div class="message my_message">
@@ -530,11 +532,11 @@
   }
 
   .right-part {
-    margin-left: auto;
+    /* margin-left: auto; */
     display: flex;
     /* align-items: center; */
     /* width: 100%; */
-    border: 1px solid;
+    /* border: 1px solid; */
   }
 
   .right-part ion-icon {
