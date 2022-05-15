@@ -267,7 +267,6 @@
 </svelte:head>
 
 <div>
-<!-- <div style:background-image={$imageURL ? `url($imageURL)` : `url('https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg')`}> -->
   <!-- <img bind:this={$background} style:opacity={$bgOpacity} alt="" /> -->
   <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
     <div class="left-part">
@@ -314,7 +313,8 @@
           />
           <ion-icon name="document-attach-outline" />
         </label>
-      {:else}
+      {/if}
+      {#if !$isMobile}
         <ion-icon
           name="camera-outline"
           on:click={() => ($showCameraModal = true)}
