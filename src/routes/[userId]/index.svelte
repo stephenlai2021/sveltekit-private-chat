@@ -548,7 +548,7 @@
 
   .right-part ion-icon {
     margin-right: 15px;
-    border: 1px solid;
+    /* border: 1px solid; */
     /* box-shadow: 2px 2px 2px gray; */
   }
 
