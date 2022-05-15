@@ -302,10 +302,11 @@
     {/if}
   </div>
 
-  <div class="right-part">
+  <!-- <div class="right-part"> -->
+  <div>
     <ion-icon name="videocam-outline" />
     <!-- {#if $isMobile} -->
-    <div>
+    <!-- <div> -->
       {#if $mobile}
         <label>
           <input
@@ -331,7 +332,7 @@
           <ion-icon name="image-outline" />
         </label>
       {/if}
-    </div>
+    <!-- </div> -->
     <ion-icon name="location-outline" />
     <ion-icon
       name="hammer-outline"
