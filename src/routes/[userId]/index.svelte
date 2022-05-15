@@ -134,19 +134,19 @@
       messageSent = "";
       console.log("message created successfully 😁");
     } catch (error) {
-      console.log("ooh, something went wrong 😥", error);
+      // console.log("ooh, something went wrong 😥", error);
     }
   };
 
   onMount(() => {
-    if ($imageURL) $background.src = $imageURL;
-    if (!$imageURL) {
-      $bgOpacity = 0.06;
-      $bgColor = "#e5ddd5";
-      $background.src =
-        "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
-      setTheme("light");
-    }
+    // if ($imageURL) $background.src = $imageURL;
+    // if (!$imageURL) {
+    //   $bgOpacity = 0.06;
+    //   $bgColor = "#e5ddd5";
+    //   $background.src =
+    //     "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
+    //   setTheme("light");
+    // }
 
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
@@ -161,12 +161,16 @@
     }
   });
 
-  $: if ($isMobile) {
-    $bgOpacity = 0.06;
-    $bgColor = "#e5ddd5";
-    $background.src =
-      "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
-  }
+  // $: if ($imageURL && browser) $background.src = $imageURL;
+
+  // $: if ($isMobile) {
+  //   $bgOpacity = 0.06;
+  //   $bgColor = "#e5ddd5";
+  //   $background.src =
+  //     "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
+  // }
+
+  $: if ($imageURL) console.log('image url: ', $imageURL)
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
@@ -271,12 +275,9 @@
 </svelte:head>
 
 <div>
-  <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
-  <!-- <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}> -->
-  <div
-    class="header"
-    style:background={$imageURL ? "transparent" : $isMobile ? "#ededed" : "#ededed"}
-  >
+  <!-- <img bind:this={$background} style:opacity={$bgOpacity} alt="" /> -->
+  <!-- <div class="header" style:background={$imageURL ? "transparent" : "#e5ddd5"}> -->
+  <div class="header" style:background={!$isMobile ? "transparent" : "red"}>
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
@@ -396,7 +397,12 @@
     </div>
   </div>
 
-  <div class="chatbox_input" style:background={$imageURL ? "transparent" : $isMobile ? "#ededed" : "#ededed"}>
+  <div
+    class="chatbox_input"
+    style:background={!$isMobile
+      ? "transparent"
+      : "red"}
+  >
     <div class="icon-wrapper icon-happy">
       <ion-icon
         name="happy-outline"
