@@ -303,7 +303,7 @@
   </div>
 
   <!-- <div class="right-part"> -->
-  <div>
+  <div style:display="flex">
     <ion-icon name="videocam-outline" />
     <!-- {#if $isMobile} -->
     <!-- <div> -->
