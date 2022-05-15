@@ -275,7 +275,7 @@
     src={$isMobile
       ? "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
       : ""}
-    style:opacity={$bgOpacity}
+    style:opacity={$isMobile ? '0.06' : $bgOpacity}
     alt=""
   />
   <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
