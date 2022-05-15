@@ -810,8 +810,8 @@ const handleSubmit = async () => {
 
   .chatBox {
     position: absolute;
-    top: 60px;
-    bottom: 60px;
+    top: 50px;
+    bottom: 50px;
     width: 100%;
     padding: 20px;
     padding-bottom: 0px;
