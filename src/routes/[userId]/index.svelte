@@ -302,7 +302,8 @@
         </div>
       {/if}
     </div>
-    <!-- <div class="right-part">
+
+    <div class="right-part">
       <ion-icon name="videocam-outline" />
       {#if $isMobile}
         <label>
@@ -333,7 +334,8 @@
         name="hammer-outline"
         on:click|stopPropagation={() => ($showToolModal = true)}
       />
-    </div> -->
+    </div>
+
   </div>
 
   <div class="chatBox">
@@ -560,8 +562,8 @@
   }
 
   .right-part {
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
     /* border: 1px solid; */
   }
 
