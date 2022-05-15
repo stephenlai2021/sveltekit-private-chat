@@ -266,7 +266,7 @@
   {/if}
 </svelte:head>
 
-<div>
+<!-- <div> -->
   <!-- <img bind:this={$background} style:opacity={$bgOpacity} alt="" /> -->
   <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
     <div class="left-part">
@@ -442,7 +442,7 @@
       <ion-icon name="mic-outline" style:font-size="1.5em" />
     </div>
   </div>
-</div>
+<!-- </div> -->
 
 {#if $showToolModal}
   <ToolModal />
