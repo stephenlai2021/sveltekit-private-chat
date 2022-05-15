@@ -139,7 +139,10 @@
   };
 
   onMount(() => {
-    if ($imageURL) $background.src = $imageURL;
+    if ($imageURL) { 
+      $background.src = $imageURL;
+      $bgOpacity = 0.6;
+    }
     if (!$imageURL) {
       $bgOpacity = 0.06;
       $bgColor = "#e5ddd5";
