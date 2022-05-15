@@ -140,12 +140,12 @@
 
   onMount(() => {
     if ($imageURL) $background.src = $imageURL;
-    if (!$imageURL || $isMobile) {
+    if (!$imageURL) {
       $bgOpacity = 0.06;
       $bgColor = "#e5ddd5";
       $background.src =
         "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
-      setTheme("light");
+      // setTheme("light");
     }
 
     if (
@@ -160,6 +160,13 @@
       console.log("device type: ", $isMobile ? "mobile" : "desktop");
     }
   });
+
+  $: if ($isMobile) {
+    $bgOpacity = 0.06;
+    $bgColor = "#e5ddd5";
+    $background.src =
+      "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
+  }
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
@@ -266,7 +273,10 @@
 <div>
   <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
   <!-- <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}> -->
-  <div class="header" style:background={$imageURL || !$isMobile ? "transparent" : "#ededed"}>
+  <div
+    class="header"
+    style:background={$imageURL ? "transparent" : $isMobile ? "#ededed" : "#ededed"}
+  >
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
@@ -397,11 +407,11 @@
     <form on:submit|preventDefault={handleSubmit} class="messageBox">
       <input type="text" placeholder="Type a message" bind:value={$message} />
       <!-- <div class="icon-submit-wrapper"> -->
-        <ion-icon
-          name="paper-plane-outline"
-          class="icon-submit"
-          on:click|preventDefault={handleSubmit}
-        />
+      <ion-icon
+        name="paper-plane-outline"
+        class="icon-submit"
+        on:click|preventDefault={handleSubmit}
+      />
       <!-- </div> -->
     </form>
     <div
