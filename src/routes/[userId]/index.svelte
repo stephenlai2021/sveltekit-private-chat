@@ -305,31 +305,33 @@
   <div class="right-part">
     <ion-icon name="videocam-outline" />
     <!-- {#if $isMobile} -->
-    {#if $mobile}
-      <label>
-        <input
-          type="file"
-          accept="image/png, image/jpg, image/jpeg"
-          on:change={handleFileChange}
+    <div>
+      {#if $mobile}
+        <label>
+          <input
+            type="file"
+            accept="image/png, image/jpg, image/jpeg"
+            on:change={handleFileChange}
+          />
+          <ion-icon name="document-attach-outline" />
+        </label>
+      {/if}
+      <!-- {#if !$isMobile} -->
+      {#if !$mobile}
+        <ion-icon
+          name="camera-outline"
+          on:click={() => ($showCameraModal = true)}
         />
-        <ion-icon name="document-attach-outline" />
-      </label>
-    {/if}
-    <!-- {#if !$isMobile} -->
-    {#if !$mobile}
-      <ion-icon
-        name="camera-outline"
-        on:click={() => ($showCameraModal = true)}
-      />
-      <label>
-        <input
-          type="file"
-          accept="image/png, image/jpg, image/jpeg"
-          on:change={handleFileChange}
-        />
-        <ion-icon name="image-outline" />
-      </label>
-    {/if}
+        <label>
+          <input
+            type="file"
+            accept="image/png, image/jpg, image/jpeg"
+            on:change={handleFileChange}
+          />
+          <ion-icon name="image-outline" />
+        </label>
+      {/if}
+    </div>
     <ion-icon name="location-outline" />
     <ion-icon
       name="hammer-outline"
@@ -392,9 +394,9 @@
     />
   </div>
   <form on:submit|preventDefault={handleSubmit} class="messageBox">
-    {#if isMobile}
+    <!-- {#if isMobile}
       <ion-icon name="menu-outline" class="icon-menu" />
-    {/if}
+    {/if} -->
     <input type="text" placeholder="Type a message" bind:value={$message} />
     <div class="icon-submit-wrapper">
       <ion-icon
@@ -470,14 +472,6 @@
     color: gray;
   }
 
-  .icon-attach {
-  }
-
-  .icon-image {
-    position: absolute;
-    left: 0;
-  }
-
   .icon-submit-wrapper {
     position: absolute;
     top: 0;
@@ -544,10 +538,6 @@
     /* border: 1px solid; */
     /* box-shadow: 2px 2px 2px gray; */
   }
-
-  /* .icon-menu {
-    display: none;
-  } */
 
   .icon-mic {
     justify-content: flex-end;
