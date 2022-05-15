@@ -139,10 +139,10 @@
   };
 
   onMount(() => {
-    $background.src =
-      "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
-      
-    if ($imageURL) { 
+    // $background.src =
+    //   "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
+
+    if ($imageURL) {
       $background.src = $imageURL;
       $bgOpacity = 0.6;
     }
@@ -165,7 +165,7 @@
     }
   });
 
-  $: if ($imageURL) console.log('image url: ', $imageURL)
+  $: if ($imageURL) console.log("image url: ", $imageURL);
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
@@ -270,9 +270,16 @@
 </svelte:head>
 
 <div>
-  <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
+  <img
+    bind:this={$background}
+    src={$isMobile
+      ? "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
+      : ""}
+    style:opacity={$bgOpacity}
+    alt=""
+  />
   <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}>
-  <!-- <div class="header" style:background={!$isMobile ? "transparent" : "#ededed"}> -->
+    <!-- <div class="header" style:background={!$isMobile ? "transparent" : "#ededed"}> -->
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
@@ -394,9 +401,7 @@
 
   <div
     class="chatbox_input"
-    style:background={$imageURL
-      ? "transparent"
-      : "#ededed"}
+    style:background={$imageURL ? "transparent" : "#ededed"}
   >
     <div class="icon-wrapper icon-happy">
       <ion-icon
