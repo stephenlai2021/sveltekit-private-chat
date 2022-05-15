@@ -138,17 +138,16 @@
     }
   };
 
-  onMount(() => {
-    // $background.src =
-    //   "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
-
+  onMount(() => {    
     if ($imageURL) {
       $background.src = $imageURL;
       $bgOpacity = 0.6;
     }
-    if (!$imageURL) {
+    if ($isMobile || !$imageURL) {
       $bgOpacity = 0.06;
       $bgColor = "#e5ddd5";
+      $background.src =
+        "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
       setTheme("light");
     }
 
@@ -269,17 +268,18 @@
   {/if}
 </svelte:head>
 
+<!-- src={$isMobile || !imageURL
+  ? "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
+  : ""} -->
+<!-- style:opacity={$isMobile ? '0.06' : $bgOpacity} -->
 <div>
   <img
     bind:this={$background}
-    src={$isMobile
-      ? "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
-      : ""}
-    style:opacity={$isMobile ? '0.06' : $bgOpacity}
+    style:opacity={$bgOpacity}
     alt=""
   />
   <!-- <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}> -->
-    <div class="header" style:background={!$isMobile ? "transparent" : "#ededed"}>
+    <div class="header" style:background={!$isMobile || !$imageURL ? "transparent" : "#ededed"}>
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
@@ -401,7 +401,7 @@
 
   <div
     class="chatbox_input"
-    style:background={!$isMobile ? "transparent" : "#ededed"}
+    style:background={!$isMobile || !$imageURL ? "transparent" : "#ededed"}
   >
     <div class="icon-wrapper icon-happy">
       <ion-icon

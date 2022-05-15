@@ -31,7 +31,7 @@
 
 <div class="tool-modal" on:click|stopPropagation>
   <ul>
-    {#if !$isMobile}
+    <!-- {#if !$isMobile} -->
       <li>
         <label>
           <input
@@ -42,7 +42,7 @@
           背景圖片
         </label>
       </li>
-    {/if}
+    <!-- {/if} -->
     <li>背景顏色</li>
     <li>背景漸層</li>
   </ul>

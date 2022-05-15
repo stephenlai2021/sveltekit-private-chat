@@ -1,5 +1,18 @@
 <script>
-  import { bgColor } from "$lib/store";
+  import { bgColor, background, bgOpacity, imageURL } from "$lib/store";
+  import { onMount } from 'svelte'
+
+  onMount(() => {
+    if ($imageURL) {
+      $background.src = $imageURL
+      $bgOpacity = 0.6;
+    }
+    if (!$imageURL) {
+      $background.src = '/whatsapp_cover.png'
+      $bgOpacity = 0.06;
+      $bgColor = "#e5ddd5";
+    }
+  })
 </script>
 
 <svelte:head>
@@ -10,7 +23,8 @@
   <!-- <h1>Letschat</h1> -->
   <!-- <p>Connect friends together</p> --> 
   <div class="image-wrapper">    
-    <img src="/whatsapp_cover.png" alt="">
+    <!-- <img src="/whatsapp_cover.png" alt=""> -->
+    <img bind:this={$background} style:opacity={$bgOpacity} alt="">
   </div>
 </div>
 
