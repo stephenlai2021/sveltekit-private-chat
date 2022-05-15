@@ -313,6 +313,11 @@
         />
         <ion-icon name="document-attach-outline" />
       </label>
+      <ion-icon name="location-outline" />
+      <ion-icon
+        name="hammer-outline"
+        on:click|stopPropagation={() => ($showToolModal = true)}
+      />
     {/if}
     {#if !$isMobile}
       <ion-icon
@@ -327,12 +332,17 @@
         />
         <ion-icon name="image-outline" />
       </label>
+      <ion-icon name="location-outline" />
+      <ion-icon
+        name="hammer-outline"
+        on:click|stopPropagation={() => ($showToolModal = true)}
+      />
     {/if}
-    <ion-icon name="location-outline" />
+    <!-- <ion-icon name="location-outline" />
     <ion-icon
       name="hammer-outline"
       on:click|stopPropagation={() => ($showToolModal = true)}
-    />
+    /> -->
   </div>
 </div>
 
