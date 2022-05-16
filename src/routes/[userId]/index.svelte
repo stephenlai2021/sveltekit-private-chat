@@ -138,7 +138,7 @@
     }
   };
 
-  onMount(() => {    
+  onMount(() => {
     if ($imageURL) {
       $background.src = $imageURL;
       $bgOpacity = 0.6;
@@ -273,13 +273,10 @@
   : ""} -->
 <!-- style:opacity={$isMobile ? '0.06' : $bgOpacity} -->
 <div>
-  <img
-    bind:this={$background}
-    style:opacity={$bgOpacity}
-    alt=""
-  />
+  <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
   <!-- <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}> -->
-    <div class="header" style:background={!$isMobile || !$imageURL ? "transparent" : "#ededed"}>
+  <!-- <div class="header" style:background={!$isMobile || !$imageURL ? "transparent" : "#ededed"}> -->
+  <div class="header">
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
@@ -399,10 +396,8 @@
     </div>
   </div>
 
-  <div
-    class="chatbox_input"
-    style:background={!$isMobile || !$imageURL ? "transparent" : "#ededed"}
-  >
+  <div class="chatbox_input">
+    <!-- style:background={!$isMobile || !$imageURL ? "transparent" : "#ededed"} -->
     <div class="icon-wrapper icon-happy">
       <ion-icon
         name="happy-outline"
@@ -665,7 +660,8 @@ const handleSubmit = async () => {
 
   .user-name {
     width: 80px;
-    color: transparent;
+    /* color: transparent; */
+    color: #51585c;
     border-radius: 2px;
   }
 
@@ -686,6 +682,7 @@ const handleSubmit = async () => {
   }
 
   .right-part ion-icon {
+    /* color: #51585c; */
     margin-right: 15px;
   }
 
@@ -731,7 +728,7 @@ const handleSubmit = async () => {
     width: 100%;
     height: 50px;
     background: #f0f0f0;
-    background: transparent;
+    background: #ededed;
     backdrop-filter: blur(15px);
     padding: 20px;
     display: flex;
@@ -821,6 +818,10 @@ const handleSubmit = async () => {
 
   .details {
     padding-left: 15px;
+  }
+
+  .details h4 {
+    color: #51585c;
   }
 
   @media (max-width: 800px) {

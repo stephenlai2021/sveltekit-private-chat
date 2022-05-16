@@ -31,7 +31,7 @@
 
 <div class="tool-modal" on:click|stopPropagation>
   <ul>
-    <!-- {#if !$isMobile} -->
+    {#if !$isMobile}
       <li>
         <label>
           <input
@@ -42,28 +42,16 @@
           背景圖片
         </label>
       </li>
-    <!-- {/if} -->
+    {/if}
     <li>背景顏色</li>
     <li>背景漸層</li>
   </ul>
 </div>
 
 <style>
-  .icon-wrapper {
-    display: flex;
-    justify-content: flex-end;
-  }
-
   label {
-    /* padding: 0; */
-    /* display: flex; */
-    /* width: auto; */
-    /* appearance: none; */
-    /* display: grid; */
-    /* padding-left: -3px; */
     margin-left: -5px;
     cursor: pointer;
-    /* border: 1px solid; */
   }
 
   label input {
@@ -73,23 +61,25 @@
   }
 
   ul {
-    /* margin: 0; */
     padding: 10px;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(8px);
-    /* border: 1px solid; */
   }
 
   li {
     margin: 0;
     padding: 3px;
     list-style: none;
+    color: #51585c;
   }
 
   .tool-modal {
     position: absolute;
     right: 18px;
     top: 50px;
+    background: #ededed;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 </style>
