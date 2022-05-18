@@ -34,7 +34,8 @@
 </div>
 
 <style>
-  .icon-arrow-back {
+  @import url("$lib/styles/theme-modal.css");
+  /* .icon-arrow-back {
     cursor: pointer;
   }
 
@@ -61,7 +62,6 @@
     z-index: 300;
     width: 100%;
     height: 100vh;
-    /* background: grey; */
     background: rgba(189, 202, 202, 0.5);
     backdrop-filter: blur(30px);
   }
@@ -82,5 +82,5 @@
   .theme-title {
     font-size: 0.7em;
     text-align: center;
-  }
+  } */
 </style>

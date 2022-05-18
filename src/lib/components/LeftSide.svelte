@@ -213,34 +213,18 @@
     </div>
   {/if}
 
-  {#if $showThemeModal}
+  <!-- {#if $showThemeModal}
     <ThemeModal />
-  {/if}
+  {/if} -->
+
   {#if $showSettingsModal && user}
-    <!-- {#if user} -->
     <SettingsModal {user} />
   {/if}
+
   {#if $showAddFriendModal}
     <AddFriendModal />
   {/if}
-  <!-- {#if showCameraModal}
-    <CameraModal />
-  {/if} -->
-
-  <!-- {#if $mobile && user}
-    <div
-      class="userimg"
-      on:click|stopPropagation={() =>
-        ($showSettingsModal = !$showSettingsModal)}
-    >
-      {#if user.photoURL}
-        <img src={user.photoURL} alt="" class="cover" />
-      {:else}
-        <img src="/joke.png" alt="" class="cover" />
-      {/if}
-      <ion-icon name="settings-outline" class="settings" />
-    </div>
-  {/if} -->
+  
 
   {#if $mobile}
     <Navbar />

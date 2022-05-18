@@ -1,9 +1,11 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
-export const file = writable(null)
-export const background = writable(null)
-export const showToolModal = writable(false)
+export const disabled = writable(false)
+// export const imageTitle = writable("")
+export const file = writable(null);
+export const background = writable(null);
+export const showToolModal = writable(false);
 export const isMobile = writable(false);
 export const message = writable("");
 export const showEmojiMenu = writable(false);
@@ -42,13 +44,17 @@ export const showBgSettingsModal = writable(false);
 export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
-export const bgColor = writable(
-  // "linear-gradient(225deg, #FC466B 0%, #3F5EFB 100%)"
-  '#e5ddd5'
-);
+export const bgColor = writable("#e5ddd5");
 // export const imageURL = writable(
 //   "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
 // );
+
+export const imageTitle = writable(
+  browser && (localStorage.getItem("image title") || "Default")
+);
+imageTitle.subscribe(
+  (val) => browser && localStorage.setItem("image title", val)
+);
 
 export const bgOpacity = writable(
   browser && (localStorage.getItem("backround opacity") || 0.06)
@@ -58,12 +64,15 @@ bgOpacity.subscribe(
 );
 
 export const imageURL = writable(
-  // browser && (localStorage.getItem("image url") || 'https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg')
-  browser && (localStorage.getItem("image url"))
+  browser &&
+    // (localStorage.getItem("image url") || {
+    //   url: "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg",
+    //   title: "default"
+    // })
+    (localStorage.getItem("image url") ||
+      "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg")
 );
-imageURL.subscribe(
-  (val) => browser && localStorage.setItem("image url", val)
-);
+imageURL.subscribe((val) => browser && localStorage.setItem("image url", val));
 
 export const selectedImg = writable(
   browser && localStorage.getItem("selected image")

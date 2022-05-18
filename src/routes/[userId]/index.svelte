@@ -14,15 +14,17 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import {
+    // bgPic,
     mobile,
     message,
     bgColor,
     imageURL,
+    imageTitle,
     isMobile,
+    disabled,
     background,
     selectedImg,
     pictureFile,
-    pictureBlob,
     audioFile,
     audioURL,
     bgOpacity,
@@ -60,6 +62,8 @@
   let url = null;
   let file = null;
   let colRef = collection(db, "whatzapp_users");
+
+  // $background.src = $imageURL
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
@@ -116,7 +120,7 @@
   const handleSubmit = async () => {
     $showEmojiMenu = false;
     messageSent = $message;
-    // $message = "";
+    $message = "";
 
     let msgId =
       loggedinUser.displayName > $selectedUsername
@@ -134,22 +138,22 @@
       messageSent = "";
       console.log("message created successfully 😁");
     } catch (error) {
-      // console.log("ooh, something went wrong 😥", error);
+      console.log("ooh, something went wrong 😥", error);
     }
-  };
+  };  
 
   onMount(() => {
-    if ($imageURL) {
-      $background.src = $imageURL;
-      $bgOpacity = 0.6;
-    }
-    if ($isMobile || !$imageURL) {
-      $bgOpacity = 0.06;
+    $background.src = $imageURL;
+    if ($imageTitle === 'Default') {
+      $bgOpacity = 0.06
       $bgColor = "#e5ddd5";
-      $background.src =
-        "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg";
-      setTheme("light");
+      $disabled = true
     }
+    if ($imageTitle != 'Default') {
+      $bgOpacity = 0.5
+      $disabled = false
+    }
+    console.log('image title: ', $imageTitle)
 
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
@@ -164,7 +168,7 @@
     }
   });
 
-  $: if ($imageURL) console.log("image url: ", $imageURL);
+  // $: if ($imageURL) console.log("image url: ", $imageURL);
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
@@ -268,14 +272,9 @@
   {/if}
 </svelte:head>
 
-<!-- src={$isMobile || !imageURL
-  ? "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
-  : ""} -->
-<!-- style:opacity={$isMobile ? '0.06' : $bgOpacity} -->
+<!-- style:background-color={$bgColor} -->
 <div>
   <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
-  <!-- <div class="header" style:background={$imageURL ? "transparent" : "#ededed"}> -->
-  <!-- <div class="header" style:background={!$isMobile || !$imageURL ? "transparent" : "#ededed"}> -->
   <div class="header">
     <div class="left-part">
       <ion-icon
@@ -397,7 +396,6 @@
   </div>
 
   <div class="chatbox_input">
-    <!-- style:background={!$isMobile || !$imageURL ? "transparent" : "#ededed"} -->
     <div class="icon-wrapper icon-happy">
       <ion-icon
         name="happy-outline"
@@ -407,7 +405,6 @@
     </div>
     <form on:submit|preventDefault={handleSubmit} class="messageBox">
       <input type="text" placeholder="Type a message" bind:value={$message} />
-      <!-- <div class="icon-submit-wrapper"> -->
       <ion-icon
         name="paper-plane-outline"
         class="icon-submit"
@@ -599,6 +596,10 @@ const handleSubmit = async () => {
 <style>
   :root {
     --bg-color: #d6d8dc;
+  }
+
+  ion-icon {
+    color: #51585c;
   }
 
   label {

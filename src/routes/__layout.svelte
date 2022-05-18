@@ -1,5 +1,7 @@
 <script context="module">
+  // import { bgColor, imageURL } from "$lib/store";
   import { bgColor } from "$lib/store";
+  // import { imageURL } from "$lib/store";
   export const load = ({ session }) => {
     const locals = session;
     const bgColor_preference = locals.bgColor;
@@ -15,7 +17,6 @@
   import "$lib/styles/global.css";
   import {
     mobile,
-    imageURL,
     connection,
     loginFormShow,
     showToolModal,
@@ -94,7 +95,7 @@
 <div class="wrapper" on:click={closeModal}>
   <SidebarMenu />
   <LeftSide />
-  <!-- style:background-image={$imageURL ? `url(${$imageURL})` : "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"}
+  <!-- style:background-image={`url(${imageURL})`}
   style:background-size="cover"
   style:background-repeat="no-repeat" -->
   <div

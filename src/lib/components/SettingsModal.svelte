@@ -13,22 +13,22 @@
   import { fly } from "svelte/transition";
   import Cookies from "js-cookie";
   import { page } from "$app/stores";
-  import { auth, db, storage } from '$lib/firebase/client'
+  import { auth, db, storage } from "$lib/firebase/client";
   import { onAuthStateChanged, updateProfile } from "firebase/auth";
   import { doc, updateDoc } from "firebase/firestore";
-  import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
-  import { v4 } from 'uuid'
-  import CameraModal from '$lib/components/CameraModal.svelte'
+  import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+  import { v4 } from "uuid";
+  import CameraModal from "$lib/components/CameraModal.svelte";
   // import { handleFileChange } from '$lib/functions/handleFileChange'
 
   export let user;
 
   // const { file, fileError } = handleFileChange()
 
-  let url = null
-  let file = null
+  let url = null;
+  let file = null;
   let theme = true;
-  let fileError = null
+  let fileError = null;
 
   // onAuthStateChanged(auth, _user => user = _user)
 
@@ -44,59 +44,56 @@
   };
 
   const handleFileChange = (e) => {
-    const types = ['image/png', 'image/jpg', 'image/jpeg']    
-    
-    let selectedFile = e.target.files[0]
-    console.log(selectedFile)
-    
+    const types = ["image/png", "image/jpg", "image/jpeg"];
+
+    let selectedFile = e.target.files[0];
+    console.log(selectedFile);
+
     if (selectedFile && types.includes(selectedFile.type)) {
-      file = selectedFile
-      console.log(file)
-      console.log(`${file.name} is selected`)
-      fileError = null
+      file = selectedFile;
+      console.log(file);
+      console.log(`${file.name} is selected`);
+      fileError = null;
     } else {
-      file = null
-      fileError = 'Please select an image file (png or jpg)'
+      file = null;
+      fileError = "Please select an image file (png or jpg)";
     }
   };
 
-  const takePhoto = () => {
-    $showCameraModal = true
-  }
-
-  $: if (file) {    
+  $: if (file) {
     // change file type to .png
-    let blob = file.slice(0, file.size, 'image/png')
-    let newFile = new File([blob], 'avatar.png', { type: 'image/png' })
-    let imageRef = ref(storage, `letschat/profile/${user.displayName}/${newFile.name}`)
-    
-    uploadBytes(imageRef, file)
-    .then(() => {
-      console.log('image upload completed !')
-      getDownloadURL(imageRef)
-      .then(_url => {
-        url = _url
-      })
-    })
+    let blob = file.slice(0, file.size, "image/png");
+    let newFile = new File([blob], "avatar.png", { type: "image/png" });
+    let imageRef = ref(
+      storage,
+      `letschat/profile/${user.displayName}/${newFile.name}`
+    );
+
+    uploadBytes(imageRef, file).then(() => {
+      console.log("image upload completed !");
+      getDownloadURL(imageRef).then((_url) => {
+        url = _url;
+      });
+    });
   }
 
   $: if (url) {
-    console.log('image url: ', url)
+    console.log("image url: ", url);
 
     updateProfile(user, {
-      photoURL: url
+      photoURL: url,
     }).then(() => {
-      $profileUpdated = true
-      console.log('use profile uupdated successfully !')
-    })
+      $profileUpdated = true;
+      console.log("use profile uupdated successfully !");
+    });
 
     // update user avatar
-    let userRef = doc(db, 'whatzapp_users', user.email)
+    let userRef = doc(db, "whatzapp_users", user.email);
     updateDoc(userRef, {
-      avatar: url
+      avatar: url,
     }).then(() => {
-      console.log('user avatar updated successfully !')
-    })
+      console.log("user avatar updated successfully !");
+    });
   }
 
   onMount(() => {
@@ -127,7 +124,11 @@
           {/if}
           <!-- <ion-icon name="camera-outline" class="icon-camera" on:click|stopPropagation={() => $showCameraModal = true} /> -->
           <label>
-            <input type="file" on:change={handleFileChange} accept="image/png, image/jpg, image/jpeg" />
+            <input
+              type="file"
+              on:change={handleFileChange}
+              accept="image/png, image/jpg, image/jpeg"
+            />
             <ion-icon name="camera-outline" class="icon-camera" />
           </label>
         </div>
@@ -160,38 +161,36 @@
         {/if}
       </div>
     </li>
-    <!-- {#if !$mobile && $page.url.pathname != "/"} -->
-      <li>
-        <div class="content">
-          <label>
-            <input
-              type="color"
-              bind:value={$bgColor}
-              on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
-              style:height="0"
-              style:width="0"
-              style:opacity="0"
-            />
-            <ion-icon name="color-palette-outline" class="icon-palette" />
-            <div class="title-wrapper" style:cursor="pointer">
-              <span class="menu-item">Color</span>
-            </div>
-          </label>
-        </div>
-      </li>
-      <li>
-        <div class="content">
-          <ion-icon name="image-outline" />
-          <div class="title-wrapper">
-            <span
-              class="menu-item"
-              on:click|stopPropagation={() => ($showThemeModal = true)}
-              >Theme</span
-            >
+    <!-- <li>
+      <div class="content">
+        <label>
+          <input
+            type="color"
+            bind:value={$bgColor}
+            on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
+            style:height="0"
+            style:width="0"
+            style:opacity="0"
+          />
+          <ion-icon name="color-palette-outline" class="icon-palette" />
+          <div class="title-wrapper" style:cursor="pointer">
+            <span class="menu-item">Color</span>
           </div>
+        </label>
+      </div>
+    </li>
+    <li>
+      <div class="content">
+        <ion-icon name="image-outline" />
+        <div class="title-wrapper">
+          <span
+            class="menu-item"
+            on:click|stopPropagation={() => ($showThemeModal = true)}
+            >Theme</span
+          >
         </div>
-      </li>
-    <!-- {/if} -->
+      </div>
+    </li> -->
     <li>
       <div class="content">
         <ion-icon name="information-circle-outline" />
