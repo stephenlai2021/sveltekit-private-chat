@@ -5,7 +5,7 @@
   export const load = ({ session }) => {
     const locals = session;
     const bgColor_preference = locals.bgColor;
-    // const imageURL_preference = locals.bgColor;
+    // const imageURL_preference = locals.imageURL;
 
     if (bgColor_preference) bgColor.set(bgColor_preference);
     // if (imageURL_preference) imageURL.set(imageURL_preference);

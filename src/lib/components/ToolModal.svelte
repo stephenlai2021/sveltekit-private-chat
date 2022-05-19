@@ -37,6 +37,10 @@
       $bgOpacity = 0.6
       $disabled = false
     }
+    // if ($imageTitle.includes('Animation')) {
+    //   $bgOpacity = 1
+    //   $disabled = true
+    // }
   };
 
   const handleFileChange = async (e) => {
@@ -121,7 +125,7 @@
                 class="theme-image"
                 style:background-image={theme.background}
               />
-              <span class="theme-title">{theme.title}</span>
+              <!-- <span class="theme-title">{theme.title}</span> -->
             </div>
           {/each}
         </main>

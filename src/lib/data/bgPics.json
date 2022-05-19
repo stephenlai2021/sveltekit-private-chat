@@ -1,9 +1,7 @@
 [
   {
     "title": "Default",
-    "url": "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg",
-    "opacity": "0.06",
-    "color": "#e5ddd5"
+    "url": "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
   },
   {
     "title": "Pic-1",
@@ -26,10 +24,6 @@
     "url": "/pic-5.jpg"
   },
   {
-    "title": "Pic-6",
-    "url": "/pic-6.jpg"
-  },
-  {
     "title": "Pic-7",
     "url": "/pic-7.jpg"
   },
@@ -38,7 +32,19 @@
     "url": "/pic-8.jpg"
   },
   {
-    "title": "PIc-9",
-    "url": "/pic-9.jpg"
+    "title": "Animation 1",
+    "url": "/animation-1.gif"
+  },
+  {
+    "title": "Animation 2",
+    "url": "/animation-2.gif"
+  },
+  {
+    "title": "Animation 3",
+    "url": "/animation-3.gif"
+  },
+  {
+    "title": "Animation 4",
+    "url": "/animation-4.gif"
   }
 ]
