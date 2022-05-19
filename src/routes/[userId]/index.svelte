@@ -138,7 +138,7 @@
       messageSent = "";
       console.log("message created successfully 😁");
     } catch (error) {
-      // console.log("ooh, something went wrong 😥", error);
+      console.log("ooh, something went wrong 😥", error);
     }
   };  
 
@@ -275,7 +275,7 @@
 <!-- style:background-color={$bgColor} -->
 <div>
   <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
-  <div class="header">
+  <div class="header" style:background={$imageTitle === 'Default' ? '#ededed' : 'rgba(229, 221, 222, 0.5)'}>
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
