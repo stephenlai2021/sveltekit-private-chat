@@ -171,12 +171,14 @@
     position: absolute;
     /* right: 18px; */
     right: 0;
-    top: 50px;
+    /* top: 50px; */
+    top: 0;
     background: #ededed;
     /* background: rgba(255, 255, 255, 0.5); */
     /* border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px; */
-    height: calc(100vh - 100px);
+    /* height: calc(100vh - 100px); */
+    height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
   }

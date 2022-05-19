@@ -32,10 +32,6 @@
     "url": "/pic-8.jpg"
   },
   {
-    "title": "Animation 1",
-    "url": "/animation-1.gif"
-  },
-  {
     "title": "Animation 2",
     "url": "/animation-2.gif"
   },
@@ -46,5 +42,9 @@
   {
     "title": "Animation 4",
     "url": "/animation-4.gif"
+  },
+  {
+    "title": "Animation 5",
+    "url": "https://www.lovethispic.com/uploaded_images/253511-Amazing-Waterfall.gif"
   }
 ]
