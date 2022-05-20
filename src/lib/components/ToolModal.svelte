@@ -213,7 +213,7 @@
   }
 
   li:hover {
-    appearance: none;
+    background: none;
   }
 
   .title,
