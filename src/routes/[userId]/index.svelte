@@ -695,7 +695,7 @@ const handleSubmit = async () => {
 
   .icon-mic {
     justify-content: flex-end;
-    z-index: 500;
+    /* z-index: 500; */
   }
 
   .icon-happy {

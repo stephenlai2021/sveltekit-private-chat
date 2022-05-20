@@ -83,7 +83,7 @@
       <li>
         <label>
           <input
-            t="file"
+            type="file"
             on:change={handleFileChange}
             accept="image/png, image/jpg, image/jpeg, image/gif"
           />
@@ -212,6 +212,10 @@
     /* border: 1px solid; */
   }
 
+  li:hover {
+    appearance: none;
+  }
+
   .title,
   li {
     color: #51585c;
@@ -251,11 +255,11 @@
     position: absolute;
     right: 0;
     top: 0;
-    /* background: #ededed; */
+    z-index: 600;
     background: rgba(229, 221, 222, 0.5);
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
-    backdrop-filter: blur(35px);
+    backdrop-filter: blur(50px);
   }
 </style>

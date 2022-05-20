@@ -102,7 +102,7 @@
     : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "0%"
     : !$mobile && $page.url.pathname != "/login"
-    ? "500px"
+    ? "550px"
     : "0%"}
 >
     <!-- : $mobile && $page.url.pathname != "/" 
