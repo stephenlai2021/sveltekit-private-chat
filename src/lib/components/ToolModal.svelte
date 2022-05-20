@@ -85,7 +85,7 @@
           <input
             type="file"
             on:change={handleFileChange}
-            accept="image/png, image/jpg, image/jpeg, image/gif"
+            accept="image/png, image/jpg, image/jpeg"
           />
           <span>選擇圖片</span>
         </label>
@@ -238,7 +238,7 @@
     /* background: #ededed; */
     /* background: rgba(255, 255, 255, 0.5); */
     /* backdrop-filter: blur(8px); */
-    width: 300px;
+    /* width: 300px; */
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
@@ -252,10 +252,11 @@
   }
 
   .tool-modal {
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     z-index: 600;
+    width: 300px;
     background: rgba(229, 221, 222, 0.5);
     height: 100vh;
     overflow-y: auto;

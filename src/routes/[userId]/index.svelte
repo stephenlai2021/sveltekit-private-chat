@@ -318,7 +318,7 @@
         <label>
           <input
             type="file"
-            accept="image/png, image/jpg, image/jpeg, image/gif"
+            accept="image/png, image/jpg, image/jpeg"
             on:change={handleFileChange}
           />
           <ion-icon name="document-attach-outline" />
@@ -332,7 +332,7 @@
         <label>
           <input
             type="file"
-            accept="image/png, image/jpg, image/jpeg, image/gif"
+            accept="image/png, image/jpg, image/jpeg"
             on:change={handleFileChange}
           />
           <ion-icon name="image-outline" />
