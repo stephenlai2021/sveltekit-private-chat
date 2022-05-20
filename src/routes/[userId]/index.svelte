@@ -33,6 +33,7 @@
     showAudioPlayerModal,
     showAudioRecordingModal,
     showCameraPreviewModal,
+    showMapModal,
     showToolModal,
     showThemeModal,
     showCameraModal,
@@ -47,6 +48,7 @@
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
   import ToolModal from "$lib/components/ToolModal.svelte";
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
+  import MapModal from "$lib/components/MapModal.svelte"
   import { onMount } from "svelte";
   import { browser } from "$app/env";
   import themeStore, { setTheme } from "svelte-themes";
@@ -168,7 +170,7 @@
     }
   });
 
-  // $: if ($imageURL) console.log("image url: ", $imageURL);
+  // $: if ()
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
@@ -316,7 +318,7 @@
         <label>
           <input
             type="file"
-            accept="image/png, image/jpg, image/jpeg"
+            accept="image/png, image/jpg, image/jpeg, image/gif"
             on:change={handleFileChange}
           />
           <ion-icon name="document-attach-outline" />
@@ -330,15 +332,15 @@
         <label>
           <input
             type="file"
-            accept="image/png, image/jpg, image/jpeg"
+            accept="image/png, image/jpg, image/jpeg, image/gif"
             on:change={handleFileChange}
           />
           <ion-icon name="image-outline" />
         </label>
       {/if}
-      <ion-icon name="location-outline" />
+      <!-- <ion-icon name="location-outline" on:click={() => $showMapModal = true} /> -->
       <ion-icon
-        name="hammer-outline"
+        name="options-outline"
         on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
       />
     </div>
@@ -443,6 +445,10 @@
 
 {#if $showEmojiMenu}
   <EmojiMenu />
+{/if}
+
+{#if $showMapModal}
+  <MapModal />
 {/if}
 
 <!-- {#if $showPicModal}
@@ -728,14 +734,14 @@ const handleSubmit = async () => {
     bottom: 0;
     width: 100%;
     height: 50px;
-    background: #f0f0f0;
+    /* background: #f0f0f0; */
     background: #ededed;
-    backdrop-filter: blur(15px);
+    /* backdrop-filter: blur(15px); */
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom-right-radius: 4px;
+    /* border-bottom-right-radius: 4px; */
   }
 
   .message.friend_message p {
@@ -833,10 +839,6 @@ const handleSubmit = async () => {
   }
 
   @media (max-width: 575px) {
-    .chatbox_input input {
-      /* width: 110%; */
-    }
-
     .chatbox_input {
       padding: 20px 10px;
     }
