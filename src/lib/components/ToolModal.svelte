@@ -91,9 +91,10 @@
         </label>
       </li>
     {/if}
-    <li
+    <!-- <li
       style:border-bottom={$disabled ? "none" : "1px solid rgba(0, 0, 0, 0.06)"}
-    >
+    > -->
+    <li>
       <div class="option" on:click={() => ($showThemeMenu = !$showThemeMenu)}>
         <div class="content">
           {#if !$showThemeMenu}
@@ -105,7 +106,6 @@
         </div>
       </div>
       {#if $showThemeMenu}
-        <!-- <main transition:fade> -->
         <main>
           {#each bgPics as bgPic}
             <div
@@ -123,19 +123,7 @@
       {/if}
     </li>
     {#if !$disabled}
-      <li>
-        <label>
-          <input
-            type="color"
-            bind:value={$bgColor}
-            on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
-            style:height="0"
-            style:width="0"
-            style:opacity="0"
-          />
-          <span>顏色/透明度</span>
-        </label>
-      </li>
+      
       <li>
         <div
           class="option"
@@ -151,7 +139,6 @@
           </div>
         </div>
         {#if $showGradientMenu}
-          <!-- <main transition:fade> -->
           <main>
             {#each themes as theme}
               <div
@@ -163,11 +150,23 @@
                   class="theme-image"
                   style:background-image={theme.background}
                 />
-                <!-- <span class="theme-title">{theme.title}</span> -->
               </div>
             {/each}
           </main>
         {/if}
+      </li>
+      <li>
+        <label>
+          <input
+            type="color"
+            bind:value={$bgColor}
+            on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
+            style:height="0"
+            style:width="0"
+            style:opacity="0"
+          />
+          <span>顏色/透明度</span>
+        </label>
       </li>
     {/if}
   </ul>
@@ -237,15 +236,15 @@
     /* backdrop-filter: blur(8px); */
     width: 300px;
     text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   li {
     margin: 0;
     padding: 8px 0;
     list-style: none;
-    /* color: #51585c; */
     cursor: pointer;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.06); */
   }
 
   .tool-modal {
