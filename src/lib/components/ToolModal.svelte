@@ -216,6 +216,10 @@
     background: none;
   }
 
+  li:active {
+    background: none;
+  }
+
   .title,
   li {
     color: #51585c;
