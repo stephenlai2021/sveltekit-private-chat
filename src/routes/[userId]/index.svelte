@@ -680,6 +680,7 @@ const handleSubmit = async () => {
 
   .header {
     padding-right: 0px;
+    padding: 15px 0 15px 15px;
     /* border: 1px solid; */
   }
 
