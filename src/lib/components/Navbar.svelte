@@ -1,6 +1,11 @@
+<script>
+  import { goto } from "$app/navigation";
+</script>
+
 <div class="navbar">
   <div class="icon-wrapper">
-    <main>
+    <main on:click={() => goto('/')}>
+    <!-- <main> -->
       <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
       <span>chat</span>
     </main>

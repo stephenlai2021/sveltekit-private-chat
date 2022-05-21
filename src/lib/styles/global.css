@@ -79,7 +79,7 @@ ion-icon {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
+  padding: 15px 15px 0 15px;
 }
 
 .leftSide {
@@ -88,7 +88,8 @@ ion-icon {
 }
 
 .leftSide .header {
-  height: 60px;
+  /* height: 60px; */
+  /* border: 1px solid; */
 }
 
 .rightSide {
@@ -223,7 +224,7 @@ ion-icon {
   position: relative;
   top: 0px;
   width: 100%;
-  padding: 0 15px;
+  padding: 8px 15px 0 15px;
   line-height: 50px;
   /* border: 1px solid; */
 }
