@@ -179,7 +179,6 @@
   .content-title {
     width: 70px;
     text-align-last: left;
-    /* border: 1px solid; */
   }
 
   .content {
@@ -187,37 +186,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid; */
   }
 
   .option ion-icon {
     width: 15px;
     height: 15px;
-    /* border: 1px solid; */
     margin-right: 20px;
-    /* color: #a8b0b4; */
   }
 
   .option {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid; */
   }
 
   .title {
     padding: 10px;
     text-align: center;
     cursor: pointer;
-    /* border: 1px solid; */
-  }
-
-  li:hover {
-    background: none;
-  }
-
-  li:active {
-    background: none;
   }
 
   .title,
@@ -237,12 +223,7 @@
   }
 
   ul {
-    /* padding: 10px; */
     border-radius: 8px;
-    /* background: #ededed; */
-    /* background: rgba(255, 255, 255, 0.5); */
-    /* backdrop-filter: blur(8px); */
-    /* width: 300px; */
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
