@@ -2,6 +2,7 @@
   import {
     leftSide,
     mobile,
+    isMobile,
     keyword,
     selectedUsername,
     loginUserEmail,
@@ -30,16 +31,20 @@
   let user = null;
   let users = [];
   let ready = false;
+  let currentContact = null
   let loading = false;
   let filteredUsers = [];
 
   onAuthStateChanged(auth, (_user) => (user = _user));
 
   const selectUser = (selectedUser) => {
+    currentContact = selectedUser
     console.log(`${selectedUser.name} is selected`);
     $selectedUsername = selectedUser.name;
     goto(`/${$selectedUsername}`)
   };
+
+  $: if ($isMobile || $mobile) currentContact = null
 
   $: if ($profileUpdated) {
     console.log("user profile updated detected !");
@@ -173,6 +178,7 @@
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
+          style:box-shadow={(currentContact === user || user.name === $page.params.userId) ? "inset -3px -3px 7px #ffffff73, inset 3px 3px 5px rgba(94, 104, 121, 0.288)" : '-3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288)'}
         >
           <!-- class:active={$activeItem === user.name} -->
           <div class="imgbx">

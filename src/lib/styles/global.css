@@ -85,6 +85,7 @@ ion-icon {
 .leftSide {
   position: relative;
   height: 100%;
+  background: #dde1e7;
 }
 
 .leftSide .header {
@@ -96,8 +97,8 @@ ion-icon {
   position: relative;
   width: 100%;
   height: 100%;
-/* #e5ddd5 = rgb(229, 221, 213) */
-/* #ededed = rgb(237, 237, 237) */
+  /* #e5ddd5 = rgb(229, 221, 213) */
+  /* #ededed = rgb(237, 237, 237) */
   /* opacity: 0.5; */
   background-color: rgb(229, 221, 213);
   /* background-image: url('https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg'); */
@@ -105,7 +106,7 @@ ion-icon {
   background-size: cover;
   background-position: center;
   background-blend-mode: multiply; */
-  }
+}
 
 .rightSide img {
   width: 100%;
@@ -255,21 +256,29 @@ ion-icon {
 .chatlist {
   overflow-y: auto;
   overflow-x: hidden;
+  padding-left: 1%;
   /* border: 1px solid red; */
 }
 
 .chatlist .block {
-  width: 100%;
+  width: 98%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px 15px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 10px;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.06); */
+  background: #dde1e7;
   cursor: pointer;
+  box-shadow: -3px -3px 7px #ffffff73, 
+              3px 3px 5px rgba(94, 104, 121, 0.288);
 }
 
+.chatlist .block:visited,
 .chatlist .block:hover {
-  transform: scale(1.02);
+  /* transform: scale(1.02); */
+  /* box-shadow: inset -3px -3px 7px #ffffff73, 
+              inset 3px 3px 5px rgba(94, 104, 121, 0.288); */
 }
 
 .chatlist .block .imgbx {
@@ -302,8 +311,8 @@ ion-icon {
 }
 
 .chatlist .block .details .listHead h4 {
-  font-size: .9em;
-  font-weight: 600;  
+  font-size: 0.9em;
+  font-weight: 600;
   /* color: var(--icon-add-color); */
   /* color: black; */
 }
@@ -393,7 +402,7 @@ ion-icon {
 
   100% {
     background-color: hsl(200, 20%, 95%);
-  }    
+  }
 }
 
 @media (max-width: 800px) {

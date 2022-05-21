@@ -170,8 +170,6 @@
     }
   });
 
-  // $: if ()
-
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
   $: if (matched) {
@@ -671,6 +669,7 @@ const handleSubmit = async () => {
 
   .user-avatar,
   .user-name {
+    /* color: transparent; */
     background: var(--bg-color);
   }
 
@@ -744,13 +743,13 @@ const handleSubmit = async () => {
     bottom: 0;
     width: 100%;
     height: 50px;
-    /* background: #f0f0f0; */
     background: #ededed;
-    /* backdrop-filter: blur(15px); */
+    background: #dde1e7;
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* backdrop-filter: blur(15px); */
     /* border-bottom-right-radius: 4px; */
   }
 
