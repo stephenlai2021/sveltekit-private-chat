@@ -321,7 +321,7 @@
             accept="image/png, image/jpg, image/jpeg"
             on:change={handleFileChange}
           />
-          <ion-icon name="document-attach-outline" />
+          <ion-icon name="document-attach-outline" class="icon-attachment" />
         </label>
       {/if}
       {#if !$isMobile}
@@ -608,7 +608,7 @@ const handleSubmit = async () => {
     color: #51585c;
   }
 
-  .icon-image {
+  .icon-image, .icon-attachment {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
