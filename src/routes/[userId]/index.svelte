@@ -140,7 +140,7 @@
       messageSent = "";
       console.log("message created successfully 😁");
     } catch (error) {
-      // console.log("ooh, something went wrong 😥", error);
+      console.log("ooh, something went wrong 😥", error);
     }
   };  
 
@@ -335,10 +335,10 @@
             accept="image/png, image/jpg, image/jpeg"
             on:change={handleFileChange}
           />
-          <ion-icon name="image-outline" />
+          <ion-icon name="image-outline" class="icon-image" />
         </label>
       {/if}
-      <!-- <ion-icon name="location-outline" on:click={() => $showMapModal = true} /> -->
+      <ion-icon name="location-outline" on:click={() => $showMapModal = true} />
       <ion-icon
         name="options-outline"
         on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
@@ -608,9 +608,18 @@ const handleSubmit = async () => {
     color: #51585c;
   }
 
+  .icon-image {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* border: 1px solid; */
+  }
+
   label {
-    padding-top: 5px;
-    /* padding-right: 0; */
+    width: 25px;
+    height: 50px;
+    position: relative;
+    margin-right: 11px;
     /* border: 1px solid; */
   }
 
@@ -691,7 +700,7 @@ const handleSubmit = async () => {
 
   .right-part ion-icon {
     /* color: #51585c; */
-    margin-right: 15px;
+    margin-right: 12px;
   }
 
   .icon-mic {

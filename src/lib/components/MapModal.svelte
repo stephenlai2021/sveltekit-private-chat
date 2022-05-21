@@ -42,14 +42,13 @@
     /* width: 1280px;
     height: 768px; */
 
-    border: 1px solid;
-    /* position: fixed; */
+    /* border: 1px solid; */
   }
 
   .icon-close {
     position: fixed;
     top: 15px;
-    right: 50%;
+    left: 50%;
     z-index: 700;
     transform: translateX(-50%);
     border-radius: 50%;

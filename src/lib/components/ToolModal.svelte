@@ -170,7 +170,7 @@
       </li>
     {/if}
   </ul>
-  <h4 class="title" on:click={() => $showMapModal = true}>顯示 {$page.params.userId} 的地理位置</h4>
+  <!-- <h4 class="title" on:click={() => $showMapModal = true}>顯示 {$page.params.userId} 的地理位置</h4> -->
 </div>
 
 <style>
