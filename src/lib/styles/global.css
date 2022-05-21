@@ -285,7 +285,7 @@ ion-icon {
 }
 
 .chatlist .block .imgbx {
-  min-width: 40px;
+  min-width: 40px; /* original 45px */  
   height: 40px;
   cursor: pointer;
   margin-right: 10px;
