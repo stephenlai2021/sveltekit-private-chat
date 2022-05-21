@@ -140,7 +140,7 @@
       messageSent = "";
       console.log("message created successfully 😁");
     } catch (error) {
-      console.log("ooh, something went wrong 😥", error);
+      // console.log("ooh, something went wrong 😥", error);
     }
   };  
 

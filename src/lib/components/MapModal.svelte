@@ -36,11 +36,12 @@
   @import "https://unpkg.com/leaflet@1.7.1/dist/leaflet.css";
 
   #map {
-    /* width: 100%;
-    height: 100vh; */
+    width: 100%;
+    height: 100vh;
 
-    width: 1280px;
-    height: 768px;
+    /* width: 1280px;
+    height: 768px; */
+
     border: 1px solid;
     /* position: fixed; */
   }
