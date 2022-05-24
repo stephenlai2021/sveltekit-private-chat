@@ -22,8 +22,11 @@
     showToolModal,
     showEmojiMenu,
     showThemeModal,
+    showCameraModal,
     showSettingsModal,
     showAddFriendModal,
+    showAudioPlayerModal,
+    showAudioRecordingModal,
   } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
@@ -108,8 +111,6 @@
       ? "100%"
       : "100%"}
   >
-    <!-- : $mobile && $page.url.pathname != "/"
-  ? "100%" -->
     <slot />
   </div>
 </div>

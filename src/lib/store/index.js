@@ -1,11 +1,20 @@
 import { writable } from "svelte/store";
+import { db } from "$lib/firebase/client";
 import { browser } from "$app/env";
+import {
+  query,
+  where,
+  collection,
+  onSnapshot,
+} from "firebase/firestore";
 
-export const selectedUsernameMatched = writable(false)
-export const showGradientMenu = writable(true)
-export const showThemeMenu = writable(true)
-export const showMapModal = writable(false)
-export const disabled = writable(false)
+let colRef = collection(db, "whatzapp_users");
+
+export const selectedUsernameMatched = writable(false);
+export const showGradientMenu = writable(true);
+export const showThemeMenu = writable(true);
+export const showMapModal = writable(false);
+export const disabled = writable(false);
 // export const imageTitle = writable("")
 export const file = writable(null);
 export const background = writable(null);
@@ -49,9 +58,42 @@ export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
 export const bgColor = writable("#e5ddd5");
-// export const imageURL = writable(
-//   "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
-// );
+// export const selectedUser = writable(null)
+
+// export const getSelectedUser = (name) => {
+export const getSelectedUser = (selectedUsername) => {
+  // let q = query(colRef, where("name", "==", name));
+  let q = query(colRef, where("name", "==", selectedUsername));
+  const unsub = onSnapshot(q, (snapshot) => {
+    let tempUsers = [];
+    snapshot.docs.forEach((doc) => {
+      tempUsers.push({ ...doc.data() });
+    });
+    // selectedUser = tempUsers[0]
+    selectedUser.set(tempUsers[0])
+    // selectedUser.update(n => tempUsers[0])
+    // console.log("get selected user name | snapshot", selectedUser.name);
+    return () => unsub();
+  });
+};
+
+export const selectedUser = writable(
+  // browser && JSON.parse(localStorage.getItem("selected user") || {})
+  browser && localStorage.getItem("selected user") || {}
+);
+selectedUser.subscribe(
+  // (val) => browser && localStorage.setItem("selected user", JSON.stringify(val))
+  (val) => browser && localStorage.setItem("selected user", val)
+);
+
+export const selectedUsername = writable(
+  // browser && JSON.parse(localStorage.getItem("selected user") || {})
+  browser && localStorage.getItem("selected user name") || {}
+);
+selectedUsername.subscribe(
+  // (val) => browser && localStorage.setItem("selected user", JSON.stringify(val))
+  (val) => browser && localStorage.setItem("selected user name", val)
+);
 
 export const imageTitle = writable(
   browser && (localStorage.getItem("image title") || "Default")
@@ -83,13 +125,6 @@ export const selectedImg = writable(
 );
 selectedImg.subscribe(
   (val) => browser && localStorage.setItem("selected image", val)
-);
-
-export const selectedUsername = writable(
-  browser && localStorage.getItem("selected user name")
-);
-selectedUsername.subscribe(
-  (val) => browser && localStorage.setItem("selected user name", val)
 );
 
 export const loggedinUser = writable(

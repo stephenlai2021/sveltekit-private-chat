@@ -12,7 +12,8 @@
     showSettingsModal,
     showAddFriendModal,
     showAudioPlayerModal,
-    showAudioRecordingModal
+    showAudioRecordingModal,
+    getSelectedUser
   } from "$lib/store";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
@@ -31,20 +32,23 @@
   let user = null;
   let users = [];
   let ready = false;
-  let currentContact = null
+  let currentContact = null;
   let loading = false;
   let filteredUsers = [];
 
   onAuthStateChanged(auth, (_user) => (user = _user));
 
   const selectUser = (selectedUser) => {
-    currentContact = selectedUser
+    currentContact = selectedUser;
     console.log(`${selectedUser.name} is selected`);
     $selectedUsername = selectedUser.name;
-    goto(`/${$selectedUsername}`)
+    // getSelectedUser(selectedUser.name)
+    // getSelectedUser($selectedUsername)
+    // getSelectedUser()
+    goto(`/${$selectedUsername}`);
   };
 
-  $: if ($isMobile || $mobile) currentContact = null
+  $: if ($isMobile || $mobile) currentContact = null;
 
   $: if ($profileUpdated) {
     console.log("user profile updated detected !");
@@ -94,24 +98,22 @@
 </script>
 
 <!-- style:width={$mobile && $page.url.pathname === "/"
-    ? "100%"
-    : $mobile && $page.url.pathname != "/"
-    ? "0%"
-    : "450px"} -->
+  ? "100%"
+  : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
+  ? "0%"
+  : !$mobile && $page.url.pathname != "/login"
+  ? "550px"
+  : "0%"} -->
 <div
   class="leftSide"
   style:width={$mobile && $page.url.pathname === "/"
     ? "100%"
-    // : $mobile && $page.url.pathname != "/" 
-    // ? "0%"
     : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "0%"
     : !$mobile && $page.url.pathname != "/login"
     ? "550px"
     : "0%"}
 >
-    <!-- : $mobile && $page.url.pathname != "/" 
-    ? "0%" -->
   <div class="header">
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
       {#if $mobile && user}
@@ -170,7 +172,7 @@
     <div
       class="chatlist"
       style:height="calc(100vh - 120px)"
-      style:padding-bottom={$mobile ? '60px' : '0px'}
+      style:padding-bottom={$mobile ? "60px" : "0px"}
       transition:fade={{ duration: 100 }}
     >
       {#each filteredUsers as user}
@@ -178,14 +180,12 @@
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          style:box-shadow={(currentContact === user || user.name === $page.params.userId) ? "inset 6px 6px 12px #b9b9b9, inset -6px -6px 12px #fbfbfb" : 'inset -6px -6px 12px #b9b9b9, inset 6px 6px 12px #fbfbfb'}
-          >
-          <!-- style:box-shadow={(currentContact === user || user.name === $page.params.userId) ? "inset -3px -3px 7px #ffffff73, inset 3px 3px 5px rgba(94, 104, 121, 0.288)" : '-3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288)'} -->
-          <!-- style:box-shadow={(currentContact === user || user.name === $page.params.userId) ? "inset -3px -3px 7px #ffffff73, inset 3px 3px 5px rgba(94, 104, 121, 0.288)" : ''} -->
-          <!-- class:active={$activeItem === user.name} -->
+          style:box-shadow={currentContact === user ||
+          user.name === $page.params.userId
+            ? "inset 6px 6px 12px #b9b9b9, inset -6px -6px 12px #fbfbfb"
+            : "inset -6px -6px 12px #b9b9b9, inset 6px 6px 12px #fbfbfb"}
+        >
           <div class="imgbx">
-            <!-- class:active={$activeItem === user.name}
-            style:background={$activeItem === user.name ? $bgColor : ""} -->
             {#if user.avatar}
               <img src={user.avatar} alt="" class="cover" />
             {:else}
@@ -220,24 +220,19 @@
       <p>Sorry, you don't have any friends yet</p>
     </div>
   {/if}
-
-  <!-- {#if $showThemeModal}
-    <ThemeModal />
-  {/if} -->
-
-  {#if $showSettingsModal && user}
-    <SettingsModal {user} />
-  {/if}
-
-  {#if $showAddFriendModal}
-    <AddFriendModal />
-  {/if}
-  
-
-  {#if $mobile}
-    <Navbar />
-  {/if}
 </div>
+
+{#if $showSettingsModal && user}
+  <SettingsModal {user} />
+{/if}
+
+{#if $showAddFriendModal}
+  <AddFriendModal />
+{/if}
+
+{#if $mobile}
+  <Navbar />
+{/if}
 
 <style>
   .warning img {

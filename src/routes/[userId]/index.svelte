@@ -29,7 +29,9 @@
     audioURL,
     bgOpacity,
     audioConfirmed,
+    selectedUser,
     selectedUsername,
+    getSelectedUser,
     showAudioPlayerModal,
     showAudioRecordingModal,
     showCameraPreviewModal,
@@ -58,14 +60,12 @@
   let q = null;
   let messageSent = "";
   let loggedinUser = {};
-  let selectedUser = {};
+  // let selectedUser = {};
   let ready = false;
   let matched = false;
   let url = null;
   let file = null;
   let colRef = collection(db, "whatzapp_users");
-
-  // $background.src = $imageURL
 
   onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
 
@@ -107,17 +107,6 @@
       });
     });
   };
-
-  // $: if (file) {
-  //   readURL(file).then(url => {
-  //     $imageURL = url;
-  //     background.src = url;
-  //     $bgOpacity = 0.6;
-  //     file = null
-  //   }).catch(err => {
-  //     console.log('something went wrong', err.message )
-  //   })
-  // }
 
   const handleSubmit = async () => {
     $showEmojiMenu = false;
@@ -170,22 +159,23 @@
     }
   });
 
-  $: if ($page.params.userId === $selectedUsername) matched = true;
-
-  $: if (matched) {
-    q = query(colRef, where("name", "==", $selectedUsername));
-    const unsub = onSnapshot(q, (snapshot) => {
-      let tempUsers = [];
-      snapshot.docs.forEach((doc) => {
-        tempUsers.push({ ...doc.data() });
-      });
-      selectedUser = tempUsers[0];
-      ready = true;
-      console.log("get selected user name | snapshot", selectedUser.name);
-      return () => unsub();
-    });
-    matched = false;
-  }
+  $: if ($page.params.userId === $selectedUsername) { getSelectedUser($selectedUsername) }
+  
+  // $: if ($page.params.userId === $selectedUsername) matched = true;
+  // $: if (matched) {
+  //   q = query(colRef, where("name", "==", $selectedUsername));
+  //   const unsub = onSnapshot(q, (snapshot) => {
+  //     let tempUsers = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       tempUsers.push({ ...doc.data() });
+  //     });
+  //     selectedUser = tempUsers[0];
+  //     ready = true;
+  //     console.log("get selected user name | snapshot", selectedUser.name);
+  //     return () => unsub();
+  //   });
+  //   matched = false;
+  // }
 
   $: if ($pictureConfirmed) {
     let imgPath =
@@ -283,20 +273,21 @@
         class="arrow-back"
         on:click={() => goto("/")}
       />
-      {#if ready}
+      <!-- {#if ready} -->
+      {#if $selectedUser.name === $page.params.userId}
         <div class="imgText">
           <div class="userimg">
-            {#if selectedUser.avatar}
-              <img src={selectedUser.avatar} alt="" />
+            {#if $selectedUser.avatar}
+              <img src={$selectedUser.avatar} alt="" />
             {:else}
               <img src="/joke.png" alt="" />
             {/if}
             <div
-              class={selectedUser.isOnline ? "status online" : "status offline"}
+              class={$selectedUser.isOnline ? "status online" : "status offline"}
             />
           </div>
           <div class="details">
-            <h4>{selectedUser.name}</h4>
+            <h4>{$selectedUser.name}</h4>
           </div>
         </div>
       {:else}
