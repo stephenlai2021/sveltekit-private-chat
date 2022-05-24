@@ -761,7 +761,7 @@ const handleSubmit = async () => {
     align-items: center;
     /* backdrop-filter: blur(15px); */
     /* border-bottom-right-radius: 4px; */
-    border-left: 1px solid rgba(0, 0, 0, 0.06);
+    /* border-left: 1px solid rgba(0, 0, 0, 0.06); */
   }
 
   .message.friend_message p {
