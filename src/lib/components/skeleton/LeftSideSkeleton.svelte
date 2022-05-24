@@ -17,7 +17,7 @@
         </div>
         <div class="message_p">
           <p class="animation">How to make Whatsapp clone using html and css</p>
-          <b>1</b>
+          <!-- <b>1</b> -->
         </div>
       </div>
     </div>

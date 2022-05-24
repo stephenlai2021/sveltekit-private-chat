@@ -297,7 +297,7 @@
             <!-- <div class="user-avatar" /> -->
           </div>
           <div class="details">
-            <h4 class="user-name animation">Bao Yang</h4>
+            <h4 class="user-name animation" />
             <!-- <h4 class="user-name">Bao Yang</h4> -->
           </div>
         </div>
