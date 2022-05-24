@@ -149,8 +149,8 @@ ion-icon {
 }
 
 .rightSide .header .imgText .userimg img {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   color: var(--icon-add-color);
   border-radius: 50%;
   opacity: 1;

@@ -622,7 +622,7 @@ const handleSubmit = async () => {
   }
 
   .popup {
-    padding: 8px;
+    padding: 5px;
     /* color: rgba(128, 128, 128, 1); */
     color: white;
     border-radius: 50px;
