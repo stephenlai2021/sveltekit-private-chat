@@ -32,7 +32,7 @@
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
-  style:background="#cccccc"
+  style:background="#ededed"
   style:display={$mobile
     ? "none"
     : $page.url.pathname === "/login"
@@ -88,7 +88,8 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    opacity: 0.7;
+    /* opacity: 0.7; */
+    background: #ededed;
   }
 
   @media (max-width: 800px) {

@@ -315,7 +315,7 @@
 
     <div class="right-part">
       <!-- <ion-icon name="videocam-outline" class="popup" /> -->
-      <ion-icon name="videocam-outline" class="popup" />
+      <ion-icon name="videocam-outline" class="icon-videocam popup" />
       {#if $isMobile}
         <label>
           <input
@@ -332,7 +332,7 @@
       {#if !$isMobile}
         <ion-icon
           name="camera-outline"
-          class="popup"
+          class="icon-camera popup"
           on:click={() => ($showCameraModal = true)}
         />
         <label>
@@ -346,12 +346,12 @@
       {/if}
       <ion-icon
         name="location-outline"
-        class="popup"
+        class="icon-location popup"
         on:click={() => ($showMapModal = true)}
       />
       <ion-icon
         name="options-outline"
-        class="popup"
+        class="icon-options popup"
         on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
       />
     </div>
@@ -420,7 +420,7 @@
       <input type="text" placeholder="Type a message" bind:value={$message} />
       <ion-icon
         name="paper-plane-outline"
-        class="icon-submit popup"
+        class="icon-submit"
         on:click|preventDefault={handleSubmit}
       />
       <!-- </div> -->
@@ -429,7 +429,7 @@
       class="icon-wrapper icon-mic"
       on:click={() => ($showAudioRecordingModal = true)}
     >
-      <ion-icon name="mic-outline" style:font-size="1.5em" />
+      <ion-icon name="mic-outline" class="icon-mic" style:font-size="1.5em" />
     </div>
   </div>
 </div>
@@ -618,15 +618,28 @@ const handleSubmit = async () => {
 
   ion-icon {
     color: #51585c;
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .popup {
-    padding: 5px;
-    color: rgba(128, 128, 128, 1);
+    padding: 8px;
+    /* color: rgba(128, 128, 128, 1); */
+    color: white;
     border-radius: 50px;
     background: #dadada;
     box-shadow: inset -4px -4px 8px #b9b9b9, inset 4px 4px 8px #fbfbfb;
+    font-size: 20px;
+  }
+
+  .icon-videocam {
+    background: #fa9950;
+    box-shadow: inset -6px -6px 12px #d58244, inset 6px 6px 12px #ffb05c;
+  }
+
+  .icon-camera {
+    /* color: white; */
+    background: #fad12f;
+    box-shadow: inset -6px -6px 12px #d5b228;
   }
 
   .icon-image,
@@ -636,7 +649,19 @@ const handleSubmit = async () => {
     transform: translateY(-50%);
     /* border: 1px solid; */
     /* margin-right: 5px; */
-    background: #dadada;
+    /* background: #dadada; */
+    background: #0f63e0;
+    box-shadow: inset -6px -6px 12px #0d54be, inset 6px 6px 12px #1172ff;
+  }
+
+  .icon-location {
+    background: #8d5cd8;
+    box-shadow: inset -6px -6px 12px #784eb8, inset 6px 6px 12px #a26af8;
+  }
+
+  .icon-options {
+    background: #36d676;
+    box-shadow: inset -6px -6px 12px #2eb664, inset 6px 6px 12px #3ef688;
   }
 
   label {
@@ -659,7 +684,7 @@ const handleSubmit = async () => {
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .messageBox {
@@ -731,19 +756,12 @@ const handleSubmit = async () => {
   .chatbox_input input {
     width: 100%;
     height: 100%;
-    /* appearance: none; */
     padding: 5px 20px;
     border: none;
     outline: none;
-    /* border-radius: 30px; */
     font-size: 1em;
     background: white;
     color: black;
-  }
-
-  .chatbox_input form {
-    /* background: #fff; */
-    /* border: 1px solid; */
   }
 
   .chatbox_input {
@@ -752,22 +770,15 @@ const handleSubmit = async () => {
     width: 100%;
     height: 50px;
     background: #ededed;
-    background: #dadada;
-    /* background: #dde1e7; */
-    /* background: #fff; */
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* backdrop-filter: blur(15px); */
-    /* border-bottom-right-radius: 4px; */
-    /* border-left: 1px solid rgba(0, 0, 0, 0.06); */
   }
 
   .message.friend_message p {
     background: #f5f5f5;
-    /* opacity: 0.5;
-    backdrop-filter: blur(8px); */
+    backdrop-filter: blur(20px); 
     justify-content: flex-start;
   }
 
@@ -819,6 +830,9 @@ const handleSubmit = async () => {
     max-width: 65%;
     padding: 12px;
     background: var(--lemon-green);
+    /* background: rgba(220, 248, 198, 0.3); */
+    /* background: transparent; */
+    /* backdrop-filter: blur(10px); */
     border-radius: 10px;
     font-size: 0.9em;
     font-weight: 600;
