@@ -178,8 +178,10 @@
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          style:box-shadow={(currentContact === user || user.name === $page.params.userId) ? "inset -3px -3px 7px #ffffff73, inset 3px 3px 5px rgba(94, 104, 121, 0.288)" : '-3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288)'}
-        >
+          style:box-shadow={(currentContact === user || user.name === $page.params.userId) ? "inset 6px 6px 12px #b9b9b9, inset -6px -6px 12px #fbfbfb" : 'inset -6px -6px 12px #b9b9b9, inset 6px 6px 12px #fbfbfb'}
+          >
+          <!-- style:box-shadow={(currentContact === user || user.name === $page.params.userId) ? "inset -3px -3px 7px #ffffff73, inset 3px 3px 5px rgba(94, 104, 121, 0.288)" : '-3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288)'} -->
+          <!-- style:box-shadow={(currentContact === user || user.name === $page.params.userId) ? "inset -3px -3px 7px #ffffff73, inset 3px 3px 5px rgba(94, 104, 121, 0.288)" : ''} -->
           <!-- class:active={$activeItem === user.name} -->
           <div class="imgbx">
             <!-- class:active={$activeItem === user.name}

@@ -122,8 +122,7 @@
         </main>
       {/if}
     </li>
-    {#if !$disabled}
-      
+    {#if !$disabled}      
       <li>
         <div
           class="option"
@@ -165,7 +164,7 @@
             style:width="0"
             style:opacity="0"
           />
-          <span>顏色/透明度</span>
+          <span>選擇顏色</span>
         </label>
       </li>
     {/if}

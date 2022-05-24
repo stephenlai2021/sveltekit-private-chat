@@ -1,8 +1,9 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
-export const showGradientMenu = writable(false)
-export const showThemeMenu = writable(false)
+export const selectedUsernameMatched = writable(false)
+export const showGradientMenu = writable(true)
+export const showThemeMenu = writable(true)
 export const showMapModal = writable(false)
 export const disabled = writable(false)
 // export const imageTitle = writable("")

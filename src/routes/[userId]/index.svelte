@@ -48,7 +48,7 @@
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
   import ToolModal from "$lib/components/ToolModal.svelte";
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
-  import MapModal from "$lib/components/MapModal.svelte"
+  import MapModal from "$lib/components/MapModal.svelte";
   import { onMount } from "svelte";
   import { browser } from "$app/env";
   import themeStore, { setTheme } from "svelte-themes";
@@ -142,20 +142,20 @@
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
-  };  
+  };
 
   onMount(() => {
     $background.src = $imageURL;
-    if ($imageTitle === 'Default') {
-      $bgOpacity = 0.06
+    if ($imageTitle === "Default") {
+      $bgOpacity = 0.06;
       $bgColor = "#e5ddd5";
-      $disabled = true
+      $disabled = true;
     }
-    if ($imageTitle != 'Default') {
-      $bgOpacity = 0.5
-      $disabled = false
+    if ($imageTitle != "Default") {
+      $bgOpacity = 0.5;
+      $disabled = false;
     }
-    console.log('image title: ', $imageTitle)
+    console.log("image title: ", $imageTitle);
 
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
@@ -275,7 +275,8 @@
 <!-- style:background-color={$bgColor} -->
 <div>
   <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
-  <div class="header" style:background={$imageTitle === 'Default' ? '#ededed' : 'rgba(229, 221, 222, 0.5)'}>
+  <!-- <div class="header" style:background={$imageTitle === 'Default' ? '#ededed' : 'rgba(229, 221, 222, 0.5)'}> -->
+  <div class="header">
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
@@ -302,16 +303,19 @@
         <div class="imgText">
           <div class="userimg">
             <div class="user-avatar animation" />
+            <!-- <div class="user-avatar" /> -->
           </div>
           <div class="details">
             <h4 class="user-name animation">Bao Yang</h4>
+            <!-- <h4 class="user-name">Bao Yang</h4> -->
           </div>
         </div>
       {/if}
     </div>
 
     <div class="right-part">
-      <ion-icon name="videocam-outline" />
+      <!-- <ion-icon name="videocam-outline" class="popup" /> -->
+      <ion-icon name="videocam-outline" class="popup" />
       {#if $isMobile}
         <label>
           <input
@@ -319,12 +323,16 @@
             accept="image/png, image/jpg, image/jpeg"
             on:change={handleFileChange}
           />
-          <ion-icon name="document-attach-outline" class="icon-attachment" />
+          <ion-icon
+            name="document-attach-outline"
+            class="icon-attachment popup"
+          />
         </label>
       {/if}
       {#if !$isMobile}
         <ion-icon
           name="camera-outline"
+          class="popup"
           on:click={() => ($showCameraModal = true)}
         />
         <label>
@@ -333,12 +341,17 @@
             accept="image/png, image/jpg, image/jpeg"
             on:change={handleFileChange}
           />
-          <ion-icon name="image-outline" class="icon-image" />
+          <ion-icon name="image-outline" class="icon-image popup" />
         </label>
       {/if}
-      <ion-icon name="location-outline" on:click={() => $showMapModal = true} />
+      <ion-icon
+        name="location-outline"
+        class="popup"
+        on:click={() => ($showMapModal = true)}
+      />
       <ion-icon
         name="options-outline"
+        class="popup"
         on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
       />
     </div>
@@ -407,7 +420,7 @@
       <input type="text" placeholder="Type a message" bind:value={$message} />
       <ion-icon
         name="paper-plane-outline"
-        class="icon-submit"
+        class="icon-submit popup"
         on:click|preventDefault={handleSubmit}
       />
       <!-- </div> -->
@@ -600,24 +613,38 @@ const handleSubmit = async () => {
 <style>
   :root {
     --bg-color: #d6d8dc;
+    --hue: red;
   }
 
   ion-icon {
     color: #51585c;
+    font-size: 22px;
   }
 
-  .icon-image, .icon-attachment {
+  .popup {
+    padding: 5px;
+    color: rgba(128, 128, 128, 1);
+    border-radius: 50px;
+    background: #dadada;
+    box-shadow: inset -4px -4px 8px #b9b9b9, inset 4px 4px 8px #fbfbfb;
+  }
+
+  .icon-image,
+  .icon-attachment {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     /* border: 1px solid; */
+    /* margin-right: 5px; */
+    background: #dadada;
   }
 
   label {
     width: 25px;
     height: 50px;
     position: relative;
-    margin-right: 11px;
+    margin-right: 21px;
+    /* margin-left: 5px; */
     /* border: 1px solid; */
   }
 
@@ -627,44 +654,18 @@ const handleSubmit = async () => {
     opacity: 0;
   }
 
-  .icon-menu {
-    position: absolute;
-    right: 50px;
-    top: 5px;
-    color: gray;
-  }
-
-  .icon-submit-wrapper {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* overflow: hidden; */
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    background: rgb(184, 174, 174);
-    /* border: 1px solid red; */
-  }
-
   .icon-submit {
     position: absolute;
     right: 12px;
-    top: 8px;
-    width: 20px;
-    height: 20px;
-    color: gray;
-    /* color: white; */
-    /* background: gray; */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
   }
 
   .messageBox {
     position: relative;
     width: 100%;
-    /* overflow: hidden; */
+    height: 50px;
   }
 
   .user-avatar,
@@ -729,13 +730,20 @@ const handleSubmit = async () => {
 
   .chatbox_input input {
     width: 100%;
+    height: 100%;
+    /* appearance: none; */
     padding: 5px 20px;
     border: none;
     outline: none;
-    border-radius: 30px;
+    /* border-radius: 30px; */
     font-size: 1em;
     background: white;
     color: black;
+  }
+
+  .chatbox_input form {
+    /* background: #fff; */
+    /* border: 1px solid; */
   }
 
   .chatbox_input {
@@ -744,13 +752,16 @@ const handleSubmit = async () => {
     width: 100%;
     height: 50px;
     background: #ededed;
-    background: #dde1e7;
+    background: #dadada;
+    /* background: #dde1e7; */
+    /* background: #fff; */
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     /* backdrop-filter: blur(15px); */
     /* border-bottom-right-radius: 4px; */
+    border-left: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .message.friend_message p {
