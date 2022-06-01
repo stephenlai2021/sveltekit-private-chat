@@ -4,6 +4,7 @@
     mobile,
     isMobile,
     keyword,
+    loggedinUser,
     selectedUsername,
     loginUserEmail,
     profileUpdated,
@@ -36,15 +37,13 @@
   let loading = false;
   let filteredUsers = [];
 
-  onAuthStateChanged(auth, (_user) => (user = _user));
+  // onAuthStateChanged(auth, (_user) => (user = _user));
+  onAuthStateChanged(auth, (user) => ($loggedinUser = user));
 
   const selectUser = (selectedUser) => {
     currentContact = selectedUser;
     console.log(`${selectedUser.name} is selected`);
     $selectedUsername = selectedUser.name;
-    // getSelectedUser(selectedUser.name)
-    // getSelectedUser($selectedUsername)
-    // getSelectedUser()
     goto(`/${$selectedUsername}`);
   };
 
@@ -55,12 +54,15 @@
     user = auth.currentUser;
   }
 
-  $: if (!user) console.log("user is not ready");
+  // $: if (!user) console.log("user is not ready");
+  $: if (!$loggedinUser) console.log("user is not ready");
 
-  $: if (user) {
+  // $: if (user) {
+  $: if ($loggedinUser) {
     ready = true;
     console.log("user is ready");
-    console.log("user", user);
+    // console.log("user", user);
+    console.log("user", $loggedinUser);
   }
 
   $: if (ready && $loginUserEmail) {

@@ -9,6 +9,7 @@
     Timestamp,
     collection,
     onSnapshot,
+    orderBy
   } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { page } from "$app/stores";
@@ -29,7 +30,7 @@
     audioURL,
     bgOpacity,
     audioConfirmed,
-    selectedUser,
+    // selectedUser,
     selectedUsername,
     getSelectedUser,
     showAudioPlayerModal,
@@ -43,7 +44,8 @@
     showAddFriendModal,
     showEmojiMenu,
     pictureConfirmed,
-  } from "$lib/store";
+    loggedinUser,
+  } from "$lib/store";  
   import CameraModal from "$lib/components/CameraModal.svelte";
   import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
   import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
@@ -59,15 +61,16 @@
 
   let q = null;
   let messageSent = "";
-  let loggedinUser = {};
-  // let selectedUser = {};
+  let messages = []
+  // let loggedinUser = {};
+  let selectedUser = {};
   let ready = false;
   let matched = false;
   let url = null;
   let file = null;
   let colRef = collection(db, "whatzapp_users");
 
-  onAuthStateChanged(auth, (_user) => (loggedinUser = _user));
+  // onAuthStateChanged(auth, (user) => (loggedinUser = user));
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
@@ -76,9 +79,9 @@
     $selectedImg = file;
 
     let imgPath =
-      loggedinUser.displayName > $selectedUsername
-        ? `${loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${loggedinUser.displayName}`;
+      $loggedinUser.displayName > $selectedUsername
+        ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${$loggedinUser.displayName}`;
 
     let imageRef = ref(
       storage,
@@ -92,12 +95,12 @@
       getDownloadURL(imageRef).then((_url) => {
         url = _url;
         let msgId =
-          loggedinUser.displayName > $selectedUsername
-            ? `${loggedinUser.displayName} & ${$selectedUsername}`
-            : `${$selectedUsername} & ${loggedinUser.displayName}`;
+          $loggedinUser.displayName > $selectedUsername
+            ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+            : `${$selectedUsername} & ${$loggedinUser.displayName}`;
         let msgRef = collection(db, "messages", msgId, "chat");
         addDoc(msgRef, {
-          from: loggedinUser.displayName,
+          from: $loggedinUser.displayName,
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
           imageURL: url || "",
@@ -114,9 +117,9 @@
     $message = "";
 
     let msgId =
-      loggedinUser.displayName > $selectedUsername
-        ? `${loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${loggedinUser.displayName}`;
+      $loggedinUser.displayName > $selectedUsername
+        ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${$loggedinUser.displayName}`;
     let msgRef = collection(db, "messages", msgId, "chat");
 
     try {
@@ -159,23 +162,41 @@
     }
   });
 
-  $: if ($page.params.userId === $selectedUsername) { getSelectedUser($selectedUsername) }
+  // $: if ($page.params.userId === $selectedUsername) { getSelectedUser($selectedUsername) } 
   
-  // $: if ($page.params.userId === $selectedUsername) matched = true;
-  // $: if (matched) {
-  //   q = query(colRef, where("name", "==", $selectedUsername));
-  //   const unsub = onSnapshot(q, (snapshot) => {
-  //     let tempUsers = [];
-  //     snapshot.docs.forEach((doc) => {
-  //       tempUsers.push({ ...doc.data() });
-  //     });
-  //     selectedUser = tempUsers[0];
-  //     ready = true;
-  //     console.log("get selected user name | snapshot", selectedUser.name);
-  //     return () => unsub();
-  //   });
-  //   matched = false;
-  // }
+  $: if ($page.params.userId === $selectedUsername) matched = true;
+  $: if (matched) {
+    // get selected user profile
+    q = query(colRef, where("name", "==", $selectedUsername));
+    const unsub = onSnapshot(q, (snapshot) => {
+      let tempUsers = [];
+      snapshot.docs.forEach((doc) => {
+        tempUsers.push({ ...doc.data() });
+      });
+      selectedUser = tempUsers[0];
+      ready = true;
+      console.log("get selected user name | snapshot", selectedUser.name);
+      return () => unsub();
+    });
+
+    // get messages with selected user
+    let msgId =
+      $loggedinUser.displayName > $selectedUsername
+        ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${$loggedinUser.displayName}`;
+    let msgRef = collection(db, "messages", msgId, "chat");
+    q = query(msgRef, orderBy('createdAt', 'asc'))
+    const unsubMsgs = onSnapshot(q, querySnapshot => {
+      let msgs = []
+      querySnapshot.forEach(doc => {
+        msgs.push(doc.data())
+      })
+      messages = msgs
+      console.log('messages:', messages)
+      return () => unsubMsgs()
+    })
+    matched = false;
+  }
 
   $: if ($pictureConfirmed) {
     let imgPath =
@@ -273,21 +294,21 @@
         class="arrow-back"
         on:click={() => goto("/")}
       />
-      <!-- {#if ready} -->
-      {#if $selectedUser.name === $page.params.userId}
+      {#if ready}
+      <!-- {#if $selectedUser.name === $page.params.userId} -->
         <div class="imgText">
           <div class="userimg">
-            {#if $selectedUser.avatar}
-              <img src={$selectedUser.avatar} alt="" />
+            {#if selectedUser.avatar}
+              <img src={selectedUser.avatar} alt="" />
             {:else}
               <img src="/joke.png" alt="" />
             {/if}
             <div
-              class={$selectedUser.isOnline ? "status online" : "status offline"}
+              class={selectedUser.isOnline ? "status online" : "status offline"}
             />
           </div>
           <div class="details">
-            <h4>{$selectedUser.name}</h4>
+            <h4>{selectedUser.name}</h4>
           </div>
         </div>
       {:else}
@@ -297,8 +318,7 @@
             <!-- <div class="user-avatar" /> -->
           </div>
           <div class="details">
-            <h4 class="user-name animation" />
-            <!-- <h4 class="user-name">Bao Yang</h4> -->
+            <h4 class="user-name animation"> </h4>
           </div>
         </div>
       {/if}
