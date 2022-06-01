@@ -200,9 +200,9 @@
 
   $: if ($pictureConfirmed) {
     let imgPath =
-      loggedinUser.displayName > $selectedUsername
-        ? `${loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${loggedinUser.displayName}`;
+      $loggedinUser.displayName > $selectedUsername
+        ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${$loggedinUser.displayName}`;
 
     let imageRef = ref(
       storage,
@@ -215,15 +215,16 @@
       getDownloadURL(imageRef).then((_url) => {
         url = _url;
         let msgId =
-          loggedinUser.displayName > $selectedUsername
-            ? `${loggedinUser.displayName} & ${$selectedUsername}`
-            : `${$selectedUsername} & ${loggedinUser.displayName}`;
+          $loggedinUser.displayName > $selectedUsername
+            ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+            : `${$selectedUsername} & ${$loggedinUser.displayName}`;
         let msgRef = collection(db, "messages", msgId, "chat");
         addDoc(msgRef, {
-          from: loggedinUser.displayName,
+          from: $loggedinUser.displayName,
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
           pictureURL: url || "",
+          text: `${$loggedinUser.displayName} has sent a photo`
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -233,9 +234,9 @@
 
   $: if ($audioConfirmed) {
     let audioPath =
-      loggedinUser.displayName > $selectedUsername
-        ? `${loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${loggedinUser.displayName}`;
+      $loggedinUser.displayName > $selectedUsername
+        ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${$loggedinUser.displayName}`;
 
     let audioRef = ref(
       storage,
@@ -248,15 +249,16 @@
       getDownloadURL(audioRef).then((_url) => {
         url = _url;
         let msgId =
-          loggedinUser.displayName > $selectedUsername
-            ? `${loggedinUser.displayName} & ${$selectedUsername}`
-            : `${$selectedUsername} & ${loggedinUser.displayName}`;
+          $loggedinUser.displayName > $selectedUsername
+            ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+            : `${$selectedUsername} & ${$loggedinUser.displayName}`;
         let msgRef = collection(db, "messages", msgId, "chat");
         addDoc(msgRef, {
-          from: loggedinUser.displayName,
+          from: $loggedinUser.displayName,
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
           audioURL: url || "",
+          text: `${$loggedinUser.displayName} has sent a voice`
         }).then(() => {
           console.log("document added successfully 😎");
         });
