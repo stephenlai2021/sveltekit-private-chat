@@ -84,7 +84,7 @@ ion-icon {
 
 .leftSide {
   position: relative;
-  height: 100%;
+  /* height: 100%; */
   /* background: #dde1e7; */
   background: #dadada;
   /* border-left: 1px solid rgba(0, 0, 0, 0.06); */

@@ -226,21 +226,21 @@
       <p>Sorry, you don't have any friends yet</p>
     </div>
   {/if}
-</div>
-
-<!-- {#if $showSettingsModal && user} -->
-{#if $showSettingsModal && $loggedinUser}
+  
+  <!-- {#if $showSettingsModal && user} -->
+  {#if $showSettingsModal && $loggedinUser}
   <!-- <SettingsModal {user} /> -->
   <SettingsModal />
-{/if}
-
-{#if $showAddFriendModal}
+  {/if}
+  
+  {#if $showAddFriendModal}
   <AddFriendModal />
-{/if}
-
-{#if $mobile}
+  {/if}
+  
+  {#if $mobile}
   <Navbar />
-{/if}
+  {/if}
+</div>
 
 <style>
   .warning img {

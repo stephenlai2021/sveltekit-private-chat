@@ -9,7 +9,7 @@
     Timestamp,
     collection,
     onSnapshot,
-    orderBy
+    orderBy,
   } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { page } from "$app/stores";
@@ -45,7 +45,7 @@
     showEmojiMenu,
     pictureConfirmed,
     loggedinUser,
-  } from "$lib/store";  
+  } from "$lib/store";
   import CameraModal from "$lib/components/CameraModal.svelte";
   import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
   import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
@@ -61,7 +61,7 @@
 
   let q = null;
   let messageSent = "";
-  let messages = []
+  let messages = [];
   // let loggedinUser = {};
   let selectedUser = {};
   let ready = false;
@@ -104,6 +104,7 @@
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
           imageURL: url || "",
+          text: `${$loggedinUser.displayName} has sent an image`
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -124,8 +125,8 @@
 
     try {
       await addDoc(msgRef, {
-        message: messageSent,
-        from: loggedinUser.displayName,
+        text: messageSent,
+        from: $loggedinUser.displayName,
         to: $selectedUsername,
         createdAt: Timestamp.fromDate(new Date()),
       });
@@ -162,11 +163,10 @@
     }
   });
 
-  // $: if ($page.params.userId === $selectedUsername) { getSelectedUser($selectedUsername) } 
-  
+  // $: if ($page.params.userId === $selectedUsername) { getSelectedUser($selectedUsername) }
+
   $: if ($page.params.userId === $selectedUsername) matched = true;
   $: if (matched) {
-    // get selected user profile
     q = query(colRef, where("name", "==", $selectedUsername));
     const unsub = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
@@ -179,22 +179,22 @@
       return () => unsub();
     });
 
-    // get messages with selected user
+
     let msgId =
       $loggedinUser.displayName > $selectedUsername
         ? `${$loggedinUser.displayName} & ${$selectedUsername}`
         : `${$selectedUsername} & ${$loggedinUser.displayName}`;
     let msgRef = collection(db, "messages", msgId, "chat");
-    q = query(msgRef, orderBy('createdAt', 'asc'))
-    const unsubMsgs = onSnapshot(q, querySnapshot => {
-      let msgs = []
-      querySnapshot.forEach(doc => {
-        msgs.push(doc.data())
-      })
-      messages = msgs
-      console.log('messages:', messages)
-      return () => unsubMsgs()
-    })
+    q = query(msgRef, orderBy("createdAt", "asc"));
+    const unsubMsgs = onSnapshot(q, (querySnapshot) => {
+      let msgs = [];
+      querySnapshot.forEach((doc) => {
+        msgs.push(doc.data());
+      });
+      messages = msgs;
+      console.log("messages:", messages);
+      return () => unsubMsgs();
+    });
     matched = false;
   }
 
@@ -283,7 +283,6 @@
   {/if}
 </svelte:head>
 
-<!-- style:background-color={$bgColor} -->
 <div>
   <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
   <!-- <div class="header" style:background={$imageTitle === 'Default' ? '#ededed' : 'rgba(229, 221, 222, 0.5)'}> -->
@@ -295,7 +294,7 @@
         on:click={() => goto("/")}
       />
       {#if ready}
-      <!-- {#if $selectedUser.name === $page.params.userId} -->
+        <!-- {#if $selectedUser.name === $page.params.userId} -->
         <div class="imgText">
           <div class="userimg">
             {#if selectedUser.avatar}
@@ -315,10 +314,9 @@
         <div class="imgText">
           <div class="userimg">
             <div class="user-avatar animation" />
-            <!-- <div class="user-avatar" /> -->
           </div>
           <div class="details">
-            <h4 class="user-name animation"> </h4>
+            <h4 class="user-name animation" />
           </div>
         </div>
       {/if}
@@ -368,56 +366,18 @@
     </div>
   </div>
 
-  <div class="chatBox">
-    <div class="message my_message">
-      <p>Hi<br /><span>12:15</span></p>
+  {#if messages}
+    <div class="chatBox">
+      {#each messages as msg}
+        <div class="message my_message">
+          <p>Hi<br /><span>12:15</span></p>
+        </div>
+        <div class="message friend_message">
+          <p>Hello<br /><span>12:18</span></p>
+        </div>
+      {/each}
     </div>
-    <div class="message friend_message">
-      <p>Hello<br /><span>12:18</span></p>
-    </div>
-    <div class="message my_message">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-        /><span>12:15</span>
-      </p>
-    </div>
-    <div class="message friend_message">
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
-        accusantium alias, optio quas voluptas consequuntur.<br /><span
-          >12:18</span
-        >
-      </p>
-    </div>
-    <div class="message my_message">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-        /><span>12:15</span>
-      </p>
-    </div>
-    <div class="message friend_message">
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
-        accusantium alias, optio quas voluptas consequuntur.<br /><span
-          >12:18</span
-        >
-      </p>
-    </div>
-    <div class="message my_message">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iure?<br
-        /><span>12:15</span>
-      </p>
-    </div>
-    <div class="message friend_message">
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
-        accusantium alias, optio quas voluptas consequuntur.<br /><span
-          >12:18</span
-        >
-      </p>
-    </div>
-  </div>
+  {/if}
 
   <div class="chatbox_input">
     <div class="icon-wrapper icon-happy">
@@ -789,7 +749,7 @@ const handleSubmit = async () => {
 
   .message.friend_message p {
     background: #f5f5f5;
-    backdrop-filter: blur(20px); 
+    backdrop-filter: blur(20px);
     justify-content: flex-start;
   }
 

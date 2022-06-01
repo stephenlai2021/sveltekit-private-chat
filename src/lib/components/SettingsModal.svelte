@@ -302,6 +302,7 @@
     top: 0;
     left: 0;
     width: 100%;
+    /* max-width: 450px; */
     height: 100vh;
     z-index: 200;
     background: rgba(189, 202, 202, 0.5);
