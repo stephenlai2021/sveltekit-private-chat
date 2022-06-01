@@ -64,7 +64,9 @@
   let messages = [];
   // let loggedinUser = {};
   let selectedUser = {};
-  let ready = false;
+  // let ready = false;
+  let selectedUserReady = false;
+  let selectedUserMsgsReady = false
   let matched = false;
   let url = null;
   let file = null;
@@ -174,12 +176,12 @@
         tempUsers.push({ ...doc.data() });
       });
       selectedUser = tempUsers[0];
-      ready = true;
+      // ready = true;
+      selectedUserReady = true;
       console.log("get selected user name | snapshot: ", selectedUser.name);
       return () => unsub();
     });
-
-
+    
     let msgId =
       $loggedinUser.displayName > $selectedUsername
         ? `${$loggedinUser.displayName} & ${$selectedUsername}`
@@ -193,6 +195,7 @@
       });
       messages = msgs;
       console.log("messages:", messages);
+      selectedUserMsgsReady = true
       return () => unsubMsgs();
     });
     matched = false;
@@ -295,7 +298,8 @@
         class="arrow-back"
         on:click={() => goto("/")}
       />
-      {#if ready}
+      <!-- {#if ready} -->
+      {#if selectedUserReady}
         <!-- {#if $selectedUser.name === $page.params.userId} -->
         <div class="imgText">
           <div class="userimg">
@@ -368,7 +372,7 @@
     </div>
   </div>
 
-  {#if messages}
+  {#if selectedUserMsgsReady}
     <div class="chatBox">
       {#each messages as msg}
         <div class="message my_message">
