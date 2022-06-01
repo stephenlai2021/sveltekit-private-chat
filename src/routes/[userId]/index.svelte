@@ -175,7 +175,7 @@
       });
       selectedUser = tempUsers[0];
       ready = true;
-      console.log("get selected user name | snapshot", selectedUser.name);
+      console.log("get selected user name | snapshot: ", selectedUser.name);
       return () => unsub();
     });
 

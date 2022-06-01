@@ -19,6 +19,7 @@
     mobile,
     connection,
     loginFormShow,
+    loggedinUser,
     showToolModal,
     showEmojiMenu,
     showThemeModal,
@@ -65,7 +66,8 @@
   onMount(() => {
     onAuthStateChanged(auth, (_user) => {
       if (!_user) goto("/login");
-      else user = _user;
+      // else user = _user;
+      else $loggedinUser = _user;
     });
     resizeWindow();
   });

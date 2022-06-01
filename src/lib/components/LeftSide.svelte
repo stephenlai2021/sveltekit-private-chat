@@ -38,7 +38,7 @@
   let filteredUsers = [];
 
   // onAuthStateChanged(auth, (_user) => (user = _user));
-  onAuthStateChanged(auth, (user) => ($loggedinUser = user));
+  // onAuthStateChanged(auth, (user) => ($loggedinUser = user));
 
   const selectUser = (selectedUser) => {
     currentContact = selectedUser;
@@ -51,7 +51,8 @@
 
   $: if ($profileUpdated) {
     console.log("user profile updated detected !");
-    user = auth.currentUser;
+    // user = auth.currentUser;
+    $loggedinUser = auth.currentUser;
   }
 
   // $: if (!user) console.log("user is not ready");
@@ -118,14 +119,17 @@
 >
   <div class="header">
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
-      {#if $mobile && user}
+      <!-- {#if $mobile && user} -->
+      {#if $mobile && $loggedinUser}
         <div
           class="userimg"
           on:click|stopPropagation={() =>
             ($showSettingsModal = !$showSettingsModal)}
         >
-          {#if user.photoURL}
-            <img src={user.photoURL} alt="" class="cover" />
+          <!-- {#if user.photoURL} -->
+          {#if $loggedinUser.photoURL}
+            <!-- <img src={user.photoURL} alt="" class="cover" /> -->
+            <img src={$loggedinUser.photoURL} alt="" class="cover" />
           {:else}
             <img src="/joke.png" alt="" class="cover" />
           {/if}
@@ -224,8 +228,10 @@
   {/if}
 </div>
 
-{#if $showSettingsModal && user}
-  <SettingsModal {user} />
+<!-- {#if $showSettingsModal && user} -->
+{#if $showSettingsModal && $loggedinUser}
+  <!-- <SettingsModal {user} /> -->
+  <SettingsModal />
 {/if}
 
 {#if $showAddFriendModal}

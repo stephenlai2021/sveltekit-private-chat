@@ -4,6 +4,7 @@
   import {
     mobile,
     bgColor,
+    loggedinUser,
     loginFormShow,
     profileUpdated,
     showCameraModal,
@@ -15,10 +16,11 @@
 
   let user = null;
 
-  onAuthStateChanged(auth, (_user) => (user = _user));
+  // onAuthStateChanged(auth, (_user) => (user = _user));
 
   $: if ($profileUpdated) {
-    user = auth.currentUser
+    // user = auth.currentUser
+    user = $loggedinUser.currentUser
     console.log('user profile updated detected !') 
     // $profileUpdated = false
   }
@@ -42,14 +44,16 @@
     : "flex"}
 >
 <!-- style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor} -->
-  {#if user}
+  {#if $loggedinUser}
     <div
       class="userimg"
       on:click|stopPropagation={() =>
         ($showSettingsModal = !$showSettingsModal)}
     >
-      {#if user.photoURL}
-        <img src={user.photoURL} alt="" />
+      <!-- {#if user.photoURL} -->
+      {#if $loggedinUser.photoURL}
+        <!-- <img src={user.photoURL} alt="" /> -->
+        <img src={$loggedinUser.photoURL} alt="" />
       {:else}
         <img src="/joke.png" alt="" />
       {/if}

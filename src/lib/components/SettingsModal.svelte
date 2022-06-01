@@ -2,6 +2,7 @@
   import {
     mobile,
     bgColor,
+    loggedinUser,
     profileUpdated,
     showThemeModal,
     showCameraModal,
@@ -21,7 +22,7 @@
   import CameraModal from "$lib/components/CameraModal.svelte";
   // import { handleFileChange } from '$lib/functions/handleFileChange'
 
-  export let user;
+  // export let user;
 
   // const { file, fileError } = handleFileChange()
 
@@ -117,8 +118,8 @@
     <div class="user-profile">
       <div class="avatar-section">
         <div class="image-wrapper">
-          {#if user.photoURL}
-            <img src={user.photoURL} alt="" width="96" height="96" />
+          {#if $loggedinUser.photoURL}
+            <img src={$loggedinUser.photoURL} alt="" width="96" height="96" />
           {:else}
             <img src="/joke.png" alt="" width="96" height="96" />
           {/if}
@@ -134,9 +135,9 @@
         </div>
       </div>
       <h3>
-        {user.displayName}
+        {$loggedinUser.displayName}
       </h3>
-      <p>{user.email}</p>
+      <p>{$loggedinUser.email}</p>
     </div>
     <li>
       <div class="content">
