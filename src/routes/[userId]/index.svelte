@@ -2,14 +2,16 @@
   import { auth, db, storage } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
   import {
+    doc,
+    addDoc,
+    setDoc,
+    updateDoc,
     query,
     where,
-    addDoc,
-    updateDoc,
+    orderBy,
     Timestamp,
     collection,
-    onSnapshot,
-    orderBy,
+    onSnapshot
   } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { page } from "$app/stores";
@@ -53,9 +55,12 @@
   import ToolModal from "$lib/components/ToolModal.svelte";
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
   import MapModal from "$lib/components/MapModal.svelte";
-  import { onMount } from "svelte";
+  import { onMount, beforeUpdate, afterUpdate } from "svelte";
   import { browser } from "$app/env";
   import themeStore, { setTheme } from "svelte-themes";
+  import moment from "moment";
+  import * as animateScroll from "svelte-scrollto";
+  import { slimscroll } from "svelte-slimscroll";
 
   console.log("selfie", $pictureFile);
 
@@ -66,10 +71,12 @@
   let selectedUser = {};
   // let ready = false;
   let selectedUserReady = false;
-  let selectedUserMsgsReady = false
+  let selectedUserMsgsReady = false;
   let matched = false;
   let url = null;
   let file = null;
+  let chatbox = null;
+  let autoscroll = null;
   let colRef = collection(db, "whatzapp_users");
 
   // onAuthStateChanged(auth, (user) => (loggedinUser = user));
@@ -106,7 +113,7 @@
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
           imageURL: url || "",
-          text: `${$loggedinUser.displayName} has sent an image`
+          text: `${$loggedinUser.displayName} has sent an image`,
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -134,6 +141,14 @@
       });
       messageSent = "";
       console.log("message created successfully 😁");
+
+      await setDoc(doc(db, 'lastMsg', msgId), {
+        text: messageSent,
+        from: $loggedinUser.displayName,
+        to: $selectedUsername,
+        createdAt: Timestamp.fromDate(new Date()),
+        unread: true
+      })
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
@@ -181,7 +196,7 @@
       console.log("get selected user name | snapshot: ", selectedUser.name);
       return () => unsub();
     });
-    
+
     let msgId =
       $loggedinUser.displayName > $selectedUsername
         ? `${$loggedinUser.displayName} & ${$selectedUsername}`
@@ -195,11 +210,29 @@
       });
       messages = msgs;
       console.log("messages:", messages);
-      selectedUserMsgsReady = true
+      selectedUserMsgsReady = true;
       return () => unsubMsgs();
     });
     matched = false;
   }
+
+  beforeUpdate(() => {
+    // autoscroll = chatbox && (chatbox.offsetHeight + chatbox.scrollTop) > (chatbox.scrollHeight - 20);
+    autoscroll =
+      chatbox &&
+      chatbox.offsetHeight + chatbox.scrollTop > chatbox.scrollHeight;
+  });
+
+  afterUpdate(() => {
+    if (autoscroll) chatbox.scrollTo(0, chatbox.scrollHeight);
+  });
+
+  onMount(() => {
+    // chatbox.scrollTo(0, chatbox.scrollHeight);
+    // chatbox.scrollTop = chatbox.scrollHeight;
+    // animateScroll.scrollToBottom()
+    // animateScroll.scrollTo({ element: "chatbox" });
+  });
 
   $: if ($pictureConfirmed) {
     let imgPath =
@@ -227,7 +260,7 @@
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
           pictureURL: url || "",
-          text: `${$loggedinUser.displayName} has sent a photo`
+          text: `${$loggedinUser.displayName} has sent a photo`,
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -261,7 +294,7 @@
           to: $selectedUsername,
           createdAt: Timestamp.fromDate(new Date()),
           audioURL: url || "",
-          text: `${$loggedinUser.displayName} has sent a voice`
+          text: `${$loggedinUser.displayName} has sent a voice`,
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -298,9 +331,7 @@
         class="arrow-back"
         on:click={() => goto("/")}
       />
-      <!-- {#if ready} -->
       {#if selectedUserReady}
-        <!-- {#if $selectedUser.name === $page.params.userId} -->
         <div class="imgText">
           <div class="userimg">
             {#if selectedUser.avatar}
@@ -373,13 +404,39 @@
   </div>
 
   {#if selectedUserMsgsReady}
-    <div class="chatBox">
+    <!-- <div class="chatBox" bind:this={chatbox} style:border="1px solid red"> -->
+    <div class="chatBox" bind:this={chatbox}>
       {#each messages as msg}
-        <div class="message my_message">
-          <p>Hi<br /><span>12:15</span></p>
-        </div>
-        <div class="message friend_message">
-          <p>Hello<br /><span>12:18</span></p>
+        <div
+          class="message"
+          class:my_message={msg.from === $loggedinUser.displayName}
+          class:friend_message={msg.from != $loggedinUser.displayName}          
+        >
+          <p class="message-content">
+            {#if msg.imageURL}
+              <img src={msg.imageURL} alt="" />
+            {/if}
+            {#if msg.pictureURL}
+              <img src={msg.pictureURL} alt="" />
+            {/if}
+            {#if msg.audioURL}
+              <audio controls style="margin-bottom: 8px;">
+                <source src={msg.audioURL} />
+                <track kind="captions" />
+              </audio>
+            {/if}
+            {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || 
+                 (msg.pictureURL && msg.from != $loggedinUser.displayName) || 
+                 (msg.audioURL && msg.from != $loggedinUser.displayName) || 
+                 (!msg.imageURL && !msg.pictureURL && !msg.audioURL)
+            }
+              <!-- <span class="message-text">{msg.text}</span> -->
+              {msg.text}
+              <br />
+            {/if}
+            <span>{moment(msg.createdAt.toDate()).fromNow()}</span>
+            <!-- <span>{new Date(msg.createdAt).getTime()}</span> -->
+          </p>
         </div>
       {/each}
     </div>
@@ -598,6 +655,15 @@ const handleSubmit = async () => {
     font-size: 24px;
   }
 
+  .my_message.message-content {
+    align-items: flex-start;
+  }
+
+  .message-content {
+    display: flex;
+    flex-direction: column;
+  }
+
   .popup {
     padding: 5px;
     /* color: rgba(128, 128, 128, 1); */
@@ -753,13 +819,23 @@ const handleSubmit = async () => {
     align-items: center;
   }
 
+  .message-text {
+    width: 100%;
+    color: black;
+    /* color: var(--icon-add-color);
+    font-size: 0.9em; */
+    /* border: 1px solid; */
+  }
+  
   .message.friend_message p {
+  /* .friend_message .message-text { */
     background: #f5f5f5;
     backdrop-filter: blur(20px);
+    /* display: flex; */
     justify-content: flex-start;
   }
 
-  .my_message {
+  .message.my_message {
     justify-content: flex-end;
     text-align: right;
   }
@@ -828,10 +904,11 @@ const handleSubmit = async () => {
     top: 50px;
     bottom: 50px;
     width: 100%;
+    height: calc(100vh-100px);
     padding: 20px;
     padding-bottom: 0px;
-    overflow-y: auto;
-    border-bottom-right-radius: 4px;
+    overflow-y: scroll;
+    /* border-bottom-right-radius: 4px; */
   }
 
   .details {

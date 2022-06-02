@@ -14,7 +14,7 @@
     showAddFriendModal,
     showAudioPlayerModal,
     showAudioRecordingModal,
-    getSelectedUser
+    getSelectedUser,
   } from "$lib/store";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
@@ -22,7 +22,7 @@
   import { fade } from "svelte/transition";
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
-  import { collection, onSnapshot, query, where } from "firebase/firestore";
+  import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
   import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import ThemeModal from "$lib/components/ThemeModal.svelte";
   import SettingsModal from "$lib/components/SettingsModal.svelte";
@@ -36,6 +36,7 @@
   let currentContact = null;
   let loading = false;
   let filteredUsers = [];
+  let lastMsg = {}
 
   // onAuthStateChanged(auth, (_user) => (user = _user));
   // onAuthStateChanged(auth, (user) => ($loggedinUser = user));
@@ -72,16 +73,25 @@
       colRef,
       where("contactList", "array-contains", $loginUserEmail)
     );
-    const unsub = onSnapshot(q, (snapshot) => {
+    const unsubUsers = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
       console.log("initialzie user list | snapshot", users);
-      return () => unsub();
+      return () => unsubUsers();
     });
     ready = false;
+
+    let msgId =
+    $loggedinUser.displayName > $selectedUsername
+    ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+    : `${$selectedUsername} & ${$loggedinUser.displayName}`;
+    let tempRef = doc(db, 'lastMsg', msgId)
+    onSnapshot(tempRef, doc => {
+      lastMsg = doc.data()
+    })
   }
 
   $: filteredUsers = users.filter((item) => {
@@ -119,16 +129,13 @@
 >
   <div class="header">
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
-      <!-- {#if $mobile && user} -->
       {#if $mobile && $loggedinUser}
         <div
           class="userimg"
           on:click|stopPropagation={() =>
             ($showSettingsModal = !$showSettingsModal)}
         >
-          <!-- {#if user.photoURL} -->
           {#if $loggedinUser.photoURL}
-            <!-- <img src={user.photoURL} alt="" class="cover" /> -->
             <img src={$loggedinUser.photoURL} alt="" class="cover" />
           {:else}
             <img src="/joke.png" alt="" class="cover" />
@@ -226,19 +233,17 @@
       <p>Sorry, you don't have any friends yet</p>
     </div>
   {/if}
-  
-  <!-- {#if $showSettingsModal && user} -->
+
   {#if $showSettingsModal && $loggedinUser}
-  <!-- <SettingsModal {user} /> -->
-  <SettingsModal />
+    <SettingsModal />
   {/if}
-  
+
   {#if $showAddFriendModal}
-  <AddFriendModal />
+    <AddFriendModal />
   {/if}
-  
+
   {#if $mobile}
-  <Navbar />
+    <Navbar />
   {/if}
 </div>
 
