@@ -84,14 +84,14 @@
     });
     ready = false;
 
-    let msgId =
-    $loggedinUser.displayName > $selectedUsername
-    ? `${$loggedinUser.displayName} & ${$selectedUsername}`
-    : `${$selectedUsername} & ${$loggedinUser.displayName}`;
-    let tempRef = doc(db, 'lastMsg', msgId)
-    onSnapshot(tempRef, doc => {
-      lastMsg = doc.data()
-    })
+    // let msgId =
+    // $loggedinUser.displayName > $selectedUsername
+    // ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+    // : `${$selectedUsername} & ${$loggedinUser.displayName}`;
+    // let tempRef = doc(db, 'lastMsg', msgId)
+    // onSnapshot(tempRef, doc => {
+    //   lastMsg = doc.data()
+    // })
   }
 
   $: filteredUsers = users.filter((item) => {

@@ -142,13 +142,13 @@
       messageSent = "";
       console.log("message created successfully 😁");
 
-      await setDoc(doc(db, 'lastMsg', msgId), {
-        text: messageSent,
-        from: $loggedinUser.displayName,
-        to: $selectedUsername,
-        createdAt: Timestamp.fromDate(new Date()),
-        unread: true
-      })
+      // await setDoc(doc(db, 'lastMsg', msgId), {
+      //   text: messageSent,
+      //   from: $loggedinUser.displayName,
+      //   to: $selectedUsername,
+      //   createdAt: Timestamp.fromDate(new Date()),
+      //   unread: true
+      // })
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
