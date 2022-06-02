@@ -213,6 +213,7 @@
       selectedUserMsgsReady = true;
       return () => unsubMsgs();
     });
+    // selectedUserMsgsReady = false
     matched = false;
   }
 
@@ -353,7 +354,7 @@
             <div class="user-avatar animation" />
           </div>
           <div class="details">
-            <h4 class="user-name animation" />
+            <h4 class="user-name animation">1</h4>
           </div>
         </div>
       {/if}
@@ -403,7 +404,8 @@
     </div>
   </div>
 
-  {#if selectedUserMsgsReady}
+  <!-- {#if selectedUserMsgsReady} -->
+  {#if messages}
     <!-- <div class="chatBox" bind:this={chatbox} style:border="1px solid red"> -->
     <div class="chatBox" bind:this={chatbox}>
       {#each messages as msg}
