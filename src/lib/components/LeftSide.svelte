@@ -124,12 +124,13 @@
     : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "0%"
     : !$mobile && $page.url.pathname != "/login"
-    ? "550px"
+    ? "600px"
     : "0%"}
 >
   <div class="header">
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
-      {#if $mobile && $loggedinUser}
+      <!-- {#if $mobile && $loggedinUser} -->
+      {#if $loggedinUser}
         <div
           class="userimg"
           on:click|stopPropagation={() =>
@@ -172,11 +173,7 @@
       <input type="text" placeholder="Find user" bind:value={$keyword} />
       <ion-icon
         name="search-outline"
-        class="icon-finduser"
-        style:left="22px"
-        style:top="17px"
-        style:width="18px"
-        style:height="18px"
+        class="icon-finduser"       
       />
     </div>
   </div>
@@ -184,20 +181,22 @@
   {#if users.length}
     <div
       class="chatlist"
-      style:height="calc(100vh - 120px)"
       style:padding-bottom={$mobile ? "60px" : "0px"}
+      style:height="calc(100vh - 100px)"
       transition:fade={{ duration: 100 }}
-    >
+      >
       {#each filteredUsers as user}
         <div
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          style:box-shadow={currentContact === user ||
+          style:background={currentContact === user ||
+            user.name === $page.params.userId ? '#ebebeb' : ''}
+        >
+          <!-- style:box-shadow={currentContact === user ||
           user.name === $page.params.userId
             ? "inset 6px 6px 12px #b9b9b9, inset -6px -6px 12px #fbfbfb"
-            : "inset -6px -6px 12px #b9b9b9, inset 6px 6px 12px #fbfbfb"}
-        >
+            : "inset -6px -6px 12px #b9b9b9, inset 6px 6px 12px #fbfbfb"} -->
           <div class="imgbx">
             {#if user.avatar}
               <img src={user.avatar} alt="" class="cover" />
@@ -208,7 +207,7 @@
           </div>
           <div class="details">
             <div class="listHead">
-              <h4>{user.name}</h4>
+              <span class="user-title">{user.name}</span>
               <p class="time">10:56</p>
             </div>
             <div class="message_p">
@@ -267,8 +266,8 @@
   }
 
   .userimg {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -277,8 +276,8 @@
   }
 
   .userimg img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
     border-radius: 50%;
   }

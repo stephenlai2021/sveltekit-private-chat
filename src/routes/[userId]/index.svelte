@@ -11,7 +11,7 @@
     orderBy,
     Timestamp,
     collection,
-    onSnapshot
+    onSnapshot,
   } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { page } from "$app/stores";
@@ -233,6 +233,7 @@
     // chatbox.scrollTop = chatbox.scrollHeight;
     // animateScroll.scrollToBottom()
     // animateScroll.scrollTo({ element: "chatbox" });
+    moment.locale(); 
   });
 
   $: if ($pictureConfirmed) {
@@ -325,6 +326,7 @@
 <div>
   <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
   <!-- <div class="header" style:background={$imageTitle === 'Default' ? '#ededed' : 'rgba(229, 221, 222, 0.5)'}> -->
+    <!-- <div class="header" style:background={$bgColor}> -->
   <div class="header">
     <div class="left-part">
       <ion-icon
@@ -346,6 +348,7 @@
           </div>
           <div class="details">
             <h4>{selectedUser.name}</h4>
+            <span class="last-seen">last seen today at 12:22pm</span>
           </div>
         </div>
       {:else}
@@ -354,7 +357,7 @@
             <div class="user-avatar animation" />
           </div>
           <div class="details">
-            <h4 class="user-name animation">1</h4>
+            <h4 class="user-name animation"> </h4>
           </div>
         </div>
       {/if}
@@ -408,11 +411,15 @@
   {#if messages}
     <!-- <div class="chatBox" bind:this={chatbox} style:border="1px solid red"> -->
     <div class="chatBox" bind:this={chatbox}>
+      <!-- <div class="date-separator-wrapper" style:margin-bottom="50px">
+        <h4 class="date-separator">{moment().format("MMM Do YY")}</h4>
+        <h4 class="date-separator">{moment().format("L")}</h4>
+      </div> -->
       {#each messages as msg}
         <div
           class="message"
           class:my_message={msg.from === $loggedinUser.displayName}
-          class:friend_message={msg.from != $loggedinUser.displayName}          
+          class:friend_message={msg.from != $loggedinUser.displayName}
         >
           <p class="message-content">
             {#if msg.imageURL}
@@ -422,22 +429,42 @@
               <img src={msg.pictureURL} alt="" />
             {/if}
             {#if msg.audioURL}
-              <audio controls style="margin-bottom: 8px;">
+              <!-- <audio controls style="margin-bottom: 8px;">
                 <source src={msg.audioURL} />
                 <track kind="captions" />
-              </audio>
+              </audio> -->
+              <div class="audio-player">
+                <div class="timeline">
+                  <div class="progress" />
+                </div>
+                <div class="controls">
+                  <div class="play-container">
+                    <div class="toggle-play play" />
+                  </div>
+                  <div class="time">
+                    <div class="current">0:00</div>
+                    <div class="divider">/</div>
+                    <div class="length" />
+                  </div>
+                  <div class="name">Audio </div>
+                  <div class="volume-container">
+                    <div class="volume-button">
+                      <!-- <div class="volume icono-volumeMedium" /> -->
+                      <ion-icon name="volume-medium-outline" class="volume" style:color="white"></ion-icon>
+                    </div>
+
+                    <div class="volume-slider">
+                      <div class="volume-percentage" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             {/if}
-            {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || 
-                 (msg.pictureURL && msg.from != $loggedinUser.displayName) || 
-                 (msg.audioURL && msg.from != $loggedinUser.displayName) || 
-                 (!msg.imageURL && !msg.pictureURL && !msg.audioURL)
-            }
-              <!-- <span class="message-text">{msg.text}</span> -->
-              {msg.text}
-              <br />
+            {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || (msg.pictureURL && msg.from != $loggedinUser.displayName) || (msg.audioURL && msg.from != $loggedinUser.displayName) || (!msg.imageURL && !msg.pictureURL && !msg.audioURL)}
+              <span class="message-text">{msg.text}</span>  
             {/if}
-            <span>{moment(msg.createdAt.toDate()).fromNow()}</span>
-            <!-- <span>{new Date(msg.createdAt).getTime()}</span> -->
+            <!-- <span>{moment(msg.createdAt.toDate()).fromNow()}</span> -->
+            <span class="showtime">{moment(msg.createdAt.toDate()).format('LLL')}</span>
           </p>
         </div>
       {/each}
@@ -459,13 +486,13 @@
         class="icon-submit"
         on:click|preventDefault={handleSubmit}
       />
-      <!-- </div> -->
     </form>
     <div
       class="icon-wrapper icon-mic"
       on:click={() => ($showAudioRecordingModal = true)}
     >
-      <ion-icon name="mic-outline" class="icon-mic" style:font-size="1.5em" />
+      <!-- <ion-icon name="mic-outline" class="icon-mic" style:font-size="1.5em" /> -->
+      <img src="/icon/icon-audio.png" alt="audio icon">
     </div>
   </div>
 </div>
@@ -498,155 +525,9 @@
   <MapModal />
 {/if}
 
-<!-- {#if $showPicModal}
-  <PicModal />
-{/if} -->
-
-<!-- {#if $showPhotoModal}
-  <PhotoModal />
-{/if} -->
-
-<!-- 
-const handleFileChange = async (e) => {
-  const types = ["image/png", "image/jpg", "image/jpeg"];
-
-  let selectedFile = e.target.files[0];
-
-  if (selectedFile && types.includes(selectedFile.type)) {
-    file = selectedFile;
-    console.log(file);
-    console.log(`${file.name} is selected`);
-    $selectedImg = file;
-    fileError = null;
-
-    let imgPath =
-      loggedinUser.displayName > $selectedUsername
-        ? `${loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-    let imageRef = ref(
-      storage,
-      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-        file.name
-      }`
-    );
-
-    uploadBytes(imageRef, file).then(() => {
-      console.log("image upload completed !");
-      getDownloadURL(imageRef).then((_url) => {
-        url = _url;
-        let msgId =
-          loggedinUser.displayName > $selectedUsername
-            ? `${loggedinUser.displayName} & ${$selectedUsername}`
-            : `${$selectedUsername} & ${loggedinUser.displayName}`;
-        let msgRef = collection(db, "messages", msgId, "chat");
-        addDoc(msgRef, {
-          from: loggedinUser.displayName,
-          to: $selectedUsername,
-          createdAt: Timestamp.fromDate(new Date()),
-          imageURL: url || "",
-        }).then(() => {
-          console.log("document added successfully 😎");
-        });
-      });
-    });
-  } else {
-    file = null;
-    fileError = "Please select an image file (png or jpg)";
-    alert(fileError)
-  }
-}; 
-
-const handleSubmit = async () => {
-  $showEmojiMenu = false;
-  messageSent = $message;
-  $message = "";
-
-  let imgPath =
-    loggedinUser.displayName > $selectedUsername
-      ? `${loggedinUser.displayName} & ${$selectedUsername}`
-      : `${$selectedUsername} & ${loggedinUser.displayName}`;
-
-  if ($selectedImg) {
-    imageRef = ref(
-      storage,
-      `letschat/messages/images/${imgPath}/${new Date().getTime()} - ${
-        $selectedImg.name
-      }`
-    );
-    try {
-      await uploadBytes(imageRef, $selectedImg);
-      console.log("image upload completed !");
-      $selectedImg = null;
-    } catch (err) {
-      console.log("image uploaded failed");
-    }
-  }
-
-  if ($pictureFile) {
-    imageRef = ref(
-      storage,
-      `letschat/messages/camera/${imgPath}/${$pictureFile.name}`
-    );
-    try {
-      await uploadBytes(imageRef, $pictureBlob);
-      console.log("picture upload completed !");
-      $pictureFile = null;
-    } catch (err) {
-      console.log("picture uploaded failed");
-    }
-  }
-
-  try {
-    const url = await getDownloadURL(imageRef);
-    console.log("get downloaded url: ", url);
-
-    let msgId =
-      loggedinUser.displayName > $selectedUsername
-        ? `${loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${loggedinUser.displayName}`;
-    let msgRef = collection(db, "messages", msgId, "chat");
-    try {
-      await addDoc(msgRef, {
-        message: messageSent,
-        from: loggedinUser.displayName,
-        to: $selectedUsername,
-        createdAt: Timestamp.fromDate(new Date()),
-        image: url || "",
-      });
-      messageSent = "";
-      console.log("message created successfully 😁");
-    } catch (error) {
-      console.log("ooh, something went wrong 😥", error);
-    }
-  } catch (err) {
-    console.log(err.message);
-  }
-
-  let msgId =
-    loggedinUser.displayName > $selectedUsername
-      ? `${loggedinUser.displayName} & ${$selectedUsername}`
-      : `${$selectedUsername} & ${loggedinUser.displayName}`;
-  let msgRef = collection(db, "messages", msgId, "chat");
-  try {
-    await addDoc(msgRef, {
-      message: messageSent,
-      from: loggedinUser.displayName,
-      to: $selectedUsername,
-      createdAt: Timestamp.fromDate(new Date()),
-    });
-    messageSent = "";
-    console.log("message created successfully 😁");
-  } catch (error) {
-    console.log("ooh, something went wrong 😥", error);
-  }
-};
- -->
-
-<!-- {#if $showBgSettingsModal}
-  <BgSettingsModal />
-{/if} -->
 <style>
+  /* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap'); */
+
   :root {
     --bg-color: #d6d8dc;
     --hue: red;
@@ -657,13 +538,197 @@ const handleSubmit = async () => {
     font-size: 24px;
   }
 
-  .my_message.message-content {
-    align-items: flex-start;
+  .last-seen {
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 12px;
+    color: rgba(13, 13, 13, 0.5);
+  }
+
+  .date-separator-wrapper {
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+  }
+
+  .date-separator {
+    /* font-family: "Montserrat"; */
+    font-weight: 500;
+    /* font-size: 14px; */
+    color: black;
+    text-align: center;
+    line-height: 17px;
+    /* text-transform: uppercase; */
+    background: #D9FFFA;
+    border-radius: 5px;
+    /* width: 70px; */
+    /* height: 25px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+  }
+
+  /* audio-player */
+  .audio-player {
+    height: 50px;
+    width: 300px;
+    max-width: 100%;
+    background: #444;
+    box-shadow: 0 0 10px 0 #000a;
+
+    font-family: arial;
+    color: white;
+    font-size: 0.75em;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-rows: 6px auto;
+  }
+
+  .progress {
+    background: coral;
+    width: 0%;
+    height: 100%;
+    transition: 0.25s;
+  }
+
+  .timeline {
+    background: white;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 2px 10px 0 #0008;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0 20px;
+  }
+
+  .volume-button {
+    height: 26px;
+    display: flex;
+    align-items: center;
+  }
+
+  .volume-percentage {
+    background: coral;
+    height: 100%;
+    width: 75%;
+  }
+
+  .volume-slider {
+    position: absolute;
+    left: -3px;
+    top: 15px;
+    z-index: -1;
+    width: 0;
+    height: 15px;
+    background: white;
+    box-shadow: 0 0 20px #000a;
+    transition: 0.25s;
+  }
+
+  .volume-container:hover .volume-slider {
+    left: -123px;
+    width: 120px;
+  }
+
+  .volume-container {
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+  }
+
+  .time {
+    display: flex;
+  }
+
+  .play-container,
+  .time,
+  .name,
+  .volume-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .current,
+  .divider,
+  .length {
+    padding: 2px;
+  }
+
+  .toggle-play.play:hover {
+    transform: scale(1.1);
+  }
+
+  .toggle-play.pause:hover {
+    transform: scale(1.1);
+  }
+
+  .toggle-play.pause:after {
+    position: absolute;
+    top: 0;
+    right: 8px;
+    background: white;
+    content: "";
+    height: 15px;
+    width: 3px;
+  }
+
+  .toggle-play.pause:before {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    background: white;
+    content: "";
+    height: 15px;
+    width: 3px;
+  }
+
+  .toggle-play.pause {
+    height: 15px;
+    width: 20px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .toggle-play.play {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    height: 0;
+    width: 0;
+    border: 7px solid #0000;
+    border-left: 13px solid white;
+  }
+  /* end of audio-player */
+
+  audio {
+    max-width: 100%;
   }
 
   .message-content {
     display: flex;
     flex-direction: column;
+    /* border: 1px solid; */
+  }
+
+  .message-content .audio-player {
+    margin-top: 5px;
+  }
+
+  .message-content img {
+    /* max-height: 300px; */
+    max-height: 300px;
+    max-width: 300px;
+    object-fit: cover;
+    margin-top: 5px;
+    border-radius: 8px;
   }
 
   .popup {
@@ -760,6 +825,10 @@ const handleSubmit = async () => {
   .header {
     padding-right: 0px;
     padding: 15px 0 15px 15px;
+    /* height: 60px;
+    display: flex;
+    align-items: center; */
+    background: #ebebeb;
     /* border: 1px solid; */
   }
 
@@ -773,19 +842,27 @@ const handleSubmit = async () => {
     margin-right: 12px;
   }
 
-  .icon-mic {
-    justify-content: flex-end;
-    /* z-index: 500; */
-  }
-
-  .icon-happy {
-    justify-content: flex-start;
-  }
-
   .icon-wrapper {
     display: flex;
     align-items: center;
-    width: 50px;
+    /* width: 40px; */
+    /* height: 60px; */
+    /* border: 1px solid; */
+  }
+
+  .icon-mic {
+    /* justify-content: flex-end; */
+    margin-left: 20px;
+  }
+
+  .icon-happy {
+    /* justify-content: flex-start; */
+    margin-right: 20px;
+  }
+  
+  .icon-wrapper img {
+    width: 16px;
+    height: 24px;
   }
 
   .arrow-back {
@@ -807,30 +884,25 @@ const handleSubmit = async () => {
     font-size: 1em;
     background: white;
     color: black;
+    /* border: 1px solid; */
   }
 
   .chatbox_input {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 50px;
+    height: 60px;
     background: #ededed;
     padding: 20px;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center;
     align-items: center;
-  }
-
-  .message-text {
-    width: 100%;
-    color: black;
-    /* color: var(--icon-add-color);
-    font-size: 0.9em; */
     /* border: 1px solid; */
   }
-  
+
   .message.friend_message p {
-  /* .friend_message .message-text { */
+    /* .friend_message .message-text { */
     background: #f5f5f5;
     backdrop-filter: blur(20px);
     /* display: flex; */
@@ -842,12 +914,9 @@ const handleSubmit = async () => {
     text-align: right;
   }
 
-  .message p span {
-    display: block;
-    margin-top: 5px;
-    font-size: 0.85em;
-    opacity: 0.5;
-  }
+  /* .message p span { */
+  /* .message p .showtime { */
+ 
 
   .message.friend_message::before {
     left: -12px;
@@ -883,14 +952,17 @@ const handleSubmit = async () => {
     position: relative;
     right: 0;
     max-width: 65%;
-    padding: 12px;
+    /* min-height: 50%; */
+    /* max-width: 50%; */
+    /* padding: 12px; */
+    padding: 6px 12px;
     background: var(--lemon-green);
     /* background: rgba(220, 248, 198, 0.3); */
     /* background: transparent; */
     /* backdrop-filter: blur(10px); */
     border-radius: 10px;
-    font-size: 0.9em;
-    font-weight: 600;
+    /* font-size: 0.9em;
+    font-weight: 600; */
     color: var(--icon-add-color);
   }
 
@@ -898,17 +970,35 @@ const handleSubmit = async () => {
     position: relative;
     display: flex;
     width: 100%;
+    /* margin-top: 15px; */
     margin-bottom: 5px;
+  }
+
+  .message p .message-text {
+    width: 100%;
+    color: black;
+    opacity: 1;
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .showtime {
+    display: block;
+    margin-top: 5px;
+    font-size: 3px;
+    font-weight: 600;
+    opacity: 0.5;
   }
 
   .chatBox {
     position: absolute;
-    top: 50px;
-    bottom: 50px;
+    top: 60px;
+    bottom: 60px;
     width: 100%;
     height: calc(100vh-100px);
     padding: 20px;
-    padding-bottom: 0px;
+    padding-bottom: 15px;
     overflow-y: scroll;
     /* border-bottom-right-radius: 4px; */
   }
@@ -930,7 +1020,22 @@ const handleSubmit = async () => {
 
   @media (max-width: 575px) {
     .chatbox_input {
-      padding: 20px 10px;
+      /* padding: 20px 10px; */
+      padding: 15px;
+    }
+
+    .icon-happy {
+      margin-right: 15px;
+    }
+
+    .icon-mic {
+      margin-left: 15px;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .message-content img {
+      max-height: 200px;
     }
   }
 
