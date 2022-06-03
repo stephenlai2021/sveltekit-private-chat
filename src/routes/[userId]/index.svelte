@@ -492,7 +492,8 @@
       on:click={() => ($showAudioRecordingModal = true)}
     >
       <!-- <ion-icon name="mic-outline" class="icon-mic" style:font-size="1.5em" /> -->
-      <img src="/icon/icon-audio.png" alt="audio icon">
+      <ion-icon name="mic-outline" />
+      <!-- <img src="/icon/icon-audio.svg" alt="audio icon"> -->
     </div>
   </div>
 </div>
@@ -534,7 +535,8 @@
   }
 
   ion-icon {
-    color: #51585c;
+    /* color: #51585c; */
+    color: #007AFF;
     font-size: 24px;
   }
 
@@ -791,7 +793,7 @@
 
   .icon-submit {
     position: absolute;
-    right: 12px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 22px;
@@ -800,7 +802,7 @@
   .messageBox {
     position: relative;
     width: 100%;
-    height: 50px;
+    height: 40px;
   }
 
   .user-avatar,
@@ -861,7 +863,7 @@
   }
   
   .icon-wrapper img {
-    width: 16px;
+    width: 20px;
     height: 24px;
   }
 
@@ -884,6 +886,10 @@
     font-size: 1em;
     background: white;
     color: black;
+
+    border: 0.5px solid #8E8E93;
+    border-radius: 50px;
+    /* opacity: 0.45; */
     /* border: 1px solid; */
   }
 
@@ -892,7 +898,8 @@
     bottom: 0;
     width: 100%;
     height: 60px;
-    background: #ededed;
+    /* background: #ededed; */
+    background: #fff;
     padding: 20px;
     display: flex;
     /* justify-content: space-between; */
