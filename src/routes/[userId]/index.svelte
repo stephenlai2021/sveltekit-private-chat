@@ -907,7 +907,6 @@
 
   .message.friend_message::before {
     left: -12px;
-    /* left: -22px; */
     background: linear-gradient(
       225deg,
       #f5f5f5 0%,
@@ -932,7 +931,6 @@
     content: "";
     position: absolute;
     top: 0;
-    /* left: 20px; */
     width: 20px;
     height: 20px;
   }
@@ -978,8 +976,8 @@
     bottom: 60px;
     width: 100%;
     height: calc(100vh-100px);
-    /* padding: 20px; */
-    padding: 0 80px;
+    padding: 20px;
+    /* padding: 0 80px; */
     padding-bottom: 15px;
     overflow-y: scroll;
   }
