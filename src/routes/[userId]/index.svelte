@@ -868,13 +868,17 @@
     border: none;
     outline: none;
     font-size: 1em;
-    background: white;
+    /* background: white; */
     /* color: black; */
 
     border: 0.5px solid #8E8E93;
     border-radius: 50px;
     /* opacity: 0.45; */
     /* border: 1px solid; */
+  }
+
+  ::placeholder {
+    /* color: white; */
   }
 
   .chatbox_input {
@@ -903,6 +907,7 @@
 
   .message.friend_message::before {
     left: -12px;
+    /* left: -22px; */
     background: linear-gradient(
       225deg,
       #f5f5f5 0%,
@@ -927,6 +932,7 @@
     content: "";
     position: absolute;
     top: 0;
+    /* left: 20px; */
     width: 20px;
     height: 20px;
   }
@@ -954,13 +960,14 @@
     opacity: 1;
     font-family: "Montserrat";
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .showtime {
     display: block;
     margin-top: 5px;
-    font-size: 3px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
     font-weight: 600;
     opacity: 0.5;
   }
@@ -971,7 +978,8 @@
     bottom: 60px;
     width: 100%;
     height: calc(100vh-100px);
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 0 80px;
     padding-bottom: 15px;
     overflow-y: scroll;
   }

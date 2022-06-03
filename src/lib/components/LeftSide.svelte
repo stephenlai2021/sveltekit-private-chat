@@ -190,8 +190,8 @@
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          style:background={currentContact === user ||
-            user.name === $page.params.userId ? '#00BFA5' : ''}
+          style:background={(currentContact === user  && !$mobile) ||
+            (user.name === $page.params.userId && !$mobile) ? '#00BFA5' : ''}
         >
           <!-- style:box-shadow={currentContact === user ||
           user.name === $page.params.userId
