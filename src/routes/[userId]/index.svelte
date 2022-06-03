@@ -327,7 +327,7 @@
   <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
   <!-- <div class="header" style:background={$imageTitle === 'Default' ? '#ededed' : 'rgba(229, 221, 222, 0.5)'}> -->
     <!-- <div class="header" style:background={$bgColor}> -->
-  <div class="header">
+  <div class="header" style:background={$themeStore.theme === 'dark' ? 'black' : 'white'}>
     <div class="left-part">
       <ion-icon
         name="arrow-back-outline"
@@ -363,8 +363,7 @@
       {/if}
     </div>
 
-    <div class="right-part">
-      <!-- <ion-icon name="videocam-outline" class="popup" /> -->
+    <!-- <div class="right-part">
       <ion-icon name="videocam-outline" class="icon-videocam popup" />
       {#if $isMobile}
         <label>
@@ -404,7 +403,7 @@
         class="icon-options popup"
         on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
       />
-    </div>
+    </div> -->
   </div>
 
   <!-- {#if selectedUserMsgsReady} -->
@@ -471,7 +470,7 @@
     </div>
   {/if}
 
-  <div class="chatbox_input">
+  <div class="chatbox_input" style:background={$themeStore.theme === 'dark' ? 'black' : 'white'}>
     <div class="icon-wrapper icon-happy">
       <ion-icon
         name="happy-outline"
@@ -536,7 +535,7 @@
 
   ion-icon {
     /* color: #51585c; */
-    color: #007AFF;
+    /* color: #007AFF; */
     font-size: 24px;
   }
 
@@ -544,7 +543,7 @@
     font-family: 'Montserrat';
     font-weight: 600;
     font-size: 12px;
-    color: rgba(13, 13, 13, 0.5);
+    /* color: rgba(13, 13, 13, 0.5); */
   }
 
   .date-separator-wrapper {
@@ -824,16 +823,6 @@
     border-radius: 50%;
   }
 
-  .header {
-    padding-right: 0px;
-    padding: 15px 0 15px 15px;
-    /* height: 60px;
-    display: flex;
-    align-items: center; */
-    /* background: #ebebeb; */
-    /* border: 1px solid; */
-  }
-
   .right-part {
     display: flex;
     align-items: center;
@@ -847,18 +836,13 @@
   .icon-wrapper {
     display: flex;
     align-items: center;
-    /* width: 40px; */
-    /* height: 60px; */
-    /* border: 1px solid; */
   }
 
   .icon-mic {
-    /* justify-content: flex-end; */
     margin-left: 20px;
   }
 
   .icon-happy {
-    /* justify-content: flex-start; */
     margin-right: 20px;
   }
   
@@ -885,7 +869,7 @@
     outline: none;
     font-size: 1em;
     background: white;
-    color: black;
+    /* color: black; */
 
     border: 0.5px solid #8E8E93;
     border-radius: 50px;
@@ -898,32 +882,24 @@
     bottom: 0;
     width: 100%;
     height: 60px;
-    /* background: #ededed; */
-    background: #fff;
+    background: #ebebeb;
     padding: 20px;
     display: flex;
-    /* justify-content: space-between; */
     justify-content: center;
     align-items: center;
     /* border: 1px solid; */
   }
 
   .message.friend_message p {
-    /* .friend_message .message-text { */
     background: #f5f5f5;
     backdrop-filter: blur(20px);
-    /* display: flex; */
     justify-content: flex-start;
   }
 
   .message.my_message {
     justify-content: flex-end;
     text-align: right;
-  }
-
-  /* .message p span { */
-  /* .message p .showtime { */
- 
+  } 
 
   .message.friend_message::before {
     left: -12px;
@@ -959,17 +935,9 @@
     position: relative;
     right: 0;
     max-width: 65%;
-    /* min-height: 50%; */
-    /* max-width: 50%; */
-    /* padding: 12px; */
     padding: 6px 12px;
     background: var(--lemon-green);
-    /* background: rgba(220, 248, 198, 0.3); */
-    /* background: transparent; */
-    /* backdrop-filter: blur(10px); */
     border-radius: 10px;
-    /* font-size: 0.9em;
-    font-weight: 600; */
     color: var(--icon-add-color);
   }
 
@@ -977,7 +945,6 @@
     position: relative;
     display: flex;
     width: 100%;
-    /* margin-top: 15px; */
     margin-bottom: 5px;
   }
 
@@ -1007,7 +974,6 @@
     padding: 20px;
     padding-bottom: 15px;
     overflow-y: scroll;
-    /* border-bottom-right-radius: 4px; */
   }
 
   .details {
@@ -1015,7 +981,7 @@
   }
 
   .details h4 {
-    color: #51585c;
+    /* color: #51585c; */
   }
 
   @media (max-width: 800px) {
@@ -1027,7 +993,6 @@
 
   @media (max-width: 575px) {
     .chatbox_input {
-      /* padding: 20px 10px; */
       padding: 15px;
     }
 
@@ -1048,11 +1013,11 @@
 
   @media (max-width: 475px) {
     .left-part .details {
-      padding-left: 0px;
+      /* padding-left: 0px; */
     }
 
     .left-part .details h4 {
-      display: none;
+      /* display: none; */
     }
   }
 
