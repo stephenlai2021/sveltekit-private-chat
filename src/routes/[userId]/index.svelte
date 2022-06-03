@@ -830,7 +830,7 @@
     /* height: 60px;
     display: flex;
     align-items: center; */
-    background: #ebebeb;
+    /* background: #ebebeb; */
     /* border: 1px solid; */
   }
 

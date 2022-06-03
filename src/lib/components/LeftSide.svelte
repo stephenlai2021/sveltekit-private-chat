@@ -191,7 +191,7 @@
           class:unread={user.unread}
           on:click={() => selectUser(user)}
           style:background={currentContact === user ||
-            user.name === $page.params.userId ? '#ebebeb' : ''}
+            user.name === $page.params.userId ? '#00BFA5' : ''}
         >
           <!-- style:box-shadow={currentContact === user ||
           user.name === $page.params.userId
@@ -241,9 +241,9 @@
     <AddFriendModal />
   {/if}
 
-  {#if $mobile}
+  <!-- {#if $mobile}
     <Navbar />
-  {/if}
+  {/if} -->
 </div>
 
 <style>

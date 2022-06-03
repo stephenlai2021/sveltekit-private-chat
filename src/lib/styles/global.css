@@ -49,7 +49,7 @@ a {
 ion-icon {
   font-size: 24px;
   cursor: pointer;
-  color: #007AFF;
+  /* color: #007AFF; */
   /* color: #51585c; */
   /* border: 1px solid; */
 }
@@ -97,7 +97,8 @@ ion-icon {
 
 .leftSide .header {
   height: 60px;
-  background: #ebebeb;
+  /* color: black; */
+  /* background: #ebebeb; */
   /* display: flex;
   align-items: center; */
   /* border: 1px solid; */
@@ -110,7 +111,7 @@ ion-icon {
   /* #e5ddd5 = rgb(229, 221, 213) */
   /* #ededed = rgb(237, 237, 237) */
   /* opacity: 0.5; */
-  background-color: rgb(229, 221, 213);
+  /* background-color: rgb(229, 221, 213); */
   /* background-image: url('https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg'); */
   /* background-image: url('http://bgfons.com/uploads/sky/sky_texture1969.jpg');
   background-size: cover;
@@ -138,7 +139,8 @@ ion-icon {
   align-items: center;
   /* background: #ededed;
   opacity: 0.5; */
-  background: transparent;
+  /* background: transparent; */
+  /* background: white; */
   /* backdrop-filter: blur(15px); */
 }
 
@@ -185,7 +187,7 @@ ion-icon {
 
 .left .user-title {
   margin-left: 5px;
-  color: rgb(70, 161, 173);
+  /* color: rgb(70, 161, 173); */
 }
 
 .left .userimg {
@@ -235,10 +237,10 @@ ion-icon {
   position: relative;
   top: 0px;
   width: 100%;
-  padding: 8px 15px;
+  padding: 8px 15px 12px 15px;
   /* line-height: 50px; */
   /* height: 40px; */
-  /* border: 1px solid; */
+  border: 1px solid/;
 }
 
 .search_user input {
@@ -275,6 +277,7 @@ ion-icon {
   /* padding-top: 10px; */
   /* height: calc(100vh-104px); */
   /* border: 1px solid red; */
+  padding: 0 10px;
 }
 
 .chatlist .block {
@@ -285,15 +288,16 @@ ion-icon {
   /* padding: 10px 15px; */
   /* padding: 10px 10px; */
   /* padding: 4px 0; */
+  padding: 0 10px;
   height: 71px;
-  padding: 0 15px;
+  /* padding: 0 15px; */
   /* color: black; */
   /* margin-bottom: 10px; */
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.06); */
   /* background: #dde1e7; */
   /* background: #dadada; */
   /* background: #ebebeb; */
-  /* border-radius: 8px; */
+  border-radius: 12px;
   cursor: pointer;
   /* border: 1px solid; */
   /* box-shadow: -3px -3px 7px #ffffff73, 
@@ -305,7 +309,9 @@ ion-icon {
   /* transform: scale(1.02); */
   /* box-shadow: inset -3px -3px 7px #ffffff73,
     inset 3px 3px 5px rgba(94, 104, 121, 0.288); */
-    background: #ebebeb;
+    background: #a5adab;
+    /* background: #00BFA5; */
+    border-radius: 12px;
 }
 
 .chatlist .block .imgbx {
@@ -354,7 +360,7 @@ justify-content: center;
   font-family: "Montserrat";
   font-weight: 600;  
   /* opacity: 1; */
-  color: rgb(107, 176, 185);
+  /* color: rgb(107, 176, 185); */
   /* color: #007AFF; */
   font-style: normal;
   line-height: 20px; 
@@ -395,7 +401,7 @@ justify-content: center;
   font-size: 14px;
   /* font-weight: 500; */
   /* color: rgba(0, 0, 0, 0.75); */
-  color: #8bb9be;
+  /* color: #32393a; */
   font-weight: 500;
   /* color: red; */
   /* max-width: 180px; */
