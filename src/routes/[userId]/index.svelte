@@ -954,11 +954,11 @@
 
   .message p .message-text {
     width: 100%;
-    color: black;
-    opacity: 1;
+    /* color: black;
+    opacity: 1; */
     font-family: "Montserrat";
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .showtime {
