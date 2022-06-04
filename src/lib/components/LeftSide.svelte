@@ -22,13 +22,20 @@
   import { fade } from "svelte/transition";
   import { auth, db } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
-  import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+  import {
+    collection,
+    doc,
+    onSnapshot,
+    query,
+    where,
+  } from "firebase/firestore";
   import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import ThemeModal from "$lib/components/ThemeModal.svelte";
   import SettingsModal from "$lib/components/SettingsModal.svelte";
   import AddFriendModal from "$lib/components/AddFriendModal.svelte";
   import Navbar from "$lib/components/Navbar.svelte";
   import CameraModal from "$lib/components/CameraModal.svelte";
+  import themeStore, { setTheme } from "svelte-themes";
 
   let user = null;
   let users = [];
@@ -36,7 +43,7 @@
   let currentContact = null;
   let loading = false;
   let filteredUsers = [];
-  let lastMsg = {}
+  let lastMsg = {};
 
   // onAuthStateChanged(auth, (_user) => (user = _user));
   // onAuthStateChanged(auth, (user) => ($loggedinUser = user));
@@ -119,6 +126,7 @@
   : "0%"} -->
 <div
   class="leftSide"
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}
   style:width={$mobile && $page.url.pathname === "/"
     ? "100%"
     : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
@@ -127,7 +135,10 @@
     ? "600px"
     : "0%"}
 >
-  <div class="header">
+  <div
+    class="header"
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+  >
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
       <!-- {#if $mobile && $loggedinUser} -->
       {#if $loggedinUser}
@@ -147,7 +158,7 @@
     </div>
 
     <ul class="nav_icons">
-      {#if $mobile}
+      <!-- {#if $mobile}
         <div
           class="btn-add-friend"
           on:click|stopPropagation={() =>
@@ -164,35 +175,114 @@
         >
           <ion-icon name="person-add-outline" />
         </li>
-      {/if}
+        {/if} -->
+      <!-- <div
+        class="icon-addFriend-wrapper"
+        on:click|stopPropagation={() =>
+          ($showAddFriendModal = !$showAddFriendModal)}
+      >
+        <ion-icon name="person-add" />
+      </div> -->
+      <li
+        on:click|stopPropagation={() =>
+          ($showAddFriendModal = !$showAddFriendModal)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            d="M376 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+          <path
+            d="M288 304c-87 0-175.3 48-191.64 138.6-2 10.92 4.21 21.4 15.65 21.4H464c11.44 0 17.62-10.48 15.65-21.4C463.3 352 375 304 288 304z"
+            fill="none"
+            stroke="currentColor"
+            stroke-miterlimit="10"
+            stroke-width="32"
+          />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M88 176v112M144 232H32"
+          />
+        </svg>
+      </li>
     </ul>
   </div>
 
   <div class="search_user">
-    <div>
-      <input type="text" placeholder="Find user" bind:value={$keyword} />
-      <ion-icon
-        name="search-outline"
-        class="icon-finduser"       
+    <div class="search-user-wrapper">
+      <input
+        type="text"
+        placeholder="Find user"
+        bind:value={$keyword}
+        style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"}
       />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-finduser"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+      >
+        <path
+          d="M256 80a176 176 0 10176 176A176 176 0 00256 80z"
+          fill="none"
+          stroke="currentColor"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+        <path
+          d="M232 160a72 72 0 1072 72 72 72 0 00-72-72z"
+          fill="none"
+          stroke="currentColor"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="32"
+          d="M283.64 283.64L336 336"
+        />
+      </svg>
     </div>
   </div>
 
   {#if users.length}
     <div
       class="chatlist"
-      style:padding-bottom={$mobile ? "60px" : "0px"}
-      style:height="calc(100vh - 100px)"
+      style:padding-bottom={$mobile ? "5px" : "0px"}
+      style:height="calc(100vh - 115px)"
       transition:fade={{ duration: 100 }}
-      >
+    >
       {#each filteredUsers as user}
         <div
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          style:background={(currentContact === user  && !$mobile) ||
-            (user.name === $page.params.userId && !$mobile) ? '#00BFA5' : ''}
+          style:background={(currentContact === user && !$mobile) ||
+          (user.name === $page.params.userId && !$mobile)
+            ? "#ebebeb"
+            : ""}
         >
+          <!-- ? "#a5adab" -->
+          <!-- ? "#00BFA5" -->
           <!-- style:box-shadow={currentContact === user ||
           user.name === $page.params.userId
             ? "inset 6px 6px 12px #b9b9b9, inset -6px -6px 12px #fbfbfb"
@@ -247,6 +337,25 @@
 </div>
 
 <style>
+  .add-friend {
+    font-size: 25px;
+  }
+
+  .icon-addFriend-wrapper {
+    width: 35px;
+    height: 35px;
+    background: #03a9f1;
+    /* background: #00bfa5; */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  ::placeholder {
+    /* color: rgba(255, 255, 255, 0.6); */
+  }
+
   .warning img {
     width: 150px;
     height: 150px;

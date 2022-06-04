@@ -41,6 +41,10 @@ body {
   /* border: 2px solid red; */
 }
 
+svg {
+  cursor: pointer;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -49,9 +53,6 @@ a {
 ion-icon {
   font-size: 24px;
   cursor: pointer;
-  /* color: #007AFF; */
-  /* color: #51585c; */
-  /* border: 1px solid; */
 }
 
 .material-icons {
@@ -88,35 +89,16 @@ ion-icon {
 
 .leftSide {
   position: relative;
-  /* height: 100%; */
-  /* background: #dde1e7; */
-  /* background: #dadada; */
-  /* background: #ebebeb; */
-  /* border-left: 1px solid rgba(0, 0, 0, 0.06); */
 }
 
 .leftSide .header {
   height: 60px;
-  /* color: black; */
-  /* background: #ebebeb; */
-  /* display: flex;
-  align-items: center; */
-  /* border: 1px solid; */
 }
 
 .rightSide {
   position: relative;
   width: 100%;
   height: 100%;
-  /* #e5ddd5 = rgb(229, 221, 213) */
-  /* #ededed = rgb(237, 237, 237) */
-  /* opacity: 0.5; */
-  /* background-color: rgb(229, 221, 213); */
-  /* background-image: url('https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg'); */
-  /* background-image: url('http://bgfons.com/uploads/sky/sky_texture1969.jpg');
-  background-size: cover;
-  background-position: center;
-  background-blend-mode: multiply; */
 }
 
 .rightSide img {
@@ -125,10 +107,6 @@ ion-icon {
   /* opacity: 0.06; */
   object-fit: cover;
 }
-
-/* ion-icon {
-  border: 1px solid;
-} */
 
 .rightSide .header {
   position: absolute;
@@ -139,6 +117,8 @@ ion-icon {
   padding-right: 0px;
   padding: 15px 0 15px 15px;
   background: #ebebeb;
+  /* border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; */
 }
 
 .rightSide .header .left-part {
@@ -227,54 +207,87 @@ ion-icon {
   position: relative;
   top: 0px;
   width: 100%;
-  padding: 4px 15px 12px 15px;
+  padding: 10px 15px;
+  border-top: 0.5px solid rgba(0, 0, 0, .1);
+  border-bottom: 0.5px solid rgba(0, 0, 0, .1);
 }
 
 .search_user input {
   width: 100%;
   outline: none;
   border: none;
-  color: black;
+  /* color: black; */
   padding: 10px;
   border-radius: 50px;
   font-size: 14px;
-  padding-left: 45px;
-  background: rgb(236, 235, 235);
+  padding-left: 40px;
+  /* background: rgb(236, 235, 235); */
+  /* color: red; */
+}
+
+.search-user-wrapper {
+  /* border: 1px solid; */
+  position: relative;
+}
+
+.icon-finduser {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .search_user input::placeholder {
-  color: rgb(161, 161, 161);
+  /* color: rgb(161, 161, 161); */
+  /* color: red; */
 }
 
-.search_user .icon-finduser {
+.search_user .icon-finduser-wrapper {
   position: absolute;
-  left: 30px;
-  top: 20px;
-  /* top: 50%;
-  transform: translateY(-50%); */
-  color: rgb(161, 161, 161);
-  font-size: 1em;
+  /* left: 30px; */
+  right: 14px;
+  top: 4px;
+  width: 40px;
+  
+  height: 36.8px;
+  background: #565E70;
+  /* border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px; */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid; */
 }
 
 .chatlist {
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 10px;
+  /* padding: 0 10px 10px 10px; */
+  /* border: 1px solid; */
 }
 
 .chatlist .block {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 7px;
+  padding: 0 15px;
+  /* padding: 0 10px 10px 10px; */
   height: 71px;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   cursor: pointer;
 }
 
 .chatlist .block:hover {
-  background: #a5adab;
-  border-radius: 12px;
+  /* background: #a5adab;
+  background: #ebebeb;
+  background: #3a4258; */
+  /* border-radius: 12px; */
+  /* border-top: 1px solid;
+  border-bottom: 1px solid; */
+  /* border: 0.3px solid;
+  border-radius: 4px; */
+  transform: scale(1.01);
 }
 
 .chatlist .block .imgbx {
@@ -298,7 +311,8 @@ ion-icon {
 
 .chatlist .block .details {
   width: 100%;
-  border-bottom: 0.5px solid #9f9f9f;
+  /* border-bottom: 0.5px solid #9f9f9f; */
+  border-bottom: 0.5px solid rgba(0, 0, 0, .1);
   height: 100%;
   display: flex;
   flex-direction: column;
