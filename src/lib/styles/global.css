@@ -279,14 +279,6 @@ ion-icon {
 }
 
 .chatlist .block:hover {
-  /* background: #a5adab;
-  background: #ebebeb;
-  background: #3a4258; */
-  /* border-radius: 12px; */
-  /* border-top: 1px solid;
-  border-bottom: 1px solid; */
-  /* border: 0.3px solid;
-  border-radius: 4px; */
   transform: scale(1.01);
 }
 

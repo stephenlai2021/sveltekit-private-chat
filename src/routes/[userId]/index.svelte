@@ -320,7 +320,7 @@
 
 <svelte:head>
   {#if $page.params.userId}
-    <title>Chat</title>
+    <!-- <title>Chat</title> -->
   {/if}
 </svelte:head>
 
@@ -379,45 +379,80 @@
     </div>
 
     <div class="right-part">
-      <ion-icon name="videocam-outline" class="icon-videocam popup" />
-      <!-- {#if $isMobile}
-        <label>
-          <input
-            type="file"
-            accept="image/png, image/jpg, image/jpeg"
-            on:change={handleFileChange}
-          />
-          <ion-icon
-            name="document-attach-outline"
-            class="icon-attachment popup"
-          />
-        </label>
-      {/if}
-      {#if !$isMobile}
-        <ion-icon
-          name="camera-outline"
-          class="icon-camera popup"
-          on:click={() => ($showCameraModal = true)}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+        style:margin-right="20px"
+      >
+        <path
+          d="M374.79 308.78L457.5 367a16 16 0 0022.5-14.62V159.62A16 16 0 00457.5 145l-82.71 58.22A16 16 0 00368 216.3v79.4a16 16 0 006.79 13.08z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
         />
-        <label>
-          <input
-            type="file"
-            accept="image/png, image/jpg, image/jpeg"
-            on:change={handleFileChange}
-          />
-          <ion-icon name="image-outline" class="icon-image popup" />
-        </label>
-      {/if} -->
-      <ion-icon
-        name="location-outline"
-        class="icon-location popup"
+        <path
+          d="M268 384H84a52.15 52.15 0 01-52-52V180a52.15 52.15 0 0152-52h184.48A51.68 51.68 0 01320 179.52V332a52.15 52.15 0 01-52 52z"
+          fill="none"
+          stroke="currentColor"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+      </svg>
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+        style:margin-right="20px"
         on:click={() => ($showMapModal = true)}
-      />
-      <ion-icon
-        name="options-outline"
-        class="icon-options popup"
+      >
+        <path
+          d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0025.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+        <circle
+          cx="256"
+          cy="192"
+          r="48"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
         on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
-      />
+        style:margin-right="20px"
+      >
+        <path
+          d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+      </svg>
     </div>
   </div>
 
@@ -482,9 +517,9 @@
               <span class="message-text">{msg.text}</span>
             {/if}
             <!-- <span>{moment(msg.createdAt.toDate()).fromNow()}</span> -->
-            <span class="showtime"
-              >{moment(msg.createdAt.toDate()).format("LLL")}</span
-            >
+            <span class="showtime">
+              {moment(msg.createdAt.toDate()).format("LLL")}
+            </span>
           </p>
         </div>
       {/each}
@@ -496,79 +531,116 @@
     style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
   >
     <div class="icon-wrapper">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-camera"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-        on:click={() => ($showCameraModal = true)}
-      >
-        <path
-          d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-        <circle
-          cx="256"
-          cy="272"
-          r="80"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M124 158v-22h-24v22"
-        />
-      </svg>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-image"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-      >
-        <rect
-          x="48"
-          y="80"
-          width="416"
-          height="352"
-          rx="48"
-          ry="48"
-          fill="none"
-          stroke="currentColor"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-        <circle
-          cx="336"
-          cy="176"
-          r="32"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-        <path
-          d="M304 335.79l-90.66-90.49a32 32 0 00-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0143.11-2L464 368"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-      </svg>
+      {#if $isMobile}
+        <label>
+          <input
+            type="file"
+            accept="image/png, image/jpg, image/jpeg"
+            on:change={handleFileChange}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon icon-attachment"
+            viewBox="0 0 512 512"
+            width="26"
+            height="26"
+            fill="currentColor"
+          >
+            <path
+              d="M216.08 192v143.85a40.08 40.08 0 0080.15 0l.13-188.55a67.94 67.94 0 10-135.87 0v189.82a95.51 95.51 0 10191 0V159.74"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="32"
+            />
+          </svg>
+        </label>
+      {/if}
+      {#if !$isMobile}
+        <!-- icon camera -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon icon-camera"
+          viewBox="0 0 512 512"
+          width="26"
+          height="26"
+          fill="currentColor"
+          on:click={() => ($showCameraModal = true)}
+        >
+          <path
+            d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+          <circle
+            cx="256"
+            cy="272"
+            r="80"
+            fill="none"
+            stroke="currentColor"
+            stroke-miterlimit="10"
+            stroke-width="32"
+          />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M124 158v-22h-24v22"
+          />
+        </svg>
+        <!-- icon image -->
+        <label>
+          <input
+            type="file"
+            accept="image/png, image/jpg, image/jpeg"
+            on:change={handleFileChange}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon icon-image"
+            viewBox="0 0 512 512"
+            width="24"
+            height="24"
+            fill="currentColor"
+          >
+            <rect
+              x="48"
+              y="80"
+              width="416"
+              height="352"
+              rx="48"
+              ry="48"
+              fill="none"
+              stroke="currentColor"
+              stroke-linejoin="round"
+              stroke-width="32"
+            />
+            <circle
+              cx="336"
+              cy="176"
+              r="32"
+              fill="none"
+              stroke="currentColor"
+              stroke-miterlimit="10"
+              stroke-width="32"
+            />
+            <path
+              d="M304 335.79l-90.66-90.49a32 32 0 00-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0143.11-2L464 368"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="32"
+            />
+          </svg>
+        </label>
+      {/if}
     </div>
     <form on:submit|preventDefault={handleSubmit} class="messageBox">
       <svg
@@ -895,20 +967,12 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 15px;
+    left: 10px;
   }
 
   .icon-videocam {
     background: #fa9950;
     box-shadow: inset -6px -6px 12px #d58244, inset 6px 6px 12px #ffb05c;
-  }
-
-  .icon-attachment {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #0f63e0;
-    box-shadow: inset -6px -6px 12px #0d54be, inset 6px 6px 12px #1172ff;
   }
 
   .icon-location {
@@ -922,12 +986,21 @@
   }
 
   label {
-    width: 25px;
-    height: 50px;
+    width: 26px;
+    /* display: inline-block; */
+    /* padding: 0; */
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* background: green; */
     position: relative;
-    margin-right: 21px;
-    /* margin-left: 5px; */
     /* border: 1px solid; */
+  }
+
+  .icon-image {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   label input {
@@ -938,7 +1011,7 @@
 
   .icon-submit {
     position: absolute;
-    right: 15px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 22px;
@@ -980,13 +1053,14 @@
 
   .icon-mic,
   .icon-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid; */
     padding: 6px;
     border-radius: 10px;
     margin-right: 15px;
+    /* border: 1px solid; */
   }
 
   .icon-mic {
@@ -995,9 +1069,16 @@
     /* border: 1px solid; */
   }
 
+  .icon-attachment {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+  }
+
   .icon-camera {
-    margin-right: 20px;
     margin-left: 15px;
+    margin-right: 20px;
     /* border: 1px solid; */
   }
 
@@ -1015,7 +1096,7 @@
     width: 100%;
     height: 100%;
     padding: 5px 20px;
-    padding-left: 50px;
+    padding-left: 40px;
     border: none;
     outline: none;
     font-size: 1em;

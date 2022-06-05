@@ -158,31 +158,6 @@
     </div>
 
     <ul class="nav_icons">
-      <!-- {#if $mobile}
-        <div
-          class="btn-add-friend"
-          on:click|stopPropagation={() =>
-            ($showAddFriendModal = !$showAddFriendModal)}
-        >
-          <ion-icon name="person-add-outline" />
-        </div>
-      {/if}
-
-      {#if !$mobile}
-        <li
-          on:click|stopPropagation={() =>
-            ($showAddFriendModal = !$showAddFriendModal)}
-        >
-          <ion-icon name="person-add-outline" />
-        </li>
-        {/if} -->
-      <!-- <div
-        class="icon-addFriend-wrapper"
-        on:click|stopPropagation={() =>
-          ($showAddFriendModal = !$showAddFriendModal)}
-      >
-        <ion-icon name="person-add" />
-      </div> -->
       <li
         on:click|stopPropagation={() =>
           ($showAddFriendModal = !$showAddFriendModal)}
@@ -231,22 +206,18 @@
         bind:value={$keyword}
         style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"}
       />
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-finduser"
         viewBox="0 0 512 512"
-        width="24"
-        height="24"
+        width="20"
+        height="20"
+        fill="currentCoklor"
+        style:cursor="none"
       >
         <path
-          d="M256 80a176 176 0 10176 176A176 176 0 00256 80z"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-        <path
-          d="M232 160a72 72 0 1072 72 72 72 0 00-72-72z"
+          d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
           fill="none"
           stroke="currentColor"
           stroke-miterlimit="10"
@@ -258,7 +229,7 @@
           stroke-linecap="round"
           stroke-miterlimit="10"
           stroke-width="32"
-          d="M283.64 283.64L336 336"
+          d="M338.29 338.29L448 448"
         />
       </svg>
     </div>
@@ -278,15 +249,11 @@
           on:click={() => selectUser(user)}
           style:background={(currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile)
-            ? "#ebebeb"
-            : ""}
+            ? $themeStore.theme === "dark" ? "#3a3f50"
+            : "#ebebeb"
+            : ""
+          }
         >
-          <!-- ? "#a5adab" -->
-          <!-- ? "#00BFA5" -->
-          <!-- style:box-shadow={currentContact === user ||
-          user.name === $page.params.userId
-            ? "inset 6px 6px 12px #b9b9b9, inset -6px -6px 12px #fbfbfb"
-            : "inset -6px -6px 12px #b9b9b9, inset 6px 6px 12px #fbfbfb"} -->
           <div class="imgbx">
             {#if user.avatar}
               <img src={user.avatar} alt="" class="cover" />
