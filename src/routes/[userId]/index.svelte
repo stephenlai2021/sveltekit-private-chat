@@ -305,6 +305,11 @@
     });
   }
 
+  // $: if ($themeStore.theme === "dark" && browser) {
+  //   $background.src = null
+  //   $bgColor = "#292F3F"
+  // }
+
   $: if ($audioFile) {
     $audioURL = window.URL.createObjectURL($audioFile);
     console.log("audio url", $audioURL);
@@ -325,7 +330,11 @@
 </svelte:head>
 
 <div>
-  <img bind:this={$background} style:opacity={$bgOpacity} alt="" />
+  <img 
+    alt="" 
+    bind:this={$background} 
+    style:opacity={$bgOpacity} 
+  />
   <div
     class="header"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
@@ -460,67 +469,65 @@
   {#if messages}
     <!-- <div class="chatBox" bind:this={chatbox} style:border="1px solid red"> -->
     <div class="chatBox" bind:this={chatbox}>
-      <!-- <div class="date-separator-wrapper" style:margin-bottom="50px">
-        <h4 class="date-separator">{moment().format("MMM Do YY")}</h4>
-        <h4 class="date-separator">{moment().format("L")}</h4>
-      </div> -->
       {#each messages as msg}
         <div
           class="message"
           class:my_message={msg.from === $loggedinUser.displayName}
           class:friend_message={msg.from != $loggedinUser.displayName}
         >
-          <p class="message-content">
-            {#if msg.imageURL}
-              <img src={msg.imageURL} alt="" />
-            {/if}
-            {#if msg.pictureURL}
+          {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
+            <!-- <p class="message-content" style:background={$themeStore.theme === "dark" ? "#292F3F" : "#dcf8c6"}> -->
+            <p
+              class="message-content"
+              style:background={msg.from === $loggedinUser.displayName &&
+              $themeStore.theme === "dark"
+                ? "#272A35"
+                : msg.from === $loggedinUser.displayName &&
+                  $themeStore.theme === "light"
+                ? "#dcf8c6"
+                : msg.from != $loggedinUser.displayName &&
+                  $themeStore.theme === "dark"
+                ? "#373E4E"
+                : "white"}
+            >
+              {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || (msg.pictureURL && msg.from != $loggedinUser.displayName) || (msg.audioURL && msg.from != $loggedinUser.displayName) || (!msg.imageURL && !msg.pictureURL && !msg.audioURL)}
+                <span class="message-text" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>{msg.text}</span>
+                <span class="showtime" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>
+                  {moment(msg.createdAt.toDate()).format("LT")}
+                </span>
+              {/if}
+            </p>
+          {/if}
+
+          {#if msg.pictureURL}
+            <div class="picture-container">
               <img src={msg.pictureURL} alt="" />
-            {/if}
-            {#if msg.audioURL}
-              <!-- <audio controls style="margin-bottom: 8px;">
+              <span class="showtime" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>
+                {moment(msg.createdAt.toDate()).format("LT")}
+              </span>
+            </div>
+          {/if}
+
+          {#if msg.imageURL}
+            <div class="image-container">
+              <img src={msg.imageURL} alt="" />
+              <span class="showtime" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>
+                {moment(msg.createdAt.toDate()).format("LT")}
+              </span>
+            </div>
+          {/if}
+
+          {#if msg.audioURL}
+            <div class="audio-player-container">
+              <audio controls style="margin-bottom: 8px;">
                 <source src={msg.audioURL} />
                 <track kind="captions" />
-              </audio> -->
-              <div class="audio-player">
-                <div class="timeline">
-                  <div class="progress" />
-                </div>
-                <div class="controls">
-                  <div class="play-container">
-                    <div class="toggle-play play" />
-                  </div>
-                  <div class="time">
-                    <div class="current">0:00</div>
-                    <div class="divider">/</div>
-                    <div class="length" />
-                  </div>
-                  <div class="name">Audio</div>
-                  <div class="volume-container">
-                    <div class="volume-button">
-                      <!-- <div class="volume icono-volumeMedium" /> -->
-                      <ion-icon
-                        name="volume-medium-outline"
-                        class="volume"
-                        style:color="white"
-                      />
-                    </div>
-
-                    <div class="volume-slider">
-                      <div class="volume-percentage" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {/if}
-            {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || (msg.pictureURL && msg.from != $loggedinUser.displayName) || (msg.audioURL && msg.from != $loggedinUser.displayName) || (!msg.imageURL && !msg.pictureURL && !msg.audioURL)}
-              <span class="message-text">{msg.text}</span>
-            {/if}
-            <!-- <span>{moment(msg.createdAt.toDate()).fromNow()}</span> -->
-            <span class="showtime">
-              {moment(msg.createdAt.toDate()).format("LLL")}
-            </span>
-          </p>
+              </audio>
+              <span class="showtime" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>
+                {moment(msg.createdAt.toDate()).format("LT")}
+              </span>
+            </div>
+          {/if}
         </div>
       {/each}
     </div>
@@ -558,7 +565,6 @@
         </label>
       {/if}
       {#if !$isMobile}
-        <!-- icon camera -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="ionicon icon-camera"
@@ -594,7 +600,6 @@
             d="M124 158v-22h-24v22"
           />
         </svg>
-        <!-- icon image -->
         <label>
           <input
             type="file"
@@ -756,180 +761,6 @@
     --hue: red;
   }
 
-  ion-icon {
-    font-size: 24px;
-  }
-
-  .last-seen {
-    font-family: "Montserrat";
-    font-weight: 600;
-    font-size: 12px;
-    /* color: rgba(13, 13, 13, 0.5); */
-  }
-
-  .date-separator-wrapper {
-    /* text-align: center; */
-    display: flex;
-    justify-content: center;
-  }
-
-  .date-separator {
-    /* font-family: "Montserrat"; */
-    font-weight: 500;
-    /* font-size: 14px; */
-    color: black;
-    text-align: center;
-    line-height: 17px;
-    /* text-transform: uppercase; */
-    background: #d9fffa;
-    border-radius: 5px;
-    /* width: 70px; */
-    /* height: 25px; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 16px;
-  }
-
-  /* audio-player */
-  .audio-player {
-    height: 50px;
-    width: 300px;
-    max-width: 100%;
-    background: #444;
-    box-shadow: 0 0 10px 0 #000a;
-
-    font-family: arial;
-    color: white;
-    font-size: 0.75em;
-    overflow: hidden;
-
-    display: grid;
-    grid-template-rows: 6px auto;
-  }
-
-  .progress {
-    background: coral;
-    width: 0%;
-    height: 100%;
-    transition: 0.25s;
-  }
-
-  .timeline {
-    background: white;
-    width: 100%;
-    position: relative;
-    cursor: pointer;
-    box-shadow: 0 2px 10px 0 #0008;
-  }
-
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    padding: 0 20px;
-  }
-
-  .volume-button {
-    height: 26px;
-    display: flex;
-    align-items: center;
-  }
-
-  .volume-percentage {
-    background: coral;
-    height: 100%;
-    width: 75%;
-  }
-
-  .volume-slider {
-    position: absolute;
-    left: -3px;
-    top: 15px;
-    z-index: -1;
-    width: 0;
-    height: 15px;
-    background: white;
-    box-shadow: 0 0 20px #000a;
-    transition: 0.25s;
-  }
-
-  .volume-container:hover .volume-slider {
-    left: -123px;
-    width: 120px;
-  }
-
-  .volume-container {
-    cursor: pointer;
-    position: relative;
-    z-index: 2;
-  }
-
-  .time {
-    display: flex;
-  }
-
-  .play-container,
-  .time,
-  .name,
-  .volume-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .current,
-  .divider,
-  .length {
-    padding: 2px;
-  }
-
-  .toggle-play.play:hover {
-    transform: scale(1.1);
-  }
-
-  .toggle-play.pause:hover {
-    transform: scale(1.1);
-  }
-
-  .toggle-play.pause:after {
-    position: absolute;
-    top: 0;
-    right: 8px;
-    background: white;
-    content: "";
-    height: 15px;
-    width: 3px;
-  }
-
-  .toggle-play.pause:before {
-    position: absolute;
-    top: 0;
-    left: 0px;
-    background: white;
-    content: "";
-    height: 15px;
-    width: 3px;
-  }
-
-  .toggle-play.pause {
-    height: 15px;
-    width: 20px;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .toggle-play.play {
-    cursor: pointer;
-    position: relative;
-    left: 0;
-    height: 0;
-    width: 0;
-    border: 7px solid #0000;
-    border-left: 13px solid white;
-  }
-  /* end of audio-player */
-
   audio {
     max-width: 100%;
   }
@@ -940,29 +771,6 @@
     /* border: 1px solid; */
   }
 
-  .message-content .audio-player {
-    margin-top: 5px;
-  }
-
-  .message-content img {
-    /* max-height: 300px; */
-    max-height: 300px;
-    max-width: 300px;
-    object-fit: cover;
-    margin-top: 5px;
-    border-radius: 8px;
-  }
-
-  .popup {
-    padding: 5px;
-    /* color: rgba(128, 128, 128, 1); */
-    color: white;
-    border-radius: 50px;
-    background: #dadada;
-    box-shadow: inset -4px -4px 8px #b9b9b9, inset 4px 4px 8px #fbfbfb;
-    font-size: 20px;
-  }
-
   .icon-emoji {
     position: absolute;
     top: 50%;
@@ -970,31 +778,9 @@
     left: 10px;
   }
 
-  .icon-videocam {
-    background: #fa9950;
-    box-shadow: inset -6px -6px 12px #d58244, inset 6px 6px 12px #ffb05c;
-  }
-
-  .icon-location {
-    background: #8d5cd8;
-    box-shadow: inset -6px -6px 12px #784eb8, inset 6px 6px 12px #a26af8;
-  }
-
-  .icon-options {
-    background: #36d676;
-    box-shadow: inset -6px -6px 12px #2eb664, inset 6px 6px 12px #3ef688;
-  }
-
   label {
     width: 26px;
-    /* display: inline-block; */
-    /* padding: 0; */
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    /* background: green; */
     position: relative;
-    /* border: 1px solid; */
   }
 
   .icon-image {
@@ -1025,13 +811,11 @@
 
   .user-avatar,
   .user-name {
-    /* color: transparent; */
     background: var(--bg-color);
   }
 
   .user-name {
     width: 80px;
-    /* color: transparent; */
     color: #51585c;
     border-radius: 2px;
   }
@@ -1045,10 +829,6 @@
   .right-part {
     display: flex;
     align-items: center;
-  }
-
-  .right-part ion-icon {
-    margin-right: 12px;
   }
 
   .icon-mic,
@@ -1065,7 +845,7 @@
 
   .icon-mic {
     margin-left: 10px;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     /* border: 1px solid; */
   }
 
@@ -1077,7 +857,7 @@
   }
 
   .icon-camera {
-    margin-left: 15px;
+    /* margin-left: 15px; */
     margin-right: 20px;
     /* border: 1px solid; */
   }
@@ -1113,6 +893,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 120px;
     /* border: 1px solid; */
   }
 
@@ -1127,7 +908,7 @@
     text-align: right;
   }
 
-  .message.friend_message::before {
+  /* .message.friend_message::before {
     left: -12px;
     background: linear-gradient(
       225deg,
@@ -1155,9 +936,12 @@
     top: 0;
     width: 20px;
     height: 20px;
-  }
+  } */
 
-  .message p {
+  .message p,
+  .image-container,
+  .picture-container,
+  .audio-player-container {
     position: relative;
     right: 0;
     max-width: 65%;
@@ -1167,29 +951,40 @@
     color: var(--icon-add-color);
   }
 
+  .image-container,
+  .picture-container,
+  .audio-player-container {
+    background: none;
+    padding: 0;
+    /* border: 1px solid; */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .picture-container img,
+  .image-container img {
+    max-width: 250px;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
   .message {
     position: relative;
     display: flex;
-    width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   .message p .message-text {
     width: 100%;
-    /* color: black;
-    opacity: 1; */
     font-family: "Montserrat";
     font-size: 16px;
     font-weight: 600;
   }
 
   .showtime {
-    display: block;
-    margin-top: 5px;
-    font-size: 11px;
+    font-size: 8px;
     letter-spacing: 0.5px;
-    font-weight: 600;
-    opacity: 0.5;
   }
 
   .chatBox {
@@ -1197,9 +992,8 @@
     top: 60px;
     bottom: 60px;
     width: 100%;
-    height: calc(100vh-100px);
-    padding: 20px;
-    /* padding: 0 100px; */
+    height: calc(100vh - 100px);
+    padding: 20px 120px;
     padding-bottom: 15px;
     overflow-y: scroll;
   }
@@ -1212,42 +1006,6 @@
     .arrow-back {
       margin-right: 10px;
       display: block;
-    }
-  }
-
-  @media (max-width: 575px) {
-    /* .chatbox_input {
-      padding: 15px;
-    }
-
-    .icon-camera {
-      margin-right: 15px;
-    }
-
-    .icon-mic {
-      margin-left: 15px;
-    } */
-  }
-
-  @media (max-width: 540px) {
-    .message-content img {
-      max-height: 200px;
-    }
-  }
-
-  @media (max-width: 475px) {
-    .left-part .details {
-      /* padding-left: 0px; */
-    }
-
-    .left-part .details h4 {
-      /* display: none; */
-    }
-  }
-
-  @media (max-width: 310px) {
-    .right-part ion-icon {
-      margin-right: 10px;
     }
   }
 </style>

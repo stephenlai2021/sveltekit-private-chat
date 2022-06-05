@@ -135,10 +135,7 @@
     ? "600px"
     : "0%"}
 >
-  <div
-    class="header"
-    style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
-  >
+  <div class="header" style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}>
     <div class="left" on:click={() => goto("/")} style:cursor="pointer">
       <!-- {#if $mobile && $loggedinUser} -->
       {#if $loggedinUser}
