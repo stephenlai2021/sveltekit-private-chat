@@ -126,6 +126,8 @@
   .video-wrapper {
     position: relative;
     width: 600px;
+    width: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -133,7 +135,7 @@
 
   video {
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
     background: center no-repeat
       url("https://www.freeiconspng.com/uploads/camera-icon-android-camera-shutter-icon-5.png");
     background-size: 300px 300px;
