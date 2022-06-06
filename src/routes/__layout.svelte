@@ -39,6 +39,7 @@
   import LeftSide from "$lib/components/LeftSide.svelte";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
+  import themeStore, { setTheme } from "svelte-themes";
 
   let user = null;
   let users = null;
@@ -103,9 +104,10 @@
   <!-- style:background-image={`url(${imageURL})`}
   style:background-size="cover"
   style:background-repeat="no-repeat" -->
+  <!-- style:background={$bgColor} -->
   <div
-    class="rightSide"
-    style:background={$bgColor}
+  class="rightSide"
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : "red"}
     style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
     style:width={$mobile && $page.url.pathname === "/"
       ? "0%"

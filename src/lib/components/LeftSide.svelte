@@ -132,7 +132,7 @@
     : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "0%"
     : !$mobile && $page.url.pathname != "/login"
-    ? "600px"
+    ? "500px"
     : "0%"}
 >
   <div class="header" style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}>

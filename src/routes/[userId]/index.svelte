@@ -156,17 +156,17 @@
   };
 
   onMount(() => {
-    $background.src = $imageURL;
-    if ($imageTitle === "Default") {
-      $bgOpacity = 0.06;
-      $bgColor = "#e5ddd5";
-      $disabled = true;
-    }
-    if ($imageTitle != "Default") {
-      $bgOpacity = 0.5;
-      $disabled = false;
-    }
-    console.log("image title: ", $imageTitle);
+    // $background.src = $imageURL;
+    // if ($imageTitle === "Default") {
+    //   $bgOpacity = 0.06;
+    //   $bgColor = "#e5ddd5";
+    //   $disabled = true;
+    // }
+    // if ($imageTitle != "Default") {
+    //   $bgOpacity = 0.5;
+    //   $disabled = false;
+    // }
+    // console.log("image title: ", $imageTitle);
 
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
@@ -219,7 +219,6 @@
   }
 
   beforeUpdate(() => {
-    // autoscroll = chatbox && (chatbox.offsetHeight + chatbox.scrollTop) > (chatbox.scrollHeight - 20);
     autoscroll =
       chatbox &&
       chatbox.offsetHeight + chatbox.scrollTop > chatbox.scrollHeight;
@@ -330,11 +329,12 @@
 </svelte:head>
 
 <div>
-  <img 
-    alt="" 
-    bind:this={$background} 
-    style:opacity={$bgOpacity} 
-  />
+  <!-- <img 
+    src="" alt=""
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
+  /> -->
+  <!-- style:opacity={$bgOpacity}  -->
+  <!-- bind:this={$background}  -->
   <div
     class="header"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
@@ -468,7 +468,7 @@
   <!-- {#if selectedUserMsgsReady} -->
   {#if messages}
     <!-- <div class="chatBox" bind:this={chatbox} style:border="1px solid red"> -->
-    <div class="chatBox" bind:this={chatbox}>
+    <div class="chatBox" bind:this={chatbox} style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}>
       {#each messages as msg}
         <div
           class="message"
@@ -491,8 +491,18 @@
                 : "white"}
             >
               {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || (msg.pictureURL && msg.from != $loggedinUser.displayName) || (msg.audioURL && msg.from != $loggedinUser.displayName) || (!msg.imageURL && !msg.pictureURL && !msg.audioURL)}
-                <span class="message-text" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>{msg.text}</span>
-                <span class="showtime" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>
+                <span
+                  class="message-text"
+                  style:color={$themeStore.theme === "dark"
+                    ? "white"
+                    : "#292f3f"}>{msg.text}</span
+                >
+                <span
+                  class="showtime"
+                  style:color={$themeStore.theme === "dark"
+                    ? "white"
+                    : "#292f3f"}
+                >
                   {moment(msg.createdAt.toDate()).format("LT")}
                 </span>
               {/if}
@@ -502,7 +512,10 @@
           {#if msg.pictureURL}
             <div class="picture-container">
               <img src={msg.pictureURL} alt="" />
-              <span class="showtime" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>
+              <span
+                class="showtime"
+                style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+              >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
             </div>
@@ -511,7 +524,10 @@
           {#if msg.imageURL}
             <div class="image-container">
               <img src={msg.imageURL} alt="" />
-              <span class="showtime" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>
+              <span
+                class="showtime"
+                style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+              >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
             </div>
@@ -523,7 +539,10 @@
                 <source src={msg.audioURL} />
                 <track kind="captions" />
               </audio>
-              <span class="showtime" style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}>
+              <span
+                class="showtime"
+                style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+              >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
             </div>
@@ -537,194 +556,196 @@
     class="chatbox_input"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
   >
-    <div class="icon-wrapper">
-      {#if $isMobile}
-        <label>
-          <input
-            type="file"
-            accept="image/png, image/jpg, image/jpeg"
-            on:change={handleFileChange}
-          />
+    <!-- <div class="inner-wrapper"> -->
+      <div class="icon-wrapper">
+        {#if $isMobile}
+          <label>
+            <input
+              type="file"
+              accept="image/png, image/jpg, image/jpeg"
+              on:change={handleFileChange}
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon icon-attachment"
+              viewBox="0 0 512 512"
+              width="26"
+              height="26"
+              fill="currentColor"
+            >
+              <path
+                d="M216.08 192v143.85a40.08 40.08 0 0080.15 0l.13-188.55a67.94 67.94 0 10-135.87 0v189.82a95.51 95.51 0 10191 0V159.74"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-miterlimit="10"
+                stroke-width="32"
+              />
+            </svg>
+          </label>
+        {/if}
+        {#if !$isMobile}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="ionicon icon-attachment"
+            class="ionicon icon-camera"
             viewBox="0 0 512 512"
             width="26"
             height="26"
             fill="currentColor"
+            on:click={() => ($showCameraModal = true)}
           >
             <path
-              d="M216.08 192v143.85a40.08 40.08 0 0080.15 0l.13-188.55a67.94 67.94 0 10-135.87 0v189.82a95.51 95.51 0 10191 0V159.74"
+              d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
               fill="none"
               stroke="currentColor"
               stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="32"
+            />
+            <circle
+              cx="256"
+              cy="272"
+              r="80"
+              fill="none"
+              stroke="currentColor"
               stroke-miterlimit="10"
               stroke-width="32"
             />
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="32"
+              d="M124 158v-22h-24v22"
+            />
           </svg>
-        </label>
-      {/if}
-      {#if !$isMobile}
+          <label>
+            <input
+              type="file"
+              accept="image/png, image/jpg, image/jpeg"
+              on:change={handleFileChange}
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon icon-image"
+              viewBox="0 0 512 512"
+              width="24"
+              height="24"
+              fill="currentColor"
+            >
+              <rect
+                x="48"
+                y="80"
+                width="416"
+                height="352"
+                rx="48"
+                ry="48"
+                fill="none"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="32"
+              />
+              <circle
+                cx="336"
+                cy="176"
+                r="32"
+                fill="none"
+                stroke="currentColor"
+                stroke-miterlimit="10"
+                stroke-width="32"
+              />
+              <path
+                d="M304 335.79l-90.66-90.49a32 32 0 00-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0143.11-2L464 368"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="32"
+              />
+            </svg>
+          </label>
+        {/if}
+      </div>
+      <form on:submit|preventDefault={handleSubmit} class="messageBox">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="ionicon icon-camera"
+          class="ionicon icon-emoji"
           viewBox="0 0 512 512"
-          width="26"
-          height="26"
+          width="24"
+          height="24"
           fill="currentColor"
-          on:click={() => ($showCameraModal = true)}
+          on:click|stopPropagation={() => ($showEmojiMenu = true)}
         >
+          <circle cx="184" cy="232" r="24" />
           <path
-            d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
+            d="M256.05 384c-45.42 0-83.62-29.53-95.71-69.83a8 8 0 017.82-10.17h175.69a8 8 0 017.82 10.17c-11.99 40.3-50.2 69.83-95.62 69.83z"
           />
+          <circle cx="328" cy="232" r="24" />
           <circle
             cx="256"
-            cy="272"
-            r="80"
+            cy="256"
+            r="208"
             fill="none"
             stroke="currentColor"
             stroke-miterlimit="10"
             stroke-width="32"
           />
+        </svg>
+        <input
+          type="text"
+          placeholder="Type a message"
+          bind:value={$message}
+          style:background={$themeStore.theme === "dark" ? "#1F232F" : "white"}
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon icon-submit"
+          viewBox="0 0 512 512"
+          width="18"
+          height="18"
+          fill="currentColor"
+          on:click|preventDefault={handleSubmit}
+        >
+          <path
+            d="M470.3 271.15L43.16 447.31a7.83 7.83 0 01-11.16-7V327a8 8 0 016.51-7.86l247.62-47c17.36-3.29 17.36-28.15 0-31.44l-247.63-47a8 8 0 01-6.5-7.85V72.59c0-5.74 5.88-10.26 11.16-8L470.3 241.76a16 16 0 010 29.39z"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+        </svg>
+      </form>
+      <div class="icon-mic" on:click={() => ($showAudioRecordingModal = true)}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
           <path
             fill="none"
             stroke="currentColor"
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="32"
-            d="M124 158v-22h-24v22"
+            d="M192 448h128M384 208v32c0 70.4-57.6 128-128 128h0c-70.4 0-128-57.6-128-128v-32M256 368v80"
+          />
+          <path
+            d="M256 64a63.68 63.68 0 00-64 64v111c0 35.2 29 65 64 65s64-29 64-65V128c0-36-28-64-64-64z"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
           />
         </svg>
-        <label>
-          <input
-            type="file"
-            accept="image/png, image/jpg, image/jpeg"
-            on:change={handleFileChange}
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="ionicon icon-image"
-            viewBox="0 0 512 512"
-            width="24"
-            height="24"
-            fill="currentColor"
-          >
-            <rect
-              x="48"
-              y="80"
-              width="416"
-              height="352"
-              rx="48"
-              ry="48"
-              fill="none"
-              stroke="currentColor"
-              stroke-linejoin="round"
-              stroke-width="32"
-            />
-            <circle
-              cx="336"
-              cy="176"
-              r="32"
-              fill="none"
-              stroke="currentColor"
-              stroke-miterlimit="10"
-              stroke-width="32"
-            />
-            <path
-              d="M304 335.79l-90.66-90.49a32 32 0 00-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0143.11-2L464 368"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
-            />
-          </svg>
-        </label>
-      {/if}
+      </div>
     </div>
-    <form on:submit|preventDefault={handleSubmit} class="messageBox">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-emoji"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-        on:click|stopPropagation={() => ($showEmojiMenu = true)}
-      >
-        <circle cx="184" cy="232" r="24" />
-        <path
-          d="M256.05 384c-45.42 0-83.62-29.53-95.71-69.83a8 8 0 017.82-10.17h175.69a8 8 0 017.82 10.17c-11.99 40.3-50.2 69.83-95.62 69.83z"
-        />
-        <circle cx="328" cy="232" r="24" />
-        <circle
-          cx="256"
-          cy="256"
-          r="208"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-      </svg>
-      <input
-        type="text"
-        placeholder="Type a message"
-        bind:value={$message}
-        style:background={$themeStore.theme === "dark" ? "#1F232F" : "white"}
-      />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-submit"
-        viewBox="0 0 512 512"
-        width="18"
-        height="18"
-        fill="currentColor"
-        on:click|preventDefault={handleSubmit}
-      >
-        <path
-          d="M470.3 271.15L43.16 447.31a7.83 7.83 0 01-11.16-7V327a8 8 0 016.51-7.86l247.62-47c17.36-3.29 17.36-28.15 0-31.44l-247.63-47a8 8 0 01-6.5-7.85V72.59c0-5.74 5.88-10.26 11.16-8L470.3 241.76a16 16 0 010 29.39z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-      </svg>
-    </form>
-    <div class="icon-mic" on:click={() => ($showAudioRecordingModal = true)}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-      >
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M192 448h128M384 208v32c0 70.4-57.6 128-128 128h0c-70.4 0-128-57.6-128-128v-32M256 368v80"
-        />
-        <path
-          d="M256 64a63.68 63.68 0 00-64 64v111c0 35.2 29 65 64 65s64-29 64-65V128c0-36-28-64-64-64z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-      </svg>
-    </div>
-  </div>
+  <!-- </div> -->
 </div>
 
 {#if $showToolModal}
@@ -886,14 +907,18 @@
 
   .chatbox_input {
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 0;
     width: 100%;
+    max-width: 800px;
+    margin: 10px auto;
     height: 60px;
     background: #ebebeb;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 120px;
+    /* padding: 0 120px; */
     /* border: 1px solid; */
   }
 
@@ -969,12 +994,6 @@
     border-radius: 10px;
   }
 
-  .message {
-    position: relative;
-    display: flex;
-    margin-bottom: 10px;
-  }
-
   .message p .message-text {
     width: 100%;
     font-family: "Montserrat";
@@ -987,14 +1006,20 @@
     letter-spacing: 0.5px;
   }
 
+  .message {
+    position: relative;
+    display: flex;
+    max-width: 800px;
+    margin: 10px auto;
+  }
+
   .chatBox {
     position: absolute;
     top: 60px;
     bottom: 60px;
     width: 100%;
-    height: calc(100vh - 100px);
-    padding: 20px 120px;
-    padding-bottom: 15px;
+    height: calc(100vh - 120px);
+    padding: 20px;
     overflow-y: scroll;
   }
 
