@@ -912,7 +912,7 @@
     bottom: 0;
     width: 100%;
     max-width: 800px;
-    margin: 10px auto;
+    margin: auto;
     height: 60px;
     background: #ebebeb;
     display: flex;
