@@ -7,10 +7,11 @@
     loggedinUser,
     loginFormShow,
     profileUpdated,
+    showSidebarMenu,
     showCameraModal,
     showSettingsModal,
     showAudioPlayerModal,
-    showAudioRecordingModal
+    showAudioRecordingModal,
   } from "$lib/store";
   import { page } from "$app/stores";
   import themeStore, { setTheme } from "svelte-themes";
@@ -21,8 +22,8 @@
 
   $: if ($profileUpdated) {
     // user = auth.currentUser
-    user = $loggedinUser.currentUser
-    console.log('user profile updated detected !') 
+    user = $loggedinUser.currentUser;
+    console.log("user profile updated detected !");
     // $profileUpdated = false
   }
 
@@ -32,11 +33,12 @@
 <!-- style:display={$mobile
   ? "none"
   : "flex"} -->
-  <!-- style:background="#ededed" -->
+<!-- style:background="#ededed" -->
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+  style:border-right={$themeStore.theme === "dark" ? '1px solid #3a3f50' : '#ebebeb'}
   style:display={$mobile
     ? "none"
     : $page.url.pathname === "/login"
@@ -45,7 +47,26 @@
     ? "none"
     : "flex"}
 >
-<!-- style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor} -->
+  <!-- style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor} -->
+
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    class="ionicon" 
+    viewBox="0 0 512 512"
+    width="24"
+    height="24"
+    fill="currentColor"
+    on:click={() => $showSidebarMenu = false}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="32"
+      d="M368 368L144 144M368 144L144 368"
+    />
+  </svg>
   {#if $loggedinUser}
     <div
       class="userimg"
@@ -71,6 +92,7 @@
     right: -5px;
     font-size: 1.2em;
   }
+
   .userimg img {
     width: 35px;
     height: 35px;

@@ -8,6 +8,7 @@
     selectedUsername,
     loginUserEmail,
     profileUpdated,
+    showSidebarMenu,
     showThemeModal,
     showCameraModal,
     showSettingsModal,
@@ -135,9 +136,34 @@
     ? "500px"
     : "0%"}
 >
-  <div class="header" style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}>
-    <div class="left" on:click={() => goto("/")} style:cursor="pointer">
+  <div
+    class="header"
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+  >
+    <div class="left" style:cursor="pointer">
+    <!-- <div class="left" on:click={() => goto("/")} style:cursor="pointer"> -->
       <!-- {#if $mobile && $loggedinUser} -->
+      {#if !$showSidebarMenu}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+        style:margin-right="5px"
+        on:click={() => $showSidebarMenu = true}
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="32"
+          d="M80 160h352M80 256h352M80 352h352"
+        />
+      </svg>
+      {/if}
       {#if $loggedinUser}
         <div
           class="userimg"
@@ -246,10 +272,10 @@
           on:click={() => selectUser(user)}
           style:background={(currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile)
-            ? $themeStore.theme === "dark" ? "#3a3f50"
-            : "#ebebeb"
-            : ""
-          }
+            ? $themeStore.theme === "dark"
+              ? "#3a3f50"
+              : "#ebebeb"
+            : ""}
         >
           <div class="imgbx">
             {#if user.avatar}
@@ -301,25 +327,6 @@
 </div>
 
 <style>
-  .add-friend {
-    font-size: 25px;
-  }
-
-  .icon-addFriend-wrapper {
-    width: 35px;
-    height: 35px;
-    background: #03a9f1;
-    /* background: #00bfa5; */
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  ::placeholder {
-    /* color: rgba(255, 255, 255, 0.6); */
-  }
-
   .warning img {
     width: 150px;
     height: 150px;
@@ -333,24 +340,18 @@
     height: 50vh;
   }
 
-  .btn-add-friend {
-    display: flex;
-    align-items: flex-end;
-  }
-
   .userimg {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     display: flex;
     align-items: center;
     cursor: pointer;
     margin-right: 5px;
-    /* border: 1px solid; */
   }
 
   .userimg img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     object-fit: cover;
     border-radius: 50%;
   }

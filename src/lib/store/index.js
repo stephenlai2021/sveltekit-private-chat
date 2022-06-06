@@ -10,6 +10,7 @@ import {
 
 let colRef = collection(db, "whatzapp_users");
 
+export const showSidebarMenu = writable(true)
 export const selectedUsernameMatched = writable(false);
 export const showGradientMenu = writable(true);
 export const showThemeMenu = writable(true);

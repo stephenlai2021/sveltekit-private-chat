@@ -75,8 +75,8 @@
 <div
   class="tool-modal"
   on:click|stopPropagation
-  transition:fly={{ x: 60, duration: 100, delay: 100 }}
->
+  >
+  <!-- transition:fly={{ x: 60, duration: 100, delay: 100 }} -->
   <h3 class="title">背景設置</h3>
   <ul>
     {#if !$isMobile}
@@ -236,11 +236,11 @@
   }
 
   .tool-modal {
-    position: fixed;
+    /* position: absolute;
     right: 0;
     top: 0;
-    z-index: 600;
-    width: 300px;
+    z-index: 600; */
+    width: 500px;
     background: rgba(229, 221, 222, 0.5);
     height: 100vh;
     overflow-y: auto;
