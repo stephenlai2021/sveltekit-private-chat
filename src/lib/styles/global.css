@@ -31,6 +31,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", "Montserrat", "Poppins", sans-serif;
+  letter-spacing: 0.5px;
 }
 
 body {
@@ -149,7 +150,8 @@ ion-icon {
 }
 
 .rightSide .header .imgText h4 {
-  font-weight: 600;
+  font-weight: 400;
+  /* letter-spacing: 0.5px; */
   line-height: 1.2em;
 }
 
@@ -166,7 +168,7 @@ ion-icon {
   margin-left: 5px;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
   font-size: 20px;
   /* text-transform: uppercase; */
 }
@@ -274,7 +276,6 @@ ion-icon {
 .chatlist {
   overflow-y: auto;
   overflow-x: hidden;
-  /* padding: 0 10px 10px 10px; */
   /* border: 1px solid; */
 }
 
@@ -283,9 +284,7 @@ ion-icon {
   align-items: center;
   justify-content: center;
   padding: 0 15px;
-  /* padding: 0 10px 10px 10px; */
-  height: 71px;
-  /* border-radius: 12px; */
+  height: 65px;
   cursor: pointer;
 }
 
@@ -332,7 +331,7 @@ ion-icon {
   font-size: 16px;
   /* font-family: "Montserrat"; */
   font-family: 'Roboto', sans-serif;
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
   font-weight: 400;
   font-style: normal;
   line-height: 20px;

@@ -13,6 +13,7 @@
     showAudioRecordingModal
   } from "$lib/store";
   import { page } from "$app/stores";
+  import themeStore, { setTheme } from "svelte-themes";
 
   let user = null;
 
@@ -31,10 +32,11 @@
 <!-- style:display={$mobile
   ? "none"
   : "flex"} -->
+  <!-- style:background="#ededed" -->
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
-  style:background="#ededed"
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
   style:display={$mobile
     ? "none"
     : $page.url.pathname === "/login"
@@ -86,7 +88,7 @@
   }
 
   .sidebar-menu {
-    min-width: 50px;
+    min-width: 60px;
     height: 100vh;
     display: flex;
     flex-direction: column;

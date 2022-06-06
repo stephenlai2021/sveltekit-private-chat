@@ -99,7 +99,7 @@
 
 <SvelteTheme />
 <div class="wrapper" on:click={closeModal}>
-  <!-- <SidebarMenu /> -->
+  <SidebarMenu />
   <LeftSide />
   <!-- style:background-image={`url(${imageURL})`}
   style:background-size="cover"

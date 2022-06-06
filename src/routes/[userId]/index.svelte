@@ -504,9 +504,6 @@
               <span
                 class="showtime"
                 style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-                style:text-align={msg.from === $loggedinUser.displayName
-                  ? "right"
-                  : "left"}
               >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
@@ -519,9 +516,6 @@
               <span
                 class="showtime"
                 style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-                style:text-align={msg.from === $loggedinUser.displayName
-                  ? "right"
-                  : "left"}
               >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
@@ -534,9 +528,6 @@
               <span
                 class="showtime"
                 style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-                style:text-align={msg.from === $loggedinUser.displayName
-                  ? "right"
-                  : "left"}
               >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
@@ -552,9 +543,6 @@
               <span
                 class="showtime"
                 style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-                style:text-align={msg.from === $loggedinUser.displayName
-                  ? "right"
-                  : "left"}
               >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
@@ -565,10 +553,7 @@
     </div>
   {/if}
 
-  <div
-    class="chatbox_input"
-    style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
-  >
+  <div class="chatbox_input" style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}>
     <div class="icon-wrapper">
       {#if $isMobile}
         <label>
@@ -813,6 +798,8 @@
   label {
     width: 26px;
     position: relative;
+    margin-right: 10px;
+
   }
 
   .icon-image {
@@ -871,7 +858,7 @@
     justify-content: center;
     padding: 6px;
     border-radius: 10px;
-    margin-right: 15px;
+    /* margin-right: 15px; */
     /* border: 1px solid; */
   }
 
@@ -930,7 +917,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 30px;
-    /* padding: 0 120px; */
+    padding: 0 15px;
     /* border: 1px solid; */
   }
 
@@ -940,9 +927,18 @@
     justify-content: flex-start;
   }
 
+  .message.my_message .showtime {
+    text-align: right;
+  }
+
+  .message.friend_message .showtime {
+    text-align: left;
+  }
+
   .message.my_message {
     justify-content: flex-end;
     text-align: right;
+    /* border: 1px solid; */
   }
 
   .message p,
@@ -978,19 +974,16 @@
 
   .message p .message-text {
     width: 100%;
-    font-family: "Roboto", sans-serif;
-    letter-spacing: 1px;
+    min-width: 40px;
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
+    text-align: center;
     /* border: 1px solid; */
   }
 
   .showtime {
-    font-family: "Roboto";
     font-size: 12px;
     font-weight: 400;
-    letter-spacing: 0.5px;
-    /* max-width: 70px; */
     width: 100%;
     position: absolute;
     top: -20px;
@@ -1018,8 +1011,20 @@
     overflow-y: scroll;
   }
 
+  .details h4 {
+    font-size: 18px;
+    font-weight: 300;
+  }
+
   .details {
     padding-left: 15px;
+  }
+
+  @media (max-width: 1200px) {
+    .chatbox_input {
+      bottom: 0;
+      border-radius: 0;
+    }
   }
 
   @media (max-width: 800px) {
@@ -1032,8 +1037,8 @@
   @media (max-width: 600px) {
     .picture-container img,
     .image-container img {
-      max-width: 150px;
-      max-height: 150px;
+      max-width: 200px;
+      max-height: 200px;
       object-fit: cover;
       border-radius: 10px;
     }
