@@ -504,7 +504,9 @@
               <span
                 class="showtime"
                 style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-                style:text-align={msg.from === $loggedinUser.displayName ? 'right' : 'left'}
+                style:text-align={msg.from === $loggedinUser.displayName
+                  ? "right"
+                  : "left"}
               >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
@@ -517,7 +519,9 @@
               <span
                 class="showtime"
                 style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-                style:text-align={msg.from === $loggedinUser.displayName ? 'right' : 'left'}
+                style:text-align={msg.from === $loggedinUser.displayName
+                  ? "right"
+                  : "left"}
               >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
@@ -530,7 +534,9 @@
               <span
                 class="showtime"
                 style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-                style:text-align={msg.from === $loggedinUser.displayName ? 'right' : 'left'}
+                style:text-align={msg.from === $loggedinUser.displayName
+                  ? "right"
+                  : "left"}
               >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
@@ -546,7 +552,9 @@
               <span
                 class="showtime"
                 style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-                style:text-align={msg.from === $loggedinUser.displayName ? 'right' : 'left'}
+                style:text-align={msg.from === $loggedinUser.displayName
+                  ? "right"
+                  : "left"}
               >
                 {moment(msg.createdAt.toDate()).format("LT")}
               </span>
@@ -912,7 +920,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 0;
+    bottom: 5px;
     width: 100%;
     max-width: 800px;
     margin: auto;
@@ -921,6 +929,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 30px;
     /* padding: 0 120px; */
     /* border: 1px solid; */
   }
@@ -982,7 +991,7 @@
     font-weight: 400;
     letter-spacing: 0.5px;
     /* max-width: 70px; */
-    width: 100%;    
+    width: 100%;
     position: absolute;
     top: -20px;
     left: 50%;
@@ -1017,6 +1026,16 @@
     .arrow-back {
       margin-right: 10px;
       display: block;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .picture-container img,
+    .image-container img {
+      max-width: 150px;
+      max-height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
     }
   }
 </style>

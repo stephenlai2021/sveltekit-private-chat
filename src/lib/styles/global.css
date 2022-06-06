@@ -30,7 +30,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", "Poppins", sans-serif;
+  font-family: "Roboto", "Montserrat", "Poppins", sans-serif;
 }
 
 body {
@@ -315,7 +315,7 @@ ion-icon {
 .chatlist .block .details {
   width: 100%;
   /* border-bottom: 0.5px solid #9f9f9f; */
-  border-bottom: 0.5px solid rgba(0, 0, 0, .1);
+  /* border-bottom: 0.5px solid rgba(0, 0, 0, .1); */
   height: 100%;
   display: flex;
   flex-direction: column;
