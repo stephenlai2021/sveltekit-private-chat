@@ -957,7 +957,7 @@
     right: 0;
     max-width: 65%;
     /* padding: 6px 12px; */
-    padding: 3px;
+    padding: 1px;
     background: var(--lemon-green);
     /* border-radius: 20px; */
     color: var(--icon-add-color);
