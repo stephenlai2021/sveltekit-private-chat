@@ -480,28 +480,31 @@
           <p
             class="message-content"
             style:background={
-              (msg.from === $loggedinUser.displayName &&
-                $themeStore.theme === "dark")
-              ? "#272A35"
-              : msg.from === $loggedinUser.displayName &&
-                $themeStore.theme === "light"
-                ? "#dcf8c6"
-              : msg.from != $loggedinUser.displayName &&
-              $themeStore.theme === "dark"
-              ? "#373E4E"
-              : "white"}
+              (msg.from === $loggedinUser.displayName && $themeStore.theme === "dark") ? 
+                "#272A35"
+                // $bgColor
+              : (msg.from === $loggedinUser.displayName && $themeStore.theme === "light") ? 
+                "#dcf8c6"
+              : (msg.from != $loggedinUser.displayName && $themeStore.theme === "dark") ? 
+                "#373E4E"
+                // $bgColor
+              : "white"
+            }
+            style:border={
+              $themeStore.theme === "dark" ? 
+                // "#272A35"
+                `2px solid ${$bgColor}`
+              : "none"
+            }
           >
-          <!-- : msg.audioURL || msg.picgtureURL || msg.imageURL
-          ? "none" -->
-            <!-- {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || (msg.pictureURL && msg.from != $loggedinUser.displayName) || (msg.audioURL && msg.from != $loggedinUser.displayName) || (!msg.imageURL && !msg.pictureURL && !msg.audioURL)}
-              <span
-              class="message-text"
-              style:color={$themeStore.theme === "dark"
-              ? "white"
-              : "#292f3f"}
-              >{msg.text}
+            <span
+              class="showtime"
+              style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+            >
+              {moment(msg.createdAt.toDate()).format("LT")}
             </span>
-            {/if} -->
+
+            <div class="inner-wrapper"></div>
             {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
               <span
                 class="message-text"
@@ -512,75 +515,21 @@
               </span>
             {/if}
 
-
             {#if msg.pictureURL}
-              <!-- <div class="picture-container"> -->
               <img src={msg.pictureURL} alt="" />
-              <!-- </div> -->
             {/if}
 
             {#if msg.imageURL}
-              <!-- <div class="image-container"> -->
               <img src={msg.imageURL} alt="" />
-              <!-- </div> -->
             {/if}
   
             {#if msg.audioURL}
-              <!-- <div class="audio-player-container"> -->
-              <!-- <audio controls style="margin-bottom: 8px;"> -->
               <audio controls>
                 <source src={msg.audioURL} />
                 <track kind="captions" />
               </audio>
-              <!-- </div> -->
-            {/if}
-
-            <span
-              class="showtime"
-              style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-            >
-              {moment(msg.createdAt.toDate()).format("LT")}
-            </span>
+            {/if}           
           </p>
-
-          <!-- {#if msg.pictureURL}
-            <div class="picture-container">
-              <img src={msg.pictureURL} alt="" />
-              <span
-                class="showtime"
-                style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-              >
-                {moment(msg.createdAt.toDate()).format("LT")}
-              </span>
-            </div>
-          {/if} -->
-
-          <!-- {#if msg.imageURL}
-            <div class="image-container">
-              <img src={msg.imageURL} alt="" />
-              <span
-                class="showtime"
-                style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-              >
-                {moment(msg.createdAt.toDate()).format("LT")}
-              </span>
-            </div>
-          {/if} -->
-          <!-- 
-          {#if msg.audioURL}
-            <div class="audio-player-container">
-              <audio controls style="margin-bottom: 8px;">
-                <source src={msg.audioURL} />
-                <track kind="captions" />
-              </audio>
-              <span
-                class="showtime"
-                style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-              >
-                {moment(msg.createdAt.toDate()).format("LT")}
-              </span>
-            </div>
-          {/if} -->
         </div>
       {/each}
     </div>
@@ -1032,7 +981,6 @@
     font-size: 12px;
     font-weight: 400;
     width: 100%;
-    /* width: 64px; */
     position: absolute;
     top: -17px;
     left: 50%;
@@ -1057,6 +1005,7 @@
     height: calc(100vh - 120px);
     padding: 20px;
     overflow-y: scroll;
+    /* border: 1px solid; */
   }
 
   .details h4 {
