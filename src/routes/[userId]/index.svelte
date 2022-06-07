@@ -481,54 +481,65 @@
             class="message-content"
             style:background={
               (msg.from === $loggedinUser.displayName && $themeStore.theme === "dark") ? 
-                "#272A35"
-                // $bgColor
+                // "#272A35"
+                $bgColor
               : (msg.from === $loggedinUser.displayName && $themeStore.theme === "light") ? 
                 "#dcf8c6"
               : (msg.from != $loggedinUser.displayName && $themeStore.theme === "dark") ? 
-                "#373E4E"
-                // $bgColor
+                // "#373E4E"
+                $bgColor
               : "white"
-            }
-            style:border={
-              $themeStore.theme === "dark" ? 
-                // "#272A35"
-                `2px solid ${$bgColor}`
-              : "none"
             }
           >
             <span
               class="showtime"
               style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+              style:left={msg.from != $loggedinUser.displayName ? "0": ""}
+              style:right={msg.from === $loggedinUser.displayName ? "0" : ""}
             >
               {moment(msg.createdAt.toDate()).format("LT")}
             </span>
 
-            <div class="inner-wrapper"></div>
-            {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
-              <span
-                class="message-text"
-                style:color={$themeStore.theme === "dark"
-                ? "white"
-                : "#292f3f"}
-                >{msg.text}
-              </span>
-            {/if}
-
-            {#if msg.pictureURL}
-              <img src={msg.pictureURL} alt="" />
-            {/if}
-
-            {#if msg.imageURL}
-              <img src={msg.imageURL} alt="" />
-            {/if}
+            <span 
+              class="inner-wrapper"              
+              style:background={
+                (msg.from === $loggedinUser.displayName && $themeStore.theme === "dark") ? 
+                  "#272A35"
+                  // $bgColor
+                : (msg.from === $loggedinUser.displayName && $themeStore.theme === "light") ? 
+                  "#dcf8c6"
+                : (msg.from != $loggedinUser.displayName && $themeStore.theme === "dark") ? 
+                  "#373E4E"
+                  // $bgColor
+                : "white"
+              }
+            >
+              <!-- {#if msg.text} -->
+              {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
+                <span
+                  class="message-text"
+                  style:color={$themeStore.theme === "dark"
+                  ? "white"
+                  : "#292f3f"}
+                  >{msg.text}
+                </span>
+              {/if}
   
-            {#if msg.audioURL}
-              <audio controls>
-                <source src={msg.audioURL} />
-                <track kind="captions" />
-              </audio>
-            {/if}           
+              {#if msg.pictureURL}
+                <img src={msg.pictureURL} alt="" />
+              {/if}
+  
+              {#if msg.imageURL}
+                <img src={msg.imageURL} alt="" />
+              {/if}
+    
+              {#if msg.audioURL}
+                <audio controls>
+                  <source src={msg.audioURL} />
+                  <track kind="captions" />
+                </audio>
+              {/if}           
+            </span>
           </p>
         </div>
       {/each}
@@ -897,7 +908,8 @@
     /* border: 1px solid; */
   }
 
-  .message.friend_message p {
+  .message.friend_message p,
+  .message.friend_message p .inner-wrapper {
     background: #f5f5f5;
     justify-content: flex-start;
     /* border: 1px solid; */
@@ -920,73 +932,16 @@
     text-align: right;
   }
 
-  .message.my_message p {
+  .inner-wrapper {
+    padding: 6px;
+  }
+
+  .message.my_message p,
+  .message.my_message p .inner-wrapper {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-  }
-
-  .message p,
-  .image-container,
-  .picture-container,
-  .audio-player-container {
-    position: relative;
-    right: 0;
-    max-width: 65%;
-    /* padding: 6px 12px; */
-    padding: 8px;
-    background: var(--lemon-green);
-    border-radius: 20px;
-    color: var(--icon-add-color);
-    /* border: 1px solid; */
-  }
-
-  .image-container,
-  .picture-container,
-  .audio-player-container {
-    background: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    /* border: 1px solid; */
-  }
-
-  .picture-container img,
-  .image-container img {
-    max-width: 200px;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  .message img {
-    max-width: 200px;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  .message p .message-text {
-    width: 100%;
-    min-width: 40px;
-    font-size: 16px;
-    font-weight: 400;
-    text-align: center;
-    /* line-height: 0.7; */
-    /* border: 1px solid; */
-  }
-
-  .showtime {
-    font-size: 12px;
-    font-weight: 400;
-    width: 100%;
-    position: absolute;
-    top: -17px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    /* border: 1px solid; */
   }
 
   .message {
@@ -994,6 +949,48 @@
     display: flex;
     max-width: 800px;
     margin: 40px auto;
+    /* border: 1px solid; */
+  }
+
+  .message p {
+    position: relative;
+    right: 0;
+    max-width: 65%;
+    /* padding: 6px 12px; */
+    padding: 3px;
+    background: var(--lemon-green);
+    /* border-radius: 20px; */
+    color: var(--icon-add-color);
+    /* border: 1px solid red; */
+  }
+
+  .message p .inner-wrapper .message-text {
+    width: 100%;
+    min-width: 40px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    /* border: 1px solid white; */
+  }
+
+  .message img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+  } 
+
+  .showtime {
+    font-size: 12px;
+    font-weight: 400;
+    /* width: 100%; */
+    width: 60px;
+    position: absolute;
+    top: -17px;
+    /* right: 0; */
+    /* left: 50%;
+    transform: translateX(-50%); */
+    text-align: center;
     /* border: 1px solid; */
   }
 
