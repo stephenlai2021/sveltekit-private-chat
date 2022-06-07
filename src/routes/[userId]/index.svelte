@@ -114,6 +114,7 @@
           createdAt: Timestamp.fromDate(new Date()),
           imageURL: url || "",
           text: `${$loggedinUser.displayName} has sent an image`,
+          tag: "image"
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -263,6 +264,7 @@
           createdAt: Timestamp.fromDate(new Date()),
           pictureURL: url || "",
           text: `${$loggedinUser.displayName} has sent a photo`,
+          tag: "picture"
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -297,6 +299,7 @@
           createdAt: Timestamp.fromDate(new Date()),
           audioURL: url || "",
           text: `${$loggedinUser.displayName} has sent a voice`,
+          tag: "audio"
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -333,10 +336,7 @@
     src="" alt=""
     style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
   /> -->
-  <div
-    class="header"
-    style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
-  >
+  <div class="header" style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}>
     <div class="left-part">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -479,8 +479,9 @@
         >
           <p
             class="message-content"
-            style:background={msg.from === $loggedinUser.displayName &&
-              $themeStore.theme === "dark"
+            style:background={
+              (msg.from === $loggedinUser.displayName &&
+                $themeStore.theme === "dark")
               ? "#272A35"
               : msg.from === $loggedinUser.displayName &&
                 $themeStore.theme === "light"
@@ -490,6 +491,8 @@
               ? "#373E4E"
               : "white"}
           >
+          <!-- : msg.audioURL || msg.picgtureURL || msg.imageURL
+          ? "none" -->
             <!-- {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || (msg.pictureURL && msg.from != $loggedinUser.displayName) || (msg.audioURL && msg.from != $loggedinUser.displayName) || (!msg.imageURL && !msg.pictureURL && !msg.audioURL)}
               <span
               class="message-text"
@@ -524,7 +527,8 @@
   
             {#if msg.audioURL}
               <!-- <div class="audio-player-container"> -->
-              <audio controls style="margin-bottom: 8px;">
+              <!-- <audio controls style="margin-bottom: 8px;"> -->
+              <audio controls>
                 <source src={msg.audioURL} />
                 <track kind="captions" />
               </audio>
@@ -595,8 +599,8 @@
             xmlns="http://www.w3.org/2000/svg"
             class="ionicon icon-attachment"
             viewBox="0 0 512 512"
-            width="30"
-            height="30"
+            width="26"
+            height="26"
             fill="currentColor"
           >
             <path
@@ -615,8 +619,8 @@
           xmlns="http://www.w3.org/2000/svg"
           class="ionicon icon-camera"
           viewBox="0 0 512 512"
-          width="30"
-          height="30"
+          width="26"
+          height="26"
           fill="currentColor"
           on:click={() => ($showCameraModal = true)}
         >
@@ -656,8 +660,8 @@
             xmlns="http://www.w3.org/2000/svg"
             class="ionicon icon-image"
             viewBox="0 0 512 512"
-            width="28"
-            height="28"
+            width="26"
+            height="26"
             fill="currentColor"
           >
             <rect
@@ -728,8 +732,8 @@
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-submit"
         viewBox="0 0 512 512"
-        width="22"
-        height="22"
+        width="20"
+        height="20"
         fill="currentColor"
         on:click|preventDefault={handleSubmit}
       >
@@ -748,8 +752,8 @@
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
         viewBox="0 0 512 512"
-        width="30"
-        height="30"
+        width="26"
+        height="26"
         fill="currentColor"
       >
         <path
@@ -948,6 +952,7 @@
     background: #f5f5f5;
     justify-content: flex-start;
     /* border: 1px solid; */
+    border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -967,6 +972,7 @@
   }
 
   .message.my_message p {
+    border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -979,7 +985,8 @@
     position: relative;
     right: 0;
     max-width: 65%;
-    padding: 6px 12px;
+    /* padding: 6px 12px; */
+    padding: 8px;
     background: var(--lemon-green);
     border-radius: 20px;
     color: var(--icon-add-color);
@@ -1017,6 +1024,7 @@
     font-size: 16px;
     font-weight: 400;
     text-align: center;
+    /* line-height: 0.7; */
     /* border: 1px solid; */
   }
 
