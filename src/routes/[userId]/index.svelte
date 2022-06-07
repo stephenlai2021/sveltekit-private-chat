@@ -477,59 +477,67 @@
           class:my_message={msg.from === $loggedinUser.displayName}
           class:friend_message={msg.from != $loggedinUser.displayName}
         >
-          {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
-            <p
-              class="message-content"
-              style:background={msg.from === $loggedinUser.displayName &&
+          <p
+            class="message-content"
+            style:background={msg.from === $loggedinUser.displayName &&
               $themeStore.theme === "dark"
-                ? "#272A35"
-                : msg.from === $loggedinUser.displayName &&
-                  $themeStore.theme === "light"
+              ? "#272A35"
+              : msg.from === $loggedinUser.displayName &&
+                $themeStore.theme === "light"
                 ? "#dcf8c6"
-                : msg.from != $loggedinUser.displayName &&
-                  $themeStore.theme === "dark"
-                ? "#373E4E"
-                : "white"}
-            >
-              {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || (msg.pictureURL && msg.from != $loggedinUser.displayName) || (msg.audioURL && msg.from != $loggedinUser.displayName) || (!msg.imageURL && !msg.pictureURL && !msg.audioURL)}
-                <span
-                  class="message-text"
-                  style:color={$themeStore.theme === "dark"
-                    ? "white"
-                    : "#292f3f"}
-                  >{msg.text}
-                </span>
-              {/if}
-            </p>
-          {/if}
-
-          {#if msg.pictureURL}
-            <!-- <div class="picture-container"> -->
-            <img src={msg.pictureURL} alt="" />
-            <!-- </div> -->
-          {/if}
-
-          {#if msg.imageURL}
-            <!-- <div class="image-container"> -->
-            <img src={msg.imageURL} alt="" />
-            <!-- </div> -->
-          {/if}
-
-          {#if msg.audioURL}
-            <!-- <div class="audio-player-container"> -->
-            <audio controls style="margin-bottom: 8px;">
-              <source src={msg.audioURL} />
-              <track kind="captions" />
-            </audio>
-            <!-- </div> -->
-          {/if}
-
-          <span
-            class="showtime"
-            style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+              : msg.from != $loggedinUser.displayName &&
+              $themeStore.theme === "dark"
+              ? "#373E4E"
+              : "white"}
           >
-            {moment(msg.createdAt.toDate()).format("LT")}
-          </span>
+            <!-- {#if (msg.imageURL && msg.from != $loggedinUser.displayName) || (msg.pictureURL && msg.from != $loggedinUser.displayName) || (msg.audioURL && msg.from != $loggedinUser.displayName) || (!msg.imageURL && !msg.pictureURL && !msg.audioURL)}
+              <span
+              class="message-text"
+              style:color={$themeStore.theme === "dark"
+              ? "white"
+              : "#292f3f"}
+              >{msg.text}
+            </span>
+            {/if} -->
+            {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
+              <span
+                class="message-text"
+                style:color={$themeStore.theme === "dark"
+                ? "white"
+                : "#292f3f"}
+                >{msg.text}
+              </span>
+            {/if}
+
+
+            {#if msg.pictureURL}
+              <!-- <div class="picture-container"> -->
+              <img src={msg.pictureURL} alt="" />
+              <!-- </div> -->
+            {/if}
+
+            {#if msg.imageURL}
+              <!-- <div class="image-container"> -->
+              <img src={msg.imageURL} alt="" />
+              <!-- </div> -->
+            {/if}
+  
+            {#if msg.audioURL}
+              <!-- <div class="audio-player-container"> -->
+              <audio controls style="margin-bottom: 8px;">
+                <source src={msg.audioURL} />
+                <track kind="captions" />
+              </audio>
+              <!-- </div> -->
+            {/if}
+
+            <span
+              class="showtime"
+              style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+            >
+              {moment(msg.createdAt.toDate()).format("LT")}
+            </span>
+          </p>
 
           <!-- {#if msg.pictureURL}
             <div class="picture-container">
@@ -956,11 +964,9 @@
   .message.my_message {
     justify-content: flex-end;
     text-align: right;
-    /* border: 1px solid; */
   }
 
   .message.my_message p {
-    /* border: 1px solid; */
     border-bottom-right-radius: 5px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -992,15 +998,15 @@
 
   .picture-container img,
   .image-container img {
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 200px;
+    max-height: 200px;
     object-fit: cover;
     border-radius: 10px;
   }
 
   .message img {
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 200px;
+    max-height: 200px;
     object-fit: cover;
     border-radius: 10px;
   }
@@ -1018,6 +1024,7 @@
     font-size: 12px;
     font-weight: 400;
     width: 100%;
+    /* width: 64px; */
     position: absolute;
     top: -17px;
     left: 50%;
