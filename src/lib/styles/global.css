@@ -319,7 +319,7 @@ ion-icon {
   font-size: 14px;
   font-weight: 300;
   font-family: 'Roboto', sans-serif;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .chatlist .block.unread .details .message_p b {

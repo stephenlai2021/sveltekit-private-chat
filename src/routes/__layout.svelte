@@ -23,6 +23,7 @@
     showToolModal,
     showEmojiMenu,
     showSidebarMenu,
+    showImagePreviewModal,
     showThemeModal,
     showCameraModal,
     showSettingsModal,
@@ -42,6 +43,7 @@
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
   import themeStore, { setTheme } from "svelte-themes";
   import ToolModal from '$lib/components/ToolModal.svelte'
+  import ImagePreviewModal from '$lib/components/ImagePreviewModal.svelte'
 
   let user = null;
   let users = null;
@@ -101,9 +103,9 @@
 
 <SvelteTheme />
 <div class="wrapper" on:click={closeModal}>
-  {#if $showSidebarMenu}
+  <!-- {#if $showSidebarMenu}
     <SidebarMenu />
-  {/if}
+  {/if} -->
   <LeftSide />
   <!-- style:background-image={`url(${imageURL})`}
   style:background-size="cover"
@@ -121,7 +123,12 @@
   >
     <slot />
   </div>
+  
   {#if $showToolModal}
     <ToolModal />
+  {/if}
+
+  {#if $showImagePreviewModal}
+    <ImagePreviewModal />
   {/if}
 </div>

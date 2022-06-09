@@ -10,6 +10,10 @@ import {
 
 let colRef = collection(db, "whatzapp_users");
 
+
+export const storedImageURL = writable(null)
+export const storedPictureURL = writable(null)
+export const showImagePreviewModal = writable(false)
 export const showSidebarMenu = writable(true)
 export const selectedUsernameMatched = writable(false);
 export const showGradientMenu = writable(true);

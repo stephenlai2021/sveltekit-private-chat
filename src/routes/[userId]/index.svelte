@@ -30,6 +30,8 @@
     pictureFile,
     audioFile,
     audioURL,
+    storedImageURL,
+    storedPictureURL,
     bgOpacity,
     audioConfirmed,
     // selectedUser,
@@ -38,6 +40,7 @@
     showAudioPlayerModal,
     showAudioRecordingModal,
     showCameraPreviewModal,
+    showImagePreviewModal,
     showMapModal,
     showToolModal,
     showThemeModal,
@@ -61,6 +64,7 @@
   import moment from "moment";
   import * as animateScroll from "svelte-scrollto";
   import { slimscroll } from "svelte-slimscroll";
+  import ImagePreviewModal from "$lib/components/ImagePreviewModal.svelte"
 
   console.log("selfie", $pictureFile);
 
@@ -114,7 +118,7 @@
           createdAt: Timestamp.fromDate(new Date()),
           imageURL: url || "",
           text: `${$loggedinUser.displayName} has sent an image`,
-          tag: "image"
+          tag: "image",
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -229,6 +233,13 @@
     if (autoscroll) chatbox.scrollTo(0, chatbox.scrollHeight);
   });
 
+  const showImagePreview = (pictureURL, imageURL) => {
+    $showImagePreviewModal = true
+
+    $storedPictureURL = pictureURL
+    $storedImageURL = imageURL
+  }
+
   onMount(() => {
     // chatbox.scrollTo(0, chatbox.scrollHeight);
     // chatbox.scrollTop = chatbox.scrollHeight;
@@ -264,7 +275,7 @@
           createdAt: Timestamp.fromDate(new Date()),
           pictureURL: url || "",
           text: `${$loggedinUser.displayName} has sent a photo`,
-          tag: "picture"
+          tag: "picture",
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -299,7 +310,7 @@
           createdAt: Timestamp.fromDate(new Date()),
           audioURL: url || "",
           text: `${$loggedinUser.displayName} has sent a voice`,
-          tag: "audio"
+          tag: "audio",
         }).then(() => {
           console.log("document added successfully 😎");
         });
@@ -336,7 +347,10 @@
     src="" alt=""
     style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
   /> -->
-  <div class="header" style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}>
+  <div
+    class="header"
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+  >
     <div class="left-part">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -479,74 +493,88 @@
         >
           <p
             class="message-content"
-            style:background={
-              (msg.from === $loggedinUser.displayName && $themeStore.theme === "dark") ? 
-                // "#272A35"
-                $bgColor
-              : (msg.from === $loggedinUser.displayName && $themeStore.theme === "light") ? 
-                "#dcf8c6"
-              : (msg.from != $loggedinUser.displayName && $themeStore.theme === "dark") ? 
-                // "#373E4E"
-                $bgColor
-              : "white"
-            }
+            style:background={msg.pictureURL || msg.imageURL || msg.audioURL
+              ? "none"
+              : msg.from === $loggedinUser.displayName &&
+                $themeStore.theme === "dark"
+              ? // $bgColor
+                // "none"
+                "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)"
+              : msg.from === $loggedinUser.displayName &&
+                $themeStore.theme === "light"
+              ? "#dcf8c6"
+              : msg.from != $loggedinUser.displayName &&
+                $themeStore.theme === "dark"
+              ? // $bgColor
+                "linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)"
+              : "white"}
           >
             <span
               class="showtime"
-              style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
-              style:left={msg.from != $loggedinUser.displayName ? "0": ""}
+              style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"}
+              style:left={msg.from != $loggedinUser.displayName ? "0" : ""}
               style:right={msg.from === $loggedinUser.displayName ? "0" : ""}
             >
               {moment(msg.createdAt.toDate()).format("LT")}
             </span>
 
-            <span 
-              class="inner-wrapper"              
-              style:background={
-                (msg.from === $loggedinUser.displayName && $themeStore.theme === "dark") ? 
-                  "#272A35"
-                  // $bgColor
-                : (msg.from === $loggedinUser.displayName && $themeStore.theme === "light") ? 
-                  "#dcf8c6"
-                : (msg.from != $loggedinUser.displayName && $themeStore.theme === "dark") ? 
-                  "#373E4E"
-                  // $bgColor
-                : "white"
-              }
-            >
-              <!-- {#if msg.text} -->
-              {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
-                <span
-                  class="message-text"
-                  style:color={$themeStore.theme === "dark"
-                  ? "white"
-                  : "#292f3f"}
-                  >{msg.text}
-                </span>
-              {/if}
-  
-              {#if msg.pictureURL}
-                <img src={msg.pictureURL} alt="" />
-              {/if}
-  
-              {#if msg.imageURL}
-                <img src={msg.imageURL} alt="" />
-              {/if}
-    
-              {#if msg.audioURL}
-                <audio controls>
-                  <source src={msg.audioURL} />
-                  <track kind="captions" />
-                </audio>
-              {/if}           
-            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon icon-expand"
+              viewBox="0 0 512 512"
+              width="20"
+              height="20"
+              fill="currentColor"
+              style:position="absolute"
+              style:top={msg.pictureURL || msg.imageURL ? "22px" : ""}
+              style:left={msg.pictureURL || msg.imageURL ? "12px" : ""}
+              style:display={msg.pictureURL || msg.imageURL ? "block" : "none"}
+              on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
+              >
+              <!-- on:click={() => $showImagePreviewModal = true} -->
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="32"
+                d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"
+              />
+            </svg>
+
+            <!-- {#if msg.text} -->
+            {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
+              <span
+                class="message-text"
+                style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+                >{msg.text}
+              </span>
+            {/if}
+
+            {#if msg.pictureURL}           
+              <img src={msg.pictureURL} alt="" />
+            {/if}
+
+            {#if msg.imageURL}
+              <img src={msg.imageURL} alt="" />
+            {/if}
+
+            {#if msg.audioURL}
+              <audio controls>
+                <source src={msg.audioURL} />
+                <track kind="captions" />
+              </audio>
+            {/if}
           </p>
         </div>
       {/each}
     </div>
   {/if}
 
-  <div class="chatbox_input" style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}>
+  <div
+    class="chatbox_input"
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+  >
     <div class="icon-wrapper">
       {#if $isMobile}
         <label>
@@ -765,11 +793,31 @@
   <MapModal />
 {/if}
 
+<!-- {#if $showImagePreviewModal}
+  <ImagePreviewModal />
+{/if} -->
+
 <style>
   :root {
     --bg-color: #d6d8dc;
     --hue: red;
   }
+
+  .picture-wrapper {
+    position: relative;
+  }
+
+  .icon-expand {
+    /* position: absolute;
+    top: -5px;
+    left: -5px;
+    z-index: 600; */
+    background: rgba(0, 0, 0, .5);
+    color: rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 2px;
+  }
+
 
   audio {
     max-width: 100%;
@@ -908,8 +956,7 @@
     /* border: 1px solid; */
   }
 
-  .message.friend_message p,
-  .message.friend_message p .inner-wrapper {
+  .message.friend_message p {
     background: #f5f5f5;
     justify-content: flex-start;
     /* border: 1px solid; */
@@ -932,23 +979,11 @@
     text-align: right;
   }
 
-  .inner-wrapper {
-    padding: 6px;
-  }
-
-  .message.my_message p,
-  .message.my_message p .inner-wrapper {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-  }
-
   .message {
     position: relative;
     display: flex;
     max-width: 800px;
-    margin: 40px auto;
+    margin: 20px auto;
     /* border: 1px solid; */
   }
 
@@ -956,20 +991,18 @@
     position: relative;
     right: 0;
     max-width: 65%;
-    /* padding: 6px 12px; */
-    padding: 1px;
+    padding: 8px 12px 6px 12px;
+    border-radius: 8px;
     background: var(--lemon-green);
-    /* border-radius: 20px; */
     color: var(--icon-add-color);
     /* border: 1px solid red; */
   }
 
-  .message p .inner-wrapper .message-text {
+  .message p .message-text {
     width: 100%;
     min-width: 40px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
-    text-align: center;
     /* border: 1px solid white; */
   }
 
@@ -978,19 +1011,15 @@
     max-height: 200px;
     object-fit: cover;
     border-radius: 10px;
-  } 
+  }
 
   .showtime {
     font-size: 12px;
     font-weight: 400;
-    /* width: 100%; */
-    width: 60px;
-    position: absolute;
+    /* margin: 5px; */
+    /* position: absolute;
     top: -17px;
-    /* right: 0; */
-    /* left: 50%;
-    transform: translateX(-50%); */
-    text-align: center;
+    width: 60px; */
     /* border: 1px solid; */
   }
 
@@ -1025,16 +1054,6 @@
     .arrow-back {
       margin-right: 10px;
       display: block;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .picture-container img,
-    .image-container img {
-      max-width: 200px;
-      max-height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
     }
   }
 </style>
