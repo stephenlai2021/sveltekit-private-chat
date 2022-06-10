@@ -11,6 +11,7 @@ import {
 let colRef = collection(db, "whatzapp_users");
 
 
+export const showActionMenu = writable(false)
 export const storedImageURL = writable(null)
 export const storedPictureURL = writable(null)
 export const showImagePreviewModal = writable(false)

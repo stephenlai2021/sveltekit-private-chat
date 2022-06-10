@@ -48,6 +48,7 @@
     showSettingsModal,
     showAddFriendModal,
     showEmojiMenu,
+    showActionMenu,
     pictureConfirmed,
     loggedinUser,
   } from "$lib/store";
@@ -65,11 +66,13 @@
   import * as animateScroll from "svelte-scrollto";
   import { slimscroll } from "svelte-slimscroll";
   import ImagePreviewModal from "$lib/components/ImagePreviewModal.svelte";
-  import AudioPlayer from "$lib/components/AudioPlayer.svelte"
+  import AudioPlayer from "$lib/components/AudioPlayer.svelte";
+  import ActionMenu from "$lib/components/ActionMenu.svelte"
 
   console.log("selfie", $pictureFile);
 
   let q = null;
+  let player = null;
   let messageSent = "";
   let messages = [];
   // let loggedinUser = {};
@@ -301,13 +304,6 @@
   }
 </script>
 
-<svelte:head>
-  <!-- {#if $page.params.userId}
-    <title>Chat</title>
-  {/if} -->
-  <script src="https://unpkg.com/wavesurfer.js"></script>
-</svelte:head>
-
 <div>
   <!-- <img 
     src="" alt=""
@@ -507,7 +503,6 @@
               />
             </svg>
 
-            <!-- {#if msg.text} -->
             {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
               <span
                 class="message-text"
@@ -525,11 +520,109 @@
             {/if}
 
             {#if msg.audioURL}
-              <!-- <audio controls>
-                <source src={msg.audioURL} />
-                <track kind="captions" />
-              </audio> -->
-              <AudioPlayer />
+              <div
+                class="player"
+                bind:this={player}
+                style:background={msg.from === $loggedinUser.displayName &&
+                $themeStore.theme === "dark"
+                  ? "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)"
+                  : msg.from !== $loggedinUser.displayName &&
+                    $themeStore.theme === "dark"
+                  ? "linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)"
+                  : msg.from === $loggedinUser.displayName &&
+                    $themeStore.theme === "light"
+                  ? "#dcf8c6"
+                  : msg.from != $loggedinUser.displayName &&
+                    $themeStore.theme === "light"
+                  ? "white"
+                  : ""}
+              >
+                <div class="inner-wrapper">
+                  <div class="progress-wrapper">
+                    <progress value="0" max="100" />
+                    <!-- <p class="time-stamp">01/10</p> -->
+                    <span
+                      class="time-stamp"
+                      style:color={$themeStore.theme === "light" ? "black" : ""}
+                    >
+                      01/10
+                    </span>
+                  </div>
+                  <div class="buttons">
+                    <button class="play">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="ionicon"
+                        viewBox="0 0 512 512"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        style:color={$themeStore.theme === "light"
+                          ? "black"
+                          : ""}
+                      >
+                        <path
+                          d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-miterlimit="10"
+                          stroke-width="32"
+                        />
+                      </svg>
+                    </button>
+
+                    <button class="pause">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="ionicon"
+                        viewBox="0 0 512 512"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        style:color={$themeStore.theme === "light"
+                          ? "black"
+                          : ""}
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="32"
+                          d="M176 96h16v320h-16zM320 96h16v320h-16z"
+                        />
+                      </svg>
+                    </button>
+                    <button class="stop">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="ionicon"
+                        viewBox="0 0 512 512"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        style:color={$themeStore.theme === "light"
+                          ? "black"
+                          : ""}
+                      >
+                        <rect
+                          x="96"
+                          y="96"
+                          width="320"
+                          height="320"
+                          rx="24"
+                          ry="24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linejoin="round"
+                          stroke-width="32"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <input type="range" class="volume" />
+              </div>
             {/if}
           </p>
         </div>
@@ -543,7 +636,7 @@
   >
     <div class="icon-wrapper">
       {#if $isMobile}
-        <label>
+        <!-- <label>
           <input
             type="file"
             accept="image/png, image/jpg, image/jpeg"
@@ -566,7 +659,26 @@
               stroke-width="32"
             />
           </svg>
-        </label>
+        </label> -->
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon icon-plus"
+          viewBox="0 0 512 512"
+          width="30"
+          height="30"
+          fill="currentColor"
+          on:click={() => $showActionMenu = true}
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M256 112v288M400 256H112"
+          />
+        </svg>
       {/if}
       {#if !$isMobile}
         <svg
@@ -735,6 +847,10 @@
   <ToolModal />
 {/if} -->
 
+{#if $showActionMenu}
+  <ActionMenu />
+{/if}
+
 {#if $showAudioPlayerModal}
   <AudioPlayerModal />
 {/if}
@@ -760,13 +876,11 @@
 {/if}
 
 <style>
+  @import url("$lib/styles/audio-player.css");
+
   :root {
     --bg-color: #d6d8dc;
     --hue: red;
-  }
-
-  .picture-wrapper {
-    position: relative;
   }
 
   .icon-expand {
@@ -780,9 +894,9 @@
     border-radius: 2px;
   }
 
-  audio {
+  /* audio {
     max-width: 100%;
-  }
+  } */
 
   .message-content {
     display: flex;
@@ -865,13 +979,13 @@
     margin-left: 10px;
   }
 
-  .icon-attachment {
+  /* .icon-attachment {
     position: absolute;
     top: 50%;
     left: 10px;
     left: 0px;
     transform: translateY(-50%);
-  }
+  } */
 
   .icon-camera {
     margin-right: 20px;
@@ -977,11 +1091,6 @@
   .showtime {
     font-size: 12px;
     font-weight: 400;
-    /* margin: 5px; */
-    /* position: absolute;
-    top: -17px;
-    width: 60px; */
-    /* border: 1px solid; */
   }
 
   .chatBox {

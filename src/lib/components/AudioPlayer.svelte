@@ -3,14 +3,11 @@
 </script>
 
 <div class="player" bind:this={player}>
-  <!-- <div class="now">Play Your Audio</div> -->
-
   <div class="inner-wrapper">
     <div class="progress-wrapper">
       <progress value="0" max="100" />
-      <p class="time">01/10</p>
+      <p class="time-stamp">01/10</p>
     </div>
-
     <div class="buttons">
       <button class="play">
         <svg
@@ -88,21 +85,14 @@
     height: 70px;
     margin: auto;
     background: rgb(2, 0, 36);
-    background: linear-gradient(
-      90deg,
-      rgba(2, 0, 36, 1) 0%,
-      rgba(9, 9, 121, 1) 35%,
-      rgba(0, 212, 255, 1) 100%
-    );
-    /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-  background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%); */
+    background: #272A35;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
     padding: 0 0px 0 20px;
-    box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+    box-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
   }
 
   .buttons {
@@ -141,9 +131,10 @@
     width: 60%;
   }
 
-  .progress-wrapper .time {
+  .progress-wrapper .time-stamp {
     font-size: 12px;
     color: white;
+    color: red;
   }
 
   .volume {

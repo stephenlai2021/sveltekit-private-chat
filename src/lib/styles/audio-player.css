@@ -5,16 +5,14 @@
   height: 70px;
   margin: auto;
   background: rgb(2, 0, 36);
-  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
-  /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-  background: linear-gradient(225deg, #1CB5E0 0%, #000851 100%); */
+  background: #272A35;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
   padding: 0 0px 0 20px;
-  box-shadow: 2px 2px 5px rgba(255, 255, 255, .5);
+  box-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
 }
 
 .buttons {
@@ -29,7 +27,7 @@ button {
   color: #fff;
   cursor: pointer;
   outline: none;
-  transition: .5s;
+  transition: 0.5s;
   position: relative;
 }
 
@@ -50,12 +48,13 @@ button:hover {
 }
 
 progress {
-  width: 45%;
+  width: 60%;
 }
 
-.progress-wrapper span.time {
-  font-size: 6px;
+.progress-wrapper .time-stamp {
+  font-size: 12px;
   color: white;
+  /* color: red; */
 }
 
 .volume {
@@ -74,7 +73,11 @@ progress {
   width: 100%;
   height: 10px;
   cursor: pointer;
+  border-radius: 4px;
   background: #010b61;
+  background: rgba(0,0, 0, 0.3);
+  /* opacity: 0.7; */
+  /* border: 1px solid #010b61; */
 }
 
 .volume::-webkit-slider-thumb {
