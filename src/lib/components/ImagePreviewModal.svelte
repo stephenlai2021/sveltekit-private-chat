@@ -14,7 +14,6 @@
   transition:scale={{ delay: 150, duration: 200, easing: quintOut }}
   style:background={$themeStore.theme === "dark" ? `#292F3F url('/image-icon/png') no-repeat center` : "#ebebeb"}
   >
-  <!-- transition:scale={{ delay: 250, duration: 300, easing: quintOut }} -->
   <svg
     xmlns="http://www.w3.org/2000/svg"
     class="ionicon icon-close"
@@ -86,6 +85,7 @@
 <style>
   img {
     max-height: 100vh;
+    max-width: 100%;
   }
 
   .icon-close {
