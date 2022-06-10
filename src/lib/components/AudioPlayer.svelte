@@ -8,7 +8,7 @@
   <div class="inner-wrapper">
     <div class="progress-wrapper">
       <progress value="0" max="100" />
-      <span class="time">01/10</span>
+      <p class="time">01/10</p>
     </div>
 
     <div class="buttons">
@@ -141,8 +141,8 @@
     width: 60%;
   }
 
-  .progress-wrapper span.time {
-    font-size: 6px;
+  .progress-wrapper .time {
+    font-size: 12px;
     color: white;
   }
 
