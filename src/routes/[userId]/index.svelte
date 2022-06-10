@@ -64,7 +64,8 @@
   import moment from "moment";
   import * as animateScroll from "svelte-scrollto";
   import { slimscroll } from "svelte-slimscroll";
-  import ImagePreviewModal from "$lib/components/ImagePreviewModal.svelte"
+  import ImagePreviewModal from "$lib/components/ImagePreviewModal.svelte";
+  import AudioPlayer from "$lib/components/AudioPlayer.svelte"
 
   console.log("selfie", $pictureFile);
 
@@ -82,8 +83,6 @@
   let chatbox = null;
   let autoscroll = null;
   let colRef = collection(db, "whatzapp_users");
-
-  // onAuthStateChanged(auth, (user) => (loggedinUser = user));
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
@@ -160,19 +159,14 @@
     }
   };
 
-  onMount(() => {
-    // $background.src = $imageURL;
-    // if ($imageTitle === "Default") {
-    //   $bgOpacity = 0.06;
-    //   $bgColor = "#e5ddd5";
-    //   $disabled = true;
-    // }
-    // if ($imageTitle != "Default") {
-    //   $bgOpacity = 0.5;
-    //   $disabled = false;
-    // }
-    // console.log("image title: ", $imageTitle);
+  const showImagePreview = (pictureURL, imageURL) => {
+    $showImagePreviewModal = true;
 
+    $storedPictureURL = pictureURL;
+    $storedImageURL = imageURL;
+  };
+
+  onMount(() => {
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
         navigator.userAgent
@@ -186,9 +180,10 @@
     }
   });
 
-  // $: if ($page.params.userId === $selectedUsername) { getSelectedUser($selectedUsername) }
+  $: if ($page.params.userId === $selectedUsername) {
+    matched = true;
+  }
 
-  $: if ($page.params.userId === $selectedUsername) matched = true;
   $: if (matched) {
     q = query(colRef, where("name", "==", $selectedUsername));
     const unsub = onSnapshot(q, (snapshot) => {
@@ -222,31 +217,6 @@
     // selectedUserMsgsReady = false
     matched = false;
   }
-
-  beforeUpdate(() => {
-    autoscroll =
-      chatbox &&
-      chatbox.offsetHeight + chatbox.scrollTop > chatbox.scrollHeight;
-  });
-
-  afterUpdate(() => {
-    if (autoscroll) chatbox.scrollTo(0, chatbox.scrollHeight);
-  });
-
-  const showImagePreview = (pictureURL, imageURL) => {
-    $showImagePreviewModal = true
-
-    $storedPictureURL = pictureURL
-    $storedImageURL = imageURL
-  }
-
-  onMount(() => {
-    // chatbox.scrollTo(0, chatbox.scrollHeight);
-    // chatbox.scrollTop = chatbox.scrollHeight;
-    // animateScroll.scrollToBottom()
-    // animateScroll.scrollTo({ element: "chatbox" });
-    // moment.locale();
-  });
 
   $: if ($pictureConfirmed) {
     let imgPath =
@@ -318,11 +288,6 @@
     });
   }
 
-  // $: if ($themeStore.theme === "dark" && browser) {
-  //   $background.src = null
-  //   $bgColor = "#292F3F"
-  // }
-
   $: if ($audioFile) {
     $audioURL = window.URL.createObjectURL($audioFile);
     console.log("audio url", $audioURL);
@@ -337,9 +302,10 @@
 </script>
 
 <svelte:head>
-  {#if $page.params.userId}
-    <!-- <title>Chat</title> -->
-  {/if}
+  <!-- {#if $page.params.userId}
+    <title>Chat</title>
+  {/if} -->
+  <script src="https://unpkg.com/wavesurfer.js"></script>
 </svelte:head>
 
 <div>
@@ -496,7 +462,7 @@
             style:background={msg.pictureURL || msg.imageURL || msg.audioURL
               ? "none"
               : msg.from === $loggedinUser.displayName &&
-                $themeStore.theme === "dark" 
+                $themeStore.theme === "dark"
               ? "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)"
               : msg.from === $loggedinUser.displayName &&
                 $themeStore.theme === "light"
@@ -505,6 +471,9 @@
                 $themeStore.theme === "dark"
               ? "linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)"
               : "white"}
+            style:padding={msg.pictureURL || msg.imageURL || msg.audioURL
+              ? "0"
+              : "8px 12px 6px 12px"}
           >
             <span
               class="showtime"
@@ -527,8 +496,7 @@
               style:left={msg.pictureURL || msg.imageURL ? "12px" : ""}
               style:display={msg.pictureURL || msg.imageURL ? "block" : "none"}
               on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
-              >
-              <!-- on:click={() => $showImagePreviewModal = true} -->
+            >
               <path
                 fill="none"
                 stroke="currentColor"
@@ -548,7 +516,7 @@
               </span>
             {/if}
 
-            {#if msg.pictureURL}           
+            {#if msg.pictureURL}
               <img src={msg.pictureURL} alt="" />
             {/if}
 
@@ -557,10 +525,11 @@
             {/if}
 
             {#if msg.audioURL}
-              <audio controls>
+              <!-- <audio controls>
                 <source src={msg.audioURL} />
                 <track kind="captions" />
-              </audio>
+              </audio> -->
+              <AudioPlayer />
             {/if}
           </p>
         </div>
@@ -709,7 +678,7 @@
       </svg>
       <input
         type="text"
-        placeholder="Type a message"
+        placeholder="Say something"
         bind:value={$message}
         style:background={$themeStore.theme === "dark" ? "#1F232F" : "white"}
       />
@@ -790,10 +759,6 @@
   <MapModal />
 {/if}
 
-<!-- {#if $showImagePreviewModal}
-  <ImagePreviewModal />
-{/if} -->
-
 <style>
   :root {
     --bg-color: #d6d8dc;
@@ -809,12 +774,11 @@
     top: -5px;
     left: -5px;
     z-index: 600; */
-    background: rgba(0, 0, 0, .5);
+    background: rgba(0, 0, 0, 0.5);
     color: rgba(255, 255, 255, 0.5);
     color: white;
     border-radius: 2px;
   }
-
 
   audio {
     max-width: 100%;
@@ -988,7 +952,7 @@
     position: relative;
     right: 0;
     max-width: 65%;
-    padding: 8px 12px 6px 12px;
+    /* padding: 8px 12px 6px 12px; */
     border-radius: 8px;
     background: var(--lemon-green);
     color: var(--icon-add-color);
@@ -1026,7 +990,7 @@
     bottom: 60px;
     width: 100%;
     height: calc(100vh - 120px);
-    padding: 20px;
+    padding: 10px 20px 0 20px;
     overflow-y: scroll;
     /* border: 1px solid; */
   }
