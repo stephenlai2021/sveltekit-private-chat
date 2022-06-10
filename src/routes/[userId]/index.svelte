@@ -496,14 +496,14 @@
             style:background={msg.pictureURL || msg.imageURL || msg.audioURL
               ? "none"
               : msg.from === $loggedinUser.displayName &&
-                $themeStore.theme === "dark"
-                "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)"
+                $themeStore.theme === "dark" 
+              ? "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)"
               : msg.from === $loggedinUser.displayName &&
                 $themeStore.theme === "light"
               ? "#dcf8c6"
               : msg.from != $loggedinUser.displayName &&
                 $themeStore.theme === "dark"
-                "linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)"
+              ? "linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)"
               : "white"}
           >
             <span

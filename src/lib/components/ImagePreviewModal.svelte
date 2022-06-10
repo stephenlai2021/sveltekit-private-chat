@@ -85,7 +85,7 @@
 <style>
   img {
     max-height: 100vh;
-    max-width: 100%;
+    max-width: 100vw;
   }
 
   .icon-close {
