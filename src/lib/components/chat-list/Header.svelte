@@ -1,0 +1,92 @@
+<script>
+  import themeStore from "svelte-themes";
+  import {
+    showSidebarMenu,
+    loggedinUser,
+    showSettingsModal,
+    showAddFriendModal,
+  } from "$lib/store";
+</script>
+
+<div
+  class="header"
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+>
+  <div class="left" style:cursor="pointer">
+    {#if !$showSidebarMenu}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+        style:margin-right="5px"
+        on:click={() => ($showSidebarMenu = true)}
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="32"
+          d="M80 160h352M80 256h352M80 352h352"
+        />
+      </svg>
+    {/if}
+    {#if $loggedinUser}
+      <div
+        class="userimg"
+        on:click|stopPropagation={() =>
+          ($showSettingsModal = !$showSettingsModal)}
+      >
+        {#if $loggedinUser.photoURL}
+          <img src={$loggedinUser.photoURL} alt="" class="cover" />
+        {:else}
+          <img src="/joke.png" alt="" class="cover" />
+        {/if}
+      </div>
+    {/if}
+    <h3 class="user-title">LetsChat</h3>
+  </div>
+
+  <ul class="nav_icons">
+    <li
+      on:click|stopPropagation={() =>
+        ($showAddFriendModal = !$showAddFriendModal)}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+      >
+        <path
+          d="M376 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+        <path
+          d="M288 304c-87 0-175.3 48-191.64 138.6-2 10.92 4.21 21.4 15.65 21.4H464c11.44 0 17.62-10.48 15.65-21.4C463.3 352 375 304 288 304z"
+          fill="none"
+          stroke="currentColor"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+          d="M88 176v112M144 232H32"
+        />
+      </svg>
+    </li>
+  </ul>
+</div>

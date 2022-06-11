@@ -91,43 +91,6 @@ ion-icon {
   object-fit: cover;
 }
 
-.rightSide .header {
-  position: absolute;
-  top: 0px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  padding-right: 0px;
-  padding: 15px 0 15px 15px;
-  background: #ebebeb;
-}
-
-.rightSide .header .left-part {
-  cursor: pointer;
-}
-
-.rightSide .header .imgText {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.rightSide .header .imgText .userimg {
-  position: relative;
-  display: flex;
-}
-
-.rightSide .header .imgText .userimg img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-}
-
-.rightSide .header .imgText h4 {
-  font-weight: 400;
-  line-height: 1.2em;
-}
-
 .left {
   display: flex;
   align-items: center;
