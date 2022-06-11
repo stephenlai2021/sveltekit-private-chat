@@ -90,3 +90,44 @@
     </li>
   </ul>
 </div>
+
+<style>
+  .left {
+    display: flex;
+    align-items: center;
+  }
+
+  .userimg {
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .userimg img {
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .user-title {
+    margin-left: 5px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+  }
+
+  .nav_icons {
+    cursor: pointer;
+    display: flex;
+  }
+
+  .nav_icons li {
+    list-style: none;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+  }
+</style>

@@ -34,11 +34,6 @@
   letter-spacing: 0.5px;
 }
 
-body {
-  overflow-y: hidden;
-  height: 100vh;
-}
-
 svg {
   cursor: pointer;
 }
@@ -48,9 +43,9 @@ a {
   color: inherit;
 }
 
-ion-icon {
-  font-size: 24px;
-  cursor: pointer;
+body {
+  overflow-y: hidden;
+  height: 100vh;
 }
 
 .wrapper {
@@ -63,20 +58,8 @@ ion-icon {
   margin: auto;
 }
 
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 15px;
-}
-
 .leftSide {
   position: relative;
-}
-
-.leftSide .header {
-  height: 60px;
 }
 
 .rightSide {
@@ -91,37 +74,13 @@ ion-icon {
   object-fit: cover;
 }
 
-.left {
+.header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-}
-
-.left .user-details {
-  padding-left: 5px;
-}
-
-.left .user-title {
-  margin-left: 5px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  /* letter-spacing: 1px; */
-  font-size: 20px;
-  /* text-transform: uppercase; */
-}
-
-.left .userimg {
-  width: 35px;
-  height: 35px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-}
-
-.left .userimg img {
-  border-radius: 50%;
-  overflow: hidden;
+  width: 100%;
+  height: 60px;
+  padding: 0 15px;
 }
 
 .user-email {
@@ -136,53 +95,7 @@ ion-icon {
   max-width: 200px;
 }
 
-.nav_icons {
-  cursor: pointer;
-  display: flex;
-}
-
-.nav_icons li {
-  list-style: none;
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-}
-
-.nav_icons li span {
-  font-size: 1.5em;
-}
-
-.search_user {
-  position: relative;
-  top: 0px;
-  width: 100%;
-  padding: 10px 15px;
-  border-top: 0.5px solid rgba(0, 0, 0, .1);
-  border-bottom: 0.5px solid rgba(0, 0, 0, .1);
-}
-
-.search_user input {
-  width: 100%;
-  outline: none;
-  border: none;
-  padding: 10px;
-  border-radius: 50px;
-  font-size: 14px;
-  padding-left: 40px;
-}
-
-.search-user-wrapper {
-  position: relative;
-}
-
-.icon-finduser {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.search_user .icon-finduser-wrapper {
+/* .search_user .icon-finduser-wrapper {
   position: absolute;
   right: 14px;
   top: 4px;
@@ -194,108 +107,7 @@ ion-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.chatlist {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.chatlist .block {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 15px;
-  height: 65px;
-  cursor: pointer;
-}
-
-.chatlist .block:hover {
-  transform: scale(1.01);
-}
-
-.chatlist .block .imgbx {
-  min-width: 45px; 
-  height: 45px;
-  cursor: pointer;
-  margin-right: 15px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.chatlist .block .imgbx img {
-  width: 45px;
-  height: 45px;
-  overflow: hidden;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.chatlist .block .details {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.chatlist .block .details .listHead {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-.chatlist .block .details .listHead .user-title {
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 20px;
-}
-
-.chatlist .block .details .listHead .time {
-  font-size: 0.75em;
-  color: #aaa;
-}
-
-.chatlist .block.unread .details .listHead .time {
-  color: var(--active-green);
-}
-
-.chatlist .block .details .listHead h4,
-.chatlist .block .details .message_p p {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  /* border: 1px solid; */
-}
-
-.message_p {
-  display: flex;
-  justify-content: space-between;
-}
-
-.message_p p {
-  font-size: 14px;
-  font-weight: 300;
-  font-family: 'Roboto', sans-serif;
-  letter-spacing: 0.5px;
-}
-
-.chatlist .block.unread .details .message_p b {
-  background: var(--active-green);
-  color: white;
-  min-width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: grid;
-  place-content: center;
-  font-size: 0.75em;
-  margin-right: 3px;
-}
+} */
 
 .imgbx {
   position: relative;

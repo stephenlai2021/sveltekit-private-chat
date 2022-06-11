@@ -1,5 +1,5 @@
 <script>
-  import { keyword } from "$lib/store"
+  import { keyword } from "$lib/store";
   import themeStore from "svelte-themes";
 </script>
 
@@ -39,3 +39,35 @@
     </svg>
   </div>
 </div>
+
+<style>
+  .search_user {
+    position: relative;
+    top: 0px;
+    width: 100%;
+    padding: 10px 15px;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .search-user-wrapper {
+    position: relative;
+  }
+
+  input {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 50px;
+    font-size: 14px;
+    padding-left: 40px;
+  }
+
+  .icon-finduser {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+</style>
