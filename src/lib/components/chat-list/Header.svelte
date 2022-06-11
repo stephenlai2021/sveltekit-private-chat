@@ -108,7 +108,10 @@
   }
 
   .userimg img {
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
+    object-fit: cover;
     overflow: hidden;
   }
 
