@@ -70,8 +70,8 @@
       />
     </svg>
     {#if selectedUserReady}
-      <div class="imgText">
-        <div class="userimg">
+      <div class="user-info">
+        <div class="image-wrapper">
           {#if selectedUser.avatar}
             <img src={selectedUser.avatar} alt="" />
           {:else}
@@ -86,8 +86,8 @@
         </div>
       </div>
     {:else}
-      <div class="imgText">
-        <div class="userimg">
+      <div class="user-info">
+        <div class="image-wrapper">
           <div class="user-avatar animation" />
         </div>
         <div class="details">
@@ -198,35 +198,31 @@
     display: none;
   }
 
-  .imgText {
+  .user-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .imgText .userimg {
+  .user-info .image-wrapper {
     position: relative;
     display: flex;
   }
 
-  .imgText .userimg img {
+  .user-info .image-wrapper img {
     width: 35px;
     height: 35px;
     border-radius: 50%;
   }
-
-  .imgText h4 {
-    font-weight: 400;
-    line-height: 1.2em;
-  }
-
-  .details h4 {
-    font-size: 18px;
-    font-weight: 400;
-  }
-
+  
   .details {
     padding-left: 15px;
+  }
+  
+  .details h4 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2em;
   }
 
   .user-avatar,

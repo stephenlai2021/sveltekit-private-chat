@@ -168,6 +168,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
   }
 
   .imgbx img {
@@ -193,9 +194,9 @@
   }
 
   .details .listHead .user-title {
-    font-size: 18px;
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
+    font-size: 16px;
+    /* font-family: "Roboto", sans-serif; */
+    font-weight: 600;
     font-style: normal;
     line-height: 20px;
   }
@@ -215,9 +216,9 @@
   }
 
   .message p {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
-    font-family: "Roboto", sans-serif;
+    /* font-family: "Roboto", sans-serif; */
     letter-spacing: 0.5px;
     display: -webkit-box;
     -webkit-line-clamp: 1;

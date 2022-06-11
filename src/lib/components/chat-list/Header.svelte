@@ -105,6 +105,8 @@
     align-items: center;
     position: relative;
     cursor: pointer;
+    margin-right: 5px;
+    /* border: 1px solid; */
   }
 
   .userimg img {
