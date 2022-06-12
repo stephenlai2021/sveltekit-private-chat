@@ -3,7 +3,11 @@
   import themeStore from "svelte-themes";
 </script>
 
-<div class="search_user">
+<div 
+  class="search_user"
+  style:border-top={$themeStore.theme === "dark" ? "1px solid #3a3f50" : "1px solid #ebebeb"}
+  style:border-bottom={$themeStore.theme === "dark" ? "1px solid #3a3f50" : "1px solid #ebebeb"}
+>
   <div class="search-user-wrapper">
     <input
       type="text"
@@ -69,5 +73,9 @@
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  ::placeholder {
+    font-size: 16px;
   }
 </style>

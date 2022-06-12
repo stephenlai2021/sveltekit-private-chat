@@ -248,7 +248,6 @@
   .message p {
     font-size: 16px;
     font-weight: 300;
-    letter-spacing: 0.5px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;

@@ -14,6 +14,7 @@
   import Navbar from "$lib/components/Navbar.svelte";
   import themeStore from "svelte-themes";
   import Header from "$lib/components/chatlist/Header.svelte"
+  import TabMenu from "$lib/components/chatlist/TabMenu.svelte"
   import SearchUser from "$lib/components/chatlist/SearchUser.svelte"
   import ContactList from "$lib/components/chatlist/ContactList.svelte" 
 </script>
@@ -31,6 +32,7 @@
 >
   <Header />
   <SearchUser />  
+  <TabMenu />
   <ContactList />
   
 
@@ -42,7 +44,7 @@
     <AddFriendModal />
   {/if}
 
-  <!-- {#if $mobile} -->
+  <!-- {#if $mobile}
     <Navbar />
-  <!-- {/if} -->
+  {/if} -->
 </div>
