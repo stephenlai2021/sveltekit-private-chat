@@ -38,7 +38,7 @@
   import { onMount } from "svelte";
   import { auth, db } from "$lib/firebase/client";
   import { page } from "$app/stores";
-  import LeftSide from "$lib/components/LeftSide.svelte";
+  import ChatList from "$lib/components/ChatList.svelte";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
   import themeStore, { setTheme } from "svelte-themes";
@@ -106,11 +106,7 @@
   <!-- {#if $showSidebarMenu}
     <SidebarMenu />
   {/if} -->
-  <LeftSide />
-  <!-- style:background-image={`url(${imageURL})`}
-  style:background-size="cover"
-  style:background-repeat="no-repeat" -->
-  <!-- style:background={$bgColor} -->
+  <ChatList />
   <div
     class="rightSide"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}

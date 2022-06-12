@@ -101,13 +101,6 @@
 </div>
 
 <style>
-  /* canvas {
-    bottom: 25px;
-    border-radius: 50%;
-    border: 1px solid;
-    display: none;
-  } */
-
   canvas {
     position: absolute;
     left: clamp(30px, 50px, 80px);

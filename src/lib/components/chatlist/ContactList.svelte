@@ -8,13 +8,12 @@
     loginUserEmail,
     selectedUsername,
     showSettingsModal,
+    allChat,
+    privateChat,
+    groupChat,
+    publicChat,
   } from "$lib/store";
-  import {
-    collection,
-    onSnapshot,
-    query,
-    where,
-  } from "firebase/firestore";
+  import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { auth, db } from "$lib/firebase/client";
   import { fade } from "svelte/transition";
   import { page } from "$app/stores";
@@ -24,6 +23,7 @@
 
   let users = [];
   let ready = false;
+  let usersReady = false
   let currentContact = null;
   let filteredUsers = [];
 
@@ -59,6 +59,7 @@
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
+      usersReady = true
       console.log("initialzie user list | snapshot", users);
       return () => unsubUsers();
     });
@@ -77,73 +78,103 @@
   }
 </script>
 
-{#if users.length}
+{#if $allChat}
   <div
     class="chatlist"
     style:padding-bottom={$mobile ? "5px" : "0px"}
-    style:height="calc(100vh - 115px)"
+    style:height={$mobile ? "calc(100vh - 175px)" : "calc(100vh - 115px)"}
     transition:fade={{ duration: 100 }}
+    style:overflow-y={usersReady ? "auto" : "hidden"}
   >
-    {#each filteredUsers as user}
-      <div
-        class="block"
-        class:unread={user.unread}
-        on:click={() => selectUser(user)}
-        style:background={(currentContact === user && !$mobile) ||
-        (user.name === $page.params.userId && !$mobile)
-          ? $themeStore.theme === "dark"
-            ? "#3a3f50"
-            : "#ebebeb"
-          : ""}
-        style:border={(currentContact === user && !$mobile) ||
-        (user.name === $page.params.userId && !$mobile)
-          ? $themeStore.theme === "dark"
-            ? "1px solid #3a3f50"
-            : "1px solid #ebebeb"
-          : ""}
-      >
-        <div class="imgbx">
-          {#if user.avatar}
-            <img src={user.avatar} alt="" class="cover" />
-          {:else}
-            <img src="/joke.png" alt="" class="cover" />
-          {/if}
-          <div class={user.isOnline ? "status online" : "status offline"} />
-        </div>
-        <div class="details">
-          <div class="listHead">
-            <span class="user-title">{user.name}</span>
-            <p class="time">10:56</p>
+    {#if users.length}
+      {#each filteredUsers as user}
+        <div
+          class="block"
+          class:unread={user.unread}
+          on:click={() => selectUser(user)}
+          style:background={(currentContact === user && !$mobile) ||
+          (user.name === $page.params.userId && !$mobile)
+            ? $themeStore.theme === "dark"
+              ? "#3a3f50"
+              : "#ebebeb"
+            : ""}
+          style:border={(currentContact === user && !$mobile) ||
+          (user.name === $page.params.userId && !$mobile)
+            ? $themeStore.theme === "dark"
+              ? "1px solid #3a3f50"
+              : "1px solid #ebebeb"
+            : ""}
+        >
+          <div class="imgbx">
+            {#if user.avatar}
+              <img src={user.avatar} alt="" class="cover" />
+            {:else}
+              <img src="/joke.png" alt="" class="cover" />
+            {/if}
+            <div class={user.isOnline ? "status online" : "status offline"} />
           </div>
-          <div class="message">
-            <p
-              style:border={(currentContact === user && !$mobile) ||
-              (user.name === $page.params.userId && !$mobile)
-                ? $themeStore.theme === "dark"
-                  ? "1px solid #3a3f50"
-                  : "1px solid #ebebeb"
-                : $themeStore.theme === "dark"
-                ? "1px solid #292F3F"
-                : "1px solid white"}
-            >
-              How to make Whatsapp clone using html and css
-            </p>
-            <b>1</b>
+          <div class="details">
+            <div class="listHead">
+              <span class="user-title">{user.name}</span>
+              <p class="time">10:56</p>
+            </div>
+            <div class="message">
+              <p
+                style:border={(currentContact === user && !$mobile) ||
+                (user.name === $page.params.userId && !$mobile)
+                  ? $themeStore.theme === "dark"
+                    ? "1px solid #3a3f50"
+                    : "1px solid #ebebeb"
+                  : $themeStore.theme === "dark"
+                  ? "1px solid #292F3F"
+                  : "1px solid white"}
+              >
+                How to make Whatsapp clone using html and css
+              </p>
+              <b>1</b>
+            </div>
           </div>
         </div>
+      {/each}
+    {:else}
+      <div class="loading">
+        <Skeleton />
       </div>
-    {/each}
+    {/if}
   </div>
-{:else}
-  <div class="loading">
-    <Skeleton />
+{/if}
+
+{#if $privateChat}
+  <div class="group-chat">
+    <h1>Private Chat</h1>
+  </div>
+{/if}
+
+{#if $groupChat}
+  <div class="group-chat">
+    <h1>Group Chat</h1>
+  </div>
+{/if}
+
+{#if $publicChat}
+  <div class="public-chat">
+    <h1>Public Chat</h1>
   </div>
 {/if}
 
 <style>
+  .group-chat,
+  .public-chat {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid; */
+  }
+
   .chatlist {
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow: hidden; */
   }
 
   .block {

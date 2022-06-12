@@ -10,7 +10,10 @@ import {
 
 let colRef = collection(db, "whatzapp_users");
 
-
+export const allChat = writable(true)
+export const privateChat = writable(false)
+export const groupChat = writable(false)
+export const publicChat = writable(false)
 export const showActionMenu = writable(false)
 export const storedImageURL = writable(null)
 export const storedPictureURL = writable(null)
@@ -21,7 +24,6 @@ export const showGradientMenu = writable(true);
 export const showThemeMenu = writable(true);
 export const showMapModal = writable(false);
 export const disabled = writable(false);
-// export const imageTitle = writable("")
 export const file = writable(null);
 export const background = writable(null);
 export const showToolModal = writable(false);
@@ -64,7 +66,6 @@ export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
 export const bgColor = writable("#e5ddd5");
-// export const selectedUser = writable(null)
 
 // export const getSelectedUser = (name) => {
 export const getSelectedUser = (selectedUsername) => {

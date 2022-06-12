@@ -150,5 +150,7 @@
     background: #eee;
     background: black;
     background: #1f232f;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 </style>

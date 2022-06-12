@@ -13,9 +13,9 @@
   import AddFriendModal from "$lib/components/AddFriendModal.svelte";
   import Navbar from "$lib/components/Navbar.svelte";
   import themeStore from "svelte-themes";
-  import Header from "$lib/components/chat-list/Header.svelte"
-  import SearchUser from "$lib/components/chat-list/SearchUser.svelte"
-  import ContactList from "$lib/components/chat-list/ContactList.svelte" 
+  import Header from "$lib/components/chatlist/Header.svelte"
+  import SearchUser from "$lib/components/chatlist/SearchUser.svelte"
+  import ContactList from "$lib/components/chatlist/ContactList.svelte" 
 </script>
 
 <div
@@ -42,7 +42,7 @@
     <AddFriendModal />
   {/if}
 
-  {#if $mobile}
+  <!-- {#if $mobile} -->
     <Navbar />
-  {/if}
+  <!-- {/if} -->
 </div>
