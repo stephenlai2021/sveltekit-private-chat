@@ -82,7 +82,7 @@
   <div
     class="chatlist"
     style:padding-bottom={$mobile ? "5px" : "0px"}
-    style:height={$mobile ? "calc(100vh - 175px)" : "calc(100vh - 115px)"}
+    style:height={$mobile ? "calc(100vh - 180px)" : "calc(100vh - 115px)"}
     transition:fade={{ duration: 100 }}
     style:overflow-y={usersReady ? "auto" : "hidden"}
   >

@@ -88,7 +88,6 @@
     height: 40px;
     padding: 0 15px;
     margin: 10px 0;
-    /* border: 1px solid; */
   }
 
   span {
@@ -101,8 +100,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    /* border-top-left-radius: 8px;
-    border-top-right-radius: 8px; */
+    padding: 2px;
     border-radius: 8px;
   }
 </style>
