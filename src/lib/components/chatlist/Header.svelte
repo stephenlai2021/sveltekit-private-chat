@@ -1,7 +1,7 @@
 <script>
   import themeStore from "svelte-themes";
   import {
-    bgColor
+    bgColor,
     showSidebarMenu,
     loggedinUser,
     showSettingsModal,
