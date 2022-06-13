@@ -51,13 +51,15 @@ style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px
     position: relative;
     top: 0px;
     width: 100%;
-    padding: o 15px 10px 15px;
+    padding: 0px 15px 10px 15px;
     /* border-top: 0.5px solid rgba(0, 0, 0, 0.05);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.05); */
+    /* border: 1px solid; */
   }
-
+  
   .search-user-wrapper {
     position: relative;
+    /* border: 1px solid; */
   }
 
   input {
