@@ -92,7 +92,7 @@
       $showAddFriendModal = false;
       $showThemeModal = false;
     });
-    window.addEventListener("resize", () => resizeWindow());
+    window.addEventListener("resize", () => desktopOrMobile());
   }
 </script>
 
@@ -105,17 +105,31 @@
   <!-- {#if $showSidebarMenu}
     <SidebarMenu />
   {/if} -->
-  <ChatList />
-  <div
+  <!-- $mobile && ($page.url.pathname === "/" || $page.url.pathname === "/private" || $page.url.pathname === "/group" || $page.url.pathname === "/public") -->
+  <div 
+    class="leftSide"
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}
+    style:width={
+      $mobile && $page.url.pathname === "/"
+      ? "100%"
+      : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
+      ? "0%"
+      : !$mobile && $page.url.pathname != "/login"
+      ? "500px"
+      : "0%"}
   >
-    <!-- class="rightSide"
+    <ChatList />
+  </div>
+  <div
+    class="rightSide"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
     style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
     style:width={$mobile && $page.url.pathname === "/"
       ? "0%"
       : $mobile && $page.url.pathname != "/"
       ? "100%"
-      : "100%"} -->
+      : "100%"}
+  >
     <slot />
   </div>
   

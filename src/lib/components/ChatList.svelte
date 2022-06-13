@@ -19,17 +19,16 @@
   import ContactList from "$lib/components/chatlist/ContactList.svelte" 
 </script>
 
-<div
-  class="leftSide"
+  <!-- class="leftSide"
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}
-  style:width={
-    $mobile && ($page.url.pathname === "/" || $page.url.pathname === "/private" || $page.url.pathname === "/group" || $page.url.pathname === "/public") ? 
-      "100%"
+  style:width={$mobile && $page.url.pathname === "/"
+    ? "100%"
     : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
     ? "0%"
     : !$mobile && $page.url.pathname != "/login"
     ? "500px"
-    : "0%"}
+    : "0%"} -->
+<div
 >
   <Header />
   <SearchUser />  
