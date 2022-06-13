@@ -7,13 +7,14 @@
   class="search_user"
   style:border-top={$themeStore.theme === "dark" ? "1px solid #3a3f50" : "1px solid #ebebeb"}
   style:border-bottom={$themeStore.theme === "dark" ? "1px solid #3a3f50" : "1px solid #ebebeb"}
+  style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}
 >
   <div class="search-user-wrapper">
     <input
       type="text"
       placeholder="Find user"
       bind:value={$keyword}
-      style:background={$themeStore.theme === "dark" ? "#1F232F" : bgColor}
+      style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"}
       />
       <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"} -->
 

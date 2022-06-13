@@ -25,6 +25,6 @@
   </div>
 </div> -->
 
-<div class="page-wrapper">
+<!-- <div class="page-wrapper">
   <h1>This is All Chat</h1>
-</div>
+</div> -->
