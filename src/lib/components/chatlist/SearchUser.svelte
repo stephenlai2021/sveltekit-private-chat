@@ -5,8 +5,8 @@
 
 <div 
   class="search_user"
-  style:border-top={$themeStore.theme === "dark" ? "1px solid #3a3f50" : "1px solid #ebebeb"}
-  style:border-bottom={$themeStore.theme === "dark" ? "1px solid #3a3f50" : "1px solid #ebebeb"}
+  style:border-top={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px solid #ebebeb"}
+  style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px solid #ebebeb"}
   style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}
 >
   <div class="search-user-wrapper">
@@ -52,8 +52,8 @@
     top: 0px;
     width: 100%;
     padding: 10px 15px;
-    border-top: 0.5px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+    /* border-top: 0.5px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.05); */
   }
 
   .search-user-wrapper {
