@@ -1,7 +1,7 @@
 <script>
   import { goto } from "$app/navigation";
   import themeStore from "svelte-themes";
-  import { allChat, privateChat, groupChat, publicChat } from "$lib/store";
+  import { bgColor, allChat, privateChat, groupChat, publicChat } from "$lib/store";
 
   const menuItems = ['All', 'Private', 'Group', 'Public']
   let currentTab = menuItems[0]
@@ -51,7 +51,8 @@
         currentTab === tab ?
           $themeStore.theme === "dark" ? 
             "#3a3f50" 
-            : "#ebebeb"
+            // : "#ebebeb"
+            : $bgColor
         : "none"
       }
     >{tab}</span>

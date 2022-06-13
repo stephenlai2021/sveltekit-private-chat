@@ -1,5 +1,5 @@
 <script>
-  import { keyword } from "$lib/store";
+  import { keyword, bgColor } from "$lib/store";
   import themeStore from "svelte-themes";
 </script>
 
@@ -13,8 +13,9 @@
       type="text"
       placeholder="Find user"
       bind:value={$keyword}
-      style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"}
-    />
+      style:background={$themeStore.theme === "dark" ? "#1F232F" : bgColor}
+      />
+      <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"} -->
 
     <svg
       xmlns="http://www.w3.org/2000/svg"

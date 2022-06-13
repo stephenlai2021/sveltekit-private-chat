@@ -1,6 +1,7 @@
 <script>
   import themeStore from "svelte-themes";
   import {
+    bgColor
     showSidebarMenu,
     loggedinUser,
     showSettingsModal,
@@ -8,9 +9,10 @@
   } from "$lib/store";
 </script>
 
+<!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"} -->
 <div
   class="header"
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
 >
   <div class="left" style:cursor="pointer">
     {#if !$showSidebarMenu}

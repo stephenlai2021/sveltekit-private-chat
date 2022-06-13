@@ -102,7 +102,6 @@
   <!-- {#if $showSidebarMenu}
     <SidebarMenu />
   {/if} -->
-  <!-- $mobile && ($page.url.pathname === "/" || $page.url.pathname === "/private" || $page.url.pathname === "/group" || $page.url.pathname === "/public") -->
   <div 
     class="leftSide"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}

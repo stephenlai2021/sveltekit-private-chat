@@ -1,5 +1,6 @@
 <script>
   import {
+    bgColor,
     mobile,
     keyword,
     isMobile,
@@ -96,7 +97,8 @@
           (user.name === $page.params.userId && !$mobile)
             ? $themeStore.theme === "dark"
               ? "#3a3f50"
-              : "#ebebeb"
+              // : "#ebebeb"
+              : $bgColor
             : ""}
           style:border={(currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile)
