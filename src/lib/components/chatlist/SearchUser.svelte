@@ -68,6 +68,8 @@
     border-radius: 50px;
     font-size: 14px;
     padding-left: 40px;
+    /* display: flex;
+    align-items: center; */
   }
 
   .icon-finduser {
@@ -79,5 +81,8 @@
 
   ::placeholder {
     font-size: 16px;
+    /* margin-top: 5px; */
+    /* line-height: 0.7;
+    border: 1px solid; */
   }
 </style>

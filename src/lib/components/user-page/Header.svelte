@@ -4,6 +4,7 @@
     showToolModal,
     selectedUsername,
     loggedinUser,
+    bgColor
   } from "$lib/store";
   import {
     doc,
@@ -48,8 +49,10 @@
 
 <div
   class="header"
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
->
+  style:background="transparent"
+  >
+  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
+  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"} -->
   <div class="left-part">
     <svg
       xmlns="http://www.w3.org/2000/svg"

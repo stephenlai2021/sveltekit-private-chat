@@ -93,13 +93,13 @@
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          style:background={(currentContact === user && !$mobile) ||
-          (user.name === $page.params.userId && !$mobile)
-            ? $themeStore.theme === "dark"
-              ? "#3a3f50"
-              // : "#ebebeb"
-              : $bgColor
-            : ""}
+          style:background={
+            (currentContact === user && !$mobile) || (user.name === $page.params.userId && !$mobile) ? 
+              $themeStore.theme === "dark" ? 
+                "#3a3f50"
+                : $bgColor
+            : ""
+          }
           style:border={(currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile)
             ? $themeStore.theme === "dark"
@@ -121,16 +121,15 @@
               <p class="time">10:56</p>
             </div>
             <div class="message">
-              <p
-                style:border={(currentContact === user && !$mobile) ||
+                <!-- style:border={(currentContact === user && !$mobile) ||
                 (user.name === $page.params.userId && !$mobile)
                   ? $themeStore.theme === "dark"
                     ? "1px solid #3a3f50"
                     : "1px solid #ebebeb"
                   : $themeStore.theme === "dark"
                   ? "1px solid #292F3F"
-                  : "1px solid white"}
-              >
+                  : "1px solid white"} -->
+              <p>
                 How to make Whatsapp clone using html and css
               </p>
               <b>1</b>
