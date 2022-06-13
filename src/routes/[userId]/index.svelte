@@ -12,6 +12,7 @@
     pictureFile,
     audioFile,
     audioURL,
+    bgColor,
     audioConfirmed,
     selectedUsername,
     showAudioPlayerModal,
@@ -33,11 +34,13 @@
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
   import MapModal from "$lib/components/MapModal.svelte";
-  import { onMount } from "svelte";
   import ActionMenu from "$lib/components/ActionMenu.svelte";
   import Header from "$lib/components/user-page/Header.svelte";
   import Footer from "$lib/components/user-page/Footer.svelte";
   import Body from "$lib/components/user-page/Body.svelte";
+  import themeStore from "svelte-themes";
+  import { page } from "$app/stores";
+  import { onMount } from "svelte";
 
   let url = null;
 
@@ -138,7 +141,17 @@
   }
 </script>
 
-<div>
+
+<div
+  class="rightSide"
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
+  style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
+  style:width={$mobile && $page.url.pathname === "/"
+    ? "0%"
+    : $mobile && $page.url.pathname != "/"
+    ? "100vw"
+    : "100vw"}
+>
   <Header />
   <Body />
   <Footer />

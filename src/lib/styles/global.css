@@ -80,6 +80,7 @@ body {
 .rightSide {
   position: relative;
   width: 100%;
+  max-width: calc(1450px - 550px);
   height: 100%;
 }
 

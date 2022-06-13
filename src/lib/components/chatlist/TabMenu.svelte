@@ -3,83 +3,59 @@
   import themeStore from "svelte-themes";
   import { allChat, privateChat, groupChat, publicChat } from "$lib/store";
 
-  const setAllChat = () => {
-    $allChat = true;
-    $privateChat = false;
-    $groupChat = false;
-    $publicChat = false;
-    goto("/");
-  };
+  const menuItems = ['All', 'Private', 'Group', 'Public']
+  let currentTab = menuItems[0]
 
-  const setPrivateChat = () => {
-    $allChat = false;
-    $privateChat = true;
-    $groupChat = false;
-    $publicChat = false;
-    goto("/private");
-  };
+  const selectTab = (selectedTab) => {
+    currentTab = selectedTab
 
-  const setGroupChat = () => {
-    $allChat = false;
-    $privateChat = false;
-    $groupChat = true;
-    $publicChat = false;
-    goto("/group");
-  };
+    if (currentTab === 'All') {
+      $allChat = true;
+      $privateChat = false;
+      $groupChat = false;
+      $publicChat = false;
+      goto("/");
+    }
 
-  const setPublicChat = () => {
-    $allChat = false;
-    $privateChat = false;
-    $groupChat = false;
-    $publicChat = true;
-    goto("/public");
-  };
+    if (currentTab === 'Private') {
+      $allChat = false;
+      $privateChat = true;
+      $groupChat = false;
+      $publicChat = false;
+      goto("/private");
+    }
+
+    if (currentTab === 'Group') {
+      $allChat = false;
+      $privateChat = false;
+      $groupChat = true;
+      $publicChat = false;
+      goto("/group");
+    }
+    
+    if (currentTab === 'Public') {
+      $allChat = false;
+      $privateChat = false;
+      $groupChat = false;
+      $publicChat = true;
+      goto("/public");
+    }
+  }
 </script>
 
 <div class="tab-menu">
-  <span 
-    on:click={setAllChat}
-    style:background={
-      $allChat ?
-        $themeStore.theme === "dark" ? 
-          "#3a3f50" 
-          : "#ebebeb"
-      : "none"
-    }
-  >All</span>
-  
-  <span 
-    on:click={setPrivateChat}
-    style:background={
-      $privateChat ?
-        $themeStore.theme === "dark" ? 
-          "#3a3f50" 
-          : "#ebebeb"
-      : "none"
-    }
-  >Private</span>
-  
-  <span 
-    on:click={setGroupChat}
-    style:background={
-      $groupChat ?
-        $themeStore.theme === "dark" ? 
-          "#3a3f50" 
-          : "#ebebeb"
-      : "none"
-    }
-  >Group</span>
-
-  <span 
-    on:click={setPublicChat}
-    style:background={
-      $publicChat ?
-        $themeStore.theme === "dark" ? 
-          "#3a3f50" 
-          : "#ebebeb"
-      : "none"
-    }
-  >Public</span>
+  {#each menuItems as tab}
+    <span 
+      on:click={() => selectTab(tab)}
+      style:background={
+        currentTab === tab ?
+          $themeStore.theme === "dark" ? 
+            "#3a3f50" 
+            : "#ebebeb"
+        : "none"
+      }
+    >{tab}</span>
+  {/each}
 </div>
 
 <style>

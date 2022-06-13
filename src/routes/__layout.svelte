@@ -58,7 +58,7 @@
     return () => unsub();
   });
 
-  const resizeWindow = () => {
+  const desktopOrMobile = () => {
     if (window.innerWidth <= 800) $mobile = true;
     if (window.innerWidth > 800) $mobile = false;
   };
@@ -69,12 +69,11 @@
   };
 
   onMount(() => {
+    desktopOrMobile();
     onAuthStateChanged(auth, (_user) => {
       if (!_user) goto("/login");
-      // else user = _user;
       else $loggedinUser = _user;
     });
-    resizeWindow();
   });
 
   $: if (user) $loginFormShow = false;
@@ -108,15 +107,15 @@
   {/if} -->
   <ChatList />
   <div
-    class="rightSide"
+  >
+    <!-- class="rightSide"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
     style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
     style:width={$mobile && $page.url.pathname === "/"
       ? "0%"
       : $mobile && $page.url.pathname != "/"
       ? "100%"
-      : "100%"}
-  >
+      : "100%"} -->
     <slot />
   </div>
   
