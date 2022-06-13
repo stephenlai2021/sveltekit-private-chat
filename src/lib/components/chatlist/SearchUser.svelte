@@ -14,7 +14,7 @@
       type="text"
       placeholder="Find user"
       bind:value={$keyword}
-      style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"}
+      style:background={$themeStore.theme === "dark" ? "#3a3f50" : "#ebebeb"}
       />
       <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"} -->
 
