@@ -1,16 +1,8 @@
 <script>
   import { goto } from "$app/navigation";
-  // import { 
-  //   allChat, 
-  //   privateChat, 
-  //   groupChat, 
-  //   publicChat 
-  // } from "$lib/store";
-
-  // const redirect = () => goto('/')
 </script>
 
-<div class="page-wrapper">
+<!-- <div class="page-wrapper">
   <h1>This is Private Chat</h1>
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
@@ -28,4 +20,4 @@
       d="M244 400L100 256l144-144M120 256h292"
     />
   </svg>
-</div>
+</div> -->
