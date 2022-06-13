@@ -65,7 +65,7 @@ export const showBgSettingsModal = writable(false);
 export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
-export const bgColor = writable("#e5ddd5");
+// export const bgColor = writable("#e5ddd5");
 
 // export const getSelectedUser = (name) => {
 export const getSelectedUser = (selectedUsername) => {
@@ -85,11 +85,9 @@ export const getSelectedUser = (selectedUsername) => {
 };
 
 export const selectedUser = writable(
-  // browser && JSON.parse(localStorage.getItem("selected user") || {})
   browser && localStorage.getItem("selected user") || {}
 );
 selectedUser.subscribe(
-  // (val) => browser && localStorage.setItem("selected user", JSON.stringify(val))
   (val) => browser && localStorage.setItem("selected user", val)
 );
 
@@ -116,12 +114,15 @@ bgOpacity.subscribe(
   (val) => browser && localStorage.setItem("backround opacity", val)
 );
 
+export const bgColor = writable(
+  browser && (localStorage.getItem("backround color") || "e5ddd5")
+);
+bgColor.subscribe(
+  (val) => browser && localStorage.setItem("backround color", val)
+);
+
 export const imageURL = writable(
   browser &&
-    // (localStorage.getItem("image url") || {
-    //   url: "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg",
-    //   title: "default"
-    // })
     (localStorage.getItem("image url") ||
       "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg")
 );

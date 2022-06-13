@@ -1,22 +1,19 @@
-<script context="module">
-  // import { bgColor, imageURL } from "$lib/store";
+<!-- <script context="module">
   import { bgColor } from "$lib/store";
-  // import { imageURL } from "$lib/store";
   export const load = ({ session }) => {
     const locals = session;
     const bgColor_preference = locals.bgColor;
-    // const imageURL_preference = locals.imageURL;
 
     if (bgColor_preference) bgColor.set(bgColor_preference);
-    // if (imageURL_preference) imageURL.set(imageURL_preference);
     return {};
   };
-</script>
+</script> -->
 
 <script>
   import "$lib/styles/global.css";
   import {
     mobile,
+    bgColor,
     connection,
     loginFormShow,
     loggedinUser,
