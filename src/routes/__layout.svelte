@@ -98,27 +98,31 @@
 </svelte:head>
 
 <SvelteTheme />
-<div class="wrapper" on:click={closeModal}>
-  <!-- {#if $showSidebarMenu}
-    <SidebarMenu />
-  {/if} -->
+<div 
+  class="wrapper" 
+  on:click={closeModal}
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
+>
   <div 
     class="leftSide"
-    style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}
+    style:display={
+      $mobile && $page.url.pathname === "/" ? "block"
+      : $mobile && $page.url.pathname != "/" ? "none"
+      : !$mobile && $page.url.pathname != "/login" ? "block"
+      : "none"
+    }
     style:width={
-      $mobile && $page.url.pathname === "/"
-      ? "100%"
-      : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
-      ? "0%"
-      : !$mobile && $page.url.pathname != "/login"
-      ? "500px"
-      : "0%"}
+      $mobile && $page.url.pathname === "/" ? "100%"
+      : $mobile && $page.url.pathname != "/" ? "0"
+      : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal ? "0%" 
+      : !$mobile && $page.url.pathname != "/login" ? "500px"
+      : "0%"
+    }
   >
     <ChatList />
   </div>
   <div
-    class="rightSide"
-    style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
+    class="rightSide"   
     style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
     style:width={$mobile && $page.url.pathname === "/"
       ? "0%"

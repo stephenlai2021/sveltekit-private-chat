@@ -106,15 +106,12 @@
   };
 </script>
 
-<div
-  class="chatbox_input"
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
->
-  <div class="icon-wrapper">
+<div class="chatbox_input">
+  <div class="icon-plus">
     {#if $isMobile}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-plus"
+        class="ionicon"
         viewBox="0 0 512 512"
         width="30"
         height="30"
@@ -243,8 +240,9 @@
       type="text"
       placeholder="Say something"
       bind:value={$message}
-      style:background={$themeStore.theme === "dark" ? "#1F232F" : "white"}
-    />
+      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
+      />
+      <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "white"} -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="ionicon icon-submit"
@@ -294,6 +292,10 @@
 </div>
 
 <style>
+  svg {
+    color: white;
+  }
+
   .chatbox_input {
     position: absolute;
     left: 50%;
@@ -303,7 +305,7 @@
     max-width: 800px;
     margin: auto;
     height: 60px;
-    background: #ebebeb;
+    /* background: #ebebeb; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -325,14 +327,20 @@
   } 
 
   .icon-mic,
-  .icon-wrapper {
+  .icon-plus,
+  .icon-camera {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6px;
     border-radius: 10px;
     /* border: 1px solid; */
+  }
+
+  .icon-plus {
+    margin-right: 10px;
+    padding: 3px;
+    background: #03A9F1;
   }
 
   .messageBox {
@@ -344,10 +352,14 @@
   .icon-mic {
     /* padding: 6px; */
     margin-left: 10px;
+    padding: 5px;
+    background: #F18303;
   }
 
   .icon-camera {
-    margin-right: 20px;
+    margin-right: 25px;
+    /* padding: 5px; */
+    border: 1px solid;
   }
 
   .icon-emoji {
@@ -365,8 +377,10 @@
 
   .icon-image {
     position: absolute;
+    left: -8px;
     top: 50%;
     transform: translateY(-50%);
+    /* border: 1px solid; */
   }
 
   label input {

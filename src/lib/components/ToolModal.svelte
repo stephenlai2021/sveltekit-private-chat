@@ -111,8 +111,9 @@
             <div
               class="theme-item"
               style:cursor="pointer"
-              on:click={() => setBgPic(bgPic.url, bgPic.title)}
-            >
+              on:click={() => $bgColor = `no-repeat url(${bgPic.url})`}
+              >
+              <!-- on:click={() => setBgPic(bgPic.url, bgPic.title)} -->
               <div
                 class="theme-image"
                 style:background-image={`url(${bgPic.url})`}

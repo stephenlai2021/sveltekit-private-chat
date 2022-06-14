@@ -58,8 +58,8 @@
 {#if messages}
   <div
     class="chatBox"
-    style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
-  >
+    >
+    <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
     {#each messages as msg}
       <div
         class="message"
@@ -253,7 +253,7 @@
     width: 100%;
     height: calc(100vh - 120px);
     padding: 10px 20px 0 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .message-content {

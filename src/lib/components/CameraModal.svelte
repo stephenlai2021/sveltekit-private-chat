@@ -7,9 +7,10 @@
     pictureURI,
     pictureBlob,
     pictureFile,
+    bgColor,
   } from "$lib/store";
   import { onMount } from "svelte";
-  // import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
+  import themeStore from "svelte-themes";
 
   let video = null;
   // let videoStream = null;
@@ -23,7 +24,7 @@
       track.stop();
     });
   };
-  
+
   const dataURLtoBlob = (dataURI) => {
     let byteString = atob(dataURI.split(",")[1]);
     let mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
@@ -47,13 +48,17 @@
     console.log("picture url: ", pictureURI);
 
     $pictureBlob = dataURLtoBlob(canvas.toDataURL());
-    const file = new File([$pictureBlob], `${new Date().getTime()}-selfie.jpg`, {
-      type: "image/jpg",
-    });
+    const file = new File(
+      [$pictureBlob],
+      `${new Date().getTime()}-selfie.jpg`,
+      {
+        type: "image/jpg",
+      }
+    );
     $pictureFile = file;
     console.log("selfie", $pictureFile);
 
-    $showCameraPreviewModal = true
+    $showCameraPreviewModal = true;
   };
 
   onMount(async () => {
@@ -77,61 +82,53 @@
 <div
   class="camera-modal"
   on:click|stopPropagation={() => console.log("camera modal clicked !")}
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
 >
   <!-- transition:fly={{ y: -60, duration: 100, delay: 100 }} -->
-  <ion-icon
-    name="close-outline"
-    class="icon-close"
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="ionicon icon-close"
+    viewBox="0 0 512 512"
     on:click|stopPropagation={closeCamera}
-  />
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="32"
+      d="M368 368L144 144M368 144L144 368"
+    /></svg
+  >
   <div class="video-wrapper">
     <video bind:this={video} autoplay>
       <track kind="captions" />
     </video>
-  </div>
-  {#if videoReady}
-    <!-- <canvas bind:this={canvas} on:click={() => ($showCameraPreviewModal = true)} /> -->
-    <canvas bind:this={canvas} />
-    <ion-icon
-      name="aperture-outline"
-      class="icon-shoot"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="ionicon icon-shutter"
+      viewBox="0 0 512 512"
       on:click={takePicture}
-    />
-    {/if}
+    >
+      <path
+        d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+        fill="none"
+        stroke="currentColor"
+        stroke-miterlimit="10"
+        stroke-width="32"
+      />
+    </svg>
+  </div>
 </div>
 
 <style>
-  canvas {
-    position: absolute;
-    left: clamp(30px, 50px, 80px);
-    width: clamp(1.5em, 2.5em, 3.5em);
-    height: clamp(1.5em, 2.5em, 3.5em);
-    background: url("/icon-image.png");
-    background-size: contain;
-    color: white;
-    cursor: pointer;
-    bottom: 25px;
-    border-radius: 50%;
-    border: 1px solid;
-    display: none;
-  }
-
   .video-wrapper {
     position: relative;
-    width: 600px;
-    width: 100%;
-    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  video {
-    width: 100%;
-    height: 100%;
-    background: center no-repeat
-      url("https://www.freeiconspng.com/uploads/camera-icon-android-camera-shutter-icon-5.png");
-    background-size: 300px 300px;
   }
 
   .icon-close {
@@ -139,12 +136,23 @@
     right: 10px;
     top: 10px;
     z-index: 500;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    padding: 3px;
+    border: 1px solid;
   }
 
-  .icon-shoot {
+  .icon-shutter {
     position: absolute;
     bottom: 20px;
-    font-size: clamp(2.5em, 3.5em, 4.5em);
+    width: 50px;
+    height: 50px;
+    z-index: 400;
+  }
+  
+  .icon-shutter:hover {
+    transform: scale(1.1);
   }
 
   .camera-modal {
@@ -155,8 +163,6 @@
     top: 0;
     left: 0;
     z-index: 300;
-    background: rgba(163, 156, 156, 0.8);
-    backdrop-filter: blur(30px);
     width: 100%;
     height: 100vh;
   }
@@ -168,7 +174,7 @@
   }
 
   @media (max-width: 306px) {
-    .icon-shoot {
+    .icon-shutter {
       bottom: 20px;
     }
   }

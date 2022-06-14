@@ -1,9 +1,5 @@
 [
   {
-    "title": "Default",
-    "url": "https://previews.123rf.com/images/dimapolie/dimapolie1808/dimapolie180800074/106049740-patr%C3%B3n-de-la-escuela-del-vector-escuela-de-fondo-sin-fisuras-ilustraci%C3%B3n-vectorial.jpg"
-  },
-  {
     "title": "Pic-1",
     "url": "/pic-1.jpg"
   },
@@ -13,54 +9,26 @@
   },
   {
     "title": "Pic-3",
-    "url": "/pic-3.jpg"
-  },
-  {
-    "title": "Pic-4",
-    "url": "/pic-4.jpg"
-  },
-  {
-    "title": "Pic-5",
-    "url": "/pic-5.jpg"
-  },
-  {
-    "title": "Pic-7",
     "url": "/pic-7.jpg"
   },
   {
-    "title": "Pic-8",
+    "title": "Pic-4",
     "url": "/pic-8.jpg"
   },
   {
-    "title": "Animation 2",
-    "url": "/animation-2.gif"
+    "title": "Pic-5",
+    "url": "/scene-4.jpg"
   },
   {
-    "title": "Animation 3",
-    "url": "/animation-3.gif"
+    "title": "Pic-7",
+    "url": "https://wallpaperaccess.com/full/93391.jpg"
   },
   {
-    "title": "Animation 4",
-    "url": "/animation-4.gif"
+    "title": "Pic-8",
+    "url": "/scene-9.jpg"
   },
   {
-    "title": "Animation 5",
-    "url": "/animation-5.gif"
-  },
-  {
-    "title": "Animation 6",
-    "url": "/3d/3d-1.jpg"
-  },
-  {
-    "title": "Animation 7",
-    "url": "/3d/3d-2.jpg"
-  },
-  {
-    "title": "Animation 8",
-    "url": "/3d/3d-3.jpg"
-  },
-  {
-    "title": "Animation 9",
-    "url": "/3d/3d-4.gif"
+    "title": "Pic-9",
+    "url": "/scene-10.jpg"
   }
 ]

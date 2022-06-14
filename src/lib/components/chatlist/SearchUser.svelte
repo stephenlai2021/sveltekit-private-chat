@@ -7,14 +7,14 @@
 style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px solid #ebebeb"} -->
 <div 
   class="search_user"
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
->
+  >
+  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
   <div class="search-user-wrapper">
     <input
       type="text"
       placeholder="Find user"
       bind:value={$keyword}
-      style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"}
+      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
       />
       <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"} -->
 
@@ -52,14 +52,10 @@ style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px
     top: 0px;
     width: 100%;
     padding: 0px 15px 10px 15px;
-    /* border-top: 0.5px solid rgba(0, 0, 0, 0.05);
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.05); */
-    /* border: 1px solid; */
   }
   
   .search-user-wrapper {
     position: relative;
-    /* border: 1px solid; */
   }
 
   input {
@@ -70,8 +66,6 @@ style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px
     border-radius: 50px;
     font-size: 14px;
     padding-left: 40px;
-    /* display: flex;
-    align-items: center; */
   }
 
   .icon-finduser {
@@ -83,8 +77,5 @@ style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px
 
   ::placeholder {
     font-size: 16px;
-    /* margin-top: 5px; */
-    /* line-height: 0.7;
-    border: 1px solid; */
   }
 </style>

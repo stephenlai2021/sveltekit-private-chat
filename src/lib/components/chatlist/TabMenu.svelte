@@ -43,16 +43,18 @@
   }
 </script>
 
-<div class="tab-menu">
+<div 
+  class="tab-menu"
+  style:background={$themeStore.theme === 'dark' ? "#292F3F" : "transparent"}
+>
   {#each menuItems as tab}
     <span 
       on:click={() => selectTab(tab)}
       style:background={
         currentTab === tab ?
           $themeStore.theme === "dark" ? 
-            "#3a3f50" 
-            // : "#ebebeb"
-            : $bgColor
+            "#3A3F50"
+            : "#ebebeb"
         : "none"
       }
     >{tab}</span>
@@ -62,22 +64,27 @@
 <style>
   .tab-menu {
     display: flex;
-    height: 40px;
-    padding: 0 15px;
-    margin: 10px 0;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 60px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
   }
 
   span {
-    width: 25%;
-    height: 100%;
+    /* width: 20%; */
+    height: 70%;
+    /* padding: 10px 0; */
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* justify-content: space-between; */
     cursor: pointer;
-    padding: 2px;
+    padding: 8px;
     border-radius: 8px;
+    /* background: transparent; */
+    /* border: 1px solid; */
   }
 </style>

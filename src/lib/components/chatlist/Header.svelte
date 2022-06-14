@@ -8,12 +8,10 @@
     showAddFriendModal,
   } from "$lib/store";
 </script>
-
-<!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"} -->
 <div
   class="header"
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
->
+  >
+  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
   <div class="left" style:cursor="pointer">
     {#if !$showSidebarMenu}
       <svg
