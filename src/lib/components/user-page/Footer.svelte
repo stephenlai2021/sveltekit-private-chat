@@ -292,8 +292,8 @@
 </div>
 
 <style>
-  svg {
-    color: white;
+  ::placeholder {
+    font-style: italic;
   }
 
   .chatbox_input {
@@ -339,8 +339,8 @@
 
   .icon-plus {
     margin-right: 10px;
-    padding: 3px;
-    background: #03A9F1;
+    /* padding: 3px;
+    background: #03A9F1; */
   }
 
   .messageBox {
@@ -352,14 +352,14 @@
   .icon-mic {
     /* padding: 6px; */
     margin-left: 10px;
-    padding: 5px;
-    background: #F18303;
+    /* padding: 5px;
+    background: #F18303; */
   }
 
   .icon-camera {
     margin-right: 25px;
     /* padding: 5px; */
-    border: 1px solid;
+    /* border: 1px solid; */
   }
 
   .icon-emoji {

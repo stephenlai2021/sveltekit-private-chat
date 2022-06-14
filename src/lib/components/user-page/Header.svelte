@@ -56,8 +56,8 @@
           xmlns="http://www.w3.org/2000/svg"
           class="ionicon arrow-back"
           viewBox="0 0 512 512"
-          width="22"
-          height="22"
+          width="24"
+          height="24"
           fill="currentColor"
           on:click={() => goto("/")}
         >
@@ -106,8 +106,8 @@
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
         viewBox="0 0 512 512"
-        width="22"
-        height="22"
+        width="24"
+        height="24"
         fill="currentColor"
         >
         <!-- style:margin-right="20px" -->
@@ -134,8 +134,8 @@
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
         viewBox="0 0 512 512"
-        width="22"
-        height="22"
+        width="24"
+        height="24"
         fill="currentColor"
         on:click={() => ($showMapModal = true)}
         >
@@ -166,8 +166,8 @@
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
         viewBox="0 0 512 512"
-        width="22"
-        height="22"
+        width="24"
+        height="24"
         fill="currentColor"
         on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
         >
@@ -187,7 +187,7 @@
 
 <style>
   svg {
-    color: white;
+    /* color: white; */
   }
 
   .icon-wrapper {
@@ -195,27 +195,27 @@
     /* justify-content: center; */
     align-items: center;
     margin-right: 20px;
-    padding: 7px;
+    /* padding: 7px; */
     border-radius: 10px;
     /* border: 1px solid; */
   }
 
   .icon-arrow-back {
-    background: #9aa2b6;
+    /* background: #9aa2b6; */
     margin-right: 10px;
-    padding: 5px;
+    /* padding: 5px; */
   }
 
   .icon-webcam {
-    background: #00AC83;
+    /* background: #00AC83; */
   }
 
   .icon-location {
-    background: #837DFF;
+    /* background: #837DFF; */
   }
 
   .icon-tool {
-    background: #565E70;
+    /* background: #565E70; */
   }
 
   .header {

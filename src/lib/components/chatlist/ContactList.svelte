@@ -226,6 +226,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    /* border: 1px solid; */
+    /* border-bottom: 1px solid #ebebeb; */
   }
 
   .details .listHead {
@@ -257,11 +259,13 @@
 
   .message p {
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 500;
+    letter-spacing: 0.6px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    font-style: italic;
   }
 
   .block.unread .details .message b {
