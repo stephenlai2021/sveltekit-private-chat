@@ -344,10 +344,6 @@
   }
 
   .icon-expand {
-    /* position: absolute;
-    top: -5px;
-    left: -5px;
-    z-index: 600; */
     background: rgba(0, 0, 0, 0.5);
     color: rgba(255, 255, 255, 0.5);
     color: white;
@@ -355,8 +351,8 @@
   }
 
   @media (max-width: 1200px) {
-    .chatBox {
-      /* padding-right: 10px; */
+    .message {
+      margin-right: 10px;
     }
   }
 </style>

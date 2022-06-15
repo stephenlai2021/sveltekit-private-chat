@@ -24,7 +24,7 @@
 
   let users = [];
   let ready = false;
-  let usersReady = false
+  let usersReady = false;
   let currentContact = null;
   let filteredUsers = [];
 
@@ -60,7 +60,7 @@
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
-      usersReady = true
+      usersReady = true;
       console.log("initialzie user list | snapshot", users);
       return () => unsubUsers();
     });
@@ -79,54 +79,58 @@
   }
 </script>
 
+<!-- style:overflow-y={usersReady ? "auto" : "hidden"}
+style:padding-bottom={$mobile ? "5px" : "0px"}
+style:border-left={$themeStore.theme === "dark"
+  ? "3px solid #3A3F50"
+  : "3px solid #ebebeb"}
+style:border-right={$themeStore.theme === "dark"
+  ? "3px solid #3A3F50"
+  : "3px solid #ebebeb"} -->
+
 {#if $allChat}
-<div
-  class="chatlist"
-  transition:fade={{ duration: 100 }}
-  style:padding-bottom={$mobile ? "5px" : "0px"}
-  style:overflow-y={usersReady ? "auto" : "hidden"}
-  style:border-left={
-    $themeStore.theme === "dark" 
-      ? "3px solid #3A3F50"
-      : "3px solid #ebebeb"
-  }
-  style:border-right={
-    $themeStore.theme === "dark" 
-      ? "3px solid #3A3F50"
-      : "3px solid #ebebeb"
-  }
+  <div 
+    class="chatlist" 
+    transition:fade={{ duration: 100 }}    
+    style:border-left={
+      $themeStore.theme === "dark"
+        ? "3px solid #3a3f50"
+        : "3px solid #ebebeb"
+    }
+    style:border-right={
+      $themeStore.theme === "dark"
+        ? "3px solid #3a3f50"
+        : "3px solid #ebebeb"
+    }
   >
-  <!-- style:height={$mobile ? "calc(100vh - 167px)" : "calc(100vh - 180px)"} -->
-  {#if users.length}
+    {#if users.length}
       {#each filteredUsers as user}
-      <!-- (currentContact === user && !$mobile) || (user.name === $page.params.userId && !$mobile) ?  -->
         <div
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          style:background={
-            (currentContact === user && !$mobile) || (user.name === $page.params.userId && !$mobile) ?
-              $themeStore.theme === "dark" ? "#3a3f50" : "#ebebeb"
-            : currentContact != user && !$mobile ?
-              $themeStore.theme === "dark" ? "#292F3F" : "transparent"
-            : ""
-          }
-          style:backdrop-filter={
-            (currentContact === user && !$mobile) || (user.name === $page.params.userId && !$mobile) ?
-              // $themeStore.theme === "dark" ? "#3a3f50" : $bgColor
-              $themeStore.theme === "dark" ? "blur(8px)" : "transparent"
-            : currentContact != user && !$mobile ?
-              $themeStore.theme === "dark" ? "#292F3F" : "white"
-              // $themeStore.theme === "dark" ? "#292F3F" : "transparent"
-            : ""
-          }
-        >
-          <!-- style:border={(currentContact === user && !$mobile) ||
+          style:background={(currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile)
             ? $themeStore.theme === "dark"
-              ? "1px solid #3a3f50"
-              : "1px solid #ebebeb"
-            : ""} -->
+              ? "#3a3f50"
+              : "#ebebeb"
+              // : "#292F3F"
+            : currentContact != user && !$mobile
+            ? $themeStore.theme === "dark"
+              ? "#292F3F"
+              : "transparent"
+            : ""}
+          style:backdrop-filter={(currentContact === user && !$mobile) ||
+            (user.name === $page.params.userId && !$mobile) ?
+              "blur(10px)"
+              : "none"
+          }
+          style:transparent={(currentContact === user && !$mobile) ||
+            (user.name === $page.params.userId && !$mobile) ?
+              "0.5"
+              : "0"
+          }
+        >
           <div class="imgbx">
             {#if user.avatar}
               <img src={user.avatar} alt="" class="cover" />
@@ -141,9 +145,7 @@
               <p class="time">10:56</p>
             </div>
             <div class="message">
-              <p>
-                How to make Whatsapp clone using html and css
-              </p>
+              <p>How to make Whatsapp clone using html and css</p>
               <b>1</b>
             </div>
           </div>
@@ -188,6 +190,8 @@
   .chatlist {
     height: calc(100vh - 167px);
     overflow: hidden;
+    /* border-left: 3px solid #ebebeb;
+    border-right: 3px solid #ebebeb; */    
   }
 
   .chatlist:hover {
@@ -200,13 +204,13 @@
 
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(8px);
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(0, 0, 0, 0.5);
   }
 
   .block {
@@ -214,11 +218,9 @@
     align-items: center;
     justify-content: center;
     padding: 0 10px;
-    /* margin-left: 10px; */
     height: 65px;
     cursor: pointer;
     /* border-radius: 10px; */
-    border-radius: 10px;
   }
 
   .block:hover {
@@ -251,8 +253,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* border: 1px solid; */
-    /* border-bottom: 1px solid #ebebeb; */
   }
 
   .details .listHead {
@@ -303,5 +303,11 @@
     place-content: center;
     font-size: 0.75em;
     margin-right: 3px;
+  }
+
+  @media (max-width: 800px) {
+    .chatlist {
+      border-right: none;
+    }
   }
 </style>

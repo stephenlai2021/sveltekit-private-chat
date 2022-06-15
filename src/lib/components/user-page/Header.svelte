@@ -197,10 +197,6 @@
     margin-right: 0px;    
   }
 
-  .icon-arrow-back {
-    margin: 0 10px;
-  }
-
   .header {
     position: absolute;
     left: 50%;
@@ -274,6 +270,12 @@
     display: flex;
     align-items: center;
   } 
+
+  @media (max-width: 1160px) {
+    .header {
+      padding-left: 15px;
+    }
+  }
 
   @media (max-width: 1200px) {
     .header {

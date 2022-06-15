@@ -142,5 +142,11 @@
     margin-left: 20px;
     display: flex;
     align-items: center;
+  }  
+
+  @media (max-width: 800px) {
+    .header {
+      padding: 0 12px;
+    }
   }
 </style>

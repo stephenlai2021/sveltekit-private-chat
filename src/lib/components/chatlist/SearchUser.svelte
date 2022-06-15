@@ -79,4 +79,10 @@ style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px
   ::placeholder {
     font-size: 16px;
   }
+
+  @media (max-width: 800px) {
+    .search_user {
+      padding: 0 10px;
+    }
+  }
 </style>
