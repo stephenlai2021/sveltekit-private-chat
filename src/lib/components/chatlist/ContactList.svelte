@@ -83,9 +83,9 @@
 <div
   class="chatlist"
   transition:fade={{ duration: 100 }}
-  style:overflow-y={usersReady ? "auto" : "hidden"}
   style:padding-bottom={$mobile ? "5px" : "0px"}
   >
+  <!-- style:overflow-y={usersReady ? "auto" : "hidden"} -->
   <!-- style:height={$mobile ? "calc(100vh - 167px)" : "calc(100vh - 180px)"} -->
   {#if users.length}
       {#each filteredUsers as user}
@@ -176,11 +176,28 @@
   }
 
   .chatlist {
-    /* min-height: 100vh; */
-    /* background: white; */
     height: calc(100vh - 167px);
-    overflow-x: hidden;
+    overflow: hidden;
     /* border: 2px solid; */
+  }
+
+  .chatlist:hover {
+    overflow-y: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, .3);
+    backdrop-filter: blur(8px);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    background: rgba(0, 0, 0, .5);
   }
 
   .block {

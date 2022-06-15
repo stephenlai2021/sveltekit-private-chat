@@ -56,9 +56,7 @@
 </script>
 
 {#if messages}
-  <div
-    class="chatBox"
-    >
+  <div class="chatBox">
     <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
     {#each messages as msg}
       <div
@@ -245,7 +243,7 @@
 
 <style>
   @import url("$lib/styles/audio-player.css");
-  
+
   .chatBox {
     position: absolute;
     top: 60px;
@@ -253,7 +251,26 @@
     width: 100%;
     height: calc(100vh - 120px);
     padding: 10px 20px 0 20px;
+    overflow-y: hidden;
+  }
+
+  .chatBox:hover {
     overflow-y: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, .3);
+    backdrop-filter: blur(8px);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    background: rgba(0, 0, 0, .5);
   }
 
   .message-content {
