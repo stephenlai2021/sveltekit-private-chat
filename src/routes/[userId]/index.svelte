@@ -174,3 +174,9 @@
     <MapModal />
   {/if}
 </div>
+
+<style>
+  .user-page {
+    /* position: relative; */
+  }
+</style>

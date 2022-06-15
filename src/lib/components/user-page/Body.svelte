@@ -246,20 +246,31 @@
 
   .chatBox {
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     top: 60px;
     bottom: 60px;
     width: 100%;
+    max-width: 810px;
+    margin: auto;
     height: calc(100vh - 120px);
-    padding: 10px 20px 0 20px;
+    padding: 10px 10px 0 10px;
+    overflow-y: auto;
     overflow-y: hidden;
+    /* border: 1px solid; */
   }
 
   .chatBox:hover {
     overflow-y: auto;
+    padding-right: 0px;
+    box-sizing: border-box;
   }
 
   ::-webkit-scrollbar {
     width: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -267,7 +278,7 @@
     background: rgba(0, 0, 0, .3);
     backdrop-filter: blur(8px);
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
     background: rgba(0, 0, 0, .5);
@@ -305,6 +316,7 @@
     display: flex;
     max-width: 800px;
     margin: 20px auto;
+    /* border: 1px solid; */
   }
 
   .message p {
@@ -344,5 +356,11 @@
     color: rgba(255, 255, 255, 0.5);
     color: white;
     border-radius: 2px;
+  }
+
+  @media (max-width: 1200px) {
+    .chatBox {
+      /* padding-right: 10px; */
+    }
   }
 </style>

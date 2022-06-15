@@ -11,7 +11,7 @@
     message,
     selectedImg,
     loggedinUser,
-    selectedUsername
+    selectedUsername,
   } from "$lib/store";
   import {
     doc,
@@ -241,8 +241,8 @@
       placeholder="Say something"
       bind:value={$message}
       style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
-      />
-      <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "white"} -->
+    />
+    <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "white"} -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="ionicon icon-submit"
@@ -302,15 +302,13 @@
     transform: translateX(-50%);
     bottom: 5px;
     width: 100%;
-    max-width: 800px;
+    max-width: 810px;
     margin: auto;
     height: 60px;
-    /* background: #ebebeb; */
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 30px;
-    padding: 0 10px;
+    padding-left: 10px;
     /* border: 1px solid; */
   }
 
@@ -324,7 +322,7 @@
     font-size: 1em;
     background: #f8f8f8;
     border-radius: 50px;
-  } 
+  }
 
   .icon-mic,
   .icon-plus,
@@ -333,33 +331,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
-    /* border: 1px solid; */
   }
 
   .icon-plus {
     margin-right: 10px;
-    /* padding: 3px;
-    background: #03A9F1; */
   }
 
   .messageBox {
     position: relative;
     width: 100%;
     height: 40px;
-  } 
+  }
 
   .icon-mic {
-    /* padding: 6px; */
     margin-left: 10px;
-    /* padding: 5px;
-    background: #F18303; */
   }
 
   .icon-camera {
-    margin-right: 25px;
-    /* padding: 5px; */
-    /* border: 1px solid; */
+    margin-right: 20px;
   }
 
   .icon-emoji {
@@ -377,10 +366,9 @@
 
   .icon-image {
     position: absolute;
-    left: -8px;
+    left: -0px;
     top: 50%;
     transform: translateY(-50%);
-    /* border: 1px solid; */
   }
 
   label input {
@@ -401,6 +389,15 @@
     .chatbox_input {
       bottom: 0;
       border-radius: 0;
+    }
+
+    .icon-camera {
+      margin-left: 10px;
+      margin-right: 15px;
+    }
+
+    .icon-mic {
+      margin-right: 15px;
     }
   }
 </style>

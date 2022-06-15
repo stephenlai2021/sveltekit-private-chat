@@ -186,47 +186,32 @@
 </div>
 
 <style>
-  svg {
-    /* color: white; */
-  }
-
   .icon-wrapper {
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     margin-right: 20px;
-    /* padding: 7px; */
     border-radius: 10px;
-    /* border: 1px solid; */
-  }
-
-  .icon-arrow-back {
-    /* background: #9aa2b6; */
-    margin-right: 10px;
-    /* padding: 5px; */
-  }
-
-  .icon-webcam {
-    /* background: #00AC83; */
-  }
-
-  .icon-location {
-    /* background: #837DFF; */
   }
 
   .icon-tool {
-    /* background: #565E70; */
+    margin-right: 0px;    
+  }
+
+  .icon-arrow-back {
+    margin-right: 10px;
   }
 
   .header {
     position: absolute;
-    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
     height: 60px;
     display: flex;
     align-items: center;
+    max-width: 810px;
+    margin: auto;
     padding-right: 0px;
-    padding: 15px 0 15px 15px;
-    /* background: #ebebeb; */
+    padding: 15px 0 15px 10px;
   }
 
   .left-part {
@@ -288,6 +273,12 @@
     display: flex;
     align-items: center;
   } 
+
+  @media (max-width: 1200px) {
+    .header {
+      padding-right: 15px;
+    }
+  }
 
   @media (max-width: 800px) {
     .icon-arrow-back {
