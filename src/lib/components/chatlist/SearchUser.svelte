@@ -52,6 +52,7 @@ style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px
     top: 0px;
     width: 100%;
     padding: 0px 15px 10px 15px;
+    padding: 0px 0px 10px 0px;
   }
   
   .search-user-wrapper {
@@ -63,7 +64,7 @@ style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px
     outline: none;
     border: none;
     padding: 10px;
-    border-radius: 50px;
+    border-radius: 10px;
     font-size: 14px;
     padding-left: 40px;
   }

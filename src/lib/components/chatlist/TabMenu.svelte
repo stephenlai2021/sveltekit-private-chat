@@ -1,15 +1,22 @@
 <script>
   import { goto } from "$app/navigation";
   import themeStore from "svelte-themes";
-  import { bgColor, allChat, privateChat, groupChat, publicChat } from "$lib/store";
+  import {
+    bgColor,
+    allChat,
+    privateChat,
+    groupChat,
+    publicChat,
+  } from "$lib/store";
 
-  const menuItems = ['All', 'Private', 'Group', 'Public']
-  let currentTab = menuItems[0]
+  const menuItems = ["All", "Private", "Group", "Public"];
+  let currentTab = menuItems[0];
+  let selecteedTab = true;
 
   const selectTab = (selectedTab) => {
-    currentTab = selectedTab
+    currentTab = selectedTab;
 
-    if (currentTab === 'All') {
+    if (currentTab === "All") {
       $allChat = true;
       $privateChat = false;
       $groupChat = false;
@@ -17,7 +24,7 @@
       goto("/");
     }
 
-    if (currentTab === 'Private') {
+    if (currentTab === "Private") {
       $allChat = false;
       $privateChat = true;
       $groupChat = false;
@@ -25,66 +32,79 @@
       goto("/private");
     }
 
-    if (currentTab === 'Group') {
+    if (currentTab === "Group") {
       $allChat = false;
       $privateChat = false;
       $groupChat = true;
       $publicChat = false;
       goto("/group");
     }
-    
-    if (currentTab === 'Public') {
+
+    if (currentTab === "Public") {
       $allChat = false;
       $privateChat = false;
       $groupChat = false;
       $publicChat = true;
       goto("/public");
     }
-  }
+  };
 </script>
 
-<div 
+<div
   class="tab-menu"
-  style:background={$themeStore.theme === 'dark' ? "#292F3F" : "transparent"}
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "transparent"}
 >
   {#each menuItems as tab}
-    <span 
+    <span
       on:click={() => selectTab(tab)}
-      style:background={
-        currentTab === tab ?
-          $themeStore.theme === "dark" ? 
-            "#3A3F50"
-            : "#ebebeb"
+      style:border-left={currentTab === tab
+        ? $themeStore.theme === "dark"
+          ? "3px solid #3A3F50"
+          : "3px solid #ebebeb"
+        : "none"}
+      style:border-top={currentTab === tab
+        ? $themeStore.theme === "dark"
+          ? "3px solid #3A3F50"
+          : "3px solid #ebebeb"
+        : "none"}
+      style:border-right={currentTab === tab
+        ? $themeStore.theme === "dark"
+          ? "3px solid #3A3F50"
+          : "3px solid #ebebeb"
+        : "none"}
+      style:border-bottom={
+        currentTab != tab ? 
+          $themeStore.theme === "dark" 
+            ? "3px solid #3A3F50"
+            : "3px solid #ebebeb"
         : "none"
       }
-    >{tab}</span>
+      >{tab}</span>
   {/each}
 </div>
 
 <style>
   .tab-menu {
+    position: relative;
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: space-evenly;
     height: 60px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
   }
 
   span {
-    /* width: 20%; */
-    height: 70%;
-    /* padding: 10px 0; */
+    width: 25%;
+    height: 60%;
     text-align: center;
     font-size: 16px;
     font-weight: 600;
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
+    justify-content: center;
     cursor: pointer;
     padding: 8px;
-    border-radius: 8px;
-    /* background: transparent; */
-    /* border: 1px solid; */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: none;
   }
 </style>

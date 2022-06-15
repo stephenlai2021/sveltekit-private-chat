@@ -8,10 +8,8 @@
     showAddFriendModal,
   } from "$lib/store";
 </script>
-<div
-  class="header"
-  >
-  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
+
+<div class="header">
   <div class="left" style:cursor="pointer">
     {#if !$showSidebarMenu}
       <svg
@@ -92,6 +90,16 @@
 </div>
 
 <style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    /* padding: 0 15px; */
+    /* border: 1px solid; */
+  }
+
   .left {
     display: flex;
     align-items: center;

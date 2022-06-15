@@ -85,6 +85,16 @@
   transition:fade={{ duration: 100 }}
   style:padding-bottom={$mobile ? "5px" : "0px"}
   style:overflow-y={usersReady ? "auto" : "hidden"}
+  style:border-left={
+    $themeStore.theme === "dark" 
+      ? "3px solid #3A3F50"
+      : "3px solid #ebebeb"
+  }
+  style:border-right={
+    $themeStore.theme === "dark" 
+      ? "3px solid #3A3F50"
+      : "3px solid #ebebeb"
+  }
   >
   <!-- style:height={$mobile ? "calc(100vh - 167px)" : "calc(100vh - 180px)"} -->
   {#if users.length}

@@ -212,6 +212,7 @@
     margin: auto;
     padding-right: 0px;
     padding: 15px 5px 15px 5px;
+    /* border: 1px solid; */
   }
 
   .left-part {
