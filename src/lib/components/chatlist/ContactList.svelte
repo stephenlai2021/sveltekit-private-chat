@@ -178,12 +178,10 @@
   .chatlist {
     height: calc(100vh - 167px);
     overflow: hidden;
-    /* overflow: auto; */
-    /* border: 2px solid; */
   }
 
   .chatlist:hover {
-    /* overflow-y: auto; */
+    overflow-y: auto;
   }
 
   ::-webkit-scrollbar {
@@ -210,8 +208,7 @@
     height: 65px;
     cursor: pointer;
     /* border-radius: 10px; */
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-radius: 10px;
   }
 
   .block:hover {

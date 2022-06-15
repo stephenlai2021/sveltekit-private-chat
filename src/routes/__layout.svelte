@@ -8,7 +8,6 @@
     return {};
   };
 </script> -->
-
 <script>
   import "$lib/styles/global.css";
   import {
@@ -19,8 +18,10 @@
     loggedinUser,
     showToolModal,
     showEmojiMenu,
+    showActionMenu,
     showSidebarMenu,
     showImagePreviewModal,
+    showCameraPreviewModal,
     showThemeModal,
     showCameraModal,
     showSettingsModal,
@@ -39,8 +40,13 @@
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
   import SidebarMenu from "$lib/components/SidebarMenu.svelte";
   import themeStore, { setTheme } from "svelte-themes";
-  import ToolModal from '$lib/components/ToolModal.svelte'
-  import ImagePreviewModal from '$lib/components/ImagePreviewModal.svelte'
+  import ToolModal from "$lib/components/ToolModal.svelte";
+  import ImagePreviewModal from "$lib/components/ImagePreviewModal.svelte";
+  import CameraModal from "$lib/components/CameraModal.svelte";
+  import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
+  import ActionMenu from "$lib/components/ActionMenu.svelte";
+  import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
+  import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
 
   let user = null;
   let users = null;
@@ -98,46 +104,71 @@
 </svelte:head>
 
 <SvelteTheme />
-<div 
-  class="wrapper" 
+<div
+  class="wrapper"
   on:click={closeModal}
   style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
 >
-  <div 
-    class="leftSide"
-    style:display={
-      $mobile && $page.url.pathname === "/" ? "block"
-      : $mobile && $page.url.pathname != "/" ? "none"
-      : !$mobile && $page.url.pathname != "/login" ? "block"
-      : "none"
-    }
-    style:width={
-      $mobile && $page.url.pathname === "/" ? "100%"
-      : $mobile && $page.url.pathname != "/" ? "0"
-      : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal ? "0%" 
-      : !$mobile && $page.url.pathname != "/login" ? "500px"
-      : "0%"
-    }
-  >
-    <ChatList />
-  </div>
-  <div
-    class="rightSide"   
-    style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
-    style:width={$mobile && $page.url.pathname === "/"
-      ? "0%"
-      : $mobile && $page.url.pathname != "/"
-      ? "100%"
-      : "100%"}
-  >
-    <slot />
-  </div>
-  
-  {#if $showToolModal}
-    <ToolModal />
-  {/if}
+  <div class="inner-wrapper">
+    <div
+      class="leftSide"
+      style:display={$mobile && $page.url.pathname === "/"
+        ? "block"
+        : $mobile && $page.url.pathname != "/"
+        ? "none"
+        : !$mobile && $page.url.pathname != "/login"
+        ? "block"
+        : "none"}
+      style:width={$mobile && $page.url.pathname === "/"
+        ? "100%"
+        : $mobile && $page.url.pathname != "/"
+        ? "0"
+        : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
+        ? "0%"
+        : !$mobile && $page.url.pathname != "/login"
+        ? "500px"
+        : "0%"}
+    >
+      <ChatList />
+    </div>
+    <div
+      class="rightSide"
+      style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
+      style:width={$mobile && $page.url.pathname === "/"
+        ? "0%"
+        : $mobile && $page.url.pathname != "/"
+        ? "100%"
+        : "100%"}
+    >
+      <slot />
+    </div>
 
-  {#if $showImagePreviewModal}
-    <ImagePreviewModal />
-  {/if}
+    {#if $showToolModal}
+      <ToolModal />
+    {/if}
+
+    {#if $showImagePreviewModal}
+      <ImagePreviewModal />
+    {/if}
+
+    {#if $showCameraModal}
+      <CameraModal />
+    {/if}
+
+    {#if $showCameraPreviewModal}
+      <CameraPreviewModal />
+    {/if}
+
+    {#if $showActionMenu}
+      <ActionMenu />
+    {/if}
+
+    {#if $showAudioRecordingModal}
+      <AudioRecordingModal />
+    {/if}
+
+    {#if $showAudioPlayerModal}
+      <AudioPlayerModal />
+    {/if}
+  </div>
 </div>

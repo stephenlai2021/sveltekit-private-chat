@@ -251,13 +251,9 @@
     top: 60px;
     bottom: 60px;
     width: 100%;
-    max-width: 810px;
-    margin: auto;
     height: calc(100vh - 120px);
     padding: 10px 10px 0 10px;
-    overflow-y: auto;
-    overflow-y: hidden;
-    /* border: 1px solid; */
+    overflow: hidden;
   }
 
   .chatBox:hover {
@@ -282,6 +278,14 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
     background: rgba(0, 0, 0, .5);
+  }
+
+  .message {
+    position: relative;
+    display: flex;
+    max-width: 800px;
+    margin: 20px auto;
+    /* border: 1px solid; */
   }
 
   .message-content {
@@ -309,14 +313,6 @@
   .message.my_message {
     justify-content: flex-end;
     text-align: right;
-  }
-
-  .message {
-    position: relative;
-    display: flex;
-    max-width: 800px;
-    margin: 20px auto;
-    /* border: 1px solid; */
   }
 
   .message p {

@@ -198,7 +198,7 @@
   }
 
   .icon-arrow-back {
-    margin-right: 10px;
+    margin: 0 10px;
   }
 
   .header {
@@ -211,7 +211,7 @@
     max-width: 810px;
     margin: auto;
     padding-right: 0px;
-    padding: 15px 0 15px 10px;
+    padding: 15px 5px 15px 5px;
   }
 
   .left-part {

@@ -146,25 +146,7 @@
   <Body />
   <Footer />
 
-  {#if $showActionMenu}
-    <ActionMenu />
-  {/if}
-
-  {#if $showAudioPlayerModal}
-    <AudioPlayerModal />
-  {/if}
-
-  {#if $showAudioRecordingModal}
-    <AudioRecordingModal />
-  {/if}
-
-  {#if $showCameraModal}
-    <CameraModal />
-  {/if}
-
-  {#if $showCameraPreviewModal}
-    <CameraPreviewModal />
-  {/if}
+   
 
   {#if $showEmojiMenu}
     <EmojiMenu />
@@ -174,9 +156,3 @@
     <MapModal />
   {/if}
 </div>
-
-<style>
-  .user-page {
-    /* position: relative; */
-  }
-</style>

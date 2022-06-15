@@ -397,7 +397,7 @@
     }
 
     .icon-mic {
-      margin-right: 15px;
+      margin-right: 10px;
     }
   }
 </style>
