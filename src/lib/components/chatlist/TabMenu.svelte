@@ -87,14 +87,16 @@
   .tab-menu {
     position: relative;
     display: flex;
-    align-items: end;
-    justify-content: space-evenly;
+    /* align-items: end; */
+    /* justify-content: space-evenly; */
     height: 60px;
+    padding-top: 22px;
+    /* border: 1px solid; */
   }
 
   span {
     width: 25%;
-    height: 60%;
+    /* height: 60%; */
     text-align: center;
     font-size: 16px;
     font-weight: 600;
