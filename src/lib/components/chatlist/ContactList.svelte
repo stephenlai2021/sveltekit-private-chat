@@ -92,14 +92,13 @@ style:border-right={$themeStore.theme === "dark"
   <div
     class="chatlist"
     transition:fade={{ duration: 100 }}
-    style:border-left={$themeStore.theme === "dark"
+  >
+    <!-- style:border-left={$themeStore.theme === "dark"
       ? "3px solid #3a3f50"
       : "3px solid #ebebeb"}
     style:border-right={$themeStore.theme === "dark"
       ? "3px solid #3a3f50"
-      : "3px solid #ebebeb"}
-  >
-    <!-- style:overflow-y={usersReady ? "auto" : "hidden"} -->
+      : "3px solid #ebebeb"} -->
     {#if users.length}
       {#each filteredUsers as user}
         <div
@@ -107,16 +106,14 @@ style:border-right={$themeStore.theme === "dark"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
           style:background={(currentContact === user && !$mobile) ||
-          (user.name === $page.params.userId && !$mobile)
-            ? $themeStore.theme === "dark"
-              ? "#3a3f50"
-              : // : "#ebebeb"
-                "rgba(235, 235, 235, 0.5)"
-            : // : "#292F3F"
-            currentContact != user && !$mobile
-            ? $themeStore.theme === "dark"
-              ? "#292F3F"
-              : "transparent"
+          (user.name === $page.params.userId && !$mobile) ? 
+            $themeStore.theme === "dark" ? 
+              "#3a3f50"
+              : "rgba(235, 235, 235, 0.5)"
+            : currentContact != user && !$mobile ? 
+              $themeStore.theme === "dark" ? 
+                "#292F3F"
+                : "transparent"
             : ""}
           style:backdrop-filter={(currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile)
@@ -182,6 +179,7 @@ style:border-right={$themeStore.theme === "dark"
   .chatlist {
     height: calc(100vh - 167px);
     overflow: hidden;
+    padding-top: 5px;
     /* overflow: auto; */
   }
 
@@ -310,10 +308,5 @@ style:border-right={$themeStore.theme === "dark"
       border-radius: 10px;
       background: inherit;
     }
-
-    /* ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-      background: rgba(0, 0, 0, 0.3);
-    } */
   }
 </style>

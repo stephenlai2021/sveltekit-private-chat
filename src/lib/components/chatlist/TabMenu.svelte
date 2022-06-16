@@ -2,6 +2,7 @@
   import { goto } from "$app/navigation";
   import themeStore from "svelte-themes";
   import {
+    mobile,
     bgColor,
     allChat,
     privateChat,
@@ -57,21 +58,49 @@
   {#each menuItems as tab}
     <span
       on:click={() => selectTab(tab)}
-      style:border-left={currentTab === tab
-        ? $themeStore.theme === "dark"
-          ? "3px solid #3A3F50"
-          : "3px solid #ebebeb"
-        : "none"}
-      style:border-top={currentTab === tab
-        ? $themeStore.theme === "dark"
-          ? "3px solid #3A3F50"
-          : "3px solid #ebebeb"
-        : "none"}
-      style:border-right={currentTab === tab
-        ? $themeStore.theme === "dark"
-          ? "3px solid #3A3F50"
-          : "3px solid #ebebeb"
-        : "none"}
+      style:border-top-right-radius={
+        currentTab === tab && currentTab != "Public" ? 
+          "10px"
+        : currentTab === tab && currentTab === "Public" && $mobile ? 
+          "0"
+        : "10px"
+      }
+      style:border-top-left-radius={
+        currentTab === tab && currentTab != "All" ? 
+          "10px"
+        : currentTab === tab && currentTab === "All" && $mobile ? 
+          "0"
+        : "10px"
+      }
+      style:border-left={
+        currentTab === tab && currentTab != "All" ? 
+          $themeStore.theme === "dark" ? 
+            "3px solid #3A3F50"
+            : "3px solid #ebebeb"
+        : currentTab === tab && currentTab === "All" && !$mobile ? 
+          $themeStore.theme === "dark" ? 
+            "3px solid #3A3F50"
+            : "3px solid #ebebeb"
+        : "none"
+      }
+      style:border-top={
+        currentTab === tab ? 
+          $themeStore.theme === "dark" ? 
+            "3px solid #3A3F50"
+            : "3px solid #ebebeb"
+        : "none"
+      }
+      style:border-right={
+        currentTab === tab && currentTab != "Public" ? 
+          $themeStore.theme === "dark" ? 
+            "3px solid #3A3F50"
+            : "3px solid #ebebeb"
+        : currentTab === tab && currentTab === "Public" && !$mobile ? 
+          $themeStore.theme === "dark" ? 
+            "3px solid #3A3F50"
+            : "3px solid #ebebeb"
+        : "none"
+      }
       style:border-bottom={
         currentTab != tab ? 
           $themeStore.theme === "dark" 
@@ -87,11 +116,8 @@
   .tab-menu {
     position: relative;
     display: flex;
-    /* align-items: end; */
-    /* justify-content: space-evenly; */
     height: 60px;
     padding-top: 22px;
-    /* border: 1px solid; */
   }
 
   span {
