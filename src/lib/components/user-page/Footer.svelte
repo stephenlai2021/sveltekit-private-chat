@@ -366,7 +366,7 @@
 
   .icon-image {
     position: absolute;
-    left: -0px;
+    left: 2px;
     top: 50%;
     transform: translateY(-50%);
   }
@@ -392,7 +392,7 @@
     }
 
     .icon-camera {
-      margin-left: 10px;
+      margin-left: 5px;
       margin-right: 15px;
     }
 

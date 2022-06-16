@@ -89,20 +89,17 @@ style:border-right={$themeStore.theme === "dark"
   : "3px solid #ebebeb"} -->
 
 {#if $allChat}
-  <div 
-    class="chatlist" 
-    transition:fade={{ duration: 100 }}    
-    style:border-left={
-      $themeStore.theme === "dark"
-        ? "3px solid #3a3f50"
-        : "3px solid #ebebeb"
-    }
-    style:border-right={
-      $themeStore.theme === "dark"
-        ? "3px solid #3a3f50"
-        : "3px solid #ebebeb"
-    }
+  <div
+    class="chatlist"
+    transition:fade={{ duration: 100 }}
+    style:border-left={$themeStore.theme === "dark"
+      ? "3px solid #3a3f50"
+      : "3px solid #ebebeb"}
+    style:border-right={$themeStore.theme === "dark"
+      ? "3px solid #3a3f50"
+      : "3px solid #ebebeb"}
   >
+    <!-- style:overflow-y={usersReady ? "auto" : "hidden"} -->
     {#if users.length}
       {#each filteredUsers as user}
         <div
@@ -113,23 +110,18 @@ style:border-right={$themeStore.theme === "dark"
           (user.name === $page.params.userId && !$mobile)
             ? $themeStore.theme === "dark"
               ? "#3a3f50"
-              : "#ebebeb"
-              // : "#292F3F"
-            : currentContact != user && !$mobile
+              : // : "#ebebeb"
+                "rgba(235, 235, 235, 0.5)"
+            : // : "#292F3F"
+            currentContact != user && !$mobile
             ? $themeStore.theme === "dark"
               ? "#292F3F"
               : "transparent"
             : ""}
           style:backdrop-filter={(currentContact === user && !$mobile) ||
-            (user.name === $page.params.userId && !$mobile) ?
-              "blur(10px)"
-              : "none"
-          }
-          style:transparent={(currentContact === user && !$mobile) ||
-            (user.name === $page.params.userId && !$mobile) ?
-              "0.5"
-              : "0"
-          }
+          (user.name === $page.params.userId && !$mobile)
+            ? "blur(8px)"
+            : "none"}
         >
           <div class="imgbx">
             {#if user.avatar}
@@ -190,8 +182,7 @@ style:border-right={$themeStore.theme === "dark"
   .chatlist {
     height: calc(100vh - 167px);
     overflow: hidden;
-    /* border-left: 3px solid #ebebeb;
-    border-right: 3px solid #ebebeb; */    
+    /* overflow: auto; */
   }
 
   .chatlist:hover {
@@ -204,13 +195,13 @@ style:border-right={$themeStore.theme === "dark"
 
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(8px);
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
   }
 
   .block {
@@ -308,6 +299,21 @@ style:border-right={$themeStore.theme === "dark"
   @media (max-width: 800px) {
     .chatlist {
       border-right: none;
+      overflow-y: auto;
     }
+
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: inherit;
+    }
+
+    /* ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+      background: rgba(0, 0, 0, 0.3);
+    } */
   }
 </style>

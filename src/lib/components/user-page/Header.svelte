@@ -191,6 +191,7 @@
     align-items: center;
     margin-right: 20px;
     border-radius: 10px;
+    /* border: 1px solid; */
   }
 
   .icon-tool {
@@ -208,7 +209,6 @@
     margin: auto;
     padding-right: 0px;
     padding: 15px 5px 15px 5px;
-    /* border: 1px solid; */
   }
 
   .left-part {
@@ -216,10 +216,6 @@
     align-items: center;
     margin-right: auto;
     cursor: pointer;
-  }
-
-  .arrow-back {
-    display: none;
   }
 
   .user-info {
@@ -273,7 +269,7 @@
 
   @media (max-width: 1160px) {
     .header {
-      padding-left: 15px;
+      padding-left: 10px;
     }
   }
 
@@ -286,10 +282,7 @@
   @media (max-width: 800px) {
     .icon-arrow-back {
       margin-right: 10px;
-
-    }
-    .arrow-back {
-      display: block;
+      margin-left: 0px;
     }
   }  
 

@@ -264,20 +264,16 @@
 
   ::-webkit-scrollbar {
     width: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
   }
 
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: rgba(0, 0, 0, .3);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.3);
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(0, 0, 0, 0.5);
   }
 
   .message {
@@ -285,7 +281,8 @@
     display: flex;
     max-width: 800px;
     margin: 20px auto;
-    /* border: 1px solid; */
+    /* border: 1px solid;
+     */
   }
 
   .message-content {
@@ -350,9 +347,30 @@
     border-radius: 2px;
   }
 
+  @media (max-width: 800px) {
+    .chatBox {
+      overflow: auto;
+      padding-right: 5px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: inherit;
+    }
+
+    /* ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+      background: rgba(0, 0, 0, 0.5);
+    } */
+  }
+
   @media (max-width: 1200px) {
     .message {
       margin-right: 10px;
-    }
+    }    
   }
 </style>
