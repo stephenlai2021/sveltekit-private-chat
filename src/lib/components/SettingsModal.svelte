@@ -107,12 +107,28 @@
   class="modal-settings"
   on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
+  style:width={$mobile ? "80%" : "100%"}
+  style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
 >
   <div class="icon-arrow">
-    <ion-icon
-      name="arrow-back-outline"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="ionicon"
+      viewBox="0 0 512 512"
+      width="24"
+      height="24"
+      fill="currentColor"
       on:click|stopPropagation={() => ($showSettingsModal = false)}
-    />
+    >
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="48"
+        d="M328 112L184 256l144 144"
+      />
+    </svg>
   </div>
   <div class="body-scroll" style:overflow-y={!$mobile ? "hidden" : "auto"}>
     <div class="user-profile">
@@ -123,7 +139,6 @@
           {:else}
             <img src="/joke.png" alt="" width="96" height="96" />
           {/if}
-          <!-- <ion-icon name="camera-outline" class="icon-camera" on:click|stopPropagation={() => $showCameraModal = true} /> -->
           <label>
             <input
               type="file"
@@ -162,36 +177,6 @@
         {/if}
       </div>
     </li>
-    <!-- <li>
-      <div class="content">
-        <label>
-          <input
-            type="color"
-            bind:value={$bgColor}
-            on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
-            style:height="0"
-            style:width="0"
-            style:opacity="0"
-          />
-          <ion-icon name="color-palette-outline" class="icon-palette" />
-          <div class="title-wrapper" style:cursor="pointer">
-            <span class="menu-item">Color</span>
-          </div>
-        </label>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <ion-icon name="image-outline" />
-        <div class="title-wrapper">
-          <span
-            class="menu-item"
-            on:click|stopPropagation={() => ($showThemeModal = true)}
-            >Theme</span
-          >
-        </div>
-      </div>
-    </li> -->
     <li>
       <div class="content">
         <ion-icon name="information-circle-outline" />
@@ -209,9 +194,6 @@
       </div>
     </li>
   </div>
-  <!-- {#if showCameraModal}
-    <CameraModal />
-  {/if} -->
 </ul>
 
 <style>
@@ -284,11 +266,6 @@
     /* border: 1px solid; */
   }
 
-  .icon-palette {
-    margin-left: -3px;
-    margin-right: 3px;
-  }
-
   label {
     display: flex;
     align-items: center;
@@ -303,10 +280,12 @@
     left: 0;
     width: 100%;
     /* max-width: 450px; */
+    /* width: 80%; */
     height: 100vh;
     z-index: 200;
-    background: rgba(189, 202, 202, 0.5);
-    backdrop-filter: blur(30px);
+    /* background: rgba(189, 202, 202, 0.5); */
+    /* backdrop-filter: blur(30px); */
+    /* background: #ebebeb; */
   }
 
   li {

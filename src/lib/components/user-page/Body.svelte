@@ -252,28 +252,17 @@
     bottom: 60px;
     width: 100%;
     height: calc(100vh - 120px);
-    padding: 10px 10px 0 10px;
+    padding: 10px 10px 0 15px;
     overflow: hidden;
-  }
-
-  .chatBox:hover {
-    overflow-y: auto;
-    padding-right: 0px;
-    box-sizing: border-box;
+    overflow: auto;
   }
 
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 0px;
   }
 
   ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.3);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-    background: rgba(0, 0, 0, 0.5);
+    background: inherit;
   }
 
   .message {
@@ -281,8 +270,6 @@
     display: flex;
     max-width: 800px;
     margin: 20px auto;
-    /* border: 1px solid;
-     */
   }
 
   .message-content {
@@ -349,23 +336,8 @@
 
   @media (max-width: 800px) {
     .chatBox {
-      overflow: auto;
       padding-right: 5px;
     }
-
-    ::-webkit-scrollbar {
-      width: 0px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background: inherit;
-    }
-
-    /* ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-      background: rgba(0, 0, 0, 0.5);
-    } */
   }
 
   @media (max-width: 1200px) {

@@ -49,8 +49,12 @@
 
   .cameraPreview-wrapper {
     position: relative;
-    width: 600px;
-    max-height: 100vh;
+    /* width: 100%;
+    max-height: 100vh; */
+  }
+
+  img {
+    width: 100vw;
   }
 
   .selfie {
@@ -69,7 +73,7 @@
     width: 100%;
     height: 100vh;
     z-index: 500;
-    background: rgba(163, 156, 156, 0.8);
-    backdrop-filter: blur(30px);
+    /* background: rgba(163, 156, 156, 0.8); */
+    /* backdrop-filter: blur(30px); */
   }
 </style>

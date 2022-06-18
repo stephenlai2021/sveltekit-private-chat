@@ -37,7 +37,7 @@
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "transparent"}
   style:border-right={$themeStore.theme === "dark" ? '1px solid #3a3f50' : '#ebebeb'}
   style:display={$mobile
     ? "none"
@@ -116,8 +116,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    /* opacity: 0.7; */
-    background: #ededed;
+    /* background: #ededed; */
   }
 
   @media (max-width: 800px) {

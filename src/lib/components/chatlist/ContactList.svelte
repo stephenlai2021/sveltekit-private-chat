@@ -180,26 +180,15 @@ style:border-right={$themeStore.theme === "dark"
     height: calc(100vh - 167px);
     overflow: hidden;
     padding-top: 5px;
-    /* overflow: auto; */
-  }
-
-  .chatlist:hover {
-    overflow-y: auto;
+    overflow: auto;
   }
 
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
   }
 
   ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(8px);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-    background: rgba(0, 0, 0, 0.3);
+    background: inherit;
   }
 
   .block {
@@ -209,7 +198,6 @@ style:border-right={$themeStore.theme === "dark"
     padding: 0 10px;
     height: 65px;
     cursor: pointer;
-    /* border-radius: 10px; */
   }
 
   .block:hover {
@@ -279,7 +267,7 @@ style:border-right={$themeStore.theme === "dark"
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    font-style: italic;
+    /* font-style: italic; */
   }
 
   .block.unread .details .message b {
@@ -292,21 +280,5 @@ style:border-right={$themeStore.theme === "dark"
     place-content: center;
     font-size: 0.75em;
     margin-right: 3px;
-  }
-
-  @media (max-width: 800px) {
-    .chatlist {
-      border-right: none;
-      overflow-y: auto;
-    }
-
-    ::-webkit-scrollbar {
-      width: 0px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background: inherit;
-    }
   }
 </style>

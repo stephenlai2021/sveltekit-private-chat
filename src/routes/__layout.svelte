@@ -108,8 +108,12 @@
   class="wrapper"
   on:click={closeModal}
   style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
+  style:padding-left={$showSidebarMenu ? "0" : "60px"}
 >
-  <div class="inner-wrapper">
+<div class="inner-wrapper">
+    <!-- {#if $showSidebarMenu}
+      <SidebarMenu />
+    {/if} -->
     <div
       class="leftSide"
       style:display={$mobile && $page.url.pathname === "/"

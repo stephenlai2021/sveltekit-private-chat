@@ -84,12 +84,12 @@
   on:click|stopPropagation={() => console.log("camera modal clicked !")}
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
 >
-  <!-- transition:fly={{ y: -60, duration: 100, delay: 100 }} -->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="ionicon icon-close"
+
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    class="ionicon icon-close" 
     viewBox="0 0 512 512"
-    on:click|stopPropagation={closeCamera}
+    on:click={closeCamera}
   >
     <path
       fill="none"
@@ -98,12 +98,13 @@
       stroke-linejoin="round"
       stroke-width="32"
       d="M368 368L144 144M368 144L144 368"
-    /></svg
-  >
+    />
+  </svg>
   <div class="video-wrapper">
     <video bind:this={video} autoplay>
       <track kind="captions" />
     </video>
+    <canvas bind:this={canvas} style:display="none" />
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="ionicon icon-shutter"
@@ -124,23 +125,28 @@
 <style>
   .video-wrapper {
     position: relative;
-    max-width: 100vw;
-    max-height: 100vh;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
+  video {
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+
   .icon-close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    z-index: 500;
-    width: 30px;
-    height: 30px;
+    position: fixed;
+    right: 5px;
+    top: 5px;
+    z-index: 600;
+    width: 50px;
+    height: 50px;
     border-radius: 50px;
     padding: 3px;
-    border: 1px solid;
+    /* border: 1px solid; */
   }
 
   .icon-shutter {
@@ -148,12 +154,12 @@
     bottom: 20px;
     width: 50px;
     height: 50px;
-    z-index: 400;
+    z-index: 500;
   }
-  
-  .icon-shutter:hover {
+
+  /* .icon-shutter:hover {
     transform: scale(1.1);
-  }
+  } */
 
   .camera-modal {
     display: flex;
