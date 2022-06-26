@@ -11,8 +11,9 @@
     showThemeMenu,
     showGradientMenu,
     showMapModal,
-    showToolModal,    
+    showToolModal,
     currentSelectedUser,
+    widthLessthan1000,
   } from "$lib/store";
   import Cookies from "js-cookie";
   import themes from "$lib/data/themes.json";
@@ -20,6 +21,7 @@
   import { fly, fade } from "svelte/transition";
   import { page } from "$app/stores";
   import themeStore from "svelte-themes";
+  import { widthLessthan1200 } from "../store";
 
   const setBgColor = (val) => {
     $bgColor = val;
@@ -75,124 +77,72 @@
     ? "#292F3F"
     : "rgba(235, 235, 235, .5)"}
 >
-  <div class="top">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon icon-back"
-      viewBox="0 0 512 512"
-      width="24"
-      height="24"
-      fill="currentColor"
-    >
-      <path
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="48"
-        d="M184 112l144 144-144 144"
-      />
-    </svg>
-  </div>
-  <div class="user-profile">
-    <div class="avatar-section">
-      <div class="image-wrapper">
-        {#if $currentSelectedUser.avatar}
-          <img
-            src={$currentSelectedUser.avatar}
-            alt=""
-            width="96"
-            height="96"
-          />
-        {:else}
-          <img src="/joke.png" alt="" width="96" height="96" />
-        {/if}
-      </div>
-    </div>
-    <h3>
-      {$currentSelectedUser.name}
-    </h3>
-    <p>{$currentSelectedUser.email}</p>
-  </div>
-  <ul>
-    {#if !$isMobile}
-      <li
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+  {#if $currentSelectedUser}
+    <div class="top">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-back"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
       >
-        <label>
-          <input
-            type="file"
-            on:change={handleFileChange}
-            accept="image/png, image/jpg, image/jpeg"
-          />
-          <span>Select image from file</span>
-        </label>
-      </li>
-    {/if}
-    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}>
-      <div class="option" on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}>
-        <div class="content">
-          {#if !$showThemeMenu}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="ionicon"
-              viewBox="0 0 512 512"
-              width="15"
-              height="15"
-              fill="currentColor"
-              style:margin-right="20px"
-            >
-              <path
-                d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-              />
-            </svg>
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="48"
+          d="M184 112l144 144-144 144"
+        />
+      </svg>
+    </div>
+    <div class="user-profile">
+      <div class="avatar-section">
+        <div class="image-wrapper">
+          {#if $currentSelectedUser.avatar}
+            <img
+              src={$currentSelectedUser.avatar}
+              alt=""
+              width="96"
+              height="96"
+            />
           {:else}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="ionicon"
-              viewBox="0 0 512 512"
-              width="15"
-              height="15"
-              fill="currentColor"
-              style:margin-right="20px"
-            >
-              <path
-                d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-              />
-            </svg>
+            <img src="/joke.png" alt="" width="96" height="96" />
           {/if}
-          <span class="content-title">Image gallery</span>
         </div>
       </div>
-      {#if $showThemeMenu}
-        <main>
-          {#each bgPics as bgPic}
-            <div
-              class="theme-item"
-              style:cursor="pointer"
-              on:click={() =>
-                ($bgColor = `no-repeat center center url(${bgPic.url})`)}
-            >
-              <!-- on:click={() => setBgPic(bgPic.url, bgPic.title)} -->
-              <div
-                class="theme-image"
-                style:background-image={`url(${bgPic.url})`}
-              />
-            </div>
-          {/each}
-        </main>
+      <h3>
+        {$currentSelectedUser.name}
+      </h3>
+      <p>{$currentSelectedUser.email}</p>
+    </div>
+    <ul>
+      {#if !$isMobile}
+        <li
+          style:background={$themeStore.theme === "dark"
+            ? "#3A3F50"
+            : "#ebebeb"}
+        >
+          <label>
+            <input
+              type="file"
+              on:change={handleFileChange}
+              accept="image/png, image/jpg, image/jpeg"
+            />
+            <span>Select image from file</span>
+          </label>
+        </li>
       {/if}
-    </li>
-    {#if !$disabled}
       <li
         style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
       >
         <div
           class="option"
-          on:click={() => ($showGradientMenu = !$showGradientMenu)}
+          on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
         >
           <div class="content">
-            {#if !$showGradientMenu}
+            {#if !$showThemeMenu}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="ionicon"
@@ -221,52 +171,117 @@
                 />
               </svg>
             {/if}
-            <span class="content-title">Gradient gallery</span>
+            <span class="content-title">Image gallery</span>
           </div>
         </div>
-        {#if $showGradientMenu}
+        {#if $showThemeMenu}
           <main>
-            {#each themes as theme}
+            {#each bgPics as bgPic}
               <div
                 class="theme-item"
                 style:cursor="pointer"
-                on:click={() => setBgColor(theme.background)}
+                on:click={() =>
+                  ($bgColor = `no-repeat center center url(${bgPic.url})`)}
               >
+                <!-- on:click={() => setBgPic(bgPic.url, bgPic.title)} -->
                 <div
                   class="theme-image"
-                  style:background-image={theme.background}
+                  style:background-image={`url(${bgPic.url})`}
                 />
               </div>
             {/each}
           </main>
         {/if}
       </li>
+      {#if !$disabled}
+        <li
+          style:background={$themeStore.theme === "dark"
+            ? "#3A3F50"
+            : "#ebebeb"}
+        >
+          <div
+            class="option"
+            on:click={() => ($showGradientMenu = !$showGradientMenu)}
+          >
+            <div class="content">
+              {#if !$showGradientMenu}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon"
+                  viewBox="0 0 512 512"
+                  width="15"
+                  height="15"
+                  fill="currentColor"
+                  style:margin-right="20px"
+                >
+                  <path
+                    d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                  />
+                </svg>
+              {:else}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon"
+                  viewBox="0 0 512 512"
+                  width="15"
+                  height="15"
+                  fill="currentColor"
+                  style:margin-right="20px"
+                >
+                  <path
+                    d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                  />
+                </svg>
+              {/if}
+              <span class="content-title">Gradient gallery</span>
+            </div>
+          </div>
+          {#if $showGradientMenu}
+            <main>
+              {#each themes as theme}
+                <div
+                  class="theme-item"
+                  style:cursor="pointer"
+                  on:click={() => setBgColor(theme.background)}
+                >
+                  <div
+                    class="theme-image"
+                    style:background-image={theme.background}
+                  />
+                </div>
+              {/each}
+            </main>
+          {/if}
+        </li>
+        <li
+          style:background={$themeStore.theme === "dark"
+            ? "#3A3F50"
+            : "#ebebeb"}
+        >
+          <label>
+            <input
+              type="color"
+              bind:value={$bgColor}
+              on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
+              style:height="0"
+              style:width="0"
+              style:opacity="0"
+            />
+            <span>Select single color</span>
+          </label>
+        </li>
+      {/if}
       <li
         style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+        on:click={() => ($showMapModal = true)}
       >
-        <label>
-          <input
-            type="color"
-            bind:value={$bgColor}
-            on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
-            style:height="0"
-            style:width="0"
-            style:opacity="0"
-          />
-          <span>Select single color</span>
-        </label>
+        <!-- <span>Show {JSON.parse($selectedUser)}'s location</span> -->
+        <!-- <span>Show location of {$currentSelectedUser.name}</span> -->
+        <span>Show location</span>
       </li>
-    {/if}
-    <li 
-      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
-      on:click={() => $showMapModal = true}
-    >
-      <!-- <span>Show {JSON.parse($selectedUser)}'s location</span> -->
-      <!-- <span>Show location of {$currentSelectedUser.name}</span> -->
-      <span>Show location</span>
-    </li>
-  </ul>
-  <!-- <h4 class="title" on:click={() => $showMapModal = true}>顯示 {$page.params.userId} 的地理位置</h4> -->
+    </ul>
+    <!-- <h4 class="title" on:click={() => $showMapModal = true}>顯示 {$page.params.userId} 的地理位置</h4> -->
+  {/if}
 </div>
 
 <style>
@@ -318,27 +333,10 @@
     /* border: 1px solid; */
   }
 
-  .option ion-icon {
-    width: 15px;
-    height: 15px;
-    margin-right: 20px;
-  }
-
   .option {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .title {
-    /* padding: 10px; */
-    /* text-align: center; */
-    cursor: pointer;
-  }
-
-  .title,
-  li {
-    /* color: #51585c; */
   }
 
   label {

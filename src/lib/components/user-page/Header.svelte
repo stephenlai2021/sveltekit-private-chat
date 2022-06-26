@@ -7,6 +7,7 @@
     loggedinUser,
     bgColor,
     mobile,
+    widthLessthan1000
   } from "$lib/store";
   import {
     doc,
@@ -18,7 +19,7 @@
     orderBy,
     Timestamp,
     collection,
-    onSnapshot,
+    onSnapshot,    
   } from "firebase/firestore";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
@@ -109,7 +110,7 @@
   </div>
 
   <div class="right-part">
-    <div class="icon-webcam" style:margin-right={$mobile ? "20px" : "5px"}>
+    <div class="icon-webcam" style:margin-right={$widthLessthan1000 ? "20px" : "5px"}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
@@ -168,7 +169,7 @@
       </svg>
     </div> -->
 
-    {#if $mobile}
+    {#if $widthLessthan1000}
       <div class="icon-tool">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -195,17 +196,6 @@
 </div>
 
 <style>
-  /* .icon-wrapper {
-    display: flex;
-    align-items: center;
-    margin-right: 5px;
-    border-radius: 10px;
-  } */
-
-  .icon-webcam {
-    margin-right: 20px; 
-  }
-
   .header {
     position: absolute;
     left: 50%;
@@ -274,17 +264,12 @@
   .right-part {
     display: flex;
     align-items: center;
+    /* border: 1px solid; */
   }
 
   @media (max-width: 1200px) {
     .header {
       padding-right: 15px;
-    }
-  }
-
-  @media (max-width: 1160px) {
-    .header {
-      padding-left: 10px;
     }
   }
 
@@ -294,11 +279,4 @@
       margin-left: 0px;
     }
   }
-
-  /* @media (max-width: 400px) {
-    .details h4,
-    .details .user-name {
-      display: none;
-    }
-  } */
 </style>

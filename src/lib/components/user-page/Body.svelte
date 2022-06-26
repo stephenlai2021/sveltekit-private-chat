@@ -319,7 +319,8 @@
     bottom: 60px;
     width: 100%;
     height: calc(100vh - 120px);
-    height: 100vh;
+    /* height: calc(100vh - 60px); */
+    /* height: 100vh; */
 
     padding: 0px 15px 100px 15px;
     overflow: hidden;
@@ -331,7 +332,7 @@
   @media (max-width: 800px) {
     .chatBox {
       padding-right: 5px;
-      padding: 0px 0px 100px 0px;
+      /* padding: 0px 0px 100px 15px; */
     }
   }
 

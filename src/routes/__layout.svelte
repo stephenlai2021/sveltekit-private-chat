@@ -14,6 +14,9 @@
     mobile,
     bgColor,
     connection,
+    widthLessthan1200,
+    widthLessthan1000,
+    currentSelectedUser,
     loginFormShow,
     loggedinUser,
     showToolModal,
@@ -69,6 +72,10 @@
   const desktopOrMobile = () => {
     if (window.innerWidth <= 800) $mobile = true;
     if (window.innerWidth > 800) $mobile = false;
+    if (window.innerWidth <= 1200) $widthLessthan1200 = true;
+    if (window.innerWidth > 1200) $widthLessthan1200 = false;
+    if (window.innerWidth <= 1000) $widthLessthan1000 = true;
+    if (window.innerWidth > 1000) $widthLessthan1000 = false;
   };
 
   const closeModal = () => {
@@ -82,7 +89,9 @@
       if (!_user) goto("/login");
       else $loggedinUser = _user;
     });
+    $currentSelectedUser = null
   });
+
 
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
@@ -160,7 +169,8 @@
     </div>
 
     <!-- {#if $showToolModal} -->
-    <ToolModal />
+    <!-- {#if $currentSelectedUser} -->
+      <ToolModal />
     <!-- {/if} -->
 
     {#if $showImagePreviewModal}

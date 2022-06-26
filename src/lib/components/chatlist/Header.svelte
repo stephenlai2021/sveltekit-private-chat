@@ -7,13 +7,14 @@
     loggedinUser,
     showSettingsModal,
     showAddFriendModal,
+    widthLessthan1200
   } from "$lib/store";
 </script>
 
 <div class="header">
   <div class="left" style:cursor="pointer">
     <!-- {#if !$showSidebarMenu} -->
-    {#if $mobile}
+    {#if $widthLessthan1200}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"

@@ -12,6 +12,7 @@
   } from "$lib/store";
 
   const menuItems = ["All", "Chat", "Group", "Room"];
+  // const menuItems = [];
   let currentTab = menuItems[0];
   let selecteedTab = true;
 
