@@ -1,10 +1,6 @@
 <script>
   import { db, storage } from "$lib/firebase/client";
-  import {
-    addDoc,
-    Timestamp,
-    collection
-  } from "firebase/firestore";
+  import { addDoc, Timestamp, collection } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import {
     mobile,
@@ -146,13 +142,7 @@
   <Body />
   <Footer />
 
-   
-
   {#if $showEmojiMenu}
     <EmojiMenu />
-  {/if}
-
-  {#if $showMapModal}
-    <MapModal />
-  {/if}
+  {/if}  
 </div>

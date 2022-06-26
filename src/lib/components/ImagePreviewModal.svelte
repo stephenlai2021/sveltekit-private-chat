@@ -85,14 +85,17 @@
 <style>
   img {
     max-height: 100vh;
-    max-width: 100vw;
+    max-width: 1000px;
   }
 
   .icon-close {
     position: absolute;
     top: 5px;
-    right: 5px;
+    left: 50%;
+    transform: translateX(-50%);
     color: white;
+    border-radius: 50px;
+    background: white;
   }
 
   .image-preview-modal {
@@ -101,10 +104,12 @@
     justify-content: center;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
+    max-width: 1920px;
     height: 100vh;
     z-index: 600;
-    background-size: 260px 195px;
+    /* background-size: 260px 195px; */
   }
 </style>

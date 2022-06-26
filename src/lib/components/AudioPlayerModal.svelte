@@ -6,7 +6,9 @@
     audioURL,
     audioConfirmed,
   } from "$lib/store";
-  console.log("audio file", $audioFile);
+  import themeStore from "svelte-themes"
+
+  // console.log("audio file", $audioFile);
 
   const handleConfirm = () => {
     $audioConfirmed = true;
@@ -21,7 +23,10 @@
   };
 </script>
 
-<div class="audioPlayer-modal">
+<div 
+  class="audioPlayer-modal" 
+  style:background={$themeStore.theme === "dark" ? "black" : "#ebebeb"}
+>
   <div class="audioPlayer-wrapper">
     <audio controls>
       <source src={$audioURL} type="audio/wav" />
@@ -45,8 +50,6 @@
     justify-content: space-around;
     align-items: center;
     margin-top: 50px;
-    /* position: absolute;
-    bottom: 20px; */
   }
 
   .audioPlayer-modal {
@@ -55,11 +58,11 @@
     align-items: center;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
+    max-width: 1000px;
     height: 100vh;
     z-index: 500;
-    background: rgba(163, 156, 156, 0.8);
-    backdrop-filter: blur(30px);
   }
 </style>

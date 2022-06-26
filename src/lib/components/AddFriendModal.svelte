@@ -1,10 +1,11 @@
 <script>
   import { fly } from "svelte/transition";
-  import { showAddFriendModal } from "$lib/store";
+  import { showAddGroupModal, showAddFriendModal, showSearchFriendModal } from "$lib/store";
   import { getAllDocs } from "$lib/functions/getAllDocs";
   import { doc, updateDoc } from "firebase/firestore";
   import { onAuthStateChanged } from "firebase/auth";
   import { db, auth } from "$lib/firebase/client";
+  import themeStore from "svelte-themes";
 
   let url = null;
   let user = null;
@@ -13,8 +14,8 @@
   let notFound = false;
   let sameUser = false;
 
-  onAuthStateChanged(auth, (_user) => { 
-    user = _user
+  onAuthStateChanged(auth, (_user) => {
+    user = _user;
   });
 
   const getUser = async () => {
@@ -34,7 +35,7 @@
     console.log(`${users[0].name} is found`);
     console.log(`loggedin user name is ${user.displayName}`);
 
-     if (users[0].name === user.displayName) {
+    if (users[0].name === user.displayName) {
       console.log("this is your name 🤗");
       users = [];
       sameUser = true;
@@ -60,7 +61,7 @@
 
   const closeDialog = () => {
     sameUser = false;
-    username = null
+    username = null;
   };
 
   $: if (users && users.length) {
@@ -73,24 +74,123 @@
 <div
   class="modal-addfriend"
   on:click|stopPropagation={() => console.log("add user modal clicked !")}
-  transition:fly={{ y: 50, duration: 100, delay: 100 }}
+  transition:fly={{ x: -60, duration: 100, delay: 100 }}
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
 >
-  <div class="icon-arrow">
-    <ion-icon
-      name="chevron-down-outline"
-      on:click|stopPropagation={() => ($showAddFriendModal = false)}
+<div class="top">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="ionicon icon-arrow-back"
+    viewBox="0 0 512 512"
+    width="24"
+    height="24"
+    fill="currentColor"
+    on:click|stopPropagation={() => ($showAddFriendModal = false)}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="48"
+      d="M328 112L184 256l144 144"
     />
-  </div>
+  </svg>
+  <span>Add friend</span>
+</div>
 
-  <div class="search_user">
-    <input
-      type="text"
-      placeholder="Find user"
-      bind:value={username}
-      on:keypress={handleSearch}
-    />
-    <ion-icon name="search-outline" class="icon-search" on:click={getUser} />
-  </div>
+  <ul class="menu">
+    <li class="menu-item" on:click={() => ($showSearchFriendModal = true)}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-add"
+        viewBox="0 0 512 512"
+        width="24"
+        heiht="24"
+        fill="currentColor"
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+          d="M256 112v288M400 256H112"
+        />
+      </svg>
+      <span>Search friend</span>
+    </li>
+    <li class="menu-item" on:click={() => ($showAddGroupModal = true)}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+      >
+        <path
+          d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-3-42.31 26.37-72 66-72s69 30.46 66 72z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+        <path
+          d="M336 304c-65.17 0-127.84 32.37-143.54 95.41-2.08 8.34 3.15 16.59 11.72 16.59h263.65c8.57 0 13.77-8.25 11.72-16.59C463.85 335.36 401.18 304 336 304z"
+          fill="none"
+          stroke="currentColor"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+        <path
+          d="M200 185.94c-2.34 32.48-26.72 58.06-53 58.06s-50.7-25.57-53-58.06C91.61 152.15 115.34 128 147 128s55.39 24.77 53 57.94z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+        <path
+          d="M206 306c-18.05-8.27-37.93-11.45-59-11.45-52 0-102.1 25.85-114.65 76.2-1.65 6.66 2.53 13.25 9.37 13.25H154"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+      </svg>
+      <span>Add a group</span>
+    </li>
+    <li class="menu-item">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+      >
+        <path
+          d="M431 320.6c-1-3.6 1.2-8.6 3.3-12.2a33.68 33.68 0 012.1-3.1A162 162 0 00464 215c.3-92.2-77.5-167-173.7-167-83.9 0-153.9 57.1-170.3 132.9a160.7 160.7 0 00-3.7 34.2c0 92.3 74.8 169.1 171 169.1 15.3 0 35.9-4.6 47.2-7.7s22.5-7.2 25.4-8.3a26.44 26.44 0 019.3-1.7 26 26 0 0110.1 2l56.7 20.1a13.52 13.52 0 003.9 1 8 8 0 008-8 12.85 12.85 0 00-.5-2.7z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+        <path
+          d="M66.46 232a146.23 146.23 0 006.39 152.67c2.31 3.49 3.61 6.19 3.21 8s-11.93 61.87-11.93 61.87a8 8 0 002.71 7.68A8.17 8.17 0 0072 464a7.26 7.26 0 002.91-.6l56.21-22a15.7 15.7 0 0112 .2c18.94 7.38 39.88 12 60.83 12A159.21 159.21 0 00284 432.11"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+      </svg>
+      <span>Create a chat room</span>     
+    </li>
+  </ul>
 
   {#if users}
     {#each users as user}
@@ -150,6 +250,36 @@
 </div>
 
 <style>
+  .top {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    /* border: 1px solid; */
+  }
+
+  .top span {
+    line-height: 0.7;
+  }
+
+  ul.menu {
+    margin-top: 50px;
+    padding-left: 10px;
+    /* border: 1px solid; */
+  }
+
+  li.menu-item {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0 10px 5px;
+    cursor: pointer;
+  }
+
+  .ionicon {
+    margin-right: 15px;
+  }
+
   .content {
     margin-top: 10px;
   }
@@ -187,12 +317,6 @@
     border: 1px solid;
   }
 
-  .icon-add {
-    width: 40px;
-    height: 40px;
-    margin-top: 10px;
-  }
-
   .offline {
     background: #b6b5b5;
   }
@@ -217,7 +341,7 @@
     border-radius: 50%;
     object-fit: cover;
   }
-  
+
   .avatar-wrapper {
     position: relative;
     width: 120px;
@@ -229,49 +353,6 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    /* border: 1px solid; */
-  }
-
-  .icon-arrow {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    padding-top: 10px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .search_user .icon-search {
-    position: absolute;
-    right: 25px;
-    top: 15px;
-    width: 20px;
-    height: 20px;
-    color: rgb(161, 161, 161);
-  }
-
-  .search_user {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    padding: 0 15px;
-    line-height: 50px;
-  }
-
-  .search_user input {
-    width: 100%;
-    outline: none;
-    border: none;
-    background: white;
-    padding: 6px;
-    height: 38px;
-    font-size: 14px;
-    padding-left: 20px;
-  }
-
-  .search_user input::placeholder {
-    color: #bbb;
   }
 
   .modal-addfriend {
@@ -281,9 +362,7 @@
     z-index: 200;
     width: 100%;
     height: 100vh;
-    padding: 10px;
+    /* padding: 10px; */
     z-index: 100;
-    background: rgba(189, 202, 202, 0.5);
-    backdrop-filter: blur(30px);
   }
 </style>

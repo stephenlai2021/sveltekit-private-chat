@@ -20,7 +20,7 @@
   const closeCamera = () => {
     $showCameraModal = false;
     videoReady = false;
-    $videoStream.getTracks().forEach(function (track) {
+    $videoStream.getTracks().forEach((track) => {
       track.stop();
     });
   };
@@ -135,6 +135,8 @@
   video {
     max-width: 100vw;
     max-height: 100vh;
+    /* width: 100%;
+    height: 100vh; */
   }
 
   .icon-close {
@@ -167,9 +169,12 @@
     align-items: center;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 300;
-    width: 100%;
+    /* width: 100%; */
+    max-width: 1920px;
+    /* margin: auto; */
     height: 100vh;
   }
 

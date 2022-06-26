@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { audioFile } from "$lib/store";
+  import themeStore from "svelte-themes"
 
   let active = false;
   let second = 0;
@@ -92,7 +93,10 @@
   }
 </script>
 
-<div class="audio-modal">
+<div 
+  class="audio-modal" 
+  style:background={$themeStore.theme === "dark" ? "black" : "#ebebeb"}
+>
   <div class="audio-wrapper" on:click={stopRecording}>
     <div class="circle" class:active>
       <ion-icon name="mic-outline" class="icon-mic" />
@@ -205,11 +209,12 @@
     flex-direction: column;
     position: absolute;
     top: 0;
-    left: 0;
-    z-index: 400;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
-    /* height: calc(100vh - 60px); */
+    max-width: 1000px;
     height: 100vh;
+    z-index: 400;
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(24px);
   }

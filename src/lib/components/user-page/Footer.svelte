@@ -106,7 +106,12 @@
   };
 </script>
 
-<div class="chatbox_input">
+<div
+  class="chatbox_input"
+  style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "rgba(235, 235, 235, .5)"}
+>
   <div class="icon-plus">
     {#if $isMobile}
       <svg
@@ -301,14 +306,17 @@
     left: 50%;
     transform: translateX(-50%);
     bottom: 5px;
+    bottom: 0;
+    padding-bottom: 5px;
     width: 100%;
-    max-width: 810px;
+    max-width: 800px;
     margin: auto;
     height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 10px;
+    padding-left: 15px;
+    backdrop-filter: blur(20px);
     /* border: 1px solid; */
   }
 
@@ -345,10 +353,11 @@
 
   .icon-mic {
     margin-left: 10px;
+    margin-right: 10px;
   }
 
   .icon-camera {
-    margin-right: 20px;
+    margin-right: 15px;
   }
 
   .icon-emoji {
@@ -400,4 +409,16 @@
       margin-right: 10px;
     }
   }
+
+  @media (max-width: 1160px) {
+    .chatbox_input {
+      padding-left: 10px;
+    }
+  }
+
+  /* @media (max-width: 800px) {
+    .chatbox_input {
+      padding-left: 10px;
+    }
+  } */
 </style>

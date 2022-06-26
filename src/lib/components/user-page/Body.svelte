@@ -9,20 +9,26 @@
   } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
   import {
-    selectedUsername,
-    loggedinUser,
     bgColor,
-    showImagePreviewModal,
-    storedPictureURL,
+    loggedinUser,
+    // isAudioPlayed,
     storedImageURL,
+    storedPictureURL,
+    selectedUsername,
+    showImagePreviewModal,
   } from "$lib/store";
   import { page } from "$app/stores";
   import moment from "moment";
+  import { onMount } from "svelte";
+  import { browser } from "$app/env";
 
   let q = null;
+  let audio = null;
   let player = null;
   let messages = [];
   let matched = false;
+  let isAudioPlayed = false;
+  let playBtnClicked = false;
   let selectedUserMsgsReady = false;
 
   const showImagePreview = (pictureURL, imageURL) => {
@@ -53,11 +59,43 @@
     });
     matched = false;
   }
+
+  const playAudio = (audioURL) => {
+    playBtnClicked = true;
+    audio = new Audio(audioURL);
+    audio.addEventListener("loadeddata", () => (audio.volume = 0.55));
+    audio.play();
+  };
+
+  const pauseAudio = () => {
+    // audio = new Audio(audioURL)
+    // audio.addEventListener('loadeddata', () => audio.volume = .75)
+    audio.pause();
+  };
+
+  $: if (isAudioPlayed) {
+    console.log("audio is played");
+  }
+
+  $: if (!isAudioPlayed) {
+    console.log("audio is paused");
+  }
+
+  onMount(() => {
+    const audio = new Audio();
+  });
 </script>
 
-{#if messages}
-  <div class="chatBox">
-    <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
+<!-- style:border-right={$themeStore.theme === "dark"
+      ? "2px solid #3A3F50"
+      : "2px solid rgba(235, 235, 235, .3)"} -->
+<div
+  class="chatBox"
+  style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "rgba(235, 235, 235, .5)"}
+>
+  {#if messages}
     {#each messages as msg}
       <div
         class="message"
@@ -85,9 +123,8 @@
           <span
             class="showtime"
             style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"}
-            style:left={msg.from != $loggedinUser.displayName ? "0" : ""}
-            style:right={msg.from === $loggedinUser.displayName ? "0" : ""}
           >
+            <!-- style:text-align={msg.audioURL ? "center" : ""} -->
             {moment(msg.createdAt.toDate()).format("LT")}
           </span>
 
@@ -121,6 +158,17 @@
             />
           </svg>
 
+          {#if msg.audioURL}
+            <div class="audio-player" style:padding="3px 0">
+              <!-- <div class="btn-play" on:click={() => playAudio(msg.audioURL)}>
+                <span />
+              </div> -->
+              <audio controls>
+                <source src={msg.audioURL} type="audio/wav" />
+              </audio>
+            </div>
+          {/if}
+
           {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
             <span
               class="message-text"
@@ -136,126 +184,51 @@
           {#if msg.imageURL}
             <img src={msg.imageURL} alt="" />
           {/if}
-
-          {#if msg.audioURL}
-            <div
-              class="player"
-              bind:this={player}
-              style:background={msg.from === $loggedinUser.displayName &&
-              $themeStore.theme === "dark"
-                ? "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)"
-                : msg.from !== $loggedinUser.displayName &&
-                  $themeStore.theme === "dark"
-                ? "linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)"
-                : msg.from === $loggedinUser.displayName &&
-                  $themeStore.theme === "light"
-                ? "#dcf8c6"
-                : msg.from != $loggedinUser.displayName &&
-                  $themeStore.theme === "light"
-                ? "white"
-                : ""}
-            >
-              <div class="inner-wrapper">
-                <div class="progress-wrapper">
-                  <progress value="0" max="100" />
-                  <span
-                    class="time-stamp"
-                    style:color={$themeStore.theme === "light" ? "black" : ""}
-                  >
-                    01/10
-                  </span>
-                </div>
-                <div class="buttons">
-                  <button class="play">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="ionicon"
-                      viewBox="0 0 512 512"
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      style:color={$themeStore.theme === "light" ? "black" : ""}
-                    >
-                      <path
-                        d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-miterlimit="10"
-                        stroke-width="32"
-                      />
-                    </svg>
-                  </button>
-
-                  <button class="pause">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="ionicon"
-                      viewBox="0 0 512 512"
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      style:color={$themeStore.theme === "light" ? "black" : ""}
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="32"
-                        d="M176 96h16v320h-16zM320 96h16v320h-16z"
-                      />
-                    </svg>
-                  </button>
-                  <button class="stop">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="ionicon"
-                      viewBox="0 0 512 512"
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      style:color={$themeStore.theme === "light" ? "black" : ""}
-                    >
-                      <rect
-                        x="96"
-                        y="96"
-                        width="320"
-                        height="320"
-                        rx="24"
-                        ry="24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linejoin="round"
-                        stroke-width="32"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <input type="range" class="volume" />
-            </div>
-          {/if}
         </p>
       </div>
     {/each}
-  </div>
-{/if}
+  {/if}
+</div>
 
 <style>
   @import url("$lib/styles/audio-player.css");
 
-  .chatBox {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 60px;
-    bottom: 60px;
-    width: 100%;
-    height: calc(100vh - 120px);
-    padding: 10px 10px 0 15px;
-    overflow: hidden;
-    overflow: auto;
+  .audio-player {
+    display: flex;
+    border-radius: 4px;
+    padding: 3px 5px;
+    /* border: 1px solid; */
   }
+
+  /* audio player button */
+  .btn-play {
+    /* background-size: contain; */
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    background: #fa183d;
+    padding: 18px 20px 18px 28px;
+  }
+
+  .btn-play span {
+    display: block;
+    position: relative;
+    z-index: 3;
+    width: 0;
+    height: 0;
+    border-left: 32px solid #fff;
+    border-top: 22px solid transparent;
+    border-bottom: 22px solid transparent;
+  }
+
+  .btn-play {
+    /* background-image: url("/btn-play.png"); */
+  }
+
+  .btn-play:hover {
+    cursor: pointer;
+  }
+  /* end of audio player button */
 
   ::-webkit-scrollbar {
     width: 0px;
@@ -293,6 +266,10 @@
   .message.friend_message .showtime {
     text-align: left;
   }
+
+  /* .showtime {
+    text-align: center;
+  } */
 
   .message.my_message {
     justify-content: flex-end;
@@ -334,15 +311,33 @@
     border-radius: 2px;
   }
 
+  .chatBox {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 60px;
+    bottom: 60px;
+    width: 100%;
+    height: calc(100vh - 120px);
+    height: 100vh;
+
+    padding: 0px 15px 100px 15px;
+    overflow: hidden;
+    overflow: auto;
+    backdrop-filter: blur(20px);
+    /* border: 1px solid; */
+  }
+
   @media (max-width: 800px) {
     .chatBox {
       padding-right: 5px;
+      padding: 0px 0px 100px 0px;
     }
   }
 
   @media (max-width: 1200px) {
     .message {
       margin-right: 10px;
-    }    
+    }
   }
 </style>

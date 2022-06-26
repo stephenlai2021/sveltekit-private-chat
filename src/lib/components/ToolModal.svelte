@@ -11,15 +11,15 @@
     showThemeMenu,
     showGradientMenu,
     showMapModal,
-    showToolModal,
+    showToolModal,    
+    currentSelectedUser,
   } from "$lib/store";
   import Cookies from "js-cookie";
   import themes from "$lib/data/themes.json";
   import bgPics from "$lib/data/bgPics.json";
   import { fly, fade } from "svelte/transition";
   import { page } from "$app/stores";
-
-  // let disabled = false;
+  import themeStore from "svelte-themes";
 
   const setBgColor = (val) => {
     $bgColor = val;
@@ -42,10 +42,6 @@
       $bgOpacity = 0.6;
       $disabled = false;
     }
-    // if ($imageTitle.includes('Animation')) {
-    //   $bgOpacity = 1
-    //   $disabled = true
-    // }
   };
 
   const handleFileChange = async (e) => {
@@ -75,34 +71,97 @@
 <div
   class="tool-modal"
   on:click|stopPropagation
-  >
-  <!-- transition:fly={{ x: 60, duration: 100, delay: 100 }} -->
-  <h3 class="title">背景設置</h3>
+  style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "rgba(235, 235, 235, .5)"}
+>
+  <div class="top">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="ionicon icon-back"
+      viewBox="0 0 512 512"
+      width="24"
+      height="24"
+      fill="currentColor"
+    >
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="48"
+        d="M184 112l144 144-144 144"
+      />
+    </svg>
+  </div>
+  <div class="user-profile">
+    <div class="avatar-section">
+      <div class="image-wrapper">
+        {#if $currentSelectedUser.avatar}
+          <img
+            src={$currentSelectedUser.avatar}
+            alt=""
+            width="96"
+            height="96"
+          />
+        {:else}
+          <img src="/joke.png" alt="" width="96" height="96" />
+        {/if}
+      </div>
+    </div>
+    <h3>
+      {$currentSelectedUser.name}
+    </h3>
+    <p>{$currentSelectedUser.email}</p>
+  </div>
   <ul>
     {#if !$isMobile}
-      <li>
+      <li
+        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+      >
         <label>
           <input
             type="file"
             on:change={handleFileChange}
             accept="image/png, image/jpg, image/jpeg"
           />
-          <span>選擇圖片</span>
+          <span>Select image from file</span>
         </label>
       </li>
     {/if}
-    <!-- <li
-      style:border-bottom={$disabled ? "none" : "1px solid rgba(0, 0, 0, 0.06)"}
-    > -->
-    <li>
-      <div class="option" on:click={() => ($showThemeMenu = !$showThemeMenu)}>
+    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}>
+      <div class="option" on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}>
         <div class="content">
           {#if !$showThemeMenu}
-            <ion-icon name="caret-down-outline" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon"
+              viewBox="0 0 512 512"
+              width="15"
+              height="15"
+              fill="currentColor"
+              style:margin-right="20px"
+            >
+              <path
+                d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+              />
+            </svg>
           {:else}
-            <ion-icon name="caret-up-outline" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon"
+              viewBox="0 0 512 512"
+              width="15"
+              height="15"
+              fill="currentColor"
+              style:margin-right="20px"
+            >
+              <path
+                d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+              />
+            </svg>
           {/if}
-          <span class="content-title">精選圖片</span>
+          <span class="content-title">Image gallery</span>
         </div>
       </div>
       {#if $showThemeMenu}
@@ -111,8 +170,9 @@
             <div
               class="theme-item"
               style:cursor="pointer"
-              on:click={() => $bgColor = `no-repeat url(${bgPic.url})`}
-              >
+              on:click={() =>
+                ($bgColor = `no-repeat center center url(${bgPic.url})`)}
+            >
               <!-- on:click={() => setBgPic(bgPic.url, bgPic.title)} -->
               <div
                 class="theme-image"
@@ -123,19 +183,45 @@
         </main>
       {/if}
     </li>
-    {#if !$disabled}      
-      <li>
+    {#if !$disabled}
+      <li
+        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+      >
         <div
           class="option"
           on:click={() => ($showGradientMenu = !$showGradientMenu)}
         >
           <div class="content">
             {#if !$showGradientMenu}
-              <ion-icon name="caret-down-outline" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+                fill="currentColor"
+                style:margin-right="20px"
+              >
+                <path
+                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                />
+              </svg>
             {:else}
-              <ion-icon name="caret-up-outline" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+                fill="currentColor"
+                style:margin-right="20px"
+              >
+                <path
+                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                />
+              </svg>
             {/if}
-            <span class="content-title">漸層</span>
+            <span class="content-title">Gradient gallery</span>
           </div>
         </div>
         {#if $showGradientMenu}
@@ -155,7 +241,9 @@
           </main>
         {/if}
       </li>
-      <li>
+      <li
+        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+      >
         <label>
           <input
             type="color"
@@ -165,10 +253,18 @@
             style:width="0"
             style:opacity="0"
           />
-          <span>選擇顏色</span>
+          <span>Select single color</span>
         </label>
       </li>
     {/if}
+    <li 
+      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+      on:click={() => $showMapModal = true}
+    >
+      <!-- <span>Show {JSON.parse($selectedUser)}'s location</span> -->
+      <!-- <span>Show location of {$currentSelectedUser.name}</span> -->
+      <span>Show location</span>
+    </li>
   </ul>
   <!-- <h4 class="title" on:click={() => $showMapModal = true}>顯示 {$page.params.userId} 的地理位置</h4> -->
 </div>
@@ -176,16 +272,50 @@
 <style>
   @import url("$lib/styles/theme-modal.css");
 
-  .content-title {
-    width: 70px;
-    text-align-last: left;
+  .icon-back {
+    display: none;
+  }
+
+  .user-profile .avatar-section {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    display: flex;
+    /* border: 1px solid; */
+  }
+
+  .user-profile {
+    margin-bottom: 30px;
+  }
+
+  .image-wrapper img {
+    border-radius: 8px;
+  }
+
+  h3,
+  p {
+    text-align: center;
+  }
+
+  .theme-item {
+    padding: 0;
+    /* border: 1px solid red; */
+  }
+
+  .top {
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+    /* border: 1px solid; */
   }
 
   .content {
-    width: 120px;
+    width: 180px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    /* border: 1px solid; */
   }
 
   .option ion-icon {
@@ -201,14 +331,14 @@
   }
 
   .title {
-    padding: 10px;
-    text-align: center;
+    /* padding: 10px; */
+    /* text-align: center; */
     cursor: pointer;
   }
 
   .title,
   li {
-    color: #51585c;
+    /* color: #51585c; */
   }
 
   label {
@@ -223,17 +353,29 @@
   }
 
   ul {
-    border-radius: 8px;
     text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.06); */
+    display: flex;
+    flex-direction: column;
+    /* margin-top: 120px; */
   }
 
   li {
-    margin: 0;
-    padding: 8px 0;
+    margin: 0 10px;
+    padding: 10px 0;
     list-style: none;
     cursor: pointer;
-    /* border-bottom: 1px solid rgba(0, 0, 0, 0.06); */
+    background: white;
+    margin-bottom: 5px;
+    border-radius: 8px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: inherit;
   }
 
   .tool-modal {
@@ -241,11 +383,19 @@
     right: 0;
     top: 0;
     z-index: 600; */
-    width: 500px;
-    background: rgba(229, 221, 222, 0.5);
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    min-width: 250px;
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
-    backdrop-filter: blur(50px);
+    backdrop-filter: blur(20px);
+  }
+
+  @media (max-width: 1000px) {
+    .tool-modal {
+      display: none;
+    }
   }
 </style>

@@ -3,9 +3,10 @@
     showMapModal,
     showToolModal,
     selectedUsername,
+    currentSelectedUser,
     loggedinUser,
     bgColor,
-    mobile
+    mobile,
   } from "$lib/store";
   import {
     doc,
@@ -40,6 +41,7 @@
         tempUsers.push({ ...doc.data() });
       });
       selectedUser = tempUsers[0];
+      $currentSelectedUser = tempUsers[0];
       selectedUserReady = true;
       console.log("get selected user name | snapshot: ", selectedUser.name);
       return () => unsub();
@@ -48,7 +50,13 @@
   }
 </script>
 
-<div class="header">
+<div
+  class="header"
+  style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "rgba(235, 235, 235, .5)"}
+>
+<!-- style:backdrop-filter="blur(20px)" -->
   <div class="left-part">
     {#if $mobile}
       <div class="icon-wrapper icon-arrow-back">
@@ -101,7 +109,7 @@
   </div>
 
   <div class="right-part">
-    <div class="icon-wrapper icon-webcam">
+    <div class="icon-webcam" style:margin-right={$mobile ? "20px" : "5px"}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
@@ -109,7 +117,7 @@
         width="24"
         height="24"
         fill="currentColor"
-        >
+      >
         <!-- style:margin-right="20px" -->
         <path
           d="M374.79 308.78L457.5 367a16 16 0 0022.5-14.62V159.62A16 16 0 00457.5 145l-82.71 58.22A16 16 0 00368 216.3v79.4a16 16 0 006.79 13.08z"
@@ -129,7 +137,7 @@
       </svg>
     </div>
 
-    <div class="icon-wrapper icon-location">
+    <!-- <div class="icon-wrapper icon-location">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
@@ -138,8 +146,7 @@
         height="24"
         fill="currentColor"
         on:click={() => ($showMapModal = true)}
-        >
-        <!-- style:margin-right="20px" -->
+      >
         <path
           d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0025.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"
           fill="none"
@@ -159,43 +166,44 @@
           stroke-width="32"
         />
       </svg>
-    </div>
+    </div> -->
 
-    <div class="icon-wrapper icon-tool">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-        on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
+    {#if $mobile}
+      <div class="icon-tool">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+          on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
         >
-        <!-- style:margin-right="20px" -->
-        <path
-          d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-      </svg>
-    </div>
+          <!-- style:margin-right="20px" -->
+          <path
+            d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+        </svg>
+      </div>
+    {/if}
   </div>
 </div>
 
 <style>
-  .icon-wrapper {
+  /* .icon-wrapper {
     display: flex;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 5px;
     border-radius: 10px;
-    /* border: 1px solid; */
-  }
+  } */
 
-  .icon-tool {
-    margin-right: 0px;    
+  .icon-webcam {
+    margin-right: 20px; 
   }
 
   .header {
@@ -205,10 +213,11 @@
     height: 60px;
     display: flex;
     align-items: center;
-    max-width: 810px;
-    margin: auto;
+    max-width: 800px;
+    /* margin: auto; */
     padding-right: 0px;
-    padding: 15px 5px 15px 5px;
+    padding: 15px 10px 15px 10px;
+    backdrop-filter: blur(20px);
   }
 
   .left-part {
@@ -234,11 +243,11 @@
     height: 35px;
     border-radius: 50%;
   }
-  
+
   .details {
     padding-left: 15px;
   }
-  
+
   .details h4 {
     font-size: 18px;
     font-weight: 600;
@@ -265,12 +274,6 @@
   .right-part {
     display: flex;
     align-items: center;
-  } 
-
-  @media (max-width: 1160px) {
-    .header {
-      padding-left: 10px;
-    }
   }
 
   @media (max-width: 1200px) {
@@ -279,17 +282,23 @@
     }
   }
 
+  @media (max-width: 1160px) {
+    .header {
+      padding-left: 10px;
+    }
+  }
+
   @media (max-width: 800px) {
     .icon-arrow-back {
       margin-right: 10px;
       margin-left: 0px;
     }
-  }  
+  }
 
-  @media (max-width: 400px) {
+  /* @media (max-width: 400px) {
     .details h4,
     .details .user-name {
       display: none;
     }
-  }
+  } */
 </style>

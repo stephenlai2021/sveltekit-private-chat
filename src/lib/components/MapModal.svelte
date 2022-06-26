@@ -23,12 +23,35 @@
   });
 </script>
 
-<div class="map-modal" transition:fly={{ y: 100, duration: 100, delay: 100 }}>
-  <ion-icon
-    name="close-outline"
-    class="icon-close"
+<div 
+  class="map-modal" 
+  transition:fly={{ y: 100, duration: 100, delay: 100 }}  
+>
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    class="ionicon icon-close" 
+    viewBox="0 0 512 512"
+    width="30"
+    height="30"
+    fill="currentColor"
     on:click={() => ($showMapModal = false)}
-  />
+  >
+    <path
+      d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+      fill="none"
+      stroke="currentColor"
+      stroke-miterlimit="10"
+      stroke-width="32"
+    />
+    <path
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="32"
+      d="M320 320L192 192M192 320l128-128"
+    />
+  </svg>
   <div id="map" />
 </div>
 
@@ -37,12 +60,8 @@
 
   #map {
     width: 100%;
+    width: 1920px;
     height: 100vh;
-
-    /* width: 1280px;
-    height: 768px; */
-
-    /* border: 1px solid; */
   }
 
   .icon-close {
@@ -51,22 +70,16 @@
     left: 50%;
     z-index: 700;
     transform: translateX(-50%);
-    border-radius: 50%;
-    background: rgb(156, 160, 131);
-    /* border: 1px solid; */
   }
 
   .map-modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
+    max-width: 1920px;
     height: 100vh;
-    z-index: 600;
-    backdrop-filter: blur(50px);
-    background: rgba(229, 221, 222, 0.5);
+    z-index: 300;
   }
 </style>

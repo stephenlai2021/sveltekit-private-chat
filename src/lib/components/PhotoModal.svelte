@@ -56,8 +56,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 400;
     width: 100%;
+    z-index: 400;
     height: calc(100vh - 60px);
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(24px);

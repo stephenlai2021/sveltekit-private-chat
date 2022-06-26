@@ -3,21 +3,14 @@
   import themeStore from "svelte-themes";
 </script>
 
-<!-- style:border-top={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px solid #ebebeb"}
-style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px solid #ebebeb"} -->
-<div 
-  class="search_user"
-  >
-  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
+<div class="search_user">
   <div class="search-user-wrapper">
     <input
       type="text"
       placeholder="Find user"
       bind:value={$keyword}
       style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
-      />
-      <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "#ebebeb"} -->
-
+    />
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="ionicon icon-finduser"
@@ -52,8 +45,7 @@ style:border-bottom={$themeStore.theme === "dark" ? "0.5px solid #3a3f50" : "1px
     top: 0px;
     width: 100%;
     padding: 0px 15px 10px 15px;
-    padding: 0px 0px 10px 0px;
-    /* border: 1px solid; */
+    padding: 0px 10px 10px 10px;
   }
   
   .search-user-wrapper {

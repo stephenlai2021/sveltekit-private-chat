@@ -103,17 +103,20 @@
   });
 </script>
 
+<!-- style:backdrop-filter="blur(20px)" -->
 <ul
   class="modal-settings"
   on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
   style:width={$mobile ? "80%" : "100%"}
-  style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+  style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "rgba(235, 235, 235, .5)"}
 >
-  <div class="icon-arrow">
+  <div class="top">
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="ionicon"
+      class="ionicon icon-back"
       viewBox="0 0 512 512"
       width="24"
       height="24"
@@ -130,7 +133,7 @@
       />
     </svg>
   </div>
-  <div class="body-scroll" style:overflow-y={!$mobile ? "hidden" : "auto"}>
+  <div class="main">
     <div class="user-profile">
       <div class="avatar-section">
         <div class="image-wrapper">
@@ -154,40 +157,161 @@
       </h3>
       <p>{$loggedinUser.email}</p>
     </div>
-    <li>
+    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}>
       <div class="content">
-        <ion-icon name="language-outline" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M48 112h288M192 64v48M272 448l96-224 96 224M301.5 384h133M281.3 112S257 206 199 277 80 384 80 384"
+          />
+          <path
+            d="M256 336s-35-27-72-75-56-85-56-85"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+        </svg>
         <div class="title-wrapper">
-          <span class="menu-item">Lang</span>
+          <span class="menu-item">Language</span>
         </div>
       </div>
     </li>
-    <li class="theme" on:click={toggleTheme}>
+    <li
+      class="theme"
+      on:click={toggleTheme}
+      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+    >
       <div class="content">
         {#if $themeStore.theme === "light"}
-          <ion-icon name="moon-outline" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon"
+            viewBox="0 0 512 512"
+            width="24"
+            height="24"
+            fill="currentColor"
+          >
+            <path
+              d="M160 136c0-30.62 4.51-61.61 16-88C99.57 81.27 48 159.32 48 248c0 119.29 96.71 216 216 216 88.68 0 166.73-51.57 200-128-26.39 11.49-57.38 16-88 16-119.29 0-216-96.71-216-216z"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="32"
+            />
+          </svg>
           <div class="title-wrapper">
-            <span class="menu-item">Dark</span>
+            <span class="menu-item">Dark mode</span>
           </div>
         {:else}
-          <ion-icon name="sunny-outline" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon"
+            viewBox="0 0 512 512"
+            width="24"
+            height="24"
+            fill="currentColor"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="32"
+              d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94"
+            />
+            <circle
+              cx="256"
+              cy="256"
+              r="80"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="32"
+            />
+          </svg>
           <div class="title-wrapper">
-            <span class="menu-item">Light</span>
+            <span class="menu-item">Light mode</span>
           </div>
         {/if}
       </div>
     </li>
-    <li>
+    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}>
       <div class="content">
-        <ion-icon name="information-circle-outline" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184 184-82.39 184-184S349.61 64 248 64z"
+            fill="none"
+            stroke="currentColor"
+            stroke-miterlimit="10"
+            stroke-width="32"
+          />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M220 220h32v116"
+          />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-miterlimit="10"
+            stroke-width="32"
+            d="M208 340h88"
+          />
+          <path d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z" />
+        </svg>
         <div class="title-wrapper">
           <span class="menu-item">About</span>
         </div>
       </div>
     </li>
-    <li on:click={logout}>
+    <li
+      on:click={logout}
+      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+    >
       <div class="content">
-        <ion-icon name="log-out-outline" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+        </svg>
         <div class="title-wrapper">
           <span class="menu-item">Logout</span>
         </div>
@@ -197,6 +321,10 @@
 </ul>
 
 <style>
+  svg {
+    margin-right: 20px;
+  }
+
   label input {
     width: 0;
     height: 0;
@@ -220,8 +348,14 @@
     position: relative;
   }
 
-  .body-scroll {
-    height: 80vh;
+  .main {
+    /* height: 80vh;
+    height: calc(100% - 200px); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* margin-top: 10px; */
+    /* border: 1px solid; */
   }
 
   h3,
@@ -243,7 +377,7 @@
 
   .title-wrapper {
     width: 100%;
-    text-align: center;
+    /* text-align: center; */
     /* border: 1px solid red; */
   }
 
@@ -251,18 +385,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100px;
+    width: 150px;
     cursor: pointer;
-    /* border: 1px solid; */
+    /* border: 1px solid yellow; */
   }
 
-  .icon-arrow {
+  .icon-back {
+    display: none;
+  }
+
+  .top {
     display: flex;
     align-items: center;
-    padding: 5px;
-    padding-top: 10px;
+    height: 60px;
     display: flex;
     justify-content: flex-start;
+    margin-bottom: 10px;
     /* border: 1px solid; */
   }
 
@@ -270,22 +408,26 @@
     display: flex;
     align-items: center;
     width: 100px;
+    /* border: 1px solid; */
   }
 
   ul {
     list-style: none;
-    padding: 10px;
-    position: absolute;
+    /* padding: 10px; */
+    /* position: absolute;
     top: 0;
-    left: 0;
+    left: 0; */
+    max-width: 250px;
     width: 100%;
-    /* max-width: 450px; */
-    /* width: 80%; */
-    height: 100vh;
     z-index: 200;
-    /* background: rgba(189, 202, 202, 0.5); */
-    /* backdrop-filter: blur(30px); */
-    /* background: #ebebeb; */
+    /* width: 80%;
+    width: 100%; */
+    height: 100vh;
+    /* height: calc(100% - 60px); */
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    backdrop-filter: blur(20px);
   }
 
   li {
@@ -294,5 +436,15 @@
     justify-content: center;
     padding: 10px 20px;
     /* cursor: pointer; */
+    margin: 0 10px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    /* border: 1px solid; */
+  }
+
+  @media (max-width: 1200px) {
+    ul {
+      display: none;
+    }
   }
 </style>

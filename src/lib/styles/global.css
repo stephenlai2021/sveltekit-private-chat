@@ -32,7 +32,7 @@
   box-sizing: border-box;
   /* font-family: "Poppins", "Montserrat", "Roboto", sans-serif; */
   font-family: "Poppins", sans-serif;
-  letter-spacing: 0.8px;
+  /* letter-spacing: 0.8px; */
 }
 
 .page-wrapper {
@@ -61,43 +61,39 @@ a {
 body {
   overflow-y: hidden;
   height: 100vh;
+  /* backdrop-filter: blur(20px); */
 }
 
 .wrapper {
   position: relative;
-  /* display: flex; */
   height: 100vh;
-  /* box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06); */
-  /* border-radius: 4px; */
-  /* max-width: 1450px; */
   max-width: 1920px;
-  max-height: 1080px;
+  max-height: 1200px;
   margin: auto;
   padding-left: 60px;
-  background: url("/scene-10.jpg");
+  /* background-image: url("/scene-10.jpg"); */
+  background-position: center center;
+  background-size: cover;
 }
 
 .inner-wrapper {
   display: flex;
-  max-width: 1450px;
+  max-width: 1000px;
+  max-width: 1920px;
   height: 100%;
   margin: auto;
-  padding-left: 15px;
-}
-
-@media (max-width: 800px) {
-  .inner-wrapper {
-    padding-left: 0;
-  }
 }
 
 .leftSide {
   position: relative;
+  min-width: 350px;
 }
 
 .rightSide {
   position: relative;
-  width: 100%;
+  /* width: 100%; */
+  max-width: 800px;
+  /* margin: auto; */
   /* width: calc(1450px - 500px); */
   background-repeat: no-repeat; 
   background-position: center center;
@@ -110,35 +106,7 @@ body {
   align-items: center;
   width: 100%;
   height: 60px;
-  /* padding: 0 15px; */
-  /* border: 1px solid; */
 }
-
-/* .user-email {
-  font-size: 14px;
-}
-
-.user-title,
-.user-email {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 200px;
-}
-
-.search_user .icon-finduser-wrapper {
-  position: absolute;
-  right: 14px;
-  top: 4px;
-  width: 40px;
-  
-  height: 36.8px;
-  background: #565E70;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
 
 .offline {
   background: #b6b5b5;
@@ -152,7 +120,7 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  border: 2px solid white;
+  /* border: 2px solid white; */
   width: 11px;
   height: 11px;
   border-radius: 50%;
@@ -181,6 +149,10 @@ body {
     margin: 0;
     height: 100vh;
     width: 100%;
+  }
+
+  .inner-wrapper {
+    padding-left: 0;
   }
 }
 

@@ -1,6 +1,7 @@
 <script>
   import themeStore from "svelte-themes";
   import {
+    mobile,
     bgColor,
     showSidebarMenu,
     loggedinUser,
@@ -11,7 +12,8 @@
 
 <div class="header">
   <div class="left" style:cursor="pointer">
-    {#if !$showSidebarMenu}
+    <!-- {#if !$showSidebarMenu} -->
+    {#if $mobile}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
@@ -32,7 +34,7 @@
         />
       </svg>
     {/if}
-    {#if $loggedinUser}
+    <!-- {#if $loggedinUser}
       <div
         class="userimg"
         on:click|stopPropagation={() =>
@@ -44,7 +46,7 @@
           <img src="/joke.png" alt="" class="cover" />
         {/if}
       </div>
-    {/if}
+    {/if} -->
     <h3 class="user-title">LetsChat</h3>
   </div>
 
@@ -96,7 +98,7 @@
     align-items: center;
     width: 100%;
     height: 60px;
-    /* padding: 0 15px; */
+    padding: 0 10px;
     /* border: 1px solid; */
   }
 

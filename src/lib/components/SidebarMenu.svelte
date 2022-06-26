@@ -26,14 +26,8 @@
     console.log("user profile updated detected !");
     // $profileUpdated = false
   }
-
-  // $: if (user) console.log('user is present !')
 </script>
 
-<!-- style:display={$mobile
-  ? "none"
-  : "flex"} -->
-<!-- style:background="#ededed" -->
 <div
   class="sidebar-menu"
   class:loginform-hide={$loginFormShow}
@@ -47,8 +41,6 @@
     ? "none"
     : "flex"}
 >
-  <!-- style:background={$page.url.pathname === "/" ? "#cccccc" : $bgColor} -->
-
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     class="ionicon" 
@@ -73,9 +65,7 @@
       on:click|stopPropagation={() =>
         ($showSettingsModal = !$showSettingsModal)}
     >
-      <!-- {#if user.photoURL} -->
       {#if $loggedinUser.photoURL}
-        <!-- <img src={user.photoURL} alt="" /> -->
         <img src={$loggedinUser.photoURL} alt="" />
       {:else}
         <img src="/joke.png" alt="" />

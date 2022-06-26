@@ -8,9 +8,10 @@
     privateChat,
     groupChat,
     publicChat,
+    selectedUsername
   } from "$lib/store";
 
-  const menuItems = ["All", "Private", "Group", "Public"];
+  const menuItems = ["All", "Chat", "Group", "Room"];
   let currentTab = menuItems[0];
   let selecteedTab = true;
 
@@ -22,15 +23,16 @@
       $privateChat = false;
       $groupChat = false;
       $publicChat = false;
-      goto("/");
+      if ($selectedUsername) goto(`/${$selectedUsername}`);
+      if (!$selectedUsername) goto("/");
     }
 
-    if (currentTab === "Private") {
+    if (currentTab === "Chat") {
       $allChat = false;
       $privateChat = true;
       $groupChat = false;
       $publicChat = false;
-      goto("/private");
+      goto("/chat");
     }
 
     if (currentTab === "Group") {
@@ -41,12 +43,12 @@
       goto("/group");
     }
 
-    if (currentTab === "Public") {
+    if (currentTab === "Room") {
       $allChat = false;
       $privateChat = false;
       $groupChat = false;
       $publicChat = true;
-      goto("/public");
+      goto("/room");
     }
   };
 </script>
@@ -56,6 +58,37 @@
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "transparent"}
 >
   {#each menuItems as tab}
+
+  <!-- Do not delete the following block of codes -->
+  <!-- style:border-top-right-radius={
+    currentTab === tab && currentTab != "Room" ? 
+      "10px"
+      : "0"
+  }
+  style:border-top-left-radius={
+    currentTab === tab && currentTab != "All" ? 
+      "10px"
+      : "0"
+  }
+  style:border-right={
+    currentTab === tab && currentTab != "Room" ? 
+      $themeStore.theme === "dark" ? 
+        "2px solid #3A3F50"
+        : "2px solid rgba(235, 235, 235, .5)"
+    : currentTab === tab && currentTab === "Room" ? 
+      "none"
+    : ""
+  }
+  style:border-left={
+    currentTab === tab && currentTab != "All" ? 
+      $themeStore.theme === "dark" ? 
+        "2px solid #3A3F50"
+        : "2px solid rgba(235, 235, 235, .5)"
+    : currentTab === tab && currentTab === "All" ? 
+      "none"
+    : ""
+  }       -->
+
     <span
       on:click={() => selectTab(tab)}
       style:border-top-right-radius={
@@ -72,40 +105,40 @@
           "0"
         : "10px"
       }
-      style:border-left={
-        currentTab === tab && currentTab != "All" ? 
-          $themeStore.theme === "dark" ? 
-            "3px solid #3A3F50"
-            : "3px solid #ebebeb"
-        : currentTab === tab && currentTab === "All" && !$mobile ? 
-          $themeStore.theme === "dark" ? 
-            "3px solid #3A3F50"
-            : "3px solid #ebebeb"
-        : "none"
-      }
-      style:border-top={
-        currentTab === tab ? 
-          $themeStore.theme === "dark" ? 
-            "3px solid #3A3F50"
-            : "3px solid #ebebeb"
-        : "none"
-      }
       style:border-right={
         currentTab === tab && currentTab != "Public" ? 
           $themeStore.theme === "dark" ? 
-            "3px solid #3A3F50"
-            : "3px solid #ebebeb"
+            "2px solid #3A3F50"
+            : "2px solid #ebebeb"
         : currentTab === tab && currentTab === "Public" && !$mobile ? 
           $themeStore.theme === "dark" ? 
-            "3px solid #3A3F50"
-            : "3px solid #ebebeb"
+            "2px solid #3A3F50"
+            : "2px solid #ebebeb"
+        : "none"
+      }
+      style:border-left={
+        currentTab === tab && currentTab != "All" ? 
+          $themeStore.theme === "dark" ? 
+            "2px solid #3A3F50"
+            : "2px solid #ebebeb"
+        : currentTab === tab && currentTab === "All" && !$mobile ? 
+          $themeStore.theme === "dark" ? 
+            "2px solid #3A3F50"
+            : "2px solid #ebebeb"
+        : "none"
+      } 
+      style:border-top={
+        currentTab === tab ? 
+          $themeStore.theme === "dark" ? 
+            "2px solid #3A3F50"
+            : "2px solid rgba(235, 235, 235, 1)"
         : "none"
       }
       style:border-bottom={
         currentTab != tab ? 
           $themeStore.theme === "dark" 
-            ? "3px solid #3A3F50"
-            : "3px solid #ebebeb"
+            ? "2px solid #3A3F50"
+            : "2px solid rgba(235, 235, 235, 1)"
         : "none"
       }
       >{tab}</span>

@@ -1,5 +1,6 @@
 <script>
   import {
+    allUsers,
     bgColor,
     mobile,
     keyword,
@@ -8,6 +9,7 @@
     profileUpdated,
     loginUserEmail,
     selectedUsername,
+    // currentSelectedUser,
     showSettingsModal,
     allChat,
     privateChat,
@@ -30,8 +32,10 @@
 
   const selectUser = (selectedUser) => {
     currentContact = selectedUser;
+    // $currentSelectedUser = selectedUser;
     console.log(`${selectedUser.name} is selected`);
     $selectedUsername = selectedUser.name;
+
     goto(`/${$selectedUsername}`);
   };
 
@@ -60,6 +64,7 @@
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
+      $allUsers = tempUsers
       usersReady = true;
       console.log("initialzie user list | snapshot", users);
       return () => unsubUsers();
@@ -79,26 +84,11 @@
   }
 </script>
 
-<!-- style:overflow-y={usersReady ? "auto" : "hidden"}
-style:padding-bottom={$mobile ? "5px" : "0px"}
-style:border-left={$themeStore.theme === "dark"
-  ? "3px solid #3A3F50"
-  : "3px solid #ebebeb"}
-style:border-right={$themeStore.theme === "dark"
-  ? "3px solid #3A3F50"
-  : "3px solid #ebebeb"} -->
-
 {#if $allChat}
   <div
     class="chatlist"
     transition:fade={{ duration: 100 }}
   >
-    <!-- style:border-left={$themeStore.theme === "dark"
-      ? "3px solid #3a3f50"
-      : "3px solid #ebebeb"}
-    style:border-right={$themeStore.theme === "dark"
-      ? "3px solid #3a3f50"
-      : "3px solid #ebebeb"} -->
     {#if users.length}
       {#each filteredUsers as user}
         <div
@@ -109,17 +99,18 @@ style:border-right={$themeStore.theme === "dark"
           (user.name === $page.params.userId && !$mobile) ? 
             $themeStore.theme === "dark" ? 
               "#3a3f50"
-              : "rgba(235, 235, 235, 0.5)"
+              : "rgba(235, 235, 235, .7)"
             : currentContact != user && !$mobile ? 
               $themeStore.theme === "dark" ? 
                 "#292F3F"
                 : "transparent"
-            : ""}
-          style:backdrop-filter={(currentContact === user && !$mobile) ||
+            : ""
+          }
+        >
+          <!-- style:backdrop-filter={(currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile)
             ? "blur(8px)"
-            : "none"}
-        >
+            : "none"} -->
           <div class="imgbx">
             {#if user.avatar}
               <img src={user.avatar} alt="" class="cover" />
@@ -149,37 +140,41 @@ style:border-right={$themeStore.theme === "dark"
 {/if}
 
 {#if $privateChat}
-  <div class="group-chat">
+  <div class="private">
     <h1>Private Chat</h1>
   </div>
 {/if}
 
 {#if $groupChat}
-  <div class="group-chat">
+  <div class="group">
     <h1>Group Chat</h1>
   </div>
 {/if}
 
 {#if $publicChat}
-  <div class="public-chat">
-    <h1>Public Chat</h1>
+  <div class="public">
+    <h1>Public Chatroom</h1>
   </div>
 {/if}
 
 <style>
-  .group-chat,
-  .public-chat {
+  .private,
+  .group,
+  .public {
     width: 100%;
-    height: 50vh;
+    height: 100vh;
+    height: calc(100%- 110px);
     display: flex;
     justify-content: center;
-    align-items: center;
+    padding-top: 200px;
+    /* border: 1px solid; */
   }
 
   .chatlist {
     height: calc(100vh - 167px);
+    height: 100vh;
     overflow: hidden;
-    padding-top: 5px;
+    /* padding-top: 5px; */
     overflow: auto;
   }
 
@@ -198,6 +193,8 @@ style:border-right={$themeStore.theme === "dark"
     padding: 0 10px;
     height: 65px;
     cursor: pointer;
+    /* border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px; */
   }
 
   .block:hover {
@@ -267,6 +264,7 @@ style:border-right={$themeStore.theme === "dark"
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    color: gray;
     /* font-style: italic; */
   }
 

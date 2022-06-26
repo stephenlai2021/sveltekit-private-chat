@@ -10,6 +10,9 @@ import {
 
 let colRef = collection(db, "whatzapp_users");
 
+export const isAudioPlayed = writable(false)
+export const showAddGroupModal = writable(false)
+export const allUsers = writable(null)
 export const allChat = writable(true)
 export const privateChat = writable(false)
 export const groupChat = writable(false)
@@ -20,8 +23,8 @@ export const storedPictureURL = writable(null)
 export const showImagePreviewModal = writable(false)
 export const showSidebarMenu = writable(true)
 export const selectedUsernameMatched = writable(false);
-export const showGradientMenu = writable(true);
-export const showThemeMenu = writable(true);
+export const showGradientMenu = writable(false);
+export const showThemeMenu = writable(false);
 export const showMapModal = writable(false);
 export const disabled = writable(false);
 export const file = writable(null);
@@ -65,6 +68,7 @@ export const showBgSettingsModal = writable(false);
 export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
+export const showSearchFriendModal = writable(false)
 // export const bgColor = writable("#e5ddd5");
 
 // export const getSelectedUser = (name) => {
@@ -84,10 +88,10 @@ export const getSelectedUser = (selectedUsername) => {
   });
 };
 
-export const selectedUser = writable(
+export const currentSelectedUser = writable(
   browser && localStorage.getItem("selected user") || {}
 );
-selectedUser.subscribe(
+currentSelectedUser.subscribe(
   (val) => browser && localStorage.setItem("selected user", val)
 );
 

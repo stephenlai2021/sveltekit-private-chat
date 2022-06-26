@@ -5,21 +5,25 @@
     showCameraModal,
     showPhotoModal,
     pictureConfirmed,
-    videoStream
+    videoStream,
   } from "$lib/store";
+  import themeStore from "svelte-themes"
 
   const handleConfirm = () => {
-    $videoStream.getTracks().forEach(track => {
+    $videoStream.getTracks().forEach((track) => {
       track.stop();
     });
     $showCameraPreviewModal = false;
     $showCameraModal = false;
     $showPhotoModal = true;
-    $pictureConfirmed = true
+    $pictureConfirmed = true;
   };
 </script>
 
-<div class="cameraPreview-modal">
+<div
+  class="cameraPreview-modal"
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+>
   <div class="cameraPreview-wrapper">
     <img src={$pictureURI} alt="" class="selfie" />
     <div class="menu-option">
@@ -69,8 +73,10 @@
     align-items: center;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
+    max-width: 1920px;
     height: 100vh;
     z-index: 500;
     /* background: rgba(163, 156, 156, 0.8); */

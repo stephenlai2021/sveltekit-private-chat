@@ -24,6 +24,9 @@
     showCameraPreviewModal,
     showThemeModal,
     showCameraModal,
+    showMapModal,
+    showThemeMenu,
+    showGradientMenu,
     showSettingsModal,
     showAddFriendModal,
     showAudioPlayerModal,
@@ -47,6 +50,8 @@
   import ActionMenu from "$lib/components/ActionMenu.svelte";
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
   import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
+  import SettingsModal from "$lib/components/SettingsModal.svelte";
+  import MapModal from "$lib/components/MapModal.svelte"
 
   let user = null;
   let users = null;
@@ -94,6 +99,8 @@
       $showSettingsModal = false;
       $showAddFriendModal = false;
       $showThemeModal = false;
+      $showThemeMenu = false
+      $showGradientMenu = false
     });
     window.addEventListener("resize", () => desktopOrMobile());
   }
@@ -107,13 +114,18 @@
 <div
   class="wrapper"
   on:click={closeModal}
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
   style:padding-left={$showSidebarMenu ? "0" : "60px"}
+  style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "(235, 235, 235, .5)"}
 >
-<div class="inner-wrapper">
-    <!-- {#if $showSidebarMenu}
-      <SidebarMenu />
-    {/if} -->
+  <div
+    class="inner-wrapper"
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
+  >
+    <!-- {#if $showSettingsModal && $loggedinUser} -->
+    <SettingsModal />
+    <!-- {/if} -->
     <div
       class="leftSide"
       style:display={$mobile && $page.url.pathname === "/"
@@ -130,7 +142,7 @@
         : $showCameraModal || $showAudioRecordingModal || $showAudioPlayerModal
         ? "0%"
         : !$mobile && $page.url.pathname != "/login"
-        ? "500px"
+        ? "350px"
         : "0%"}
     >
       <ChatList />
@@ -147,9 +159,9 @@
       <slot />
     </div>
 
-    {#if $showToolModal}
-      <ToolModal />
-    {/if}
+    <!-- {#if $showToolModal} -->
+    <ToolModal />
+    <!-- {/if} -->
 
     {#if $showImagePreviewModal}
       <ImagePreviewModal />
@@ -173,6 +185,10 @@
 
     {#if $showAudioPlayerModal}
       <AudioPlayerModal />
+    {/if}
+
+    {#if $showMapModal}
+      <MapModal />
     {/if}
   </div>
 </div>
