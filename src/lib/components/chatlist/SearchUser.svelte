@@ -9,7 +9,7 @@
       type="text"
       placeholder="Find user"
       bind:value={$keyword}
-      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
     />
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -122,7 +122,7 @@
         <li
           style:background={$themeStore.theme === "dark"
             ? "#3A3F50"
-            : "#ebebeb"}
+            : "white"}
         >
           <label>
             <input
@@ -135,7 +135,7 @@
         </li>
       {/if}
       <li
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
       >
         <div
           class="option"
@@ -197,7 +197,7 @@
         <li
           style:background={$themeStore.theme === "dark"
             ? "#3A3F50"
-            : "#ebebeb"}
+            : "white"}
         >
           <div
             class="option"
@@ -256,7 +256,7 @@
         <li
           style:background={$themeStore.theme === "dark"
             ? "#3A3F50"
-            : "#ebebeb"}
+            : "white"}
         >
           <label>
             <input
@@ -272,7 +272,7 @@
         </li>
       {/if}
       <li
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
         on:click={() => ($showMapModal = true)}
       >
         <!-- <span>Show {JSON.parse($selectedUser)}'s location</span> -->

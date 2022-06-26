@@ -157,7 +157,7 @@
       </h3>
       <p>{$loggedinUser.email}</p>
     </div>
-    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}>
+    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}>
       <div class="content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +192,7 @@
     <li
       class="theme"
       on:click={toggleTheme}
-      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
     >
       <div class="content">
         {#if $themeStore.theme === "light"}
@@ -250,7 +250,7 @@
         {/if}
       </div>
     </li>
-    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}>
+    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}>
       <div class="content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -292,7 +292,7 @@
     </li>
     <li
       on:click={logout}
-      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "#ebebeb"}
+      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
     >
       <div class="content">
         <svg

@@ -48,7 +48,8 @@
         {/if}
       </div>
     {/if} -->
-    <h3 class="user-title">LetsChat</h3>
+    <!-- <h3 class="user-title">LetsChat</h3> -->
+    <img src="https://miro.medium.com/max/1400/1*gr3kgm0McAm1eeJJog7jfg.png" height="30" alt="">
   </div>
 
   <ul class="nav_icons">

@@ -200,36 +200,6 @@
     /* border: 1px solid; */
   }
 
-  /* audio player button */
-  .btn-play {
-    /* background-size: contain; */
-    width: 80px;
-    height: 80px;
-    border-radius: 50px;
-    background: #fa183d;
-    padding: 18px 20px 18px 28px;
-  }
-
-  .btn-play span {
-    display: block;
-    position: relative;
-    z-index: 3;
-    width: 0;
-    height: 0;
-    border-left: 32px solid #fff;
-    border-top: 22px solid transparent;
-    border-bottom: 22px solid transparent;
-  }
-
-  .btn-play {
-    /* background-image: url("/btn-play.png"); */
-  }
-
-  .btn-play:hover {
-    cursor: pointer;
-  }
-  /* end of audio player button */
-
   ::-webkit-scrollbar {
     width: 0px;
   }
@@ -242,7 +212,7 @@
     position: relative;
     display: flex;
     max-width: 800px;
-    margin: 20px auto;
+    margin: 10px auto;
   }
 
   .message-content {
@@ -266,10 +236,6 @@
   .message.friend_message .showtime {
     text-align: left;
   }
-
-  /* .showtime {
-    text-align: center;
-  } */
 
   .message.my_message {
     justify-content: flex-end;
@@ -322,7 +288,7 @@
     /* height: calc(100vh - 60px); */
     /* height: 100vh; */
 
-    padding: 0px 15px 100px 15px;
+    padding: 0px 15px 0px 15px;
     overflow: hidden;
     overflow: auto;
     backdrop-filter: blur(20px);
@@ -332,7 +298,6 @@
   @media (max-width: 800px) {
     .chatBox {
       padding-right: 5px;
-      /* padding: 0px 0px 100px 15px; */
     }
   }
 

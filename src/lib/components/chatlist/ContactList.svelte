@@ -95,11 +95,13 @@
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
+          style:border-radius={(currentContact === user && !$mobile) ||
+            (user.name === $page.params.userId && !$mobile) ? "8px" : "0"}
           style:background={(currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile) ? 
             $themeStore.theme === "dark" ? 
               "#3a3f50"
-              : "rgba(235, 235, 235, .7)"
+              : "rgba(235, 235, 235, 1)"
             : currentContact != user && !$mobile ? 
               $themeStore.theme === "dark" ? 
                 "#292F3F"
@@ -249,6 +251,7 @@
 
   .block.unread .details .listHead .time {
     color: var(--active-green);
+    color: #FF4408;
   }
 
   .message {
@@ -270,6 +273,7 @@
 
   .block.unread .details .message b {
     background: var(--active-green);
+    background: #FF4408;
     color: white;
     min-width: 20px;
     height: 20px;
