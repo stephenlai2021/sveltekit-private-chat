@@ -109,10 +109,6 @@
             : ""
           }
         >
-          <!-- style:backdrop-filter={(currentContact === user && !$mobile) ||
-          (user.name === $page.params.userId && !$mobile)
-            ? "blur(8px)"
-            : "none"} -->
           <div class="imgbx">
             {#if user.avatar}
               <img src={user.avatar} alt="" class="cover" />
