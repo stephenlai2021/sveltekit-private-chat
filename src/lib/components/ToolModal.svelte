@@ -72,10 +72,15 @@
 </script>
 
 <!-- style:display={!$loggedinUser ? "none" : "block"} -->
+<!-- style:display={$page.url.pathname === "/login" ? "none" : "block"} -->
 <div
   class="tool-modal"
   on:click|stopPropagation
-  style:display={$page.url.pathname === "/login" ? "none" : "block"}
+  style:display={
+    $page.url.pathname != "/login" && $widthLessthan1000 ? "none"
+    : $page.url.pathname === "/login" ? "none"
+    : "block"
+  }
   style:background={$themeStore.theme === "dark"
       ? "#292F3F"
       : "rgba(235, 235, 235, .5)"}
@@ -369,9 +374,9 @@
     backdrop-filter: blur(20px);
   }
 
-  @media (max-width: 1000px) {
+  /* @media (max-width: 1000px) {
     .tool-modal {
       display: none;
     }
-  }
+  } */
 </style>

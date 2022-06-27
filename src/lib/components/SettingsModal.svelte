@@ -7,7 +7,8 @@
     showThemeModal,
     showCameraModal,
     showSettingsModal,
-    currentSelectedUser
+    currentSelectedUser,
+    widthLessthan1200
   } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
   import { onMount } from "svelte";
@@ -109,12 +110,15 @@
   <!-- style:width={
     $page.url.pathname === "/login" ? "0%" : "100%"
   } -->
+  <!-- $page.url.pathname != "/login" ? "block" -->
 <ul
   class="modal-settings"
   on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
   style:display={
-    $page.url.pathname != "/login" ? "block" : "none"
+    $page.url.pathname != "/login" && $widthLessthan1200 ? "none"
+    : $page.url.pathname === "/login" ? "none"
+    : "block"
   }
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
@@ -472,9 +476,9 @@
 
   }
 
-  @media (max-width: 1200px) {
+  /* @media (max-width: 1200px) {
     ul {
       display: none;
     }
-  }
+  } */
 </style>

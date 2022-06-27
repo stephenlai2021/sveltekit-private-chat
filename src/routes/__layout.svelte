@@ -169,10 +169,8 @@
     >
       <slot />
     </div>
-
-    <!-- {#if $currentSelectedUser != null} -->
-      <ToolModal />
-    <!-- {/if} -->
+        
+    <ToolModal />
 
     {#if $showImagePreviewModal}
       <ImagePreviewModal />
