@@ -85,6 +85,7 @@ body {
   /* margin: auto; */
   max-width: 1920px;
   max-height: 1080px;
+  height: 100vh;
   margin: auto;
 }
 
