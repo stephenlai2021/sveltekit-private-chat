@@ -84,7 +84,7 @@
   };
 
   onMount(() => {
-    console.log('current selected user', JSON.parse($currentSelectedUser))
+    // console.log('current selected user', JSON.parse($currentSelectedUser))
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
       if (!user) goto("/login");
@@ -169,7 +169,7 @@
     >
       <slot />
     </div>
-        
+
     <ToolModal />
 
     {#if $showImagePreviewModal}
