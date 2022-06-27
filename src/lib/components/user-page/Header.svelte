@@ -7,7 +7,8 @@
     loggedinUser,
     bgColor,
     mobile,
-    widthLessthan1000
+    widthLessthan1000,
+    showToolModalMobile
   } from "$lib/store";
   import {
     doc,
@@ -178,7 +179,7 @@
           width="24"
           height="24"
           fill="currentColor"
-          on:click|stopPropagation={() => ($showToolModal = !$showToolModal)}
+          on:click|stopPropagation={() => ($showToolModalMobile = true)}
         >
           <!-- style:margin-right="20px" -->
           <path

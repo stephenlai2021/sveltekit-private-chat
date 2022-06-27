@@ -5,8 +5,11 @@
     showAddFriendModal,
     showSearchFriendModal,
     showAddGroupModal,
+    showSettingsModalMobile,
+    showToolModalMobile
   } from "$lib/store";
-  import SettingsModal from "$lib/components/SettingsModal.svelte";
+  import SettingsModalMobile from "$lib/components/SettingsModalMobile.svelte";
+  import ToolModalMobile from "$lib/components/ToolModalMobile.svelte";
   import AddFriendModal from "$lib/components/AddFriendModal.svelte";
   import Header from "$lib/components/chatlist/Header.svelte";
   import TabMenu from "$lib/components/chatlist/TabMenu.svelte";
@@ -18,6 +21,7 @@
 </script>
 
 <div 
+  class="chatlist"
   style:backdrop-filter="blur(20px)"
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "rgba(235, 235, 235, .5)"}
 >
@@ -32,8 +36,13 @@
   <TabMenu />
   <ContactList />
 
-  {#if $showSettingsModal && $loggedinUser}
-    <SettingsModal />
+  <!-- {#if $showSettingsModalMobile && $loggedinUser} -->
+  {#if $showSettingsModalMobile}
+    <SettingsModalMobile />
+  {/if}
+
+  {#if $showToolModalMobile}
+    <ToolModalMobile />
   {/if}
 
   {#if $showAddFriendModal}
@@ -52,3 +61,10 @@
     <Navbar />
   {/if} -->
 </div>
+
+<style>
+  .chatlist {
+    position: relative;
+    height: 100vh;
+  }
+</style>

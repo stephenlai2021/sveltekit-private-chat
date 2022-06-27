@@ -7,13 +7,13 @@
     loggedinUser,
     showSettingsModal,
     showAddFriendModal,
-    widthLessthan1200
+    widthLessthan1200,
+    showSettingsModalMobile
   } from "$lib/store";
 </script>
 
 <div class="header">
   <div class="left" style:cursor="pointer">
-    <!-- {#if !$showSidebarMenu} -->
     {#if $widthLessthan1200}
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -23,8 +23,8 @@
         height="24"
         fill="currentColor"
         style:margin-right="5px"
-        on:click={() => ($showSidebarMenu = true)}
-      >
+        on:click|stopPropagation={() => ($showSettingsModalMobile = true)}
+        >
         <path
           fill="none"
           stroke="currentColor"
@@ -55,8 +55,10 @@
   <ul class="nav_icons">
     <li
       on:click|stopPropagation={() =>
-        ($showAddFriendModal = !$showAddFriendModal)}
+        ($showAddFriendModal = true)}
     >
+      <!-- on:click|stopPropagation={() =>
+        ($showAddFriendModal = !$showAddFriendModal)} -->
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
@@ -101,7 +103,6 @@
     width: 100%;
     height: 60px;
     padding: 0 10px;
-    /* border: 1px solid; */
   }
 
   .left {
@@ -109,7 +110,7 @@
     align-items: center;
   }
 
-  .userimg {
+  /* .userimg {
     width: 35px;
     height: 35px;
     overflow: hidden;
@@ -118,7 +119,6 @@
     position: relative;
     cursor: pointer;
     margin-right: 5px;
-    /* border: 1px solid; */
   }
 
   .userimg img {
@@ -131,10 +131,9 @@
 
   .user-title {
     margin-left: 5px;
-    /* font-family: "Roboto", sans-serif; */
     font-weight: 600;
     font-size: 20px;
-  }
+  } */
 
   .nav_icons {
     cursor: pointer;

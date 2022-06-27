@@ -30,7 +30,7 @@
     showMapModal,
     showThemeMenu,
     showGradientMenu,
-    showSettingsModal,
+    showSettingsModalMobile,
     showAddFriendModal,
     showAudioPlayerModal,
     showAudioRecordingModal,
@@ -105,7 +105,7 @@
       console.log("OOh, internet is disconnected 😮");
     });
     window.addEventListener("click", (e) => {
-      $showSettingsModal = false;
+      $showSettingsModalMobile = false;
       $showAddFriendModal = false;
       $showThemeModal = false;
       $showThemeMenu = false
@@ -132,9 +132,7 @@
     class="inner-wrapper"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
   >
-    <!-- {#if $showSettingsModal && $loggedinUser} -->
     <SettingsModal />
-    <!-- {/if} -->
     <div
       class="leftSide"
       style:display={$mobile && $page.url.pathname === "/"
@@ -168,10 +166,7 @@
       <slot />
     </div>
 
-    <!-- {#if $showToolModal} -->
-    <!-- {#if $currentSelectedUser} -->
-      <ToolModal />
-    <!-- {/if} -->
+    <ToolModal />
 
     {#if $showImagePreviewModal}
       <ImagePreviewModal />

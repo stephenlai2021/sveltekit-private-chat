@@ -173,11 +173,9 @@
   }
 
   .chatlist {
-    height: calc(100vh - 167px);
-    height: 100vh;
-    overflow: hidden;
-    /* padding-top: 5px; */
+    height: calc(100vh - 160px);
     overflow: auto;
+    /* border: 1px solid; */
   }
 
   ::-webkit-scrollbar {
@@ -195,8 +193,6 @@
     padding: 0 10px;
     height: 65px;
     cursor: pointer;
-    /* border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px; */
   }
 
   .block:hover {
@@ -204,8 +200,8 @@
   }
 
   .imgbx {
-    min-width: 45px;
-    height: 45px;
+    min-width: 40px;
+    height: 40px;
     cursor: pointer;
     margin-right: 15px;
     border-radius: 50%;
@@ -216,8 +212,8 @@
   }
 
   .imgbx img {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
     object-fit: cover;
     border-radius: 50%;
@@ -239,7 +235,8 @@
 
   .details .listHead .user-title {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
+    letter-spacing: 0.5px;
     font-style: normal;
     line-height: 20px;
   }
@@ -268,7 +265,6 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     color: gray;
-    /* font-style: italic; */
   }
 
   .block.unread .details .message b {
