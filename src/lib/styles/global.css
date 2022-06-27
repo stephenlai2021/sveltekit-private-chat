@@ -84,9 +84,9 @@ body {
   height: 100%; */
   /* margin: auto; */
   max-width: 1920px;
-  max-height: 1080px;
-  height: 100vh;
-  margin: auto;
+  /* max-height: 1080px; */
+  /* height: 100vh; */
+  margin: 0 auto;
 }
 
 .leftSide {
