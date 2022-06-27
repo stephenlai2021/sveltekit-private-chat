@@ -123,14 +123,14 @@
   <title>Sveltechat</title>
 </svelte:head>
 
+<!-- style:padding-left={$showSidebarMenu ? "0" : "60px"} -->
+<!-- style:background={$themeStore.theme === "dark"
+  ? "#292F3F"
+  : "(235, 235, 235, .5)"} -->
 <SvelteTheme />
 <div
   class="wrapper"
   on:click={closeModal}
-  style:padding-left={$showSidebarMenu ? "0" : "60px"}
-  style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "(235, 235, 235, .5)"}
 >
   <div
     class="inner-wrapper"
