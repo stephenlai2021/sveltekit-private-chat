@@ -116,29 +116,30 @@
   <div class="top" />
   <div class="main">
     <div class="user-profile">
-      <div class="avatar-section">
-        <div class="image-wrapper">
-          <!-- {#if $loggedinUser.photoURL} -->
-          {#if $loggedinUser.photoURL}
-            <img src={$loggedinUser.photoURL} alt="" width="96" height="96" />
-          {:else}
-            <img src="/joke.png" alt="" width="96" height="96" />
-          {/if}
-          <label>
-            <input
-              type="file"
-              on:change={handleFileChange}
-              accept="image/png, image/jpg, image/jpeg"
-            />
-            <ion-icon name="camera-outline" class="icon-camera" />
-          </label>
+        {#if $loggedinUser}
+        <div class="avatar-section">
+          <div class="image-wrapper">
+            {#if $loggedinUser.photoURL}
+              <img src={$loggedinUser.photoURL} alt="" width="96" height="96" />
+            {:else}
+              <img src="/joke.png" alt="" width="96" height="96" />
+            {/if}
+            <label>
+              <input
+                type="file"
+                on:change={handleFileChange}
+                accept="image/png, image/jpg, image/jpeg"
+              />
+              <ion-icon name="camera-outline" class="icon-camera" />
+            </label>
+          </div>
         </div>
+        <h3>
+          {$loggedinUser.displayName}
+        </h3>
+        <p>{$loggedinUser.email}</p>
+        {/if}
       </div>
-      <h3>
-        <!-- {$loggedinUser.displayName} -->
-      </h3>
-      <p>{$loggedinUser.email}</p>
-    </div>
     <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}>
       <div class="content">
         <svg
