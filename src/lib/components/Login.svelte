@@ -20,7 +20,7 @@
   import { bgColor, userList } from "$lib/store";
   import { updateProfile } from "firebase/auth";
   //   import { profileUpdate, userDocCreated } from "$lib/store";
-  import { loginState, loggedinUser, loginUserEmail } from "../store";
+  import { loginState, loggedinUser, loginUserEmail } from "$lib/store";
 
   let users = [];
   let name = "";
@@ -166,6 +166,7 @@
       $loginState = true;
       // $loggedinUser = result.user
       $loginUserEmail = result.user.email;
+      console.log('loggedin user email: ', $loginUserEmail)
 
       userRef = doc(db, "whatzapp_users", result.user.email);
       await updateDoc(userRef, {

@@ -41,6 +41,7 @@
   };
 
   const logout = () => {
+    $currentSelectedUser = null
     $showSettingsModal = false;
     signout();
   };

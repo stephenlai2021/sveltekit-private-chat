@@ -77,29 +77,11 @@
   on:click|stopPropagation
   style:display={$page.url.pathname === "/login" ? "none" : "block"}
   style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "rgba(235, 235, 235, .5)"}
+      ? "#292F3F"
+      : "rgba(235, 235, 235, .5)"}
 >
-  {#if $currentSelectedUser}
-    <div class="top">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-back"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-      >
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="48"
-          d="M184 112l144 144-144 144"
-        />
-      </svg>
-    </div>
+{#if $currentSelectedUser}
+    <div class="top" />
     <div class="user-profile">
       <div class="avatar-section">
         <div class="image-wrapper">
@@ -278,21 +260,14 @@
         style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
         on:click={() => ($showMapModal = true)}
       >
-        <!-- <span>Show {JSON.parse($selectedUser)}'s location</span> -->
-        <!-- <span>Show location of {$currentSelectedUser.name}</span> -->
         <span>Show location</span>
       </li>
     </ul>
-    <!-- <h4 class="title" on:click={() => $showMapModal = true}>顯示 {$page.params.userId} 的地理位置</h4> -->
-  {/if}
-</div>
+    {/if}
+  </div>
 
 <style>
   @import url("$lib/styles/theme-modal.css");
-
-  .icon-back {
-    display: none;
-  }
 
   .user-profile .avatar-section {
     justify-content: center;

@@ -46,13 +46,14 @@
     $loggedinUser = auth.currentUser;
   }
 
-  $: if ($loggedinUser) {
+  $: if ($loggedinUser && $loginUserEmail) {
     ready = true;
     console.log("user is ready");
     console.log("user", $loggedinUser);
   }
 
-  $: if (ready && $loginUserEmail) {
+  // $: if (ready && $loginUserEmail) {
+  $: if (ready) {
     let colRef = collection(db, "whatzapp_users");
     const q = query(
       colRef,
