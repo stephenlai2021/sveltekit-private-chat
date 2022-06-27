@@ -1,5 +1,5 @@
 {
-  "name": "letschat",
+  "name": "sveltechat",
   "version": "0.0.1",
   "scripts": {
     "dev": "svelte-kit dev --open",

@@ -113,26 +113,7 @@
     ? "#292F3F"
     : "rgba(235, 235, 235, .5)"}
 >
-  <div class="top">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon icon-back"
-      viewBox="0 0 512 512"
-      width="24"
-      height="24"
-      fill="currentColor"
-      on:click|stopPropagation={() => ($showSettingsModal = false)}
-    >
-      <path
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="48"
-        d="M328 112L184 256l144 144"
-      />
-    </svg>
-  </div>
+  <div class="top" />
   <div class="main">
     <div class="user-profile">
       <div class="avatar-section">
@@ -154,7 +135,7 @@
         </div>
       </div>
       <h3>
-        {$loggedinUser.displayName}
+        <!-- {$loggedinUser.displayName} -->
       </h3>
       <p>{$loggedinUser.email}</p>
     </div>
@@ -391,16 +372,8 @@
     /* border: 1px solid yellow; */
   }
 
-  .icon-back {
-    display: none;
-  }
-
   .top {
-    display: flex;
-    align-items: center;
     height: 60px;
-    display: flex;
-    justify-content: flex-start;
     margin-bottom: 10px;
     /* border: 1px solid; */
   }

@@ -119,7 +119,7 @@
 </script>
 
 <svelte:head>
-  <title>Letschat</title>
+  <title>Svelte</title>
 </svelte:head>
 
 <SvelteTheme />
