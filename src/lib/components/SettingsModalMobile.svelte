@@ -40,6 +40,7 @@
   };
 
   const logout = () => {
+    // $loggedinUser = null
     $showSettingsModalMobile = false;
     signout();
   };

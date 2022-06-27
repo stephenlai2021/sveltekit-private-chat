@@ -6,7 +6,8 @@
     showSearchFriendModal,
     showAddGroupModal,
     showSettingsModalMobile,
-    showToolModalMobile
+    showToolModalMobile,
+    widthLessthan1200
   } from "$lib/store";
   import SettingsModalMobile from "$lib/components/SettingsModalMobile.svelte";
   import ToolModalMobile from "$lib/components/ToolModalMobile.svelte";
@@ -37,7 +38,7 @@
   <ContactList />
 
   <!-- {#if $showSettingsModalMobile && $loggedinUser} -->
-  {#if $showSettingsModalMobile}
+  {#if $showSettingsModalMobile && $widthLessthan1200}
     <SettingsModalMobile />
   {/if}
 

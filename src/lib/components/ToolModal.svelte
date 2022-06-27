@@ -14,6 +14,7 @@
     showToolModal,
     currentSelectedUser,
     widthLessthan1000,
+    loggedinUser
   } from "$lib/store";
   import Cookies from "js-cookie";
   import themes from "$lib/data/themes.json";
@@ -70,9 +71,11 @@
   };
 </script>
 
+<!-- style:display={!$loggedinUser ? "none" : "block"} -->
 <div
   class="tool-modal"
   on:click|stopPropagation
+  style:display={$page.url.pathname === "/login" ? "none" : "block"}
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
     : "rgba(235, 235, 235, .5)"}

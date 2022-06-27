@@ -7,6 +7,7 @@
     showThemeModal,
     showCameraModal,
     showSettingsModal,
+    currentSelectedUser
   } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
   import { onMount } from "svelte";
@@ -103,12 +104,17 @@
   });
 </script>
 
-<!-- style:backdrop-filter="blur(20px)" -->
+<!-- style:width={$mobile ? "80%" : "100%"} -->
+  <!-- style:width={
+    $page.url.pathname === "/login" ? "0%" : "100%"
+  } -->
 <ul
   class="modal-settings"
   on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
-  style:width={$mobile ? "80%" : "100%"}
+  style:display={
+    $page.url.pathname != "/login" ? "block" : "none"
+  }
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
     : "rgba(235, 235, 235, .5)"}
@@ -349,13 +355,8 @@
 
 <style>
   h3.user-name {
-    /* width: 96px; */
     margin-bottom: 5px;
     margin-top: 10px;
-  }
-
-  p.user-email {
-    /* width: 150px; */
   }
 
   .user-name, .user-email {
@@ -403,17 +404,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* border: 1px solid; */
   }
 
   .main {
-    /* height: 80vh;
-    height: calc(100% - 200px); */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* margin-top: 10px; */
-    /* border: 1px solid; */
   }
 
   h3,
@@ -426,7 +422,6 @@
     align-items: center;
     margin-bottom: 15px;
     display: flex;
-    /* border: 1px solid; */
   }
 
   .user-profile {
@@ -435,8 +430,6 @@
 
   .title-wrapper {
     width: 100%;
-    /* text-align: center; */
-    /* border: 1px solid red; */
   }
 
   .content {
@@ -445,38 +438,25 @@
     justify-content: space-between;
     width: 150px;
     cursor: pointer;
-    /* border: 1px solid yellow; */
   }
 
   .top {
     height: 60px;
     margin-bottom: 10px;
-    /* border: 1px solid; */
   }
 
   label {
     display: flex;
     align-items: center;
     width: 100px;
-    /* border: 1px solid; */
   }
 
   ul {
     list-style: none;
-    /* padding: 10px; */
-    /* position: absolute;
-    top: 0;
-    left: 0; */
     max-width: 250px;
     width: 100%;
     z-index: 200;
-    /* width: 80%;
-    width: 100%; */
     height: 100vh;
-    /* height: calc(100% - 60px); */
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
     backdrop-filter: blur(20px);
   }
 
@@ -485,11 +465,10 @@
     align-items: baseline;
     justify-content: center;
     padding: 10px 20px;
-    /* cursor: pointer; */
     margin: 0 10px;
     margin-bottom: 5px;
     border-radius: 8px;
-    /* border: 1px solid; */
+
   }
 
   @media (max-width: 1200px) {

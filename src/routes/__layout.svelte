@@ -119,7 +119,7 @@
 </script>
 
 <svelte:head>
-  <title>Svelte</title>
+  <title>Sveltechat</title>
 </svelte:head>
 
 <SvelteTheme />
@@ -160,11 +160,11 @@
     <div
       class="rightSide"
       style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
-      style:width={$mobile && $page.url.pathname === "/"
-        ? "0%"
-        : $mobile && $page.url.pathname != "/"
-        ? "100%"
-        : "100%"}
+      style:width={
+        $mobile && $page.url.pathname === "/" ? "0%"
+        : $mobile && $page.url.pathname != "/" ? "100%"
+        : "100%"
+      }
     >
       <slot />
     </div>
