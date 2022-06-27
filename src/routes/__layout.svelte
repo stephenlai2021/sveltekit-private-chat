@@ -132,10 +132,10 @@
   class="wrapper"
   on:click={closeModal}
 >
-  <!-- <div
+  <div
     class="inner-wrapper"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
-  > -->
+  >
     <SettingsModal />
     <div
       class="leftSide"
@@ -199,5 +199,5 @@
     {#if $showMapModal}
       <MapModal />
     {/if}
-  <!-- </div> -->
+  </div>
 </div>

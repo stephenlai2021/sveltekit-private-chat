@@ -65,9 +65,9 @@ body {
 
 .wrapper {
   position: relative;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  height: 100vh;
+  height: 100vh; */
   max-width: 1920px;
   max-height: 1080px;
   margin: auto;
@@ -79,17 +79,23 @@ body {
 }
 
 .inner-wrapper {
-  display: flex; 
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  max-width: 1920px;
+  max-height: 1080px;
+  margin: auto;
+  /* display: flex;  */
   /* max-width: 1920px;
   max-height: 10800px; */
   /* height: 100vh; */
   /* width: 100%;
   height: 100%; */
   /* margin: auto; */
-  max-width: 1820px;
+  /* max-width: 1820px; */
   /* max-height: 1080px; */
-  height: 100vh;
-  margin: 0 auto;
+  /* height: 100vh;
+  margin: 0 auto; */
 }
 
 .leftSide {
