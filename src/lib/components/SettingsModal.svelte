@@ -137,6 +137,7 @@
     <div class="user-profile">
       <div class="avatar-section">
         <div class="image-wrapper">
+          <!-- {#if $loggedinUser.photoURL} -->
           {#if $loggedinUser.photoURL}
             <img src={$loggedinUser.photoURL} alt="" width="96" height="96" />
           {:else}

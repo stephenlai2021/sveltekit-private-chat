@@ -85,9 +85,12 @@
 
   onMount(() => {
     desktopOrMobile();
-    onAuthStateChanged(auth, (_user) => {
-      if (!_user) goto("/login");
-      else $loggedinUser = _user;
+    onAuthStateChanged(auth, (user) => {
+      if (!user) goto("/login");
+      else {
+        $loggedinUser = user;
+        console.log('get loggedin user name: ', $loggedinUser.displayName)
+      }
     });
     $currentSelectedUser = null
   });
