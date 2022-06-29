@@ -106,19 +106,19 @@ selectedUsername.subscribe(
   (val) => browser && localStorage.setItem("selected user name", val)
 );
 
-// export const imageTitle = writable(
-//   browser && (localStorage.getItem("image title") || "Default")
-// );
-// imageTitle.subscribe(
-//   (val) => browser && localStorage.setItem("image title", val)
-// );
+export const imageTitle = writable(
+  browser && (localStorage.getItem("image title") || "Default")
+);
+imageTitle.subscribe(
+  (val) => browser && localStorage.setItem("image title", val)
+);
 
-// export const bgOpacity = writable(
-//   browser && (localStorage.getItem("backround opacity") || 0.06)
-// );
-// bgOpacity.subscribe(
-//   (val) => browser && localStorage.setItem("backround opacity", val)
-// );
+export const bgOpacity = writable(
+  browser && (localStorage.getItem("backround opacity") || 0.06)
+);
+bgOpacity.subscribe(
+  (val) => browser && localStorage.setItem("backround opacity", val)
+);
 
 export const bgColor = writable(
   browser && (localStorage.getItem("backround color") || "#ebebeb")
