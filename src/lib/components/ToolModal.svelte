@@ -94,11 +94,11 @@
             <img
               src={$currentSelectedUser.avatar}
               alt=""
-              width="96"
-              height="96"
+              width="80"
+              height="80"
             />
           {:else}
-            <img src="/joke.png" alt="" width="96" height="96" />
+            <img src="/joke.png" alt="" width="80" height="80" />
           {/if}
         </div>
       </div>
@@ -108,30 +108,15 @@
       <p>{$currentSelectedUser.email}</p>
     </div>
     <ul>
-      {#if !$isMobile}
-        <li
-          style:background={$themeStore.theme === "dark"
-            ? "#3A3F50"
-            : "white"}
-        >
-          <label>
-            <input
-              type="file"
-              on:change={handleFileChange}
-              accept="image/png, image/jpg, image/jpeg"
-            />
-            <span>Select image from file</span>
-          </label>
-        </li>
-      {/if}
       <li
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
       >
+      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
         <div
           class="option"
           on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
         >
           <div class="content">
+            <span class="content-title">Image gallery</span>
             {#if !$showThemeMenu}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +125,7 @@
                 width="15"
                 height="15"
                 fill="currentColor"
-                style:margin-right="20px"
+                style:margin-left="26px"
               >
                 <path
                   d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
@@ -154,14 +139,13 @@
                 width="15"
                 height="15"
                 fill="currentColor"
-                style:margin-right="20px"
+                style:margin-left="26px"
               >
                 <path
                   d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
                 />
               </svg>
             {/if}
-            <span class="content-title">Image gallery</span>
           </div>
         </div>
         {#if $showThemeMenu}
@@ -185,15 +169,16 @@
       </li>
       {#if !$disabled}
         <li
-          style:background={$themeStore.theme === "dark"
-            ? "#3A3F50"
-            : "white"}
         >
+          <!-- style:background={$themeStore.theme === "dark"
+            ? "#3A3F50"
+            : "white"} -->
           <div
             class="option"
             on:click={() => ($showGradientMenu = !$showGradientMenu)}
           >
             <div class="content">
+              <span class="content-title">Gradient gallery</span>
               {#if !$showGradientMenu}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -202,7 +187,7 @@
                   width="15"
                   height="15"
                   fill="currentColor"
-                  style:margin-right="20px"
+                  style:margin-left="10px"
                 >
                   <path
                     d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
@@ -216,14 +201,13 @@
                   width="15"
                   height="15"
                   fill="currentColor"
-                  style:margin-right="20px"
+                  style:margin-left="10px"
                 >
                   <path
                     d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
                   />
                 </svg>
               {/if}
-              <span class="content-title">Gradient gallery</span>
             </div>
           </div>
           {#if $showGradientMenu}
@@ -243,10 +227,27 @@
             </main>
           {/if}
         </li>
+        {#if !$isMobile}
         <li
-          style:background={$themeStore.theme === "dark"
+        >
+          <!-- style:background={$themeStore.theme === "dark"
             ? "#3A3F50"
-            : "white"}
+            : "white"} -->
+          <label>
+            <input
+              type="file"
+              on:change={handleFileChange}
+              accept="image/png, image/jpg, image/jpeg"
+            />
+            <span>Select image from file</span>
+          </label>
+        </li>
+      {/if}
+
+          <!-- style:background={$themeStore.theme === "dark"
+            ? "#3A3F50"
+            : "white"} -->
+        <li
         >
           <label>
             <input
@@ -261,8 +262,8 @@
           </label>
         </li>
       {/if}
+      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <li
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
         on:click={() => ($showMapModal = true)}
       >
         <span>Show location</span>
@@ -343,12 +344,14 @@
 
   li {
     margin: 0 10px;
-    padding: 10px 0;
+    padding: 10px 37px;
+    /* padding: 10px; */
+    text-align: left;
     list-style: none;
     cursor: pointer;
-    background: white;
     margin-bottom: 5px;
     border-radius: 8px;
+    /* border: 1px solid; */
   }
 
   ::-webkit-scrollbar {

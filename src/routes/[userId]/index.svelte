@@ -23,6 +23,7 @@
     showActionMenu,
     pictureConfirmed,
     loggedinUser,
+    showToolModalMobile
   } from "$lib/store";
   import CameraModal from "$lib/components/CameraModal.svelte";
   import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
@@ -37,6 +38,8 @@
   import themeStore from "svelte-themes";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
+  import { browser } from "$app/env"
+  import ToolModalMobile from "$lib/components/ToolModalMobile.svelte"
 
   let url = null;
 
@@ -135,6 +138,8 @@
     $showSettingsModal = false;
     $showAddFriendModal = false;
   }
+
+  $: if (browser) document.title = `Chat with ${$selectedUsername}`
 </script>
 
 <div>
@@ -145,4 +150,8 @@
   {#if $showEmojiMenu}
     <EmojiMenu />
   {/if}  
+
+  {#if $showToolModalMobile}
+    <ToolModalMobile />
+  {/if}
 </div>

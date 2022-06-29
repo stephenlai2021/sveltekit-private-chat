@@ -132,14 +132,13 @@
         <div class="image-wrapper">
           <!-- {#if $loggedinUser.photoURL} -->
           {#if $loggedinUser}
-            <img src={$loggedinUser.photoURL} alt="" width="96" height="96" />
+            <img src={$loggedinUser.photoURL} alt="" width="80" height="80" />
             <label>
               <input
                 type="file"
                 on:change={handleFileChange}
                 accept="image/png, image/jpg, image/jpeg"
               />
-              <!-- <ion-icon name="camera-outline" class="icon-camera" /> -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="ionicon icon-camera"
@@ -173,7 +172,6 @@
               </svg>
             </label>
           {:else}
-            <!-- <img src="/joke.png" alt="" width="96" height="96" /> -->
             <div class="user-avatar animation" />
           {/if}
         </div>
@@ -193,8 +191,9 @@
       {/if}
     </div>
 
+    <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
     {#if $loggedinUser}
-      <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}>
+      <li >
         <div class="content">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -229,8 +228,8 @@
       <li
         class="theme"
         on:click={toggleTheme}
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
-      >
+        >
+        <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
         <div class="content">
           {#if $themeStore.theme === "light"}
             <svg
@@ -287,7 +286,8 @@
           {/if}
         </div>
       </li>
-      <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}>
+      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
+      <li >
         <div class="content">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -329,8 +329,8 @@
       </li>
       <li
         on:click={logout}
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
-      >
+        >
+        <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
         <div class="content">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -375,8 +375,8 @@
   }
 
   .user-avatar {
-    width: 96px;
-    height: 96px;
+    width: 80px;
+    height: 80px;
     border-radius: 50px;
   }
 
@@ -391,17 +391,18 @@
   }
 
   .icon-camera {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     margin-right: 0;
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: 10px;
+    bottom: -10px;
   }
 
   .image-wrapper img {
     border-radius: 8px;
     object-fit: contain;
+    /* border: 1px solid; */
   }
 
   .image-wrapper {

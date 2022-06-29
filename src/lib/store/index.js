@@ -99,31 +99,29 @@ currentSelectedUser.subscribe(
   (val) => browser && localStorage.setItem("selected user", val)
 );
 
-export const selectedUsername = writable(
-  // browser && JSON.parse(localStorage.getItem("selected user") || {})
-  browser && localStorage.getItem("selected user name") || {}
-);
-selectedUsername.subscribe(
-  // (val) => browser && localStorage.setItem("selected user", JSON.stringify(val))
-  (val) => browser && localStorage.setItem("selected user name", val)
-);
+// export const selectedUsername = writable(
+//   browser && localStorage.getItem("selected user name") || {}
+// );
+// selectedUsername.subscribe(
+//   (val) => browser && localStorage.setItem("selected user name", val)
+// );
 
-export const imageTitle = writable(
-  browser && (localStorage.getItem("image title") || "Default")
-);
-imageTitle.subscribe(
-  (val) => browser && localStorage.setItem("image title", val)
-);
+// export const imageTitle = writable(
+//   browser && (localStorage.getItem("image title") || "Default")
+// );
+// imageTitle.subscribe(
+//   (val) => browser && localStorage.setItem("image title", val)
+// );
 
-export const bgOpacity = writable(
-  browser && (localStorage.getItem("backround opacity") || 0.06)
-);
-bgOpacity.subscribe(
-  (val) => browser && localStorage.setItem("backround opacity", val)
-);
+// export const bgOpacity = writable(
+//   browser && (localStorage.getItem("backround opacity") || 0.06)
+// );
+// bgOpacity.subscribe(
+//   (val) => browser && localStorage.setItem("backround opacity", val)
+// );
 
 export const bgColor = writable(
-  browser && (localStorage.getItem("backround color") || "e5ddd5")
+  browser && (localStorage.getItem("backround color") || "#ebebeb")
 );
 bgColor.subscribe(
   (val) => browser && localStorage.setItem("backround color", val)

@@ -37,13 +37,8 @@
   <TabMenu />
   <ContactList />
 
-  <!-- {#if $showSettingsModalMobile && $loggedinUser} -->
   {#if $showSettingsModalMobile && $widthLessthan1200}
     <SettingsModalMobile />
-  {/if}
-
-  {#if $showToolModalMobile}
-    <ToolModalMobile />
   {/if}
 
   {#if $showAddFriendModal}
@@ -57,10 +52,6 @@
   {#if $showAddGroupModal}
     <AddGroupModal />
   {/if}
-
-  <!-- {#if $mobile}
-    <Navbar />
-  {/if} -->
 </div>
 
 <style>

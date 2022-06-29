@@ -32,11 +32,15 @@
   let selectedUserMsgsReady = false;
 
   const showImagePreview = (pictureURL, imageURL) => {
-    $showImagePreviewModal = true;
-
-    $storedPictureURL = pictureURL;
+  // const showImagePreview = (imageURL) => {
+    $showImagePreviewModal = true;    
     $storedImageURL = imageURL;
+    $storedPictureURL = pictureURL;
   };
+  
+  // const showPicturePreview = pictureURL => {
+  //   $showImagePreviewModal = true;
+  // }
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
@@ -128,7 +132,7 @@
             {moment(msg.createdAt.toDate()).format("LT")}
           </span>
 
-          <svg
+          <!-- <svg
             xmlns="http://www.w3.org/2000/svg"
             class="ionicon icon-expand"
             viewBox="0 0 512 512"
@@ -156,7 +160,7 @@
               stroke-width="32"
               d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"
             />
-          </svg>
+          </svg> -->
 
           {#if msg.audioURL}
             <div class="audio-player" style:padding="3px 0">
@@ -178,11 +182,19 @@
           {/if}
 
           {#if msg.pictureURL}
-            <img src={msg.pictureURL} alt="" />
+            <img 
+              src={msg.pictureURL} 
+              alt="" 
+              on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
+            />
           {/if}
 
           {#if msg.imageURL}
-            <img src={msg.imageURL} alt="" />
+            <img 
+              src={msg.imageURL} 
+              alt="" 
+              on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
+            />
           {/if}
         </p>
       </div>
@@ -192,6 +204,10 @@
 
 <style>
   @import url("$lib/styles/audio-player.css");
+
+  img:hover {
+    cursor: pointer;
+  }
 
   .audio-player {
     display: flex;

@@ -10,9 +10,9 @@
 </script>
 
 <div
-  class="image-preview-modal"
-  transition:scale={{ delay: 150, duration: 200, easing: quintOut }}
-  style:background={$themeStore.theme === "dark" ? `#292F3F url('/image-icon/png') no-repeat center` : "#ebebeb"}
+class="image-preview-modal"
+transition:scale={{ delay: 150, duration: 200, easing: quintOut }}
+style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
   >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,8 @@
     width="30"
     height="30"
     fill="currentColor"
-    style:color={$themeStore.theme === "dark" ? "white" : "#292F3F"}
+    style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}
+    style:border={$themeStore.theme === "dark" ? "1px solid white" : "1px solid #292F3F"}
     on:click={() => ($showImagePreviewModal = false)}
   >
     <path
@@ -88,12 +89,17 @@
     max-width: 1000px;
   }
 
+  /* img:hover {
+    cursor: pointer;
+  } */
+
   .icon-close {
-    position: absolute;
-    top: 5px;
+    position: fixed;
+    top: 20px;
     left: 50%;
+    z-index: 500;
     transform: translateX(-50%);
-    color: white;
+    /* color: white; */
     border-radius: 50px;
     background: white;
   }
