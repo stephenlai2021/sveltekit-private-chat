@@ -111,16 +111,15 @@
     $page.url.pathname === "/login" ? "0%" : "100%"
   } -->
   <!-- $page.url.pathname != "/login" ? "block" -->
-  <!-- style:display={
+<ul
+  class="modal-settings"
+  on:click|stopPropagation
+  transition:fly={{ x: -60, duration: 100, delay: 100 }}
+  style:display={
     $page.url.pathname != "/login" && $widthLessthan1200 ? "none"
     : $page.url.pathname === "/login" ? "none"
     : "block"
-  } -->
-<ul
-  class="modal-settings"
-  on:click|stopPropagation={() => console.log("settings modal clicked !")}
-  transition:fly={{ x: -60, duration: 100, delay: 100 }}
-  style:display={$widthLessthan1200 || $page.url.pathname === "/login"  ? "none" : "block"}
+  }
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
     : "rgba(235, 235, 235, .5)"}
