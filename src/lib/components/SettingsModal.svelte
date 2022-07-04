@@ -247,7 +247,8 @@
             <div class="title-wrapper">
               <span class="menu-item">Dark mode</span>
             </div>
-          {:else}
+          {/if}
+          {#if $themeStore.theme === "dark"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="ionicon"
