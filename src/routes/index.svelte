@@ -53,14 +53,18 @@
     />
   </svg>
   <span> Please select a contact to start a conversation </span>
+  
 </div>
 
 <style>
   .home-page {
-    height: 100vh;
     display: flex;
+    /* flex-direction: column; */
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(20px);
+    height: calc(100vh - 10px);
+    border-radius: 8px;
+    margin: 5px 0;
   }
 </style>

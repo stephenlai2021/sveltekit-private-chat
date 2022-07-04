@@ -233,14 +233,17 @@
           <!-- style:background={$themeStore.theme === "dark"
             ? "#3A3F50"
             : "white"} -->
-          <label>
-            <input
-              type="file"
-              on:change={handleFileChange}
-              accept="image/png, image/jpg, image/jpeg"
-            />
-            <span>Select image from file</span>
-          </label>
+            <div class="content">
+
+              <label>
+                <input
+                  type="file"
+                  on:change={handleFileChange}
+                  accept="image/png, image/jpg, image/jpeg"
+                />
+                <span>Select image from file</span>
+              </label>
+            </div>
         </li>
       {/if}
 
@@ -249,6 +252,7 @@
             : "white"} -->
         <li
         >
+        <div class="content">
           <label>
             <input
               type="color"
@@ -260,13 +264,16 @@
             />
             <span>Select single color</span>
           </label>
+        </div>
         </li>
       {/if}
       <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <li
         on:click={() => ($showMapModal = true)}
       >
-        <span>Show location</span>
+        <div class="content">
+          <span>Show location</span>
+        </div>
       </li>
     </ul>
     {/if}
@@ -274,6 +281,11 @@
 
 <style>
   @import url("$lib/styles/theme-modal.css");
+
+  main {
+    border: 1px solid;
+    width: 100%;
+  }
 
   .user-profile .avatar-section {
     justify-content: center;
@@ -311,7 +323,7 @@
   }
 
   .content {
-    width: 180px;
+    width: 160px;
     display: flex;
     align-items: center;
     /* border: 1px solid; */
@@ -336,21 +348,27 @@
 
   ul {
     text-align: center;
-    /* border-bottom: 1px solid rgba(0, 0, 0, 0.06); */
     display: flex;
     flex-direction: column;
-    /* margin-top: 120px; */
   }
 
   li {
     margin: 0 10px;
-    padding: 10px 37px;
-    /* padding: 10px; */
-    text-align: left;
+    padding: 10px 0;
     list-style: none;
     cursor: pointer;
+    /* background: white; */
     margin-bottom: 5px;
     border-radius: 8px;
+    /* text-align: center; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid; */
+  }
+
+  li span {
     /* border: 1px solid; */
   }
 
@@ -371,7 +389,9 @@
     flex-direction: column;
     justify-content: center; */
     min-width: 250px;
-    height: 100vh;
+    /* max-height: 90%; */
+    margin: 5px;
+    border-radius: 8px;
     overflow-y: auto;
     overflow-x: hidden;
     backdrop-filter: blur(20px);

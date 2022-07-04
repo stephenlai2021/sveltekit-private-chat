@@ -442,8 +442,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 150px;
+    width: 120px;
     cursor: pointer;
+    /* border: 1px solid; */
   }
 
   .top {
@@ -460,21 +461,24 @@
   ul {
     list-style: none;
     max-width: 250px;
+    /* max-height: 90%; */
     width: 100%;
     z-index: 200;
-    height: 100vh;
+    /* height: 90vh; */
     backdrop-filter: blur(20px);
+    border-radius: 8px;
+    margin: 5px;
   }
 
   li {
     display: flex;
     align-items: baseline;
-    justify-content: center;
+    justify-content: center;    
     padding: 10px 20px;
     margin: 0 10px;
     margin-bottom: 5px;
     border-radius: 8px;
-
+    /* border: 1px solid; */
   }
 
   /* @media (max-width: 1200px) {

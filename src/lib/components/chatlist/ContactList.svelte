@@ -15,6 +15,7 @@
     privateChat,
     groupChat,
     publicChat,
+    currentContact
   } from "$lib/store";
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { auth, db } from "$lib/firebase/client";
@@ -27,11 +28,11 @@
   let users = [];
   let ready = false;
   let usersReady = false;
-  let currentContact = null;
+  // let currentContact = null;
   let filteredUsers = [];
 
   const selectUser = (selectedUser) => {
-    currentContact = selectedUser;
+    $currentContact = selectedUser;
     // $currentSelectedUser = selectedUser;
     console.log(`${selectedUser.name} is selected`);
     $selectedUsername = selectedUser.name;
@@ -39,7 +40,7 @@
     goto(`/${$selectedUsername}`);
   };
 
-  $: if ($isMobile || $mobile) currentContact = null;
+  $: if ($isMobile || $mobile) $currentContact = null;
 
   $: if ($profileUpdated) {
     console.log("user profile updated detected !");
@@ -96,14 +97,14 @@
           class="block"
           class:unread={user.unread}
           on:click={() => selectUser(user)}
-          style:border-radius={(currentContact === user && !$mobile) ||
+          style:border-radius={($currentContact === user && !$mobile) ||
             (user.name === $page.params.userId && !$mobile) ? "8px" : "0"}
-          style:background={(currentContact === user && !$mobile) ||
+          style:background={($currentContact === user && !$mobile) ||
           (user.name === $page.params.userId && !$mobile) ? 
             $themeStore.theme === "dark" ? 
               "#3a3f50"
               : "rgba(235, 235, 235, 1)"
-            : currentContact != user && !$mobile ? 
+            : $currentContact != user && !$mobile ? 
               $themeStore.theme === "dark" ? 
                 "#292F3F"
                 : "transparent"
@@ -170,10 +171,16 @@
   }
 
   .chatlist {
-    height: calc(100vh - 160px);
+    height: calc(100vh - 177px);
     overflow: auto;
-    /* border: 1px solid; */
+  } 
+  
+  @media (max-width: 800px) {
+    .chatlist {
+      height: calc(100vh - 160px);
+    }
   }
+  
 
   ::-webkit-scrollbar {
     width: 0px;
@@ -231,7 +238,7 @@
   }
 
   .details .listHead .user-title {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.5px;
     font-style: normal;
@@ -254,7 +261,7 @@
   }
 
   .message p {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.6px;
     display: -webkit-box;

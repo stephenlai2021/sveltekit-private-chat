@@ -8,7 +8,7 @@
     bgColor,
     mobile,
     widthLessthan1000,
-    showToolModalMobile
+    showToolModalMobile,
   } from "$lib/store";
   import {
     doc,
@@ -20,7 +20,7 @@
     orderBy,
     Timestamp,
     collection,
-    onSnapshot,    
+    onSnapshot,
   } from "firebase/firestore";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
@@ -110,7 +110,10 @@
   </div>
 
   <div class="right-part">
-    <div class="icon-webcam" style:margin-right={$widthLessthan1000 ? "20px" : "5px"}>
+    <div
+      class="icon-webcam"
+      style:margin-right={$widthLessthan1000 ? "20px" : "5px"}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
@@ -174,6 +177,9 @@
     padding-right: 0px;
     padding: 15px 10px 15px 10px;
     backdrop-filter: blur(20px);
+    margin-top: 5px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
   .left-part {
@@ -241,6 +247,11 @@
   }
 
   @media (max-width: 800px) {
+    .header {
+      margin-top: 0px;
+      border-radius: 0px;
+    }
+
     .icon-arrow-back {
       margin-right: 10px;
       margin-left: 0px;

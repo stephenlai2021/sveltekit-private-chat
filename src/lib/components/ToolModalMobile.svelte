@@ -1,6 +1,7 @@
 <script>
   import {
     file,
+    mobile,
     bgColor,
     disabled,
     imageTitle,
@@ -12,6 +13,7 @@
     showGradientMenu,
     showMapModal,
     showToolModal,
+    showToolModalMobile,
     currentSelectedUser,
     widthLessthan1000,
   } from "$lib/store";
@@ -70,12 +72,16 @@
   };
 </script>
 
+<!-- style:width={$widthLessthan1000 ? "80%" : "100%"} -->
+<!-- style:left={$widthLessthan1000 ? "30%" : "0"} -->
+<!-- style:width={$widthLessthan1000 ? "80%" : "100%"} -->
 <div
   class="tool-modal"
   on:click|stopPropagation
+  transition:fly={{ right: 0, duration: 100, delay: 100 }}
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
-    : "rgba(235, 235, 235, .5)"}
+    : "#ebebeb"}
 >
   {#if $currentSelectedUser}
     <div class="top">
@@ -86,6 +92,7 @@
         width="24"
         height="24"
         fill="currentColor"
+        on:click|stopPropagation={() => $showToolModalMobile = false}
       >
         <path
           fill="none"
@@ -183,7 +190,6 @@
                 on:click={() =>
                   ($bgColor = `no-repeat center center url(${bgPic.url})`)}
               >
-                <!-- on:click={() => setBgPic(bgPic.url, bgPic.title)} -->
                 <div
                   class="theme-image"
                   style:background-image={`url(${bgPic.url})`}
@@ -287,10 +293,6 @@
 <style>
   @import url("$lib/styles/theme-modal.css");
 
-  .icon-back {
-    display: none;
-  }
-
   .user-profile .avatar-section {
     justify-content: center;
     align-items: center;
@@ -314,7 +316,6 @@
 
   .theme-item {
     padding: 0;
-    /* border: 1px solid red; */
   }
 
   .top {
@@ -323,12 +324,15 @@
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 10px;
+    padding-right: 5px;
     /* border: 1px solid; */
   }
 
   .content {
     width: 180px;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     /* border: 1px solid; */
   }
@@ -352,10 +356,8 @@
 
   ul {
     text-align: center;
-    /* border-bottom: 1px solid rgba(0, 0, 0, 0.06); */
     display: flex;
     flex-direction: column;
-    /* margin-top: 120px; */
   }
 
   li {
@@ -378,20 +380,22 @@
 
   .tool-modal {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 5px;
+    bottom: 5px;
+    right: 0;
     /* width: 250px; */
     /* min-width: 250px; */
-    width: 100%;
-    height: 100vh;
+    width: 80%;
+    /* height: 100vh; */
+    border-radius: 8px;
     z-index: 100;
     overflow-y: auto;
     overflow-x: hidden;
   }
 
-  @media (max-width: 1000px) {
+  /* @media (max-width: 1000px) {
     .tool-modal {
       display: none;
     }
-  }
+  } */
 </style>

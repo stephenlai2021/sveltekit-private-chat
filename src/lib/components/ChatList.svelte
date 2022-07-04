@@ -57,6 +57,16 @@
 <style>
   .chatlist {
     position: relative;
-    height: 100vh;
+    margin: 5px ;
+    margin-left: 0;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 800px) {
+    .chatlist {
+      margin: 0;
+      border-radius: 0;
+      height: 100vh;
+    }
   }
 </style>

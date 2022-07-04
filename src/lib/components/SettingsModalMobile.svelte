@@ -111,7 +111,7 @@
   style:width={$mobile ? "80%" : "100%"}
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
-    : "rgba(235, 235, 235, 1)"}
+    : "white"}
 >
   <div class="top">
     <svg
@@ -158,7 +158,8 @@
       </h3>
       <p>{$loggedinUser.email}</p>
     </div>
-    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}>
+    <li>
+      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -193,8 +194,8 @@
     <li
       class="theme"
       on:click={toggleTheme}
-      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
-    >
+      >
+      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         {#if $themeStore.theme === "light"}
           <svg
@@ -251,7 +252,8 @@
         {/if}
       </div>
     </li>
-    <li style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}>
+    <li>
+      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -292,9 +294,9 @@
       </div>
     </li>
     <li
-      on:click={logout}
-      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
+      on:click={logout}      
     >
+    <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -386,7 +388,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 150px;
+    width: 120px;
     cursor: pointer;
     /* border: 1px solid yellow; */
   }

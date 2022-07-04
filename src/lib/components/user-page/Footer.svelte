@@ -306,8 +306,6 @@
     left: 50%;
     transform: translateX(-50%);
     bottom: 5px;
-    bottom: 0;
-    padding-bottom: 5px;
     width: 100%;
     max-width: 800px;
     margin: auto;
@@ -317,6 +315,8 @@
     align-items: center;
     padding-left: 15px;
     backdrop-filter: blur(20px);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     /* border: 1px solid; */
   }
 
@@ -395,11 +395,6 @@
   }
 
   @media (max-width: 1200px) {
-    .chatbox_input {
-      bottom: 0;
-      border-radius: 0;
-    }
-
     .icon-camera {
       margin-left: 5px;
       margin-right: 15px;
@@ -416,9 +411,11 @@
     }
   }
 
-  /* @media (max-width: 800px) {
+  @media (max-width: 800px) {
     .chatbox_input {
-      padding-left: 10px;
+      /* padding-left: 10px; */
+      bottom: 0;
+      border-radius: 0;
     }
-  } */
+  }
 </style>

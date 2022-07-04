@@ -9,6 +9,7 @@
     groupChat,
     publicChat,
     selectedUsername,
+    currentContact
   } from "$lib/store";
 
   const menuItems = ["All", "Chat", "Group", "Room"];
@@ -18,6 +19,8 @@
 
   const selectTab = (selectedTab) => {
     currentTab = selectedTab;
+    $selectedUsername = null
+    $currentContact = null
 
     if (currentTab === "All") {
       $allChat = true;
@@ -33,7 +36,8 @@
       $privateChat = true;
       $groupChat = false;
       $publicChat = false;
-      goto("/chat");
+      // goto("/chat");
+      goto('/')
     }
 
     if (currentTab === "Group") {
@@ -41,7 +45,8 @@
       $privateChat = false;
       $groupChat = true;
       $publicChat = false;
-      goto("/group");
+      // goto("/group");
+      goto('/')
     }
 
     if (currentTab === "Room") {
@@ -49,7 +54,8 @@
       $privateChat = false;
       $groupChat = false;
       $publicChat = true;
-      goto("/room");
+      // goto("/room");
+      goto('/')
     }
   };
 </script>

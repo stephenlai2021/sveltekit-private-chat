@@ -10,6 +10,7 @@ import {
 
 let colRef = collection(db, "whatzapp_users");
 
+export const currentContact = writable(null)
 export const showToolModalMobile = writable(false)
 export const showSettingsModalMobile = writable(false)
 export const widthLessthan1200 = writable(false)

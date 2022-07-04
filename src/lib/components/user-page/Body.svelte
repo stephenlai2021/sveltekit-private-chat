@@ -97,7 +97,7 @@
   class="chatBox"
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
-    : "rgba(235, 235, 235, .5)"}
+    : "rgba(235, 235, 235, 0.1)"}
 >
   {#if messages}
     {#each messages as msg}

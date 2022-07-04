@@ -101,6 +101,8 @@ body {
 .leftSide {
   position: relative;
   min-width: 350px;
+  border-radius: 8px;
+  /* margin: 5px 0; */
 }
 
 .rightSide {
@@ -158,6 +160,12 @@ body {
   }
 }
 
+@media (max-width: 1000px) {
+  .inner-wrapper {
+    padding: 0 5px;
+  }
+}
+
 @media (max-width: 800px) {
   .wrapper {
     margin: 0;
@@ -166,7 +174,13 @@ body {
   }
 
   .inner-wrapper {
-    padding-left: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 350px) {
+  .leftSide {
+    min-width: 0;
   }
 }
 

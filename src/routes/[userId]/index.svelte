@@ -23,7 +23,8 @@
     showActionMenu,
     pictureConfirmed,
     loggedinUser,
-    showToolModalMobile
+    showToolModalMobile,
+    widthLessthan1000
   } from "$lib/store";
   import CameraModal from "$lib/components/CameraModal.svelte";
   import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
@@ -150,8 +151,11 @@
   {#if $showEmojiMenu}
     <EmojiMenu />
   {/if}  
-
-  {#if $showToolModalMobile}
-    <ToolModalMobile />
+  
+  <!-- {#if showToolModalMobile && $widthLessthan1000} -->
+  {#if showToolModalMobile}
+    <!-- {#if $widthLessthan1000} -->
+      <ToolModalMobile />
+    <!-- {/if} -->
   {/if}
 </div>

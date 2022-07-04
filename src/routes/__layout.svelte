@@ -26,6 +26,7 @@
     showImagePreviewModal,
     showCameraPreviewModal,
     showThemeModal,
+    showToolModalMobile,
     showCameraModal,
     showMapModal,
     showThemeMenu,
@@ -110,6 +111,7 @@
     });
     window.addEventListener("click", (e) => {
       $showSettingsModalMobile = false;
+      $showToolModalMobile = false;
       $showAddFriendModal = false;
       $showThemeModal = false;
       $showThemeMenu = false
