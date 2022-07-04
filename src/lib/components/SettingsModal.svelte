@@ -30,17 +30,15 @@
 
   let url = null;
   let file = null;
-  let theme = true;
+  let theme = false;
   let fileError = null;
 
   // onAuthStateChanged(auth, _user => user = _user)
 
   const toggleTheme = () => {
-    // theme = !theme;
-    // if (theme) setTheme("dark");
-    // if (!theme) setTheme("light");
-    if ($themeStore.theme === 'dark') setTheme('light')
-    if ($themeStore.theme === 'light') setTheme('dark')
+    theme = !theme;
+    if (theme) setTheme("dark");
+    if (!theme) setTheme("light");
   };
 
   const logout = () => {
@@ -103,8 +101,8 @@
   }
 
   onMount(() => {
-    // if ($themeStore.theme === "light") theme = false;
-    // if ($themeStore.theme === "dark") theme = true;
+    if ($themeStore.theme === "light") theme = false;
+    if ($themeStore.theme === "dark") theme = true;
   });
 </script>
 
@@ -187,7 +185,7 @@
         </p>
       {/if}
     </div>
-
+    
     {#if $loggedinUser}
       <li >
         <div class="content">
@@ -217,7 +215,7 @@
             />
           </svg>
           <div class="title-wrapper">
-            <span class="menu-item">Language</span>
+            <span class="menu-item">CHN / EN</span>
           </div>
         </div>
       </li>
@@ -247,8 +245,7 @@
             <div class="title-wrapper">
               <span class="menu-item">Dark mode</span>
             </div>
-          {/if}
-          {#if $themeStore.theme === "dark"}
+          {:else}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="ionicon"

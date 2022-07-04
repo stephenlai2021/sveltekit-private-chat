@@ -119,16 +119,14 @@
     });
     window.addEventListener("resize", () => desktopOrMobile());
   }
+  $: if ($themeStore.theme === 'dark') console.log('you are in light mode')
+  $: if ($themeStore.theme === 'light') console.log('you are in dark mode')
 </script>
 
 <svelte:head>
   <title>Sveltechat</title>
 </svelte:head>
 
-<!-- style:padding-left={$showSidebarMenu ? "0" : "60px"} -->
-<!-- style:background={$themeStore.theme === "dark"
-  ? "#292F3F"
-  : "(235, 235, 235, .5)"} -->
 <SvelteTheme />
 <div
   class="wrapper"
