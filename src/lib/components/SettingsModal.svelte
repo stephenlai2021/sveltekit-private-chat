@@ -106,11 +106,6 @@
   });
 </script>
 
-<!-- style:width={$mobile ? "80%" : "100%"} -->
-  <!-- style:width={
-    $page.url.pathname === "/login" ? "0%" : "100%"
-  } -->
-  <!-- $page.url.pathname != "/login" ? "block" -->
 <ul
   class="modal-settings"
   on:click|stopPropagation
@@ -459,18 +454,18 @@
   }
 
   ul {
-    list-style: none;
-    max-width: 250px;
+    min-width: 250px;
     /* max-height: 90%; */
-    width: 100%;
-    z-index: 200;
+    /* width: 100%; */
+    /* z-index: 200; */
     /* height: 90vh; */
     backdrop-filter: blur(20px);
     border-radius: 8px;
     margin: 5px;
   }
-
+  
   li {
+    list-style: none;
     display: flex;
     align-items: baseline;
     justify-content: center;    
@@ -478,12 +473,6 @@
     margin: 0 10px;
     margin-bottom: 5px;
     border-radius: 8px;
-    /* border: 1px solid; */
+    /* border: 1px solid red; */
   }
-
-  /* @media (max-width: 1200px) {
-    ul {
-      display: none;
-    }
-  } */
 </style>

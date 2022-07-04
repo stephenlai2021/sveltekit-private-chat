@@ -151,11 +151,8 @@
   {#if $showEmojiMenu}
     <EmojiMenu />
   {/if}  
-  
-  <!-- {#if showToolModalMobile && $widthLessthan1000} -->
-  {#if showToolModalMobile}
-    <!-- {#if $widthLessthan1000} -->
-      <ToolModalMobile />
-    <!-- {/if} -->
+
+  {#if $showToolModalMobile && $widthLessthan1000}
+    <ToolModalMobile />
   {/if}
 </div>

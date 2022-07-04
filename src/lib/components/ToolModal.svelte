@@ -71,8 +71,6 @@
   };
 </script>
 
-<!-- style:display={!$loggedinUser ? "none" : "block"} -->
-<!-- style:display={$page.url.pathname === "/login" ? "none" : "block"} -->
 <div
   class="tool-modal"
   on:click|stopPropagation
@@ -283,8 +281,8 @@
   @import url("$lib/styles/theme-modal.css");
 
   main {
-    border: 1px solid;
     width: 100%;
+    /* border: 1px solid; */
   }
 
   .user-profile .avatar-section {
@@ -323,7 +321,7 @@
   }
 
   .content {
-    width: 160px;
+    width: 140px;
     display: flex;
     align-items: center;
     /* border: 1px solid; */
@@ -357,19 +355,12 @@
     padding: 10px 0;
     list-style: none;
     cursor: pointer;
-    /* background: white; */
     margin-bottom: 5px;
     border-radius: 8px;
-    /* text-align: center; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid; */
-  }
-
-  li span {
-    /* border: 1px solid; */
   }
 
   ::-webkit-scrollbar {
@@ -395,11 +386,6 @@
     overflow-y: auto;
     overflow-x: hidden;
     backdrop-filter: blur(20px);
+    /* border: 1px solid red; */
   }
-
-  /* @media (max-width: 1000px) {
-    .tool-modal {
-      display: none;
-    }
-  } */
 </style>

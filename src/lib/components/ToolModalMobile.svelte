@@ -149,6 +149,7 @@
           on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
         >
           <div class="content">
+            <span class="content-title">Image gallery</span>
             {#if !$showThemeMenu}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +158,7 @@
                 width="15"
                 height="15"
                 fill="currentColor"
-                style:margin-right="20px"
+                style:margin-left="26px"
               >
                 <path
                   d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
@@ -171,14 +172,14 @@
                 width="15"
                 height="15"
                 fill="currentColor"
-                style:margin-right="20px"
+                style:margin-left="26px"
               >
                 <path
                   d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
                 />
               </svg>
             {/if}
-            <span class="content-title">Image gallery</span>
+           
           </div>
         </div>
         {#if $showThemeMenu}
@@ -210,6 +211,7 @@
             on:click={() => ($showGradientMenu = !$showGradientMenu)}
           >
             <div class="content">
+              <span class="content-title">Gradient gallery</span>
               {#if !$showGradientMenu}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +220,7 @@
                   width="15"
                   height="15"
                   fill="currentColor"
-                  style:margin-right="20px"
+                  style:margin-left="10px"
                 >
                   <path
                     d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
@@ -232,14 +234,14 @@
                   width="15"
                   height="15"
                   fill="currentColor"
-                  style:margin-right="20px"
+                  style:margin-left="10px"
                 >
                   <path
                     d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
                   />
                 </svg>
               {/if}
-              <span class="content-title">Gradient gallery</span>
+              
             </div>
           </div>
           {#if $showGradientMenu}
@@ -264,6 +266,7 @@
             ? "#3A3F50"
             : "white"}
         >
+        <div class="content">
           <label>
             <input
               type="color"
@@ -275,6 +278,8 @@
             />
             <span>Select single color</span>
           </label>
+
+        </div>
         </li>
       {/if}
       <li
@@ -283,7 +288,9 @@
       >
         <!-- <span>Show {JSON.parse($selectedUser)}'s location</span> -->
         <!-- <span>Show location of {$currentSelectedUser.name}</span> -->
-        <span>Show location</span>
+        <div class="content">
+          <span>Show location</span>
+        </div>
       </li>
     </ul>
     <!-- <h4 class="title" on:click={() => $showMapModal = true}>顯示 {$page.params.userId} 的地理位置</h4> -->
@@ -292,6 +299,10 @@
 
 <style>
   @import url("$lib/styles/theme-modal.css");
+
+  main {
+    width: 100%;
+  }
 
   .user-profile .avatar-section {
     justify-content: center;
@@ -329,10 +340,8 @@
   }
 
   .content {
-    width: 180px;
+    width: 140px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     /* border: 1px solid; */
   }
@@ -365,9 +374,12 @@
     padding: 10px 0;
     list-style: none;
     cursor: pointer;
-    background: white;
     margin-bottom: 5px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   ::-webkit-scrollbar {
