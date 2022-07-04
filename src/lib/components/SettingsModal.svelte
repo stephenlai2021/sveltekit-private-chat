@@ -36,9 +36,11 @@
   // onAuthStateChanged(auth, _user => user = _user)
 
   const toggleTheme = () => {
-    theme = !theme;
-    if (theme) setTheme("dark");
-    if (!theme) setTheme("light");
+    // theme = !theme;
+    // if (theme) setTheme("dark");
+    // if (!theme) setTheme("light");
+    if ($themeStore.theme === 'dark') setTheme('light')
+    if ($themeStore.theme === 'light') setTheme('dark')
   };
 
   const logout = () => {
@@ -101,8 +103,8 @@
   }
 
   onMount(() => {
-    if ($themeStore.theme === "light") theme = false;
-    if ($themeStore.theme === "dark") theme = true;
+    // if ($themeStore.theme === "light") theme = false;
+    // if ($themeStore.theme === "dark") theme = true;
   });
 </script>
 
@@ -186,7 +188,6 @@
       {/if}
     </div>
 
-    <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
     {#if $loggedinUser}
       <li >
         <div class="content">
@@ -224,7 +225,6 @@
         class="theme"
         on:click={toggleTheme}
         >
-        <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
         <div class="content">
           {#if $themeStore.theme === "light"}
             <svg
@@ -281,7 +281,6 @@
           {/if}
         </div>
       </li>
-      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <li >
         <div class="content">
           <svg
@@ -322,10 +321,7 @@
           </div>
         </div>
       </li>
-      <li
-        on:click={logout}
-        >
-        <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
+      <li on:click={logout}>
         <div class="content">
           <svg
             xmlns="http://www.w3.org/2000/svg"
