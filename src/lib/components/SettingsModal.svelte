@@ -348,6 +348,11 @@
 </ul>
 
 <style>
+  span.menu-item {
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    /* color: red; */
+  }
   h3.user-name {
     margin-bottom: 5px;
     margin-top: 10px;
@@ -361,6 +366,8 @@
     color: transparent;
     line-height: 0.7;
     border-radius: 4px;
+    /* letter-spacing: 0.8px;
+    border: 1px solid; */
   }
 
   .user-avatar {
@@ -410,6 +417,8 @@
   h3,
   p {
     text-align: center;
+    letter-spacing: 0.8px;
+    font-size: 14px;
   }
 
   .user-profile .avatar-section {

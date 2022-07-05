@@ -33,7 +33,6 @@
 
   const selectUser = (selectedUser) => {
     $currentContact = selectedUser;
-    // $currentSelectedUser = selectedUser;
     console.log(`${selectedUser.name} is selected`);
     $selectedUsername = selectedUser.name;
 
@@ -81,9 +80,7 @@
     );
   });
 
-  $: if ($page.url.pathname === "/login") {
-    $showSettingsModal = false;
-  }
+  $: if ($page.url.pathname === "/login") $showSettingsModal = false;
 </script>
 
 {#if $allChat}

@@ -3,48 +3,32 @@
     file,
     bgColor,
     disabled,
-    imageTitle,
     isMobile,
     imageURL,
     bgOpacity,
+    imageTitle,
     background,
-    showThemeMenu,
-    showGradientMenu,
     showMapModal,
     showToolModal,
-    currentSelectedUser,
+    showThemeMenu,
+    currentContact,
+    showGradientMenu,
+    selectedUsername,
     widthLessthan1000,
-    loggedinUser
+    currentSelectedUser,
   } from "$lib/store";
   import Cookies from "js-cookie";
   import themes from "$lib/data/themes.json";
   import bgPics from "$lib/data/bgPics.json";
-  import { fly, fade } from "svelte/transition";
   import { page } from "$app/stores";
   import themeStore from "svelte-themes";
-  import { widthLessthan1200 } from "../store";
+
+  let matched = false;
+  let selectedUserReady = false;
 
   const setBgColor = (val) => {
     $bgColor = val;
     Cookies.set("bgColor", $bgColor);
-  };
-
-  const setBgPic = (url, title) => {
-    console.log(`url: ${url}`);
-    console.log(`image title: ${title}`);
-
-    $imageTitle = title;
-    $imageURL = url;
-    $background.src = $imageURL;
-    if ($imageTitle === "Default") {
-      $bgOpacity = 0.06;
-      $bgColor = "#e5ddd5";
-      $disabled = true;
-    }
-    if ($imageTitle != "Default") {
-      $bgOpacity = 0.6;
-      $disabled = false;
-    }
   };
 
   const handleFileChange = async (e) => {
@@ -74,16 +58,16 @@
 <div
   class="tool-modal"
   on:click|stopPropagation
-  style:display={
-    $page.url.pathname != "/login" && $widthLessthan1000 ? "none"
-    : $page.url.pathname === "/login" ? "none"
-    : "block"
-  }
+  style:display={$page.url.pathname != "/login" && $widthLessthan1000
+    ? "none"
+    : $page.url.pathname === "/login"
+    ? "none"
+    : "block"}
   style:background={$themeStore.theme === "dark"
-      ? "#292F3F"
-      : "rgba(235, 235, 235, .5)"}
+    ? "#292F3F"
+    : "rgba(235, 235, 235, .5)"}
 >
-{#if $currentSelectedUser}
+  {#if $currentSelectedUser && $page.url.pathname != '/' && $page.url.pathname != '/login'} 
     <div class="top" />
     <div class="user-profile">
       <div class="avatar-section">
@@ -105,10 +89,9 @@
       </h3>
       <p>{$currentSelectedUser.email}</p>
     </div>
+
     <ul>
-      <li
-      >
-      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
+      <li>
         <div
           class="option"
           on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
@@ -155,7 +138,6 @@
                 on:click={() =>
                   ($bgColor = `no-repeat center center url(${bgPic.url})`)}
               >
-                <!-- on:click={() => setBgPic(bgPic.url, bgPic.title)} -->
                 <div
                   class="theme-image"
                   style:background-image={`url(${bgPic.url})`}
@@ -166,11 +148,7 @@
         {/if}
       </li>
       {#if !$disabled}
-        <li
-        >
-          <!-- style:background={$themeStore.theme === "dark"
-            ? "#3A3F50"
-            : "white"} -->
+        <li>
           <div
             class="option"
             on:click={() => ($showGradientMenu = !$showGradientMenu)}
@@ -226,13 +204,8 @@
           {/if}
         </li>
         {#if !$isMobile}
-        <li
-        >
-          <!-- style:background={$themeStore.theme === "dark"
-            ? "#3A3F50"
-            : "white"} -->
+          <li>
             <div class="content">
-
               <label>
                 <input
                   type="file"
@@ -242,40 +215,34 @@
                 <span>Select image from file</span>
               </label>
             </div>
-        </li>
-      {/if}
+          </li>
+        {/if}
 
-          <!-- style:background={$themeStore.theme === "dark"
-            ? "#3A3F50"
-            : "white"} -->
-        <li
-        >
-        <div class="content">
-          <label>
-            <input
-              type="color"
-              bind:value={$bgColor}
-              on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
-              style:height="0"
-              style:width="0"
-              style:opacity="0"
-            />
-            <span>Select single color</span>
-          </label>
-        </div>
+        <li>
+          <div class="content">
+            <label>
+              <input
+                type="color"
+                bind:value={$bgColor}
+                on:input|stopPropagation={() =>
+                  Cookies.set("bgColor", $bgColor)}
+                style:height="0"
+                style:width="0"
+                style:opacity="0"
+              />
+              <span>Select single color</span>
+            </label>
+          </div>
         </li>
       {/if}
-      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
-      <li
-        on:click={() => ($showMapModal = true)}
-      >
+      <li on:click={() => ($showMapModal = true)}>
         <div class="content">
           <span>Show location</span>
         </div>
       </li>
     </ul>
-    {/if}
-  </div>
+  {/if}
+</div>
 
 <style>
   @import url("$lib/styles/theme-modal.css");
