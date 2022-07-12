@@ -26,12 +26,6 @@
   style:backdrop-filter="blur(20px)"
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "rgba(235, 235, 235, .5)"}
 >
-  <!-- style:border-right={$themeStore.theme === "dark"
-    ? "2px solid #3A3F50"
-    : "2px solid rgba(235, 235, 235, .3)"}
-  style:border-left={$themeStore.theme === "dark"
-    ? "2px solid #3A3F50"
-    : "2px solid rgba(235, 235, 235, .3)"} -->
   <Header />
   <SearchUser />
   <TabMenu />

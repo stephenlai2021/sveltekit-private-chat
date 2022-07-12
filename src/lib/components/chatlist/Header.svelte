@@ -35,20 +35,6 @@
         />
       </svg>
     {/if}
-    <!-- {#if $loggedinUser}
-      <div
-        class="userimg"
-        on:click|stopPropagation={() =>
-          ($showSettingsModal = !$showSettingsModal)}
-      >
-        {#if $loggedinUser.photoURL}
-          <img src={$loggedinUser.photoURL} alt="" class="cover" />
-        {:else}
-          <img src="/joke.png" alt="" class="cover" />
-        {/if}
-      </div>
-    {/if} -->
-    <!-- <h3 class="user-title">LetsChat</h3> -->
     <img src="https://miro.medium.com/max/1400/1*gr3kgm0McAm1eeJJog7jfg.png" height="30" alt="">
   </div>
 

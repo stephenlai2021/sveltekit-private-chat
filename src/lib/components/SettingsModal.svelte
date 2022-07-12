@@ -8,7 +8,7 @@
     showCameraModal,
     showSettingsModal,
     currentSelectedUser,
-    widthLessthan1200
+    widthLessthan1200,
   } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
   import { onMount } from "svelte";
@@ -42,7 +42,7 @@
   };
 
   const logout = () => {
-    $currentSelectedUser = null
+    $currentSelectedUser = null;
     $showSettingsModal = false;
     signout();
   };
@@ -110,11 +110,11 @@
   class="modal-settings"
   on:click|stopPropagation
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
-  style:display={
-    $page.url.pathname != "/login" && $widthLessthan1200 ? "none"
-    : $page.url.pathname === "/login" ? "none"
-    : "block"
-  }
+  style:display={$page.url.pathname != "/login" && $widthLessthan1200
+    ? "none"
+    : $page.url.pathname === "/login"
+    ? "none"
+    : "block"}
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
     : "rgba(235, 235, 235, .5)"}
@@ -122,10 +122,8 @@
   <div class="top" />
   <div class="main">
     <div class="user-profile">
-      <!-- {#if $loggedinUser} -->
       <div class="avatar-section">
         <div class="image-wrapper">
-          <!-- {#if $loggedinUser.photoURL} -->
           {#if $loggedinUser}
             <img src={$loggedinUser.photoURL} alt="" width="80" height="80" />
             <label>
@@ -172,22 +170,30 @@
         </div>
       </div>
       {#if $loggedinUser}
-        <h3>
-          {$loggedinUser.displayName}
-        </h3>
-        <p>{$loggedinUser.email}</p>
+        <li style:padding="0">
+          <h3 style:width="120px">
+            {$loggedinUser.displayName}
+          </h3>
+        </li>
+        <li style:padding="0">
+          <p style:width="120px">{$loggedinUser.email}</p>
+        </li>
       {:else}
-        <h3 class="user-name">
-          <span class="animation">maskman</span> 
+      <li style:padding="0">
+        <h3 class="user-name" style:width="120px">
+          <span class="animation">maskman</span>
         </h3>
-        <p class="user-email">
+      </li>
+      <li style:padding="0">
+        <p class="user-email" style:width="120px">
           <span class="animation">maskman@mail.com</span>
         </p>
+      </li>
       {/if}
     </div>
-    
+
     {#if $loggedinUser}
-      <li >
+      <li>
         <div class="content">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -219,10 +225,7 @@
           </div>
         </div>
       </li>
-      <li
-        class="theme"
-        on:click={toggleTheme}
-        >
+      <li class="theme" on:click={toggleTheme}>
         <div class="content">
           {#if $themeStore.theme === "light"}
             <svg
@@ -279,7 +282,7 @@
           {/if}
         </div>
       </li>
-      <li >
+      <li>
         <div class="content">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -349,25 +352,28 @@
 
 <style>
   span.menu-item {
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 0.8px;
-    /* color: red; */
   }
+
   h3.user-name {
     margin-bottom: 5px;
     margin-top: 10px;
   }
 
-  .user-name, .user-email {
+  h3,
+  p {
     text-align: center;
+    text-align: left;
+    letter-spacing: 0.8px;
+    font-size: 14px;
   }
-  
-  h3 span, p span {
+
+  h3 span,
+  p span {
     color: transparent;
     line-height: 0.7;
     border-radius: 4px;
-    /* letter-spacing: 0.8px;
-    border: 1px solid; */
   }
 
   .user-avatar {
@@ -391,7 +397,7 @@
     height: 24px;
     margin-right: 0;
     position: absolute;
-    right: 10px;
+    right: 30px;
     bottom: -10px;
   }
 
@@ -406,6 +412,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 120px;
+    /* border: 1px solid black; */
   }
 
   .main {
@@ -414,22 +422,17 @@
     justify-content: center;
   }
 
-  h3,
-  p {
-    text-align: center;
-    letter-spacing: 0.8px;
-    font-size: 14px;
-  }
-
   .user-profile .avatar-section {
     justify-content: center;
     align-items: center;
     margin-bottom: 15px;
     display: flex;
+    /* width: 120px; */
   }
 
   .user-profile {
     margin-bottom: 30px;
+    /* border: 1px solid yellowgreen; */
   }
 
   .title-wrapper {
@@ -442,7 +445,6 @@
     justify-content: space-between;
     width: 120px;
     cursor: pointer;
-    /* border: 1px solid; */
   }
 
   .top {
@@ -456,26 +458,22 @@
     width: 100px;
   }
 
-  ul {
-    min-width: 250px;
-    /* max-height: 90%; */
-    /* width: 100%; */
-    /* z-index: 200; */
-    /* height: 90vh; */
-    backdrop-filter: blur(20px);
-    border-radius: 8px;
-    margin: 5px;
-  }
-  
   li {
     list-style: none;
     display: flex;
     align-items: baseline;
-    justify-content: center;    
-    padding: 10px 20px;
+    justify-content: center;
+    padding: 5px 20px;
     margin: 0 10px;
     margin-bottom: 5px;
     border-radius: 8px;
     /* border: 1px solid red; */
+  }
+
+  ul {
+    min-width: 250px;
+    backdrop-filter: blur(20px);
+    border-radius: 8px;
+    margin: 5px;
   }
 </style>

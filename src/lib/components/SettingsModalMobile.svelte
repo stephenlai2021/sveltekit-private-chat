@@ -109,9 +109,7 @@
   on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
   style:width={$mobile ? "80%" : "100%"}
-  style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "white"}
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}
 >
   <div class="top">
     <svg
@@ -139,24 +137,58 @@
       <div class="avatar-section">
         <div class="image-wrapper">
           {#if $loggedinUser.photoURL}
-            <img src={$loggedinUser.photoURL} alt="" width="96" height="96" />
+            <img src={$loggedinUser.photoURL} alt="" width="80" height="80" />
+            <label>
+              <input
+                type="file"
+                on:change={handleFileChange}
+                accept="image/png, image/jpg, image/jpeg"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon icon-camera"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="32"
+                />
+                <circle
+                  cx="256"
+                  cy="272"
+                  r="80"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-miterlimit="10"
+                  stroke-width="32"
+                />
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="32"
+                  d="M124 158v-22h-24v22"
+                />
+              </svg>
+            </label>
           {:else}
-            <img src="/joke.png" alt="" width="96" height="96" />
+            <img src="/joke.png" alt="" width="80" height="80" />
           {/if}
-          <label>
-            <input
-              type="file"
-              on:change={handleFileChange}
-              accept="image/png, image/jpg, image/jpeg"
-            />
-            <ion-icon name="camera-outline" class="icon-camera" />
-          </label>
         </div>
       </div>
-      <h3>
-        {$loggedinUser.displayName}
-      </h3>
-      <p>{$loggedinUser.email}</p>
+      <li style:padding="0">
+        <h3 style:width="120px">
+          {$loggedinUser.displayName}
+        </h3>
+      </li>
+      <li style:padding="0">
+        <p style:width="120px">{$loggedinUser.email}</p>
+      </li>
     </div>
     <li>
       <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
@@ -191,10 +223,7 @@
         </div>
       </div>
     </li>
-    <li
-      class="theme"
-      on:click={toggleTheme}
-      >
+    <li class="theme" on:click={toggleTheme}>
       <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         {#if $themeStore.theme === "light"}
@@ -293,10 +322,8 @@
         </div>
       </div>
     </li>
-    <li
-      on:click={logout}      
-    >
-    <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
+    <li on:click={logout}>
+      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -324,8 +351,21 @@
 </ul>
 
 <style>
+  span.menu-item {
+    font-size: 13px;
+    letter-spacing: 0.8px;
+  }
+
   svg {
     margin-right: 20px;
+  }
+
+  h3,
+  p {
+    text-align: center;
+    text-align: left;
+    letter-spacing: 0.8px;
+    font-size: 14px;
   }
 
   label input {
@@ -335,11 +375,12 @@
   }
 
   .icon-camera {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
+    margin-right: 0;
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: 30px;
+    bottom: -10px;
   }
 
   .image-wrapper img {
@@ -349,21 +390,16 @@
 
   .image-wrapper {
     position: relative;
-  }
-
-  .main {
-    /* height: 80vh;
-    height: calc(100% - 200px); */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* margin-top: 10px; */
-    /* border: 1px solid; */
+    width: 120px;
   }
 
-  h3,
-  p {
-    text-align: center;
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .user-profile .avatar-section {
@@ -380,8 +416,6 @@
 
   .title-wrapper {
     width: 100%;
-    /* text-align: center; */
-    /* border: 1px solid red; */
   }
 
   .content {
@@ -390,7 +424,6 @@
     justify-content: space-between;
     width: 120px;
     cursor: pointer;
-    /* border: 1px solid yellow; */
   }
 
   .top {
@@ -411,25 +444,26 @@
   }
 
   li {
+    list-style: none;
     display: flex;
     align-items: baseline;
     justify-content: center;
-    padding: 10px 20px;
-    /* cursor: pointer; */
+    padding: 5px 20px;
     margin: 0 10px;
     margin-bottom: 5px;
-    list-style: none;
     border-radius: 8px;
     /* border: 1px solid; */
   }
 
   ul {
     position: absolute;
-    top: 0;
+    top: 0px;
+    bottom: 5px;
     left: 0;
     /* width: 250px; */
     width: 100%;
     z-index: 100;
-    height: 100vh;
+    height: calc(100vh - 10px);
+    border-radius: 8px;
   }
 </style>

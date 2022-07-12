@@ -286,14 +286,11 @@
         style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
         on:click={() => ($showMapModal = true)}
       >
-        <!-- <span>Show {JSON.parse($selectedUser)}'s location</span> -->
-        <!-- <span>Show location of {$currentSelectedUser.name}</span> -->
         <div class="content">
           <span>Show location</span>
         </div>
       </li>
     </ul>
-    <!-- <h4 class="title" on:click={() => $showMapModal = true}>顯示 {$page.params.userId} 的地理位置</h4> -->
   {/if}
 </div>
 
