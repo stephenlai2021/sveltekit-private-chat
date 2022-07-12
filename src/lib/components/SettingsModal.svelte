@@ -169,6 +169,7 @@
           {/if}
         </div>
       </div>
+
       {#if $loggedinUser}
         <li style:padding="0">
           <h3 style:width="120px">
@@ -179,16 +180,16 @@
           <p style:width="120px">{$loggedinUser.email}</p>
         </li>
       {:else}
-      <li style:padding="0">
-        <h3 class="user-name" style:width="120px">
-          <span class="animation">maskman</span>
-        </h3>
-      </li>
-      <li style:padding="0">
-        <p class="user-email" style:width="120px">
-          <span class="animation">maskman@mail.com</span>
-        </p>
-      </li>
+        <li style:padding="0">
+          <h3 class="user-name" style:width="120px">
+            <span class="animation">maskman</span>
+          </h3>
+        </li>
+        <li style:padding="0">
+          <p class="user-email" style:width="120px">
+            <span class="animation">maskman@mail.com</span>
+          </p>
+        </li>
       {/if}
     </div>
 
@@ -363,7 +364,6 @@
 
   h3,
   p {
-    text-align: center;
     text-align: left;
     letter-spacing: 0.8px;
     font-size: 14px;
@@ -404,7 +404,6 @@
   .image-wrapper img {
     border-radius: 8px;
     object-fit: contain;
-    /* border: 1px solid; */
   }
 
   .image-wrapper {
@@ -413,7 +412,6 @@
     flex-direction: column;
     justify-content: center;
     width: 120px;
-    /* border: 1px solid black; */
   }
 
   .main {
@@ -427,12 +425,10 @@
     align-items: center;
     margin-bottom: 15px;
     display: flex;
-    /* width: 120px; */
   }
 
   .user-profile {
     margin-bottom: 30px;
-    /* border: 1px solid yellowgreen; */
   }
 
   .title-wrapper {
@@ -467,7 +463,6 @@
     margin: 0 10px;
     margin-bottom: 5px;
     border-radius: 8px;
-    /* border: 1px solid red; */
   }
 
   ul {

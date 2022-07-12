@@ -25,6 +25,7 @@
         style:margin-right="5px"
         on:click|stopPropagation={() => ($showSettingsModalMobile = true)}
         >
+        <!-- on:click={() => console.log('hi, there !')} -->
         <path
           fill="none"
           stroke="currentColor"

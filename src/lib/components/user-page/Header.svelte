@@ -9,6 +9,7 @@
     mobile,
     widthLessthan1000,
     showToolModalMobile,
+    selectedUserReady,
   } from "$lib/store";
   import {
     doc,
@@ -29,7 +30,7 @@
 
   let q = null;
   let matched = false;
-  let selectedUserReady = false;
+  // let selectedUserReady = false;
   let selectedUser = {};
   let colRef = collection(db, "whatzapp_users");
 
@@ -44,7 +45,7 @@
       });
       selectedUser = tempUsers[0];
       $currentSelectedUser = tempUsers[0];
-      selectedUserReady = true;
+      $selectedUserReady = true;
       console.log("get selected user name | snapshot: ", selectedUser.name);
       return () => unsub();
     });
@@ -81,13 +82,14 @@
         </svg>
       </div>
     {/if}
-    {#if selectedUserReady}
+    {#if $selectedUserReady}
       <div class="user-info">
         <div class="image-wrapper">
           {#if selectedUser.avatar}
             <img src={selectedUser.avatar} alt="" />
           {:else}
-            <img src="/joke.png" alt="" />
+            <!-- <img src="/joke.png" alt="" /> -->
+            <div class="user-avatar animation" />
           {/if}
           <div
             class={selectedUser.isOnline ? "status online" : "status offline"}

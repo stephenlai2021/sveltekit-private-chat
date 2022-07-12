@@ -32,6 +32,7 @@
   <ContactList />
 
   {#if $showSettingsModalMobile && $widthLessthan1200}
+  <!-- {#if $showSettingsModalMobile} -->
     <SettingsModalMobile />
   {/if}
 
@@ -51,11 +52,23 @@
 <style>
   .chatlist {
     position: relative;
-    margin: 5px ;
-    margin-left: 0;
+    margin: 5px 5px 5px 0;
+    /* margin-left: 0; */
     border-radius: 8px;
   }
   
+  @media (max-width: 1200px) {
+    .chatlist {
+      margin-left: 5px;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .chatlist {
+      margin-left: 0px;
+    }
+  }
+
   @media (max-width: 800px) {
     .chatlist {
       margin: 0;
