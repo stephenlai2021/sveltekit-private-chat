@@ -19,28 +19,26 @@
   } from "$lib/store";
   import { page } from "$app/stores";
   import moment from "moment";
-  import { onMount } from "svelte";
+  import { onMount, beforeUpdate, afterUpdate } from "svelte";
   import { browser } from "$app/env";
 
+  let y
   let q = null;
+  let chat = null
+  let autoscroll = null
   let audio = null;
   let player = null;
   let messages = [];
   let matched = false;
   let isAudioPlayed = false;
   let playBtnClicked = false;
-  let selectedUserMsgsReady = false;
+  // let selectedUserMsgsReady = false;
 
   const showImagePreview = (pictureURL, imageURL) => {
-  // const showImagePreview = (imageURL) => {
     $showImagePreviewModal = true;    
     $storedImageURL = imageURL;
     $storedPictureURL = pictureURL;
   };
-  
-  // const showPicturePreview = pictureURL => {
-  //   $showImagePreviewModal = true;
-  // }
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
@@ -57,12 +55,14 @@
         msgs.push(doc.data());
       });
       messages = msgs;
+      chat.scrollTo(0, chat.scrollHeight)
       console.log("messages:", messages);
-      selectedUserMsgsReady = true;
       return () => unsubMsgs();
     });
     matched = false;
   }
+
+  // $: if (messages) chat.scrollTo(0, chat.scrollHeight)
 
   const playAudio = (audioURL) => {
     playBtnClicked = true;
@@ -77,24 +77,26 @@
     audio.pause();
   };
 
-  $: if (isAudioPlayed) {
-    console.log("audio is played");
-  }
+  $: if (isAudioPlayed) console.log("audio is played");
 
-  $: if (!isAudioPlayed) {
-    console.log("audio is paused");
-  }
+  $: if (!isAudioPlayed) console.log("audio is paused");
 
   onMount(() => {
     const audio = new Audio();
   });
+
+  beforeUpdate(() => {
+    autoscroll = chat && chat.offsetHeight + chat.scrollTop > chat.scrollHeight - 20;
+  })
+
+  afterUpdate(() => {
+    if (autoscroll) chat.scrollTo(0, chat.scrollHeight);
+  })
 </script>
 
-<!-- style:border-right={$themeStore.theme === "dark"
-      ? "2px solid #3A3F50"
-      : "2px solid rgba(235, 235, 235, .3)"} -->
 <div
   class="chatBox"
+  bind:this={chat}
   style:background={$themeStore.theme === "dark"
     ? "#292F3F"
     : "rgba(235, 235, 235, 0.1)"}
@@ -128,45 +130,11 @@
             class="showtime"
             style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"}
           >
-            <!-- style:text-align={msg.audioURL ? "center" : ""} -->
             {moment(msg.createdAt.toDate()).format("LT")}
           </span>
 
-          <!-- <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="ionicon icon-expand"
-            viewBox="0 0 512 512"
-            width="20"
-            height="20"
-            fill="currentColor"
-            style:position="absolute"
-            style:top={msg.pictureURL || msg.imageURL ? "22px" : ""}
-            style:left={(msg.pictureURL || msg.imageURL) &&
-            msg.from === $loggedinUser.displayName
-              ? "12px"
-              : ""}
-            style:right={(msg.pictureURL || msg.imageURL) &&
-            msg.from !== $loggedinUser.displayName
-              ? "12px"
-              : ""}
-            style:display={msg.pictureURL || msg.imageURL ? "block" : "none"}
-            on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
-              d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"
-            />
-          </svg> -->
-
           {#if msg.audioURL}
             <div class="audio-player" style:padding="3px 0">
-              <!-- <div class="btn-play" on:click={() => playAudio(msg.audioURL)}>
-                <span />
-              </div> -->
               <audio controls>
                 <source src={msg.audioURL} type="audio/wav" />
               </audio>
@@ -213,11 +181,10 @@
     display: flex;
     border-radius: 4px;
     padding: 3px 5px;
-    /* border: 1px solid; */
   }
 
   ::-webkit-scrollbar {
-    width: 0px;
+    width: 5px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -300,12 +267,9 @@
     top: 60px;
     bottom: 60px;
     width: 100%;
-    height: calc(100vh - 120px);
-    /* height: calc(100vh - 60px); */
-    /* height: 100vh; */
-
-    padding: 0px 15px 0px 15px;
-    overflow: hidden;
+    height: calc(100vh - 125px);
+    /* height: calc(100vh - 100px); */
+    padding: 0px 10px;
     overflow: auto;
     backdrop-filter: blur(20px);
     /* border: 1px solid; */

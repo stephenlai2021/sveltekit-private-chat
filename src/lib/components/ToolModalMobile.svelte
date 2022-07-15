@@ -73,10 +73,7 @@
   };
 </script>
 
-<div
-  class="tool-modal"
-  on:click|stopPropagation
->
+<div class="tool-modal" on:click|stopPropagation>
   <!-- style:display={$page.url.pathname != "/login" && $widthLessthan1000
     ? "none"
     : $page.url.pathname === "/login"
@@ -147,75 +144,17 @@
 
   {#if $selectedUserReady && $currentSelectedUser}
     <ul>
-      <li>
-        <div
-          class="option"
-          on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
-        >
-          <div class="content">
-            <div class="title-wrapper">
-              <span class="menu-item">Image gallery</span>
-            </div>
-            {#if !$showThemeMenu}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-                style:margin-left="26px"
-              >
-                <path
-                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-                />
-              </svg>
-            {:else}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-                style:margin-left="26px"
-              >
-                <path
-                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-                />
-              </svg>
-            {/if}
-          </div>
-        </div>
-        {#if $showThemeMenu}
-          <main>
-            {#each bgPics as bgPic}
-              <div
-                class="theme-item"
-                style:cursor="pointer"
-                on:click={() =>
-                  ($bgColor = `no-repeat center center url(${bgPic.url})`)}
-              >
-                <div
-                  class="theme-image"
-                  style:background-image={`url(${bgPic.url})`}
-                />
-              </div>
-            {/each}
-          </main>
-        {/if}
-      </li>
-      {#if !$disabled}
+      {#if $themeStore.theme === "light"}
         <li>
           <div
             class="option"
-            on:click={() => ($showGradientMenu = !$showGradientMenu)}
+            on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
           >
             <div class="content">
               <div class="title-wrapper">
-                <span class="menu-item">Gradient gallery</span>
+                <span class="menu-item">Image gallery</span>
               </div>
-              {#if !$showGradientMenu}
+              {#if !$showThemeMenu}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="ionicon"
@@ -223,7 +162,7 @@
                   width="15"
                   height="15"
                   fill="currentColor"
-                  style:margin-left="10px"
+                  style:margin-left="26px"
                 >
                   <path
                     d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
@@ -237,7 +176,7 @@
                   width="15"
                   height="15"
                   fill="currentColor"
-                  style:margin-left="10px"
+                  style:margin-left="26px"
                 >
                   <path
                     d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
@@ -246,58 +185,118 @@
               {/if}
             </div>
           </div>
-          {#if $showGradientMenu}
+          {#if $showThemeMenu}
             <main>
-              {#each themes as theme}
+              {#each bgPics as bgPic}
                 <div
                   class="theme-item"
                   style:cursor="pointer"
-                  on:click={() => setBgColor(theme.background)}
+                  on:click={() =>
+                    ($bgColor = `no-repeat center center url(${bgPic.url})`)}
                 >
                   <div
                     class="theme-image"
-                    style:background-image={theme.background}
+                    style:background-image={`url(${bgPic.url})`}
                   />
                 </div>
               {/each}
             </main>
           {/if}
         </li>
-        {#if !$isMobile}
+        {#if !$disabled}
+          <li>
+            <div
+              class="option"
+              on:click={() => ($showGradientMenu = !$showGradientMenu)}
+            >
+              <div class="content">
+                <div class="title-wrapper">
+                  <span class="menu-item">Gradient gallery</span>
+                </div>
+                {#if !$showGradientMenu}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="ionicon"
+                    viewBox="0 0 512 512"
+                    width="15"
+                    height="15"
+                    fill="currentColor"
+                    style:margin-left="10px"
+                  >
+                    <path
+                      d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                    />
+                  </svg>
+                {:else}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="ionicon"
+                    viewBox="0 0 512 512"
+                    width="15"
+                    height="15"
+                    fill="currentColor"
+                    style:margin-left="10px"
+                  >
+                    <path
+                      d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                    />
+                  </svg>
+                {/if}
+              </div>
+            </div>
+            {#if $showGradientMenu}
+              <main>
+                {#each themes as theme}
+                  <div
+                    class="theme-item"
+                    style:cursor="pointer"
+                    on:click={() => setBgColor(theme.background)}
+                  >
+                    <div
+                      class="theme-image"
+                      style:background-image={theme.background}
+                    />
+                  </div>
+                {/each}
+              </main>
+            {/if}
+          </li>
+          {#if !$isMobile}
+            <li>
+              <div class="content">
+                <label>
+                  <input
+                    type="file"
+                    on:change={handleFileChange}
+                    accept="image/png, image/jpg, image/jpeg"
+                  />
+                </label>
+                <div class="title-wrapper">
+                  <span class="menu-item">Select image</span>
+                </div>
+              </div>
+            </li>
+          {/if}
+
           <li>
             <div class="content">
               <label>
                 <input
-                  type="file"
-                  on:change={handleFileChange}
-                  accept="image/png, image/jpg, image/jpeg"
+                  type="color"
+                  bind:value={$bgColor}
+                  on:input|stopPropagation={() =>
+                    Cookies.set("bgColor", $bgColor)}
                 />
+                <!-- style:height="0"
+              style:width="0"
+              style:opacity="0" -->
               </label>
               <div class="title-wrapper">
-                <span class="menu-item">Select image</span>
+                <span class="menu-item">Select single color</span>
               </div>
             </div>
           </li>
         {/if}
-
-        <li>
-          <div class="content">
-            <label>
-              <input
-                type="color"
-                bind:value={$bgColor}
-                on:input|stopPropagation={() =>
-                  Cookies.set("bgColor", $bgColor)}
-              />
-              <!-- style:height="0"
-              style:width="0"
-              style:opacity="0" -->
-            </label>
-            <div class="title-wrapper">
-              <span class="menu-item">Select single color</span>
-            </div>
-          </div>
-        </li>
       {/if}
       <li on:click={() => ($showMapModal = true)}>
         <div class="content">
@@ -317,7 +316,7 @@
     margin-right: 5px;
     /* border: 1px solid; */
   }
-  
+
   .user-avatar {
     width: 80px;
     height: 80px;
