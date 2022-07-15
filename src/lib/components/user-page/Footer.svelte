@@ -247,7 +247,6 @@
       bind:value={$message}
       style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
     />
-    <!-- style:background={$themeStore.theme === "dark" ? "#1F232F" : "white"} -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="ionicon icon-submit"
@@ -255,6 +254,8 @@
       width="20"
       height="20"
       fill="currentColor"
+      style:color={$message ? "#FF4408" : "currentColor"}
+      style:cursor={$message ? "pointer" : "none"}
       on:click|preventDefault={handleSubmit}
     >
       <path
