@@ -32,7 +32,6 @@
   <ContactList />
 
   {#if $showSettingsModalMobile && $widthLessthan1200}
-  <!-- {#if $showSettingsModalMobile} -->
     <SettingsModalMobile />
   {/if}
 

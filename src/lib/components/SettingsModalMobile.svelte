@@ -460,10 +460,16 @@
     top: 0px;
     bottom: 5px;
     left: 0;
-    /* width: 250px; */
     width: 100%;
     z-index: 100;
     height: calc(100vh - 10px);
     border-radius: 8px;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 800px) {
+    ul {
+      height: 100vh;
+    }
   }
 </style>

@@ -89,12 +89,10 @@
 
     {#if $selectedUserReady && $currentSelectedUser}
       <li style:padding="0">
-        <h3 style:width="120px">
-          {$currentSelectedUser.name}
-        </h3>
+        <h3>{$currentSelectedUser.name}</h3>
       </li>
       <li style:padding="0">
-        <p style:width="120px">{$currentSelectedUser.email}</p>
+        <p>{$currentSelectedUser.email}</p>
       </li>
     {:else if $page.url.pathname === '/'}
       <span></span>
@@ -255,9 +253,6 @@
               bind:value={$bgColor}
               on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
               />
-              <!-- style:height="0"
-              style:width="0"
-              style:opacity="0" -->
           </label>
           <div class="title-wrapper">
             <span class="menu-item">Select single color</span>
@@ -307,8 +302,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 120px;
-    /* border: 1px solid black; */
+    width: 140px;
+    /* border: 1px solid; */
   }
 
   .image-wrapper img {
@@ -331,6 +326,8 @@
     text-align: left;
     letter-spacing: 0.8px;
     font-size: 14px;
+    width: 140px;
+    /* border: 1px solid; */
   }
 
   h3 span,
@@ -354,16 +351,9 @@
     /* border: 1px solid; */
   }
 
-  .title-wrapper {
-    /* width: 100%; */
-    /* border: 1px solid red; */
-  }
-
   .content {
     width: 140px;
     display: flex;
-    /* justify-content: flex-start; */
-    /* align-items: center; */
     /* border: 1px solid; */
   }
 
@@ -401,8 +391,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid;
-     */
+    /* border: 1px solid; */
   }
 
   ::-webkit-scrollbar {
@@ -414,20 +403,11 @@
   }
 
   .tool-modal {
-    /* position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 600; */
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
     min-width: 250px;
-    /* max-height: 90%; */
     margin: 5px;
     border-radius: 8px;
     overflow-y: auto;
     overflow-x: hidden;
     backdrop-filter: blur(20px);
-    /* border: 1px solid red; */
   }
 </style>

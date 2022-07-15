@@ -16,6 +16,7 @@
     showToolModalMobile,
     currentSelectedUser,
     widthLessthan1000,
+    selectedUserReady,
   } from "$lib/store";
   import Cookies from "js-cookie";
   import themes from "$lib/data/themes.json";
@@ -72,19 +73,17 @@
   };
 </script>
 
-<!-- style:width={$widthLessthan1000 ? "80%" : "100%"} -->
-<!-- style:left={$widthLessthan1000 ? "30%" : "0"} -->
-<!-- style:width={$widthLessthan1000 ? "80%" : "100%"} -->
 <div
   class="tool-modal"
   on:click|stopPropagation
-  transition:fly={{ right: 0, duration: 100, delay: 100 }}
-  style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "#ebebeb"}
 >
-  {#if $currentSelectedUser}
-    <div class="top">
+  <!-- style:display={$page.url.pathname != "/login" && $widthLessthan1000
+    ? "none"
+    : $page.url.pathname === "/login"
+    ? "none"
+    : "block"} -->
+  <div class="top">
+    {#if $selectedUserReady && $currentSelectedUser}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-back"
@@ -92,7 +91,7 @@
         width="24"
         height="24"
         fill="currentColor"
-        on:click|stopPropagation={() => $showToolModalMobile = false}
+        on:click|stopPropagation={() => ($showToolModalMobile = false)}
       >
         <path
           fill="none"
@@ -103,53 +102,60 @@
           d="M184 112l144 144-144 144"
         />
       </svg>
-    </div>
-    <div class="user-profile">
-      <div class="avatar-section">
-        <div class="image-wrapper">
-          {#if $currentSelectedUser.avatar}
-            <img
-              src={$currentSelectedUser.avatar}
-              alt=""
-              width="96"
-              height="96"
-            />
-          {:else}
-            <img src="/joke.png" alt="" width="96" height="96" />
-          {/if}
-        </div>
+    {/if}
+  </div>
+  <div class="user-profile">
+    <div class="avatar-section">
+      <div class="image-wrapper">
+        {#if $selectedUserReady && $currentSelectedUser}
+          <img
+            src={$currentSelectedUser.avatar}
+            alt=""
+            width="80"
+            height="80"
+          />
+        {:else if $page.url.pathname === "/"}
+          <span />
+        {:else}
+          <div class="user-avatar animation" />
+        {/if}
       </div>
-      <h3>
-        {$currentSelectedUser.name}
-      </h3>
-      <p>{$currentSelectedUser.email}</p>
     </div>
+
+    {#if $selectedUserReady && $currentSelectedUser}
+      <li style:padding="0">
+        <h3>{$currentSelectedUser.name}</h3>
+      </li>
+      <li style:padding="0">
+        <p>{$currentSelectedUser.email}</p>
+      </li>
+    {:else if $page.url.pathname === "/"}
+      <span />
+    {:else}
+      <li style:padding="0">
+        <h3 class="user-name" style:width="140px">
+          <span class="animation">maskman</span>
+        </h3>
+      </li>
+      <li style:padding="0">
+        <p class="user-email" style:width="140px">
+          <span class="animation">maskman@mail.com</span>
+        </p>
+      </li>
+    {/if}
+  </div>
+
+  {#if $selectedUserReady && $currentSelectedUser}
     <ul>
-      {#if !$isMobile}
-        <li
-          style:background={$themeStore.theme === "dark"
-            ? "#3A3F50"
-            : "white"}
-        >
-          <label>
-            <input
-              type="file"
-              on:change={handleFileChange}
-              accept="image/png, image/jpg, image/jpeg"
-            />
-            <span>Select image from file</span>
-          </label>
-        </li>
-      {/if}
-      <li
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
-      >
+      <li>
         <div
           class="option"
           on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
         >
           <div class="content">
-            <span class="content-title">Image gallery</span>
+            <div class="title-wrapper">
+              <span class="menu-item">Image gallery</span>
+            </div>
             {#if !$showThemeMenu}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +185,6 @@
                 />
               </svg>
             {/if}
-           
           </div>
         </div>
         {#if $showThemeMenu}
@@ -201,17 +206,15 @@
         {/if}
       </li>
       {#if !$disabled}
-        <li
-          style:background={$themeStore.theme === "dark"
-            ? "#3A3F50"
-            : "white"}
-        >
+        <li>
           <div
             class="option"
             on:click={() => ($showGradientMenu = !$showGradientMenu)}
           >
             <div class="content">
-              <span class="content-title">Gradient gallery</span>
+              <div class="title-wrapper">
+                <span class="menu-item">Gradient gallery</span>
+              </div>
               {#if !$showGradientMenu}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -241,7 +244,6 @@
                   />
                 </svg>
               {/if}
-              
             </div>
           </div>
           {#if $showGradientMenu}
@@ -261,33 +263,47 @@
             </main>
           {/if}
         </li>
-        <li
-          style:background={$themeStore.theme === "dark"
-            ? "#3A3F50"
-            : "white"}
-        >
-        <div class="content">
-          <label>
-            <input
-              type="color"
-              bind:value={$bgColor}
-              on:input|stopPropagation={() => Cookies.set("bgColor", $bgColor)}
-              style:height="0"
-              style:width="0"
-              style:opacity="0"
-            />
-            <span>Select single color</span>
-          </label>
+        {#if !$isMobile}
+          <li>
+            <div class="content">
+              <label>
+                <input
+                  type="file"
+                  on:change={handleFileChange}
+                  accept="image/png, image/jpg, image/jpeg"
+                />
+              </label>
+              <div class="title-wrapper">
+                <span class="menu-item">Select image</span>
+              </div>
+            </div>
+          </li>
+        {/if}
 
-        </div>
+        <li>
+          <div class="content">
+            <label>
+              <input
+                type="color"
+                bind:value={$bgColor}
+                on:input|stopPropagation={() =>
+                  Cookies.set("bgColor", $bgColor)}
+              />
+              <!-- style:height="0"
+              style:width="0"
+              style:opacity="0" -->
+            </label>
+            <div class="title-wrapper">
+              <span class="menu-item">Select single color</span>
+            </div>
+          </div>
         </li>
       {/if}
-      <li
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
-        on:click={() => ($showMapModal = true)}
-      >
+      <li on:click={() => ($showMapModal = true)}>
         <div class="content">
-          <span>Show location</span>
+          <div class="title-wrapper">
+            <span class="menu-item">Show location</span>
+          </div>
         </div>
       </li>
     </ul>
@@ -297,8 +313,20 @@
 <style>
   @import url("$lib/styles/theme-modal.css");
 
+  .icon-back {
+    margin-right: 5px;
+    /* border: 1px solid; */
+  }
+  
+  .user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+  }
+
   main {
     width: 100%;
+    /* border: 1px solid; */
   }
 
   .user-profile .avatar-section {
@@ -313,17 +341,49 @@
     margin-bottom: 30px;
   }
 
+  .image-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 140px;
+    /* border: 1px solid; */
+  }
+
   .image-wrapper img {
     border-radius: 8px;
+    object-fit: contain;
+  }
+
+  span.menu-item {
+    font-size: 13px;
+    letter-spacing: 0.8px;
+  }
+
+  h3.user-name {
+    margin-bottom: 5px;
+    margin-top: 10px;
   }
 
   h3,
   p {
-    text-align: center;
+    text-align: left;
+    letter-spacing: 0.8px;
+    font-size: 14px;
+    width: 140px;
+    /* border: 1px solid; */
+  }
+
+  h3 span,
+  p span {
+    color: transparent;
+    line-height: 0.7;
+    border-radius: 4px;
   }
 
   .theme-item {
     padding: 0;
+    /* border: 1px solid red; */
   }
 
   .top {
@@ -332,14 +392,12 @@
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 10px;
-    padding-right: 5px;
     /* border: 1px solid; */
   }
 
   .content {
     width: 140px;
     display: flex;
-    align-items: center;
     /* border: 1px solid; */
   }
 
@@ -350,7 +408,7 @@
   }
 
   label {
-    margin-left: -5px;
+    margin-left: 0px;
     cursor: pointer;
   }
 
@@ -377,6 +435,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* border: 1px solid; */
   }
 
   ::-webkit-scrollbar {
@@ -392,19 +451,12 @@
     top: 5px;
     bottom: 5px;
     right: 0;
-    /* width: 250px; */
-    /* min-width: 250px; */
     width: 80%;
-    /* height: 100vh; */
     border-radius: 8px;
-    z-index: 100;
+    z-index: 500;
     overflow-y: auto;
     overflow-x: hidden;
+    /* background: #ebebeb; */
+    background: white;
   }
-
-  /* @media (max-width: 1000px) {
-    .tool-modal {
-      display: none;
-    }
-  } */
 </style>
