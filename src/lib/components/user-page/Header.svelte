@@ -90,9 +90,7 @@
           {:else}
             <div class="user-avatar animation" />
           {/if}
-          <div
-            class={selectedUser.isOnline ? "status online" : "status offline"}
-          />
+          <div class={selectedUser.isOnline ? "status online" : "status offline"} />
         </div>
         <div class="details">
           <h4>{selectedUser.name}</h4>
@@ -214,7 +212,7 @@
 
   .details h4 {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 300;
     line-height: 1.2em;
   }
 

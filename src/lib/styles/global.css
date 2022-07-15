@@ -137,7 +137,7 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  /* border: 2px solid white; */
+  border: 2px solid white;
   width: 11px;
   height: 11px;
   border-radius: 50%;
