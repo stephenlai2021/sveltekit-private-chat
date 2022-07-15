@@ -6,15 +6,10 @@
   import moment from "moment";
 
   export let msg
-
-  let chatbox
-
-  $: if (msg) chatbox.scrollIntoView({ behavior: 'smooth' }) 
 </script>
 
 <div
   class="message"
-  bind:this={chatbox}
   class:my_message={msg.from === $loggedinUser.displayName}
   class:friend_message={msg.from != $loggedinUser.displayName}
 >
@@ -94,16 +89,98 @@
       <img
         src={msg.pictureURL}
         alt=""
-        on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
-      />
+        />
+        <!-- on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)} -->
     {/if}
 
     {#if msg.imageURL}
       <img
         src={msg.imageURL}
         alt=""
-        on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
-      />
-    {/if}
+        />
+        <!-- on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)} -->
+        {/if}
   </p>
 </div>
+
+<style>
+  img:hover {
+    cursor: pointer;
+  }
+
+  .audio-player {
+    display: flex;
+    border-radius: 4px;
+    padding: 3px 5px;
+  }
+
+  .message {
+    position: relative;
+    display: flex;
+    max-width: 800px;
+    margin: 10px auto;
+  }
+
+  .message-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message.friend_message p {
+    background: #f5f5f5;
+    justify-content: flex-start;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .message.my_message .showtime {
+    text-align: right;
+  }
+
+  .message.friend_message .showtime {
+    text-align: left;
+  }
+
+  .message.my_message {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .message p {
+    position: relative;
+    right: 0;
+    max-width: 65%;
+    border-radius: 8px;
+    background: var(--lemon-green);
+    color: var(--icon-add-color);
+  }
+
+  .message p .message-text {
+    width: 100%;
+    min-width: 40px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .message img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .showtime {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .icon-expand {
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 2px;
+  }
+
+</style>

@@ -1,171 +1,111 @@
 <script>
-  let player = null;
+  import { onMount } from "svelte";
+
+  export let audioURL;
+
+  let audio = null;
+  let duration = 0;
+  let isPlayed = false;
+
+  const playAudio = () => {
+    isPlayed = !isPlayed;
+    if (isPlayed) {
+      audio.play();
+      audio.addEventListener("ended", () => (isPlayed = false));
+    }
+    if (!isPlayed) audio.pause();
+  };
+
+  onMount(() => {
+    audio = new Audio(audioURL);
+    audio.addEventListener("loadeddata", () => {
+      audio.volume = 0.55;
+      console.log('audio volume: ', audio.volume)
+      duration = audio.duration
+      console.log("audio duration: ", duration);
+    });
+  });
 </script>
 
-<div class="player" bind:this={player}>
-  <div class="inner-wrapper">
-    <div class="progress-wrapper">
-      <progress value="0" max="100" />
-      <p class="time-stamp">01/10</p>
-    </div>
-    <div class="buttons">
-      <button class="play">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
-        >
-          <path
-            d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z"
-            fill="none"
-            stroke="currentColor"
-            stroke-miterlimit="10"
-            stroke-width="32"
-          />
-        </svg>
-      </button>
-
-      <button class="pause">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
-        >
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-            d="M176 96h16v320h-16zM320 96h16v320h-16z"
-          />
-        </svg>
-      </button>
-      <button class="stop">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
-        >
-          <rect
-            x="96"
-            y="96"
-            width="320"
-            height="320"
-            rx="24"
-            ry="24"
-            fill="none"
-            stroke="currentColor"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-        </svg>
-      </button>
+<div style="width: 50px; height: 50px;" />
+<div class="audio-player">
+  <div class="controls">
+    <div class="play-container">
+      <div
+        class="toggle-play {isPlayed ? 'pause' : 'play'}"
+        on:click={playAudio}
+      />
     </div>
   </div>
-  <input type="range" class="volume" />
 </div>
 
 <style>
-  /* @import url("$lib/styles/audio-player.css"); */
+  .audio-player {
+    height: 100px;
+    width: 100px;
+    background-image: url("/radio.png");
+    background-size: cover;
+    /* border-radius: 50%; */
+    font-family: arial;
+    font-size: 0.75em;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 6px auto;
+  }
 
-  .player {
-    position: relative;
-    width: 100%;
-    width: 180px;
-    height: 70px;
-    margin: auto;
-    background: rgb(2, 0, 36);
-    background: #272A35;
+  .controls {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    padding: 0 0px 0 20px;
-    box-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
+    height: 100px;
   }
 
-  .buttons {
-    box-sizing: border-box;
-    padding-top: 5px;
+  .controls .play-container {
+    display: flex;
   }
-
-  button {
-    border: none;
-    background: none;
-    margin: 5px;
-    color: #fff;
+  
+  .toggle-play.play {
     cursor: pointer;
-    outline: none;
-    transition: 0.5s;
+    position: relative;
+    top: 20px;
+    left: 5px;
+    height: 0;
+    width: 0;
+    border: 7px solid #0000;
+    border-left: 13px solid white;
+  }
+  
+  .toggle-play.play:hover {
+    transform: scale(1.1);
+  }
+  
+  .toggle-play.pause {
+    height: 15px;
+    width: 20px;
+    cursor: pointer;
     position: relative;
   }
 
-  button:hover {
-    border: 1px solid #fff;
-    color: #04c2fc;
-  }
-
-  .now {
-    margin-bottom: 5px;
-    color: #fff;
-    font-size: 1.1rem;
-  }
-
-  .progress-wrapper {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  progress {
-    width: 60%;
-  }
-
-  .progress-wrapper .time-stamp {
-    font-size: 12px;
-    color: white;
-    color: red;
-  }
-
-  .volume {
+  .toggle-play.pause:before {
     position: absolute;
-    left: 0px;
-    width: 25%;
-    transform: rotate(-90deg);
-    -webkit-appearance: none;
+    top: 20px;
+    left: 5px;
+    background: white;
+    content: "";
+    height: 15px;
+    width: 3px;
   }
 
-  .volume:focus {
-    outline: none;
+  .toggle-play.pause:after {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    background: white;
+    content: "";
+    height: 15px;
+    width: 3px;
   }
 
-  .volume::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 10px;
-    cursor: pointer;
-    background: #010b61;
-  }
-
-  .volume::-webkit-slider-thumb {
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    background: #ffa8ff;
-    cursor: pointer;
-    -webkit-appearance: none;
-  }
-
-  .volume:focus::-webkit-slider-runnable-track {
-    background: #1069b8;
-  }
+  .toggle-play.pause:hover {
+    transform: scale(1.1);
+  } 
 </style>

@@ -21,6 +21,7 @@
   import moment from "moment";
   import { onMount, beforeUpdate, afterUpdate } from "svelte";
   import { browser } from "$app/env";
+  import AudioPlayer from "$lib/components/AudioPlayer.svelte"
 
   let y
   let q = null;
@@ -135,9 +136,10 @@
 
           {#if msg.audioURL}
             <div class="audio-player" style:padding="3px 0">
-              <audio controls>
+              <!-- <audio controls>
                 <source src={msg.audioURL} type="audio/wav" />
-              </audio>
+              </audio> -->
+              <AudioPlayer audioURL={msg.audioURL} />
             </div>
           {/if}
 
