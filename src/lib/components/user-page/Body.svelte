@@ -188,21 +188,24 @@
     position: relative;
     display: flex;
     max-width: 800px;
-    margin: 10px auto;
+    margin: 25px auto;
     /* border: 1px solid; */
   }
 
   .message.my_message .showtime {
     position: absolute;
-    left: -55px;
-    bottom: 0;
+    /* left: -55px; */
+    right: 0;
+    bottom: -15px;
+    width: 55px;
     text-align: right;
   }
 
   .message.friend_message .showtime {
     position: absolute;
-    right: -55px;
-    bottom: 0;
+    left: 0;
+    bottom: -15px;
+    width: 55px;
     text-align: left;
   }
 
@@ -226,6 +229,7 @@
   .message-content {
     position: relative;
     max-width: 65%;
+    /* min-width: 20px; */
     border-radius: 8px;
     background: var(--lemon-green);
     color: var(--icon-add-color);   
@@ -234,7 +238,7 @@
 
   .message-content .message-text {
     /* width: 100%; */
-    min-width: 10px;
+    /* min-width: 10px; */
     font-size: 18px;
     font-weight: 400;
     /* border: 1px solid; */
@@ -250,6 +254,8 @@
   .showtime {
     font-size: 12px;
     font-weight: 400;
+    /* border: 1px solid; */
+    /* margin-bottom: 10px; */
   }
 
   .icon-expand {
