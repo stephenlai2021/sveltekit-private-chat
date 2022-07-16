@@ -109,8 +109,12 @@
         class:my_message={msg.from === $loggedinUser.displayName}
         class:friend_message={msg.from != $loggedinUser.displayName}
       >
-        <p
-          class="message-content"
+      <p
+        class="message-content"
+        style:padding={msg.pictureURL || msg.imageURL || msg.audioURL
+          ? "0px"
+          : "6px 10px 6px 10px"}
+         
           style:background={msg.pictureURL || msg.imageURL || msg.audioURL
             ? "none"
             : msg.from === $loggedinUser.displayName &&
@@ -123,9 +127,6 @@
               $themeStore.theme === "dark"
             ? "linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)"
             : "white"}
-          style:padding={msg.pictureURL || msg.imageURL || msg.audioURL
-            ? "0"
-            : "8px 12px 6px 12px"}
         >
           <span
             class="showtime"
@@ -135,12 +136,7 @@
           </span>
 
           {#if msg.audioURL}
-            <div class="audio-player" style:padding="3px 0">
-              <!-- <audio controls>
-                <source src={msg.audioURL} type="audio/wav" />
-              </audio> -->
-              <AudioPlayer audioURL={msg.audioURL} />
-            </div>
+            <AudioPlayer audioURL={msg.audioURL} />
           {/if}
 
           {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
@@ -179,18 +175,13 @@
     cursor: pointer;
   }
 
-  .audio-player {
-    display: flex;
-    border-radius: 4px;
-    padding: 3px 5px;
-  }
-
   ::-webkit-scrollbar {
     width: 5px;
   }
 
   ::-webkit-scrollbar-thumb {
     background: inherit;
+    background: rgb(216, 216, 216);
   }
 
   .message {
@@ -198,54 +189,60 @@
     display: flex;
     max-width: 800px;
     margin: 10px auto;
-  }
-
-  .message-content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .message.friend_message p {
-    background: #f5f5f5;
-    justify-content: flex-start;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    /* border: 1px solid; */
   }
 
   .message.my_message .showtime {
+    position: absolute;
+    left: -55px;
+    bottom: 0;
     text-align: right;
   }
 
   .message.friend_message .showtime {
+    position: absolute;
+    right: -55px;
+    bottom: 0;
     text-align: left;
   }
 
   .message.my_message {
     justify-content: flex-end;
     text-align: right;
+    position: relative;
+    /* border: 1px solid red; */
   }
 
-  .message p {
+  .message.friend_message .message-content {
+    background: #f5f5f5;
+    justify-content: flex-start;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    /* border: 1px solid; */
+  }
+
+  .message-content {
     position: relative;
-    right: 0;
     max-width: 65%;
     border-radius: 8px;
     background: var(--lemon-green);
-    color: var(--icon-add-color);
+    color: var(--icon-add-color);   
+    /* border: 1px solid red; */
   }
 
-  .message p .message-text {
-    width: 100%;
-    min-width: 40px;
+  .message-content .message-text {
+    /* width: 100%; */
+    min-width: 10px;
     font-size: 18px;
     font-weight: 400;
+    /* border: 1px solid; */
   }
 
   .message img {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 200px;
+    max-height: 200px;
     object-fit: cover;
     border-radius: 10px;
   }
@@ -270,11 +267,9 @@
     bottom: 60px;
     width: 100%;
     height: calc(100vh - 120px);
-    /* height: calc(100vh - 100px); */
     padding: 0px 10px;
     overflow: auto;
     backdrop-filter: blur(20px);
-    /* border: 1px solid; */
   }
 
   @media (max-width: 800px) {
