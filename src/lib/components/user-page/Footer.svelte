@@ -324,8 +324,9 @@
   .chatbox_input input {
     width: 100%;
     height: 100%;
-    padding: 5px 20px;
+    /* padding: 0px 40px; */
     padding-left: 40px;
+    padding-right: 35px;
     border: none;
     outline: none;
     font-size: 1em;

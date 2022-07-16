@@ -143,7 +143,7 @@
   $: if (browser) document.title = `Chat with ${$selectedUsername}`
 </script>
 
-<div class="user-page">
+<div>
   <Header />
   <Body />
   <Footer />
@@ -153,13 +153,6 @@
   {/if}  
 
   {#if $showToolModalMobile && $widthLessthan1000}
-  <!-- {#if $showToolModalMobile} -->
     <ToolModalMobile />
   {/if}
 </div>
-
-<style>
-  .user-page {
-    /* position: relative; */
-  }
-</style>

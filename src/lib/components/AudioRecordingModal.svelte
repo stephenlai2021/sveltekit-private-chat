@@ -207,12 +207,13 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 1000px;
+    /* left: 50%; */
+    left: 0;
+    /* transform: translateX(-50%); */
+    width: 100vw;
+    max-width: 1920px;
     height: 100vh;
     z-index: 400;
     background: rgba(255, 255, 255, 0.5);

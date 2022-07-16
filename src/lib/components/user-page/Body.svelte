@@ -194,16 +194,16 @@
 
   .message.my_message .showtime {
     position: absolute;
-    right: 0;
-    bottom: -15px;
+    left: -60px;
+    bottom: 0px;
     width: 55px;
     text-align: right;
   }
 
   .message.friend_message .showtime {
     position: absolute;
-    left: 0;
-    bottom: -15px;
+    right: -60px;
+    bottom: 0px;
     width: 55px;
     text-align: left;
   }
@@ -212,28 +212,31 @@
     justify-content: flex-end;
     text-align: left;
     position: relative;
-    /* border: 1px solid red; */
+    /* border: 1px solid red; */    
   }
-
+  
   .message.friend_message .message-content {
     background: #f5f5f5;
     justify-content: flex-start;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 0px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     /* border: 1px solid; */
   }
-
+  
   .message-content {
     position: relative;
     max-width: 65%;
     /* min-width: 20px; */
-    border-radius: 8px;
+    border-radius: 10px;
+    border-bottom-right-radius: 0px;    
     background: var(--lemon-green);
     color: var(--icon-add-color);   
     /* border: 1px solid red; */
   }
+
+
 
   .message-content .message-text {
     font-size: 18px;
