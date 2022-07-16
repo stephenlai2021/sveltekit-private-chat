@@ -194,7 +194,6 @@
 
   .message.my_message .showtime {
     position: absolute;
-    /* left: -55px; */
     right: 0;
     bottom: -15px;
     width: 55px;
@@ -211,7 +210,7 @@
 
   .message.my_message {
     justify-content: flex-end;
-    text-align: right;
+    text-align: left;
     position: relative;
     /* border: 1px solid red; */
   }
@@ -237,10 +236,10 @@
   }
 
   .message-content .message-text {
-    /* width: 100%; */
-    /* min-width: 10px; */
     font-size: 18px;
     font-weight: 400;
+    word-wrap: break-word;
+    /* max-width: 60%; */
     /* border: 1px solid; */
   }
 
@@ -254,8 +253,6 @@
   .showtime {
     font-size: 12px;
     font-weight: 400;
-    /* border: 1px solid; */
-    /* margin-bottom: 10px; */
   }
 
   .icon-expand {
@@ -274,7 +271,8 @@
     width: 100%;
     height: calc(100vh - 120px);
     padding: 0px 10px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     backdrop-filter: blur(20px);
   }
 
