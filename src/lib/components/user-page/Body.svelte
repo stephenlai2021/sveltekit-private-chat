@@ -278,7 +278,7 @@
     backdrop-filter: blur(20px);
   }
 
-  @media (max-width: 800px) {
+  /* @media (max-width: 800px) {
     .chatBox {
       padding-right: 5px;
     }
@@ -288,5 +288,5 @@
     .message {
       margin-right: 10px;
     }
-  }
+  } */
 </style>
