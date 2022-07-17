@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { audioFile } from "$lib/store";
-  import themeStore from "svelte-themes"
+  import themeStore from "svelte-themes";
 
   let active = false;
   let second = 0;
@@ -25,7 +25,7 @@
     try {
       mediaStream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
       measureMicVolume();
-      recordVoice()
+      recordVoice();
     } catch (err) {
       console.log(err.message);
     }
@@ -86,29 +86,57 @@
   });
 
   $: if (second === 10) {
+    // sceond = 0
     zero = "";
-    setTimeout(() => {
-      stopRecording();
-    }, 1000);
+    stopRecording();
+    // setTimeout(() => {
+    //   stopRecording();
+    // }, 1000);
   }
 </script>
 
-<div 
-  class="audio-modal" 
+<div
+  class="audio-modal"
   style:background={$themeStore.theme === "dark" ? "black" : "#ebebeb"}
 >
   <div class="audio-wrapper" on:click={stopRecording}>
     <div class="circle" class:active>
-      <ion-icon name="mic-outline" class="icon-mic" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-mic"
+        viewBox="0 0 512 512"
+        width="44"
+        height="44"
+        fill="currentColor"
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+          d="M192 448h128M384 208v32c0 70.4-57.6 128-128 128h0c-70.4 0-128-57.6-128-128v-32M256 368v80"
+        />
+        <path
+          d="M256 64a63.68 63.68 0 00-64 64v111c0 35.2 29 65 64 65s64-29 64-65V128c0-36-28-64-64-64z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+      </svg>
     </div>
   </div>
+
   <meter
     class="volume-meter"
     bind:this={volumeMeter}
     high="0.25"
     max="1"
     value="0.0045595006073966"
-    />
+  />  
+
   <div class="timer-wrapper">
     <span class="timer">{zero}{second}</span>
   </div>
@@ -119,18 +147,20 @@
     appearance: auto;
     width: 200px;
     height: 50px;
-    margin: 30px 0 20px 0;
+    margin: 20px 0 10px 0;
   }
 
   .timer-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
+    /* border: 1px solid; */
+    /* margin-top: 20px; */
   }
 
   .timer {
     color: #b2b1b1;
-    font-size: 3.5em;
+    font-size: 3em;
   }
 
   .circle.active::before {
