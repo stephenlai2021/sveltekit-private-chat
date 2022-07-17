@@ -222,7 +222,7 @@
             />
           </svg>
           <div class="title-wrapper">
-            <span class="menu-item">CHN / EN</span>
+            <span class="menu-item">Language</span>
           </div>
         </div>
       </li>
@@ -353,7 +353,7 @@
 
 <style>
   span.menu-item {
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 0.8px;
   }
 
@@ -366,7 +366,7 @@
   p {
     text-align: left;
     letter-spacing: 0.8px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   h3 span,

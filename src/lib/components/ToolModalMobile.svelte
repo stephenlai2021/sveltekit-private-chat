@@ -355,7 +355,7 @@
   }
 
   span.menu-item {
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 0.8px;
   }
 
@@ -368,7 +368,7 @@
   p {
     text-align: left;
     letter-spacing: 0.8px;
-    font-size: 14px;
+    font-size: 16px;
     width: 140px;
     /* border: 1px solid; */
   }
@@ -457,5 +457,12 @@
     overflow-x: hidden;
     /* background: #ebebeb; */
     background: white;
+  }
+
+  @media (max-width: 800px) {
+    .tool-modal {
+      top: 0px;
+      bottom: 0px;
+    }
   }
 </style>

@@ -352,7 +352,7 @@
 
 <style>
   span.menu-item {
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 0.8px;
   }
 
@@ -365,7 +365,7 @@
     text-align: center;
     text-align: left;
     letter-spacing: 0.8px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   label input {
