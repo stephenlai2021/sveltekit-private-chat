@@ -447,8 +447,8 @@
 
   .tool-modal {
     position: absolute;
-    top: 5px;
-    bottom: 5px;
+    top: 10px;
+    bottom: 10px;
     right: 0;
     width: 80%;
     border-radius: 8px;

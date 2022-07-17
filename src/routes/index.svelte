@@ -63,8 +63,8 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(20px);
-    height: calc(100vh - 10px);
+    height: calc(100vh - 20px);
     border-radius: 8px;
-    margin: 5px 0;
+    margin: 10px 0;
   }
 </style>

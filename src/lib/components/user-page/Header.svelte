@@ -167,20 +167,19 @@
 <style>
   .header {
     position: absolute;
-    top: 5px;
+    margin-top: 10px;
     left: 50%;
     transform: translateX(-50%);
     height: 60px;
     display: flex;
     align-items: center;
     max-width: 800px;
-    /* margin: auto; */
     padding-right: 0px;
     padding: 15px 10px 15px 10px;
     backdrop-filter: blur(20px);
-    margin-top: 5px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    /* border-top-left-radius: 8px;
+    border-top-right-radius: 8px; */
+    border-radius: 8px;
   }
 
   .left-part {
@@ -251,6 +250,7 @@
     .header {
       margin-top: 0px;
       border-radius: 0px;
+      /* top: 0px; */
     }
 
     .icon-arrow-back {

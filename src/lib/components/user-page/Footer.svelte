@@ -316,8 +316,9 @@
     align-items: center;
     padding-left: 15px;
     backdrop-filter: blur(20px);
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    /* border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px; */
+    border-radius: 8px;
     /* border: 1px solid; */
   }
 
