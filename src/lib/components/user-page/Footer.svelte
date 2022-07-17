@@ -306,7 +306,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 5px;
+    bottom: 10px;
     width: 100%;
     max-width: 800px;
     margin: auto;

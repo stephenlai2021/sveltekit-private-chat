@@ -167,6 +167,7 @@
 <style>
   .header {
     position: absolute;
+    top: 5px;
     left: 50%;
     transform: translateX(-50%);
     height: 60px;

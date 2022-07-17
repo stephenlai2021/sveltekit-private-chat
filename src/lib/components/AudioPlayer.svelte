@@ -20,9 +20,6 @@
     audio = new Audio(audioURL);
     audio.addEventListener("loadeddata", () => {
       audio.volume = 0.55;
-      console.log('audio volume: ', audio.volume)
-      duration = audio.duration
-      console.log("audio duration: ", duration);
     });
   });
 </script>

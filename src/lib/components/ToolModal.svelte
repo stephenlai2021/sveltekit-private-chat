@@ -409,6 +409,7 @@
   .tool-modal {
     min-width: 250px;
     margin: 5px;
+    margin: 10px;
     border-radius: 8px;
     overflow-y: auto;
     overflow-x: hidden;

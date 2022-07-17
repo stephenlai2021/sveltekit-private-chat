@@ -168,7 +168,7 @@
   }
 
   .chatlist {
-    height: calc(100vh - 177px);
+    height: calc(100vh - 187px);
     overflow: auto;
   } 
   

@@ -52,6 +52,7 @@
   .chatlist {
     position: relative;
     margin: 5px 5px 5px 0;
+    margin: 10px 10px 10px 0px;
     /* margin-left: 0; */
     border-radius: 8px;
   }
