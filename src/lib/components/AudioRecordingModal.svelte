@@ -85,7 +85,7 @@
     handleRecording();
   });
 
-  $: if (second === 9) {
+  $: if (second === 10) {
     // sceond = 0
     zero = "";
     // stopRecording();

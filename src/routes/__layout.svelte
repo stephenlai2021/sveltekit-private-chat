@@ -132,9 +132,10 @@
   class="wrapper"
   on:click={closeModal}
 >
+<!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
   <div
     class="inner-wrapper"
-    style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor}
+    style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}
     style:display={$page.url.pathname === '/login' ? 'block' : 'flex'}
   >
     <SettingsModal />
