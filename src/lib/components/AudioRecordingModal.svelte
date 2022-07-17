@@ -85,13 +85,13 @@
     handleRecording();
   });
 
-  $: if (second === 10) {
+  $: if (second === 9) {
     // sceond = 0
     zero = "";
-    stopRecording();
-    // setTimeout(() => {
-    //   stopRecording();
-    // }, 1000);
+    // stopRecording();
+    setTimeout(() => {
+      stopRecording();
+    }, 1000);
   }
 </script>
 

@@ -98,7 +98,7 @@
 <style>
   audio {
     border-radius: 20px;
-    border: 1px solid #FF4408;
+    /* border: 1px solid #FF4408; */
   }
 
   span {
