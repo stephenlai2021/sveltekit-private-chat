@@ -59,16 +59,19 @@
       users = tempUsers;
       $allUsers = tempUsers;
       console.log("initialzie user list | snapshot", users);
-      unsubUsers
+      // unsubUsers
     });
+    return unsubUsers
     // return unsubUsers
   }
 
   $: if ($loggedinUser && $loginUserEmail) {
-    // ready = true;
+    ready = true;
     console.log("user is ready");
     console.log("user", $loggedinUser);
     getUsers()
+
+    ready = false
   }
 
   // $: if (ready) {
@@ -92,7 +95,7 @@
   //   console.log('hi, there !')
   // }
 
-  // $: if (ready === false)  unsubUsers;
+  $: if (ready === false)  unsubUsers;
 
   $: filteredUsers = users.filter((usesr) => {
     return (
