@@ -240,8 +240,8 @@
 
 
   .message-content .message-text {
-    font-size: 18px;
-    font-weight: 400;
+    /* font-size: 18px;
+    font-weight: 400; */
     word-wrap: break-word;
     /* max-width: 60%; */
     /* border: 1px solid; */
