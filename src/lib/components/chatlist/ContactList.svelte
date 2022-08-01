@@ -71,9 +71,9 @@
       $allUsers = tempUsers;
       console.log("initialzie user list | snapshot", users);
       // return () => unsubUsers()
-      unsubUsers
+      ready = false;
     });
-    ready = false;
+    unsubUsers
     console.log('hi, there !')
   }
 
