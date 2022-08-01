@@ -75,7 +75,9 @@
       console.log("initialzie user list | snapshot", users);
     });
     // ready = false
-    unsubUsers
+
+    // stop listening to changes
+    unsubUsers()
   }
 
   // $: if (ready) {
