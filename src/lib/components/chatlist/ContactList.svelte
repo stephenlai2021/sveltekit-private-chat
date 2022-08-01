@@ -75,7 +75,7 @@
       console.log("initialzie user list | snapshot", users);
 
       // stop listening to changes
-      // return () => unsubUsers
+      unsubUsers
       ready = false
     });
   }
