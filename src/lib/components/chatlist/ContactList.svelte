@@ -56,9 +56,9 @@
   }
   
   $: if (ready) {
-    let colRef = collection(db, "whatzapp_users");
+    let usersRef = collection(db, "whatzapp_users");
     const q = query(
-      colRef,
+      usersRef,
       where("contactList", "array-contains", $loginUserEmail)
     );
 
@@ -71,18 +71,20 @@
       users = tempUsers;
       $allUsers = tempUsers;
       console.log("initialzie user list | snapshot", users);
-
       
       // stop listen to change once
       // return () => unsubUsers
       // return unsubUsers
       unsubUsers
-      ready = false;
     });
+    ready = false;
   }
 
   // stop listen to change twice
-  $: if (!ready) () => unsubUsers
+  $: if (!ready) {
+    () => unsubUsers
+    // unsubUsers
+  }
 
   $: filteredUsers = users.filter((usesr) => {
     return (
