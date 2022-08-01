@@ -15,12 +15,12 @@
     signInWithEmailAndPassword,
   } from "firebase/auth";
   import { auth, db } from "$lib/firebase/client";
-  import { fly } from "svelte/transition";
+  import { fly, fade } from "svelte/transition";
   import { loginWithGoogle } from "$lib/functions/auth/google";
   import { bgColor, userList } from "$lib/store";
   import { updateProfile } from "firebase/auth";
-  //   import { profileUpdate, userDocCreated } from "$lib/store";
   import { loginState, loggedinUser, loginUserEmail } from "$lib/store";
+  // import themeStore from 'svelte-themes'
 
   let users = [];
   let name = "";
@@ -28,9 +28,10 @@
   let password = "";
   let error = null;
   let signup = false;
+  let isLogin = false;
   let result = null;
   let userRef = null;
-  let errorMsg = null;
+  let errorMsg = "";
   let warningMsg = null;
   let emailErrMsg = null;
   let passwordErrMsg = null;
@@ -51,7 +52,7 @@
       unread: true
     }
   */
- 
+
   /*
     firebase auth error
     signup
@@ -65,7 +66,7 @@
 
   const checkUsername = async () => {
     if (signup) {
-      console.log('user name: ', name)
+      console.log("user name: ", name);
       const q = query(colRef, where("name", "==", name));
       const unsub = onSnapshot(q, async (snapshot) => {
         let tempUsers = [];
@@ -76,16 +77,16 @@
         console.log("get user list", users);
 
         if (users.length === 0) {
-          users = []
-          console.log(`${name} is available 😀`)
-          handleSignup()
+          users = [];
+          console.log(`${name} is available 😀`);
+          handleSignup();
         }
         if (users.length != 0) {
           console.log(`${name} is already in use 😆`);
           warningMsg = "This name is already in use 😆";
-          users = []
+          users = [];
           return;
-        } 
+        }
         return () => unsub();
       });
     }
@@ -160,27 +161,35 @@
   };
 
   const handleLogin = async () => {
+    isLogin = true;
     try {
       result = await signInWithEmailAndPassword(auth, email, password);
       console.log(`${result.user.email} signed in successfully 😙`);
       $loginState = true;
       // $loggedinUser = result.user
       $loginUserEmail = result.user.email;
-      console.log('loggedin user email: ', $loginUserEmail)
+      console.log("loggedin user email: ", $loginUserEmail);
 
       userRef = doc(db, "whatzapp_users", result.user.email);
       await updateDoc(userRef, {
         isOnline: true,
       });
       console.log(`update ${result.user.email}'s status -> 🟢`);
+      isLogin = false
     } catch (err) {
       console.log(`error code: `, err.code);
       console.log(`error message: `, err.message);
       errorMsg = err.code;
-    } 
+      isLogin = false
+    }
   };
 
-  const clearUsername = () => warningMsg = null;
+  const handleLoginSignup = () => {
+    if (signup) handleSignup();
+    if (!signup) handleLogin();
+  };
+
+  const clearUsername = () => (warningMsg = null);
 
   $: if (errorMsg) {
     if (
@@ -196,91 +205,190 @@
   $: console.log(signup ? "You are in signup page" : "You are in login page");
 </script>
 
+<!-- <section transition:fade> -->
 <section>
-  <div class="imgBx">
-    <img src="/login-bg.jpg" alt="" />
-  </div>
-  <div class="contentBx">
-    <div class="formBx">
-      <h2>
-        {signup ? "signup" : "login"}
-      </h2>
+  {#if !isLogin}
+    <div class="main">
+      <div class="logo-wrapper">
+        <img
+          src="https://www.hosteurope.de/blog/wp-content/uploads/2020/11/abbildung_-_das-offizielle-svelte-logo.jpg"
+          alt=""
+          class="logo"
+        />
+      </div>
+
       <form on:submit|preventDefault={checkUsername}>
-        {#if signup}
-          <div class="inputBx">
-            <span>Username</span>
+        <div class="top">
+          <div class="btn btn-login" on:click={() => (signup = false)}>
+            Login
+          </div>
+          <div class="btn btn-signup" on:click={() => (signup = true)}>
+            Signup
+          </div>
+        </div>
+        <div class="body">
+          {#if signup}
             <input
               type="text"
-              bind:value={name}
-              on:input={clearUsername}
+              class="user-name"
+              placeholder="name"
               required
+              bind:value={name}
             />
-            {#if warningMsg}
-              <p class="error-msg" style:color="red">{warningMsg}</p>
-            {/if}
-          </div>
-        {/if}
-        <div class="inputBx">
-          <span>Email</span>
+          {/if}
           <input
             type="email"
-            bind:value={email}
-            on:input={() => (emailErrMsg = null)}
+            class="user-email"
+            placeholder="email"
             required
+            bind:value={email}
           />
-          {#if errorMsg && emailErrMsg}
-            <p class="error-msg" style:color="red">{emailErrMsg}</p>
-          {/if}
-        </div>
-        <div class="inputBx">
-          <span>Password</span>
           <input
             type="password"
-            bind:value={password}
-            on:input={() => (passwordErrMsg = null)}
+            class="user-password"
+            placeholder="password"
             required
+            bind:value={password}
           />
-          {#if passwordErrMsg}
-            <p class="error-msg" style:color="red">{passwordErrMsg}</p>
-          {/if}
         </div>
-        <div class="remember">
-          <label>
-            <input type="checkbox" />Remember me
-          </label>
+        <div class="btn-action" on:click={handleLoginSignup}>
+          {signup ? "signup" : "login"}
         </div>
-        <div class="inputBx btn-submit">
-          <input type="submit" value={signup ? "Sign up" : "Login in"} />
-        </div>
-        <div class="inputBx">
-          <p>
-            Don't have an account?
-            <span
-              class="toggle"
-              on:click={() => (signup = !signup)}
-              style:color={$bgColor}
-            >
-              {signup ? "Login" : "Sign up"}
-            </span>
-          </p>
+        <div class="btn-facebook">
+          <img
+            class="icon-facebook"
+            src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Facebook_icon_2013.svg"
+            alt=""
+          />
+          <p>Login with Facebook</p>
         </div>
       </form>
-      <h3 class:mt={!signup}>Login with social media</h3>
-      <ul class="sci">
-        <li on:click={loginWithGoogle}>
-          <img src="/google.png" alt="" />
-        </li>
-        <li>
-          <img src="/facebook.png" alt="" />
-        </li>
-        <li>
-          <img src="/instagram.png" alt="" />
-        </li>
-      </ul>
     </div>
-  </div>
+    {/if}
+    <p class="error-message">{errorMsg}</p>
+
+  {#if isLogin}
+    <div class="loading-indicator">
+      <div class="lds-ring">
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+    </div>
+  {/if}
 </section>
 
 <style>
-  @import url("$lib/styles/login.css");
+  :root {
+    --title-grey: #607d8b;
+    --logo-green: #42d39b;
+    --bg-red: #e91e63;
+    --bg-purple: #03a9f4;
+    --btn-red: #ff4584;
+    --btn-red-hover: #f53677;
+    --facebook-blue: #3a559f;
+    --facebook-blue: #3d5998;
+  }
+
+  form {
+    margin-top: 5px;
+  }
+
+  .error-message {
+    text-align: center;
+    color: red;
+    margin-top: 20px;
+  }
+
+  .icon-facebook {
+    width: 35px;
+    height: 35px;
+  }
+
+  .btn-facebook p {
+    color: white;
+    margin-left: 35px;
+    font-weight: 600;
+  }
+
+  .btn-facebook {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: var(--facebook-blue);
+    padding: 4px;
+    margin-top: 10px;
+    border-radius: 2px;
+  }
+
+  .btn,
+  .btn-action {
+    cursor: pointer;
+  }
+
+  .btn-action {
+    padding: 12px;
+    margin-top: 10px;
+    text-align: center;
+    color: white;
+    background: rgb(187, 195, 206);
+    border-radius: 2px;
+  }
+
+  input {
+    outline: none;
+    width: 100%;
+    padding: 12px 12px;
+    border: 1px solid rgb(243, 242, 242);
+  }
+
+  .btn-login {
+    border-top: 1px solid rgb(243, 242, 242);
+    border-left: 1px solid rgb(243, 242, 242);
+  }
+
+  .btn-signup {
+    color: gray;
+    background: rgb(243, 242, 242);
+  }
+
+  .btn {
+    width: 50%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .top {
+    display: flex;
+  }
+
+  .logo-wrapper {
+    text-align: center;
+  }
+
+  .logo {
+    height: 60px;
+  }
+
+  section {
+    width: 100vw;
+    max-width: 1920px;
+    height: 100vh;
+    background: #fff;
+  }
+
+  .loading-indicator {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .main {
+    position: relative;
+    width: 300px;
+    margin: 200px auto;
+    overflow-y: auto;
+  }  
 </style>

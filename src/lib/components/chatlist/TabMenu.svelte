@@ -2,62 +2,83 @@
   import { goto } from "$app/navigation";
   import themeStore from "svelte-themes";
   import {
-    mobile,
-    bgColor,
-    allChat,
     privateChat,
     groupChat,
     publicChat,
     selectedUsername,
-    currentContact
+    currentContact,
   } from "$lib/store";
 
-  const menuItems = ["All", "Chat", "Group", "Room"];
-  // const menuItems = [];
+  const menuItems = ["Private", "Group", "Public"];
   let currentTab = menuItems[0];
-  let selecteedTab = true;
+
+  // let btnPrivate = true;
+  // let btnGroup = false;
+  // let btnPublic = false;
 
   const selectTab = (selectedTab) => {
     currentTab = selectedTab;
-    $selectedUsername = null
-    $currentContact = null
+    $selectedUsername = null;
+    $currentContact = null;
 
-    if (currentTab === "All") {
-      $allChat = true;
-      $privateChat = false;
+    if (currentTab === "Private") {
+      $privateChat = true;
       $groupChat = false;
       $publicChat = false;
       if ($selectedUsername) goto(`/${$selectedUsername}`);
       if (!$selectedUsername) goto("/");
     }
 
-    if (currentTab === "Chat") {
-      $allChat = false;
-      $privateChat = true;
-      $groupChat = false;
-      $publicChat = false;
-      // goto("/chat");
-      goto('/')
-    }
-
     if (currentTab === "Group") {
-      $allChat = false;
       $privateChat = false;
       $groupChat = true;
       $publicChat = false;
-      // goto("/group");
-      goto('/')
+      goto("/");
     }
 
-    if (currentTab === "Room") {
-      $allChat = false;
+    if (currentTab === "Public") {
       $privateChat = false;
       $groupChat = false;
       $publicChat = true;
-      // goto("/room");
-      goto('/')
+      goto("/");
     }
   };
+
+  // const selectPrivate = () => {
+  //   $selectedUsername = null;
+  //   $currentContact = null;
+    
+  //   $privateChat = true;
+  //   $groupChat = false;
+  //   $publicChat = false;
+
+  //   btnPrivate = true;
+  //   btnGroup = false;
+  //   btnPublic = false;
+    
+  //   if ($selectedUsername) goto(`/${$selectedUsername}`);
+  //   if (!$selectedUsername) goto("/");
+  // };
+
+  // const selectGroup = () => {
+  //   btnPrivate = false;
+  //   btnGroup = true;
+  //   btnPublic = false;
+  //   $privateChat = false;
+  //   $groupChat = true;
+  //   $publicChat = false;
+  //   goto("/");
+  // };
+
+  // const selectPublic = () => {
+  //   btnPrivate = false;
+  //   btnGroup = false;
+  //   btnPublic = true;
+  //   $privateChat = false;
+  //   $groupChat = false;
+  //   $publicChat = true;
+  //   goto("/");
+  // };
 </script>
 
 <div
@@ -65,82 +86,8 @@
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "transparent"}
 >
   {#each menuItems as tab}
-
-<!-- Do not delete the following block of codes -->
-  <!-- style:border-top-right-radius={
-    currentTab === tab && currentTab != "Room" ? 
-      "10px"
-      : "0"
-  }
-  style:border-top-left-radius={
-    currentTab === tab && currentTab != "All" ? 
-      "10px"
-      : "0"
-  }
-  style:border-right={
-    currentTab === tab && currentTab != "Room" ? 
-      $themeStore.theme === "dark" ? 
-        "2px solid #3A3F50"
-        : "2px solid rgba(235, 235, 235, .5)"
-    : currentTab === tab && currentTab === "Room" ? 
-      "none"
-    : ""
-  }
-  style:border-left={
-    currentTab === tab && currentTab != "All" ? 
-      $themeStore.theme === "dark" ? 
-        "2px solid #3A3F50"
-        : "2px solid rgba(235, 235, 235, .5)"
-    : currentTab === tab && currentTab === "All" ? 
-      "none"
-    : ""
-  }       -->
-
-  <!-- style:border-top-right-radius={currentTab === tab &&
-    currentTab != "Public"
-      ? "10px"
-      : currentTab === tab && currentTab === "Public" && $mobile
-      ? "0"
-      : "10px"}
-    style:border-top-left-radius={currentTab === tab && currentTab != "All"
-      ? "10px"
-      : currentTab === tab && currentTab === "All" && $mobile
-      ? "0"
-      : "10px"}
-    style:border-right={currentTab === tab && currentTab != "Public"
-      ? $themeStore.theme === "dark"
-        ? "2px solid #3A3F50"
-        : "2px solid #ebebeb"
-      : currentTab === tab && currentTab === "Public" && !$mobile
-      ? $themeStore.theme === "dark"
-        ? "2px solid #3A3F50"
-        : "2px solid #ebebeb"
-      : "none"}
-    style:border-left={currentTab === tab && currentTab != "All"
-      ? $themeStore.theme === "dark"
-        ? "2px solid #3A3F50"
-        : "2px solid #ebebeb"
-      : currentTab === tab && currentTab === "All" && !$mobile
-      ? $themeStore.theme === "dark"
-        ? "2px solid #3A3F50"
-        : "2px solid #ebebeb"
-      : "none"}
-    style:border-top={currentTab === tab
-      ? $themeStore.theme === "dark"
-        ? "2px solid #3A3F50"
-        : "2px solid rgba(235, 235, 235, 1)"
-      : "none"}
-    style:border-bottom={currentTab != tab
-      ? $themeStore.theme === "dark"
-        ? "2px solid #3A3F50"
-        : "2px solid rgba(235, 235, 235, 1)"
-      : "none"} -->
-
-    <span
-      on:click={() => selectTab(tab)}
-      
-    >
-      {#if tab === "All"}
+    <span on:click={() => selectTab(tab)}>
+      {#if tab === "Private"}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="ionicon"
@@ -150,57 +97,6 @@
           fill="currentColor"
           style:color={currentTab === tab ? "#FF4408" : ""}
           >
-          <!-- style:transform="scale(1.5)" -->
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-            d="M160 144h288M160 256h288M160 368h288"
-          />
-          <circle
-            cx="80"
-            cy="144"
-            r="16"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-          <circle
-            cx="80"
-            cy="256"
-            r="16"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-          <circle
-            cx="80"
-            cy="368"
-            r="16"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-        </svg>
-      {/if}
-      {#if tab === "Chat"}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
-          style:color={currentTab === tab ? "#FF4408" : ""}
-        >
           <path
             d="M87.48 380c1.2-4.38-1.43-10.47-3.94-14.86a42.63 42.63 0 00-2.54-3.8 199.81 199.81 0 01-33-110C47.64 139.09 140.72 48 255.82 48 356.2 48 440 117.54 459.57 209.85a199 199 0 014.43 41.64c0 112.41-89.49 204.93-204.59 204.93-18.31 0-43-4.6-56.47-8.37s-26.92-8.77-30.39-10.11a31.14 31.14 0 00-11.13-2.07 30.7 30.7 0 00-12.08 2.43L81.5 462.78a15.92 15.92 0 01-4.66 1.22 9.61 9.61 0 01-9.58-9.74 15.85 15.85 0 01.6-3.29z"
             fill="none"
@@ -211,8 +107,8 @@
           />
           <circle cx="160" cy="256" r="32" />
           <circle cx="256" cy="256" r="32" />
-          <circle cx="352" cy="256" r="32" /></svg
-        >
+          <circle cx="352" cy="256" r="32" />
+        </svg>
       {/if}
       {#if tab === "Group"}
         <svg
@@ -257,7 +153,7 @@
           />
         </svg>
       {/if}
-      {#if tab === "Room"}
+      {#if tab === "Public"}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="ionicon"
@@ -287,6 +183,103 @@
       {/if}
     </span>
   {/each}
+
+  <!-- <span on:click={selectPrivate}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="ionicon"
+      viewBox="0 0 512 512"
+      width="24"
+      height="24"
+      fill="currentColor"
+      style:color={btnPrivate ? "var(--theme-color)" : ""}
+    >
+      <path
+        d="M87.48 380c1.2-4.38-1.43-10.47-3.94-14.86a42.63 42.63 0 00-2.54-3.8 199.81 199.81 0 01-33-110C47.64 139.09 140.72 48 255.82 48 356.2 48 440 117.54 459.57 209.85a199 199 0 014.43 41.64c0 112.41-89.49 204.93-204.59 204.93-18.31 0-43-4.6-56.47-8.37s-26.92-8.77-30.39-10.11a31.14 31.14 0 00-11.13-2.07 30.7 30.7 0 00-12.08 2.43L81.5 462.78a15.92 15.92 0 01-4.66 1.22 9.61 9.61 0 01-9.58-9.74 15.85 15.85 0 01.6-3.29z"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-miterlimit="10"
+        stroke-width="32"
+      />
+      <circle cx="160" cy="256" r="32" />
+      <circle cx="256" cy="256" r="32" />
+      <circle cx="352" cy="256" r="32" />
+    </svg>
+  </span>
+
+  <span on:click={selectGroup}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="ionicon"
+      viewBox="0 0 512 512"
+      width="24"
+      height="24"
+      fill="currentColor"
+      style:color={btnGroup ? "var(--theme-color)" : ""}
+    >
+      <path
+        d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-3-42.31 26.37-72 66-72s69 30.46 66 72z"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="32"
+      />
+      <path
+        d="M336 304c-65.17 0-127.84 32.37-143.54 95.41-2.08 8.34 3.15 16.59 11.72 16.59h263.65c8.57 0 13.77-8.25 11.72-16.59C463.85 335.36 401.18 304 336 304z"
+        fill="none"
+        stroke="currentColor"
+        stroke-miterlimit="10"
+        stroke-width="32"
+      />
+      <path
+        d="M200 185.94c-2.34 32.48-26.72 58.06-53 58.06s-50.7-25.57-53-58.06C91.61 152.15 115.34 128 147 128s55.39 24.77 53 57.94z"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="32"
+      />
+      <path
+        d="M206 306c-18.05-8.27-37.93-11.45-59-11.45-52 0-102.1 25.85-114.65 76.2-1.65 6.66 2.53 13.25 9.37 13.25H154"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-miterlimit="10"
+        stroke-width="32"
+      />
+    </svg>
+  </span>
+
+  <span on:click={selectPublic}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="ionicon"
+      viewBox="0 0 512 512"
+      width="24"
+      height="24"
+      fill="currentColor"
+      style:color={btnPublic ? "var(--theme-color)" : ""}
+    >
+      <path
+        d="M431 320.6c-1-3.6 1.2-8.6 3.3-12.2a33.68 33.68 0 012.1-3.1A162 162 0 00464 215c.3-92.2-77.5-167-173.7-167-83.9 0-153.9 57.1-170.3 132.9a160.7 160.7 0 00-3.7 34.2c0 92.3 74.8 169.1 171 169.1 15.3 0 35.9-4.6 47.2-7.7s22.5-7.2 25.4-8.3a26.44 26.44 0 019.3-1.7 26 26 0 0110.1 2l56.7 20.1a13.52 13.52 0 003.9 1 8 8 0 008-8 12.85 12.85 0 00-.5-2.7z"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-miterlimit="10"
+        stroke-width="32"
+      />
+      <path
+        d="M66.46 232a146.23 146.23 0 006.39 152.67c2.31 3.49 3.61 6.19 3.21 8s-11.93 61.87-11.93 61.87a8 8 0 002.71 7.68A8.17 8.17 0 0072 464a7.26 7.26 0 002.91-.6l56.21-22a15.7 15.7 0 0112 .2c18.94 7.38 39.88 12 60.83 12A159.21 159.21 0 00284 432.11"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-miterlimit="10"
+        stroke-width="32"
+      />
+    </svg>
+  </span> -->
 </div>
 
 <style>
@@ -300,7 +293,7 @@
   }
 
   span {
-    width: 25%;
+    width: 33.33%;
     /* height: 60%; */
     text-align: center;
     font-size: 16px;

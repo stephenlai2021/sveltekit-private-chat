@@ -143,7 +143,7 @@
   $: if (browser) document.title = `Chat with ${$selectedUsername}`
 </script>
 
-<div>
+<div class="user-page" style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}>
   <Header />
   <Body />
   <Footer />
@@ -156,3 +156,11 @@
     <ToolModalMobile />
   {/if}
 </div>
+
+<style>
+  @media (max-width: 1000px) {
+    .user-page {
+      margin-right: 10px;
+    }
+  }  
+</style>

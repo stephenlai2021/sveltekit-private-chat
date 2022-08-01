@@ -7,9 +7,21 @@
     loggedinUser,
     showSettingsModal,
     showAddFriendModal,
+    showAddGroupModal,
+    showAddRoomModal,
+    // showSearchFriendModal,
     widthLessthan1200,
-    showSettingsModalMobile
+    showSettingsModalMobile,
+    privateChat,
+    groupChat,
+    publicChat,
   } from "$lib/store";
+
+  const showModal = () => {    
+    if ($privateChat) $showAddFriendModal = true
+    if ($groupChat) $showAddGroupModal = true
+    if ($publicChat) $showAddRoomModal = true
+  }
 </script>
 
 <div class="header">
@@ -24,8 +36,7 @@
         fill="currentColor"
         style:margin-right="5px"
         on:click|stopPropagation={() => ($showSettingsModalMobile = true)}
-        >
-        <!-- on:click={() => console.log('hi, there !')} -->
+      >
         <path
           fill="none"
           stroke="currentColor"
@@ -40,12 +51,8 @@
   </div>
 
   <ul class="nav_icons">
-    <li
-      on:click|stopPropagation={() =>
-        ($showAddFriendModal = true)}
-    >
-      <!-- on:click|stopPropagation={() =>
-        ($showAddFriendModal = !$showAddFriendModal)} -->
+    <!-- <li on:click|stopPropagation={() => ($showAddFriendModal = true)}> -->
+    <li on:click|stopPropagation={showModal}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
@@ -96,31 +103,6 @@
     display: flex;
     align-items: center;
   }
-
-  /* .userimg {
-    width: 35px;
-    height: 35px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-
-  .userimg img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-    overflow: hidden;
-  }
-
-  .user-title {
-    margin-left: 5px;
-    font-weight: 600;
-    font-size: 20px;
-  } */
 
   .nav_icons {
     cursor: pointer;

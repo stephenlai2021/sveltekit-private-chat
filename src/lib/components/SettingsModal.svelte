@@ -469,7 +469,6 @@
     min-width: 250px;
     backdrop-filter: blur(20px);
     border-radius: 8px;
-    margin: 5px;
     margin: 10px;
   }
 </style>

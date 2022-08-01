@@ -11,11 +11,10 @@
     selectedUsername,
     // currentSelectedUser,
     showSettingsModal,
-    allChat,
     privateChat,
     groupChat,
     publicChat,
-    currentContact
+    currentContact,
   } from "$lib/store";
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { auth, db } from "$lib/firebase/client";
@@ -24,12 +23,14 @@
   import { goto } from "$app/navigation";
   import themeStore from "svelte-themes";
   import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
+  import { onMount } from "svelte";
 
   let users = [];
   let ready = false;
   let usersReady = false;
   // let currentContact = null;
   let filteredUsers = [];
+  let unsubUsers = null
 
   const selectUser = (selectedUser) => {
     $currentContact = selectedUser;
@@ -59,35 +60,34 @@
       colRef,
       where("contactList", "array-contains", $loginUserEmail)
     );
-    const unsubUsers = onSnapshot(q, (snapshot) => {
+    unsubUsers = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
-      $allUsers = tempUsers
+      $allUsers = tempUsers;
       usersReady = true;
       console.log("initialzie user list | snapshot", users);
-      return () => unsubUsers();
+      unsubUsers();
     });
     ready = false;
   }
 
-  $: filteredUsers = users.filter((item) => {
+  $: if (ready === false)  unsubUsers;
+
+  $: filteredUsers = users.filter((usesr) => {
     return (
-      item.name.toUpperCase().includes($keyword) ||
-      item.name.toLowerCase().includes($keyword)
+      usesr.name.toUpperCase().includes($keyword) ||
+      usesr.name.toLowerCase().includes($keyword)
     );
   });
 
   $: if ($page.url.pathname === "/login") $showSettingsModal = false;
 </script>
 
-{#if $allChat}
-  <div
-    class="chatlist"
-    transition:fade={{ duration: 100 }}
-  >
+{#if $privateChat}
+  <div class="chatlist" transition:fade={{ duration: 100 }}>
     {#if users.length}
       {#each filteredUsers as user}
         <div
@@ -95,25 +95,22 @@
           class:unread={user.unread}
           on:click={() => selectUser(user)}
           style:border-radius={($currentContact === user && !$mobile) ||
-            (user.name === $page.params.userId && !$mobile) ? "8px" : "0"}
+          (user.name === $page.params.userId && !$mobile)
+            ? "8px"
+            : "0"}
           style:background={($currentContact === user && !$mobile) ||
-          (user.name === $page.params.userId && !$mobile) ? 
-            $themeStore.theme === "dark" ? 
-              "#3a3f50"
+          (user.name === $page.params.userId && !$mobile)
+            ? $themeStore.theme === "dark"
+              ? "#3a3f50"
               : "rgba(235, 235, 235, 1)"
-            : $currentContact != user && !$mobile ? 
-              $themeStore.theme === "dark" ? 
-                "#292F3F"
-                : "transparent"
-            : ""
-          }
+            : $currentContact != user && !$mobile
+            ? $themeStore.theme === "dark"
+              ? "#292F3F"
+              : "transparent"
+            : ""}
         >
           <div class="imgbx">
-            {#if user.avatar}
-              <img src={user.avatar} alt="" class="cover" />
-            {:else}
-              <img src="/joke.png" alt="" class="cover" />
-            {/if}
+            <img src={user.avatar} alt="" class="cover" />
             <div class={user.isOnline ? "status online" : "status offline"} />
           </div>
           <div class="details">
@@ -136,12 +133,6 @@
   </div>
 {/if}
 
-{#if $privateChat}
-  <div class="private">
-    <h1>Private Chat</h1>
-  </div>
-{/if}
-
 {#if $groupChat}
   <div class="group">
     <h1>Group Chat</h1>
@@ -155,12 +146,11 @@
 {/if}
 
 <style>
-  .private,
   .group,
   .public {
     width: 100%;
-    height: 100vh;
-    height: calc(100%- 110px);
+    /* height: calc(100vh - 20px); */
+    height: calc(100vh - 187px);
     display: flex;
     justify-content: center;
     padding-top: 200px;
@@ -170,14 +160,9 @@
   .chatlist {
     height: calc(100vh - 187px);
     overflow: auto;
-  } 
-  
-  @media (max-width: 800px) {
-    .chatlist {
-      height: calc(100vh - 160px);
-    }
-  }
-  
+    border-radius: 8px;
+    /* border: 1px solid; */
+  }  
 
   ::-webkit-scrollbar {
     width: 0px;
@@ -249,7 +234,7 @@
 
   .block.unread .details .listHead .time {
     color: var(--active-green);
-    color: #FF4408;
+    color: #ff4408;
   }
 
   .message {
@@ -270,7 +255,7 @@
 
   .block.unread .details .message b {
     background: var(--active-green);
-    background: #FF4408;
+    background: #ff4408;
     color: white;
     min-width: 20px;
     height: 20px;
@@ -279,5 +264,11 @@
     place-content: center;
     font-size: 0.75em;
     margin-right: 3px;
+  }
+
+  @media (max-width: 800px) {
+    .chatlist {
+      height: calc(100vh - 160px);
+    }
   }
 </style>

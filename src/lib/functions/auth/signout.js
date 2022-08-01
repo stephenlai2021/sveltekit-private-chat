@@ -1,11 +1,13 @@
 import { auth, db } from "$lib/firebase/client";
 import { signOut } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import { loginState, loginUserEmail } from "$lib/store";
+import { loginState, loginUserEmail, isSignout } from "$lib/store";
 
 export const signout = async () => {
+  isSignout.set(true)
+  
   let userRef = doc(db, "whatzapp_users", auth.currentUser.email);
-  let tempUserEmail = auth.currentUser.email
+  let tempUserEmail = auth.currentUser.email;
   try {
     await updateDoc(userRef, {
       isOnline: false,
@@ -18,18 +20,11 @@ export const signout = async () => {
   try {
     await signOut(auth);
     console.log(`${tempUserEmail} is signed out 😃`);
-    loginState.set(false)
-    loginUserEmail.set(null)
+    loginState.set(false);
+    loginUserEmail.set(null);
+    isSignout.set(false)
+    console.log('signing out ended')
   } catch (err) {
     console.log(err.code, err.message);
   }
 };
-
-// signOut(auth).then(() => {
-//   console.log(`user is logged out 😃`);
-// activeItem.set(null)
-// userLogout, loginState, loginUserEmail.set(true)
-// user.set(null)
-// goto{'/login'}
-
-// });

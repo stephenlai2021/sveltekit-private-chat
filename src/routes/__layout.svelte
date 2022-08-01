@@ -33,8 +33,12 @@
     showGradientMenu,
     showSettingsModalMobile,
     showAddFriendModal,
+    showAddGroupModal,
+    showAddRoomModal,
     showAudioPlayerModal,
     showAudioRecordingModal,
+    privateChat,
+    isSignout,
   } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
@@ -55,7 +59,9 @@
   import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
   import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
   import SettingsModal from "$lib/components/SettingsModal.svelte";
-  import MapModal from "$lib/components/MapModal.svelte"
+  import MapModal from "$lib/components/MapModal.svelte";
+  import AddGroupModal from "$lib/components/AddGroupModal.svelte";
+  import LoadingModal from "$lib/components/LoadingModal.svelte";
 
   let user = null;
   let users = null;
@@ -85,18 +91,16 @@
   };
 
   onMount(() => {
-    // console.log('current selected user', JSON.parse($currentSelectedUser))
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
       if (!user) goto("/login");
       else {
         $loggedinUser = user;
-        console.log('get loggedin user name: ', $loggedinUser.displayName)
+        console.log("get loggedin user name: ", $loggedinUser.displayName);
       }
     });
-    $currentSelectedUser = null
+    $currentSelectedUser = null;
   });
-
 
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
@@ -113,14 +117,19 @@
       $showSettingsModalMobile = false;
       $showToolModalMobile = false;
       $showAddFriendModal = false;
+      $showAddGroupModal = false;
+      $showAddRoomModal = false;
       $showThemeModal = false;
-      $showThemeMenu = false
-      $showGradientMenu = false
+      $showThemeMenu = false;
+      $showGradientMenu = false;
     });
     window.addEventListener("resize", () => desktopOrMobile());
   }
-  $: if ($themeStore.theme === 'dark') console.log('you are in light mode')
-  $: if ($themeStore.theme === 'light') console.log('you are in dark mode')
+  $: if ($themeStore.theme === "dark") console.log("you are in light mode");
+  $: if ($themeStore.theme === "light") console.log("you are in dark mode");
+  $: if ($themeStore.theme === "system") console.log("you are in system mode");
+
+  // $: if ($page.url.pathname === "/") $currentSelectedUser = {}
 </script>
 
 <svelte:head>
@@ -128,15 +137,17 @@
 </svelte:head>
 
 <SvelteTheme />
-<div
-  class="wrapper"
-  on:click={closeModal}
->
-<!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : $bgColor} -->
+<div class="wrapper" on:click={closeModal}>
   <div
     class="inner-wrapper"
-    style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}
-    style:display={$page.url.pathname === '/login' ? 'block' : 'flex'}
+    style:display={$page.url.pathname === "/login" ? "block" : "flex"}
+    style:background={
+      $themeStore.theme === "dark" ? 
+        "#1F232F"
+      : $page.url.pathname === "/" ?
+        "#ebebeb"
+      : $currentSelectedUser?.bgColor
+    }    
   >
     <SettingsModal />
     <div
@@ -163,16 +174,24 @@
     <div
       class="rightSide"
       style:display={$mobile && $page.url.pathname === "/" ? "none" : "block"}
-      style:width={
-        $mobile && $page.url.pathname === "/" ? "0%"
-        : $mobile && $page.url.pathname != "/" ? "100%"
-        : "100%"
-      }
+      style:width={$mobile && $page.url.pathname === "/"
+        ? "0%"
+        : $mobile && $page.url.pathname != "/"
+        ? "100%"
+        : "100%"}
     >
       <slot />
     </div>
 
     <ToolModal />
+
+    {#if $isSignout}
+      <LoadingModal />
+    {/if}
+
+    {#if $showAddGroupModal}
+      <AddGroupModal />
+    {/if}
 
     {#if $showImagePreviewModal}
       <ImagePreviewModal />

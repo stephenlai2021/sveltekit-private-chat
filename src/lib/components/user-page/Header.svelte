@@ -177,9 +177,8 @@
     padding-right: 0px;
     padding: 15px 10px 15px 10px;
     backdrop-filter: blur(20px);
-    /* border-top-left-radius: 8px;
-    border-top-right-radius: 8px; */
     border-radius: 8px;
+    /* border: 1px solid; */
   }
 
   .left-part {
@@ -245,7 +244,7 @@
       padding-right: 15px;
     }
   }
-
+  
   @media (max-width: 800px) {
     .header {
       margin-top: 0px;

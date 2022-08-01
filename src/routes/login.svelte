@@ -4,7 +4,8 @@
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from '$app/navigation'
   import { onMount } from 'svelte'
-
+  import themeStore from 'svelte-themes'
+  
   onMount(() => {
     onAuthStateChanged(auth, user => { 
       if (user) goto('/')

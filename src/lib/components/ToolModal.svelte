@@ -24,9 +24,6 @@
   import { page } from "$app/stores";
   import themeStore from "svelte-themes";
 
-  let matched = false;
-  // let selectedUserReady = false;
-
   const setBgColor = (val) => {
     $bgColor = val;
     Cookies.set("bgColor", $bgColor);
@@ -54,6 +51,17 @@
       reader.readAsDataURL(file);
     });
   };
+
+  $: if ($currentSelectedUser) {
+    console.log('current selected user: ', $currentSelectedUser.name)
+    console.log('current selected user: ', $currentSelectedUser)
+  }
+  $: if ($currentSelectedUser) console.log('current selected user: ', $currentSelectedUser)
+
+  $: if ($page.url.pathname === "/") {
+    $currentSelectedUser = {}
+    $selectedUserReady = false
+  }
 </script>
 
 <div
@@ -230,7 +238,8 @@
               </main>
             {/if}
           </li>
-          {#if !$isMobile}
+
+          <!-- {#if !$isMobile}
             <li>
               <div class="content">
                 <label>
@@ -245,7 +254,7 @@
                 </div>
               </div>
             </li>
-          {/if}
+          {/if} -->
 
           <li>
             <div class="content">

@@ -10,17 +10,22 @@ import {
 
 let colRef = collection(db, "whatzapp_users");
 
+export const foundUser = writable({})
+export const isSignout = writable(false)
+export const selectedMembers = writable([])
 export const selectedUserReady = writable(false)
 export const currentContact = writable(null)
+export const showAddPeopleModal = writable(false)
 export const showToolModalMobile = writable(false)
 export const showSettingsModalMobile = writable(false)
 export const widthLessthan1200 = writable(false)
 export const widthLessthan1000 = writable(false)
 export const isAudioPlayed = writable(false)
+export const showAddFriendModal = writable(false);
 export const showAddGroupModal = writable(false)
-export const allUsers = writable(null)
-export const allChat = writable(true)
-export const privateChat = writable(false)
+export const showAddRoomModal = writable(false)
+export const allUsers = writable([])
+export const privateChat = writable(true)
 export const groupChat = writable(false)
 export const publicChat = writable(false)
 export const showActionMenu = writable(false)
@@ -69,27 +74,20 @@ export const showPicModal = writable(false);
 export const showThemeModal = writable(false);
 export const showCameraModal = writable(false);
 export const showSettingsModal = writable(false);
-export const showAddFriendModal = writable(false);
 export const showBgSettingsModal = writable(false);
 export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
 export const showSearchFriendModal = writable(false)
-// export const bgColor = writable("#e5ddd5");
 
-// export const getSelectedUser = (name) => {
 export const getSelectedUser = (selectedUsername) => {
-  // let q = query(colRef, where("name", "==", name));
   let q = query(colRef, where("name", "==", selectedUsername));
   const unsub = onSnapshot(q, (snapshot) => {
     let tempUsers = [];
     snapshot.docs.forEach((doc) => {
       tempUsers.push({ ...doc.data() });
     });
-    // selectedUser = tempUsers[0]
     selectedUser.set(tempUsers[0])
-    // selectedUser.update(n => tempUsers[0])
-    // console.log("get selected user name | snapshot", selectedUser.name);
     return () => unsub();
   });
 };
