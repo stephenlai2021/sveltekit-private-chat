@@ -48,13 +48,9 @@
   }
 
   $: if ($loggedinUser && $loginUserEmail) {
-    ready = true;
+    // ready = true;
     console.log("user is ready");
     console.log("user", $loggedinUser);
-  }
-
-  // $: if (ready && $loginUserEmail) {
-  $: if (ready) {
     let colRef = collection(db, "whatzapp_users");
     const q = query(
       colRef,
@@ -69,15 +65,32 @@
       $allUsers = tempUsers;
       usersReady = true;
       console.log("initialzie user list | snapshot", users);
-      // unsubUsers;
-      ready = false;
     });
-    // ready = false;
-    unsubUsers
-    console.log('hi, there !')
+    unsubUsers()
   }
 
-  $: if (ready === false)  unsubUsers;
+  // $: if (ready) {
+  //   let colRef = collection(db, "whatzapp_users");
+  //   const q = query(
+  //     colRef,
+  //     where("contactList", "array-contains", $loginUserEmail)
+  //   );
+  //   unsubUsers = onSnapshot(q, (snapshot) => {
+  //     let tempUsers = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       tempUsers.push({ ...doc.data() });
+  //     });
+  //     users = tempUsers;
+  //     $allUsers = tempUsers;
+  //     usersReady = true;
+  //     console.log("initialzie user list | snapshot", users);
+  //     ready = false;
+  //   });
+  //   unsubUsers()
+  //   console.log('hi, there !')
+  // }
+
+  // $: if (ready === false)  unsubUsers;
 
   $: filteredUsers = users.filter((usesr) => {
     return (
