@@ -38,6 +38,10 @@
     goto(`/${$selectedUsername}`);
   };
 
+  onMount(() => {
+    
+  })
+
   $: if ($isMobile || $mobile) $currentContact = null;
 
   $: if ($profileUpdated) {
@@ -46,12 +50,22 @@
   }
 
   const getUsers = () => {
+    
+    return unsubUsers
+  }
+  
+  $: if ($loggedinUser && $loginUserEmail) {
+    ready = true;
+    console.log("user is ready");
+    console.log("user", $loggedinUser);
+
     let usersRef = collection(db, "whatzapp_users");
     const q = query(
       usersRef,
       where("contactList", "array-contains", $loginUserEmail)
     );
-    unsubUsers = onSnapshot(q, (snapshot) => {
+
+    const unsubUsers = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
@@ -59,19 +73,9 @@
       users = tempUsers;
       $allUsers = tempUsers;
       console.log("initialzie user list | snapshot", users);
-      // unsubUsers
     });
-    return unsubUsers
-    // return unsubUsers
-  }
-
-  $: if ($loggedinUser && $loginUserEmail) {
-    ready = true;
-    console.log("user is ready");
-    console.log("user", $loggedinUser);
-    getUsers()
-
-    ready = false
+    // ready = false
+    unsubUsers
   }
 
   // $: if (ready) {
@@ -95,7 +99,7 @@
   //   console.log('hi, there !')
   // }
 
-  $: if (ready === false)  unsubUsers;
+  // $: if (ready === false) unsubUsers;
 
   $: filteredUsers = users.filter((usesr) => {
     return (
