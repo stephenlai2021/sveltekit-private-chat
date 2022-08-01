@@ -62,6 +62,7 @@
       where("contactList", "array-contains", $loginUserEmail)
     );
 
+    // unsubUsers is not a function !
     const unsubUsers = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
@@ -72,11 +73,8 @@
       console.log("initialzie user list | snapshot", users);
 
       // stop listen to change once
-      return () => unsubUsers()
-      // return () => unsubUsers
-      // return unsubUsers()
+      return () => unsubUsers
       // return unsubUsers
-      // unsubUsers()
       // unsubUsers
     });
     ready = false;
@@ -85,7 +83,7 @@
 
   $: if (!ready) {
     // stop listen to changes twice
-    unsubUsers()
+    unsubUsers
     // unsubUsers
   };
 
