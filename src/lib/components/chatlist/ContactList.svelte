@@ -75,10 +75,12 @@
       console.log("initialzie user list | snapshot", users);
 
       // stop listening to changes
-      unsubUsers
+      unsubUsers()
       ready = false
     });
   }
+  
+  $: if (ready === false) unsubUsers;
 
   // $: if (ready) {
   //   let colRef = collection(db, "whatzapp_users");
@@ -101,7 +103,6 @@
   //   console.log('hi, there !')
   // }
 
-  $: if (ready === false) unsubUsers;
 
   $: filteredUsers = users.filter((usesr) => {
     return (
