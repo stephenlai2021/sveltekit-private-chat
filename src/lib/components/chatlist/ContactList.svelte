@@ -70,8 +70,9 @@
       usersReady = true;
       console.log("initialzie user list | snapshot", users);
       // unsubUsers();
+      ready = false;
     });
-    ready = false;
+    // ready = false;
   }
 
   $: if (ready === false)  unsubUsers;
