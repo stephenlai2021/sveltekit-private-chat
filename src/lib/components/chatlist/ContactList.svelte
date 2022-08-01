@@ -75,8 +75,8 @@
       ready = false;
 
       // stop listen to change once
-      return () => unsubUsers
-      // return unsubUsers
+      // return () => unsubUsers
+      return unsubUsers
       // unsubUsers
     });
     console.log('hi, there !')
