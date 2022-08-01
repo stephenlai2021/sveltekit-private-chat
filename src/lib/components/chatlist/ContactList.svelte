@@ -48,11 +48,6 @@
     console.log("user profile updated detected !");
     $loggedinUser = auth.currentUser;
   }
-
-  const getUsers = () => {
-    
-    return unsubUsers
-  }
   
   $: if ($loggedinUser && $loginUserEmail) {
     ready = true;
@@ -75,12 +70,12 @@
       console.log("initialzie user list | snapshot", users);
 
       // stop listening to changes
-      unsubUsers()
-      ready = false
+      return () => unsubUsers
     });
+    ready = false
   }
   
-  $: if (ready === false) unsubUsers;
+  $: if (!ready) unsubUsers;
 
   // $: if (ready) {
   //   let colRef = collection(db, "whatzapp_users");
