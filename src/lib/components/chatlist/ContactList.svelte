@@ -76,7 +76,7 @@
     // ready = false;
   }
 
-  $: if (ready === false)  () => unsubUsers;
+  $: if (ready === false)  unsubUsers();
 
   $: filteredUsers = users.filter((usesr) => {
     return (
