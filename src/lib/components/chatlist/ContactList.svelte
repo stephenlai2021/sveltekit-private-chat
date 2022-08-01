@@ -70,14 +70,24 @@
       users = tempUsers;
       $allUsers = tempUsers;
       console.log("initialzie user list | snapshot", users);
-      // return () => unsubUsers()
-      ready = false;
+
+      // stop listen to change once
+      return () => unsubUsers()
+      // return () => unsubUsers
+      // return unsubUsers()
+      // return unsubUsers
+      // unsubUsers()
+      // unsubUsers
     });
-    unsubUsers
+    ready = false;
     console.log('hi, there !')
   }
 
-  $: if (!ready) unsubUsers;
+  $: if (!ready) {
+    // stop listen to changes twice
+    unsubUsers()
+    // unsubUsers
+  };
 
   $: filteredUsers = users.filter((usesr) => {
     return (
