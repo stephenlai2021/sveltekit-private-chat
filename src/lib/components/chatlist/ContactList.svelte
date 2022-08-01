@@ -73,11 +73,10 @@
       users = tempUsers;
       $allUsers = tempUsers;
       console.log("initialzie user list | snapshot", users);
-    });
-    // ready = false
 
-    // stop listening to changes
-    unsubUsers()
+      // stop listening to changes
+      retrun => unsubUsers
+    });
   }
 
   // $: if (ready) {
