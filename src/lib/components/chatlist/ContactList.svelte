@@ -27,7 +27,7 @@
 
   let users = [];
   let ready = false;
-  let usersReady = false;
+  // let usersReady = false;
   // let currentContact = null;
   let filteredUsers = [];
   let unsubUsers = null
@@ -47,10 +47,7 @@
     $loggedinUser = auth.currentUser;
   }
 
-  $: if ($loggedinUser && $loginUserEmail) {
-    // ready = true;
-    console.log("user is ready");
-    console.log("user", $loggedinUser);
+  const getUsers = () => {
     let colRef = collection(db, "whatzapp_users");
     const q = query(
       colRef,
@@ -63,10 +60,17 @@
       });
       users = tempUsers;
       $allUsers = tempUsers;
-      usersReady = true;
+      // usersReady = true;
       console.log("initialzie user list | snapshot", users);
     });
-    unsubUsers()
+    return unsubUsers
+  }
+
+  $: if ($loggedinUser && $loginUserEmail) {
+    // ready = true;
+    console.log("user is ready");
+    console.log("user", $loggedinUser);
+    getUsers()
   }
 
   // $: if (ready) {
