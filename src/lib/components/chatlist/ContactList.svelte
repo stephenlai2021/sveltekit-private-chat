@@ -27,8 +27,6 @@
 
   let users = [];
   let ready = false;
-  // let usersReady = false;
-  // let currentContact = null;
   let filteredUsers = [];
   let unsubUsers = null
 
@@ -48,9 +46,9 @@
   }
 
   const getUsers = () => {
-    let colRef = collection(db, "whatzapp_users");
+    let usersRef = collection(db, "whatzapp_users");
     const q = query(
-      colRef,
+      usersRef,
       where("contactList", "array-contains", $loginUserEmail)
     );
     unsubUsers = onSnapshot(q, (snapshot) => {
@@ -60,10 +58,10 @@
       });
       users = tempUsers;
       $allUsers = tempUsers;
-      // usersReady = true;
       console.log("initialzie user list | snapshot", users);
+      unsubUsers
     });
-    return unsubUsers
+    // return unsubUsers
   }
 
   $: if ($loggedinUser && $loginUserEmail) {
