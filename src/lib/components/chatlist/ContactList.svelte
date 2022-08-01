@@ -72,6 +72,7 @@
       // unsubUsers();
       ready = false;
     });
+    unsubUsers();
     // ready = false;
   }
 
