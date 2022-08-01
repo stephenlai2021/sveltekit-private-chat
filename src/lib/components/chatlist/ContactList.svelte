@@ -70,13 +70,11 @@
       usersReady = true;
       console.log("initialzie user list | snapshot", users);
       // unsubUsers;
-      // ready = false;
-      return () => {
-        ready = false
-        onsubUsers
-      }
+      ready = false;
     });
     // ready = false;
+    unsubUsers
+    console.log('hi, there !')
   }
 
   $: if (ready === false)  unsubUsers;
