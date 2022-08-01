@@ -75,7 +75,8 @@
       console.log("initialzie user list | snapshot", users);
 
       // stop listening to changes
-      retrun => unsubUsers
+      // return () => unsubUsers
+      ready = false
     });
   }
 
@@ -100,7 +101,7 @@
   //   console.log('hi, there !')
   // }
 
-  // $: if (ready === false) unsubUsers;
+  $: if (ready === false) unsubUsers;
 
   $: filteredUsers = users.filter((usesr) => {
     return (
