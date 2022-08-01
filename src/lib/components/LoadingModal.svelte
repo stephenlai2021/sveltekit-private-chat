@@ -2,7 +2,8 @@
   import { fade } from "svelte/transition";
 </script>
 
-<div class="modal-loading" transition:fade>
+<!-- <div class="modal-loading" transition:fade> -->
+<div class="modal-loading">
   <div class="lds-ring">
     <div />
     <div />
