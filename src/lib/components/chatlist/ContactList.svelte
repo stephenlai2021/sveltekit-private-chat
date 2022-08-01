@@ -74,18 +74,15 @@
 
       // stop listen to change once
       // return () => unsubUsers
-      return unsubUsers
-      // unsubUsers
+      // return unsubUsers
+      unsubUsers
     });
     ready = false;
     console.log('hi, there !')
   }
 
-  $: if (!ready) {
-    // stop listen to changes twice
-    unsubUsers
-    // unsubUsers
-  };
+  // stop listen to change twice
+  $: if (!ready) unsubUsers
 
   $: filteredUsers = users.filter((usesr) => {
     return (
