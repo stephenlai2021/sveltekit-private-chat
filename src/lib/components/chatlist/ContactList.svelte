@@ -77,13 +77,12 @@
       // stop listen to change once
       // return () => unsubUsers
       // return unsubUsers
-      unsubUsers
     });
-    console.log('hi, there !')
+    unsubUsers
   }
 
   // stop listen to change twice
-  $: if (!ready) unsubUsers
+  $: if (!ready) () => unsubUsers
 
   $: filteredUsers = users.filter((usesr) => {
     return (
