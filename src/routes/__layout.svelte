@@ -11,6 +11,8 @@
 <script>
   import "$lib/styles/global.css";
   import {
+    mode,
+    isDarkMode,
     mobile,
     bgColor,
     connection,
@@ -142,13 +144,20 @@
     class="inner-wrapper"
     style:display={$page.url.pathname === "/login" ? "block" : "flex"}
     style:background={
-      $themeStore.theme === "dark" ? 
+      $mode === "dark" ? 
         "#1F232F"
       : $page.url.pathname === "/" ?
         "#ebebeb"
       : $currentSelectedUser?.bgColor
     }    
   >
+    <!-- style:background={
+      $themeStore.theme === "dark" ? 
+        "#1F232F"
+      : $page.url.pathname === "/" ?
+        "#ebebeb"
+      : $currentSelectedUser?.bgColor
+    }     -->
     <SettingsModal />
     <div
       class="leftSide"

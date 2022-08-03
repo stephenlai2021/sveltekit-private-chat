@@ -1,4 +1,4 @@
-[
+export const users = [
   {
     "avatar": "https://firebasestorage.googleapis.com/v0/b/chat-app-9ff7a.appspot.com/o/letschat%2Fprofile%2Fantman%2Favatar.png?alt=media&token=d5a2c7de-3f64-4e9d-a213-4cb48fba095f",
     "avatarPath": "",

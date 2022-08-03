@@ -15,6 +15,7 @@
     groupChat,
     publicChat,
     currentContact,
+    mode
   } from "$lib/store";
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { auth, db } from "$lib/firebase/client";
@@ -62,7 +63,7 @@
       where("contactList", "array-contains", $loginUserEmail)
     );
 
-    // unsubUsers is not a function !
+    // unsubUsers is function in here
     const unsubUsers = onSnapshot(q, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
@@ -72,16 +73,14 @@
       $allUsers = tempUsers;
       console.log("initialzie user list | snapshot", users);
       
-      // stop listen to change once
+      // stop listen to change 
       // return () => unsubUsers()
       // return unsubUsers()
       unsubUsers()
+      console.log('stop listen to change')
     });
     ready = false;
   }
-
-  // stop listen to change twice
-  $: if (!ready) () => unsubUsers
 
   $: filteredUsers = users.filter((usesr) => {
     return (
@@ -122,7 +121,7 @@
           </div>
           <div class="details">
             <div class="listHead">
-              <span class="user-title">{user.name}</span>
+              <span class="user-title" style:color={$mode === 'light' ? 'black' : 'white'}>{user.name}</span>
               <p class="time">10:56</p>
             </div>
             <div class="message">
@@ -232,6 +231,7 @@
     letter-spacing: 0.5px;
     font-style: normal;
     line-height: 20px;
+    /* color: black; */
   }
 
   .details .listHead .time {
