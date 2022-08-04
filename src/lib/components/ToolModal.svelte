@@ -72,10 +72,10 @@
     : $page.url.pathname === "/login"
     ? "none"
     : "block"}
-  style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "rgba(235, 235, 235, .5)"}
 >
+  <!-- style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "rgba(235, 235, 235, .5)"} -->
   <div class="top" />
   <div class="user-profile">
     <div class="avatar-section">
