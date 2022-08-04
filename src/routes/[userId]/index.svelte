@@ -140,7 +140,7 @@
     $showAddFriendModal = false;
   }
 
-  $: if (browser && $selectedUsername) document.title = `Chat with ${$selectedUsername}`
+  $: if (browser) document.title = `Chat with ${$selectedUsername}`
 </script>
 
 <div class="user-page" style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}>
