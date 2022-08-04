@@ -136,7 +136,7 @@
   <title>Sveltechat</title>
 </svelte:head>
 
-<SvelteTheme />
+<SvelteTheme enableSystem={false} />
 <div class="wrapper" on:click={closeModal}>
   <div
     class="inner-wrapper"
