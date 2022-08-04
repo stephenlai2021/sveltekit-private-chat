@@ -27,7 +27,7 @@
     "js-cookie": "^3.0.1",
     "leaflet": "^1.8.0",
     "moment": "^2.29.3",
-    "svelte-themes": "^0.0.2",
+    "svelte-themes": "^0.0.1",
     "uuid": "^8.3.2"
   }
 }
