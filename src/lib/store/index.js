@@ -106,13 +106,6 @@ selectedUsername.subscribe(
   (val) => browser && localStorage.setItem("selected user name", val)
 );
 
-export const selectedUsername = writable(
-  browser && localStorage.getItem("selected user name") || {}
-);
-selectedUsername.subscribe(
-  (val) => browser && localStorage.setItem("selected user name", val)
-);
-
 export const imageTitle = writable(
   browser && (localStorage.getItem("image title") || "Default")
 );
