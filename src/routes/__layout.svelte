@@ -139,8 +139,9 @@
   <title>Sveltechat</title>
 </svelte:head>
 
-<SvelteTheme forcedTheme={'light'} />
+<!-- <SvelteTheme forcedTheme={'light'} /> -->
 <!-- <SvelteTheme enableSystem={false} /> -->
+<SvelteTheme />
 <div class="wrapper" on:click={closeModal}>
   <div
     class="inner-wrapper"
