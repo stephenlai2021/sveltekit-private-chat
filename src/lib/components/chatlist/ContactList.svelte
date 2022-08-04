@@ -73,8 +73,6 @@
       console.log("initialzie user list | snapshot", users);
       
       // stop listen to change 
-      // return () => unsubUsers()
-      // return unsubUsers()
       unsubUsers()
       console.log('stop listen to change')
     });
