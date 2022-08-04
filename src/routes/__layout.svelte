@@ -138,7 +138,7 @@
   <title>Sveltechat</title>
 </svelte:head>
 
-<SvelteTheme enableSystem="false/>
+<SvelteTheme enableSystem="false" />
 <div class="wrapper" on:click={closeModal}>
   <!-- style:background={
     $mode === "dark" ? 
