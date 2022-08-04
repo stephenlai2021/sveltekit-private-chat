@@ -11,8 +11,6 @@
 <script>
   import "$lib/styles/global.css";
   import {
-    mode,
-    isDarkMode,
     mobile,
     bgColor,
     connection,
@@ -65,8 +63,6 @@
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
   import LoadingModal from "$lib/components/LoadingModal.svelte";
 
-  $themeStore.enableSystem = false
-
   let user = null;
   let users = null;
   let colRef = collection(db, "whatzapp_users");
@@ -95,8 +91,6 @@
   };
 
   onMount(() => {
-    // if ($themeStore.themes === 'system') setTheme("light");
-    // $themeStore.enableSystem = false
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
       if (!user) goto("/login");
@@ -144,13 +138,6 @@
 
 <SvelteTheme />
 <div class="wrapper" on:click={closeModal}>
-  <!-- style:background={
-    $mode === "dark" ? 
-      "#1F232F"
-    : $page.url.pathname === "/" ?
-      "#ebebeb"
-    : $currentSelectedUser?.bgColor
-  }     -->
   <div
     class="inner-wrapper"
     style:display={$page.url.pathname === "/login" ? "block" : "flex"}
@@ -160,7 +147,7 @@
       : $page.url.pathname === "/" ?
         "#ebebeb"
       : $currentSelectedUser?.bgColor
-    }        
+    }    
   >
     <SettingsModal />
     <div

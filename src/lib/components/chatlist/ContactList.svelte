@@ -15,7 +15,6 @@
     groupChat,
     publicChat,
     currentContact,
-    mode
   } from "$lib/store";
   import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { auth, db } from "$lib/firebase/client";
@@ -121,7 +120,7 @@
           </div>
           <div class="details">
             <div class="listHead">
-              <span class="user-title" style:color={$themeStore.theme === "light" ? 'black' : 'white'}>{user.name}</span>
+              <span class="user-title">{user.name}</span>
               <p class="time">10:56</p>
             </div>
             <div class="message">
@@ -231,7 +230,6 @@
     letter-spacing: 0.5px;
     font-style: normal;
     line-height: 20px;
-    /* color: black; */
   }
 
   .details .listHead .time {
