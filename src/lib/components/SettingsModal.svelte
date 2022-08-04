@@ -20,7 +20,6 @@
   import { onAuthStateChanged, updateProfile } from "firebase/auth";
   import { doc, updateDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-  // import { v4 } from "uuid";
   import CameraModal from "$lib/components/CameraModal.svelte";
   // import { handleFileChange } from '$lib/functions/handleFileChange'
 
@@ -33,15 +32,9 @@
   let theme = false;
   let fileError = null;
 
-  // onAuthStateChanged(auth, _user => user = _user)
-
   const toggleTheme = () => {
     theme = !theme;
-    if (theme) {
-      setTheme("dark");
-      $themeStore.forcedTheme = 'dark'
-      $themeStore.enableSystem = true
-    }
+    if (theme) setTheme("dark");
     if (!theme) setTheme("light");
   };
 

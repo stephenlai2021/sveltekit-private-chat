@@ -63,6 +63,8 @@
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
   import LoadingModal from "$lib/components/LoadingModal.svelte";
 
+  $themeStore.enableSystem = false
+  
   let user = null;
   let users = null;
   let colRef = collection(db, "whatzapp_users");
@@ -137,7 +139,7 @@
 </svelte:head>
 
 <!-- <SvelteTheme enableSystem={false} forcedTheme={'light'} /> -->
-<SvelteTheme enableSystem={false} defaultTheme={'light'} forcedTheme={'light'} />
+<SvelteTheme enableSystem={false} />
 <div class="wrapper" on:click={closeModal}>
   <div
     class="inner-wrapper"
