@@ -93,7 +93,8 @@
   };
 
   onMount(() => {
-    if ($themeStore.themes === 'system') setTheme("light");
+    // if ($themeStore.themes === 'system') setTheme("light");
+    $themeStore.enableSystem = false
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
       if (!user) goto("/login");
