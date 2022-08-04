@@ -93,6 +93,7 @@
   };
 
   onMount(() => {
+    if ($themeStore.themes === 'system') setTheme("light");
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
       if (!user) goto("/login");
@@ -138,7 +139,7 @@
   <title>Sveltechat</title>
 </svelte:head>
 
-<SvelteTheme enableSystem="false" />
+<SvelteTheme />
 <div class="wrapper" on:click={closeModal}>
   <!-- style:background={
     $mode === "dark" ? 
