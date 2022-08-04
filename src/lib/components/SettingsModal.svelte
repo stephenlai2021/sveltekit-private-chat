@@ -228,7 +228,7 @@
       </li>
       <li class="theme" on:click={toggleTheme}>
         <div class="content">
-          {#if $themeStore.theme === "light"}
+          {#if $themeStore.theme === "light" || $themeStore.theme === "system"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="ionicon"
