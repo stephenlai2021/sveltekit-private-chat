@@ -74,6 +74,7 @@
       
       // stop listen to change 
       unsubUsers()
+      ready = false
       console.log('stop listen to change')
     });
     ready = false;
