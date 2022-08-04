@@ -121,7 +121,7 @@
           </div>
           <div class="details">
             <div class="listHead">
-              <span class="user-title" style:color={$mode === 'light' ? 'black' : 'white'}>{user.name}</span>
+              <span class="user-title" style:color={$themeStore.theme === "light" ? 'black' : 'white'}>{user.name}</span>
               <p class="time">10:56</p>
             </div>
             <div class="message">

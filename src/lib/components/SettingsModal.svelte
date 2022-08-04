@@ -38,13 +38,13 @@
   // onAuthStateChanged(auth, _user => user = _user)
 
   const toggleTheme = () => {
-    // theme = !theme;
-    // if (theme) setTheme("dark");
-    // if (!theme) setTheme("light");
+    theme = !theme;
+    if (theme) setTheme("dark");
+    if (!theme) setTheme("light");
 
-    $isDarkMode = !$isDarkMode
-    if ($isDarkMode) $mode = 'dark'
-    if (!$isDarkMode) $mode = 'light'
+    // $isDarkMode = !$isDarkMode
+    // if ($isDarkMode) $mode = 'dark'
+    // if (!$isDarkMode) $mode = 'light'
   };
 
   const logout = () => {
@@ -234,8 +234,8 @@
       </li>
       <li class="theme" on:click={toggleTheme}>
         <div class="content">
-          <!-- {#if $themeStore.theme === "light"} -->
-          {#if $mode === "light"}
+          {#if $themeStore.theme === "light"}
+          <!-- {#if $mode === "light"} -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="ionicon"

@@ -138,26 +138,26 @@
   <title>Sveltechat</title>
 </svelte:head>
 
-<SvelteTheme />
+<SvelteTheme enableSystem="false/>
 <div class="wrapper" on:click={closeModal}>
+  <!-- style:background={
+    $mode === "dark" ? 
+      "#1F232F"
+    : $page.url.pathname === "/" ?
+      "#ebebeb"
+    : $currentSelectedUser?.bgColor
+  }     -->
   <div
     class="inner-wrapper"
     style:display={$page.url.pathname === "/login" ? "block" : "flex"}
     style:background={
-      $mode === "dark" ? 
-        "#1F232F"
-      : $page.url.pathname === "/" ?
-        "#ebebeb"
-      : $currentSelectedUser?.bgColor
-    }    
-  >
-    <!-- style:background={
       $themeStore.theme === "dark" ? 
         "#1F232F"
       : $page.url.pathname === "/" ?
         "#ebebeb"
       : $currentSelectedUser?.bgColor
-    }     -->
+    }        
+  >
     <SettingsModal />
     <div
       class="leftSide"
