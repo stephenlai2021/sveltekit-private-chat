@@ -106,6 +106,7 @@
 
   $: if (user) $loginFormShow = false;
   $: if (!user) $loginFormShow = true;
+
   $: if (browser) {
     window.addEventListener("online", () => {
       $connection = true;
@@ -139,7 +140,7 @@
 </svelte:head>
 
 <!-- <SvelteTheme enableSystem={false} forcedTheme={'light'} /> -->
-<SvelteTheme />
+<SvelteTheme enableSystem={false} />
 <div class="wrapper" on:click={closeModal}>
   <div
     class="inner-wrapper"
