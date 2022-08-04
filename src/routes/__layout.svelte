@@ -63,7 +63,7 @@
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
   import LoadingModal from "$lib/components/LoadingModal.svelte";
 
-  $themeStore.enableSystem = false
+  // $themeStore.enableSystem = false
   
   let user = null;
   let users = null;
