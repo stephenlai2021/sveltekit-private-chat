@@ -248,12 +248,11 @@
     /* border: 1px solid; */
   }
 
-  .icon-close {
+  /* .icon-close {
     width: 100%;
     text-align: right;
     padding: 5px;
-    /* border: 1px solid; */
-  }
+  } */
 
   .info-message {
     margin-top: 10px;

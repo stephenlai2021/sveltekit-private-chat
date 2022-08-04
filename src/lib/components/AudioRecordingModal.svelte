@@ -225,12 +225,12 @@
     width: 120px;
   }
 
-  .icon-close {
+  /* .icon-close {
     position: absolute;
     right: 5px;
     top: 5px;
     color: black;
-  }
+  } */
 
   .audio-modal {
     display: flex;

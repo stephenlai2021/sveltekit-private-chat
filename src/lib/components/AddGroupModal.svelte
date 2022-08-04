@@ -447,10 +447,10 @@
     border: 1px solid;
   }
 
-  .avatar-section img {
+  /* .avatar-section img {
     width: 120px;
     height: 120px;
-  }
+  } */
 
   .checkbox:hover {
     cursor: pointer;

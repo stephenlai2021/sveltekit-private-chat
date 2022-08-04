@@ -259,12 +259,12 @@
     font-weight: 400;
   }
 
-  .icon-expand {
+  /* .icon-expand {
     background: rgba(0, 0, 0, 0.5);
     color: rgba(255, 255, 255, 0.5);
     color: white;
     border-radius: 2px;
-  }
+  } */
 
   .chatBox {
     position: absolute;
