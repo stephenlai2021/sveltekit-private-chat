@@ -137,7 +137,7 @@
 </svelte:head>
 
 <!-- <SvelteTheme enableSystem={false} forcedTheme={'light'} /> -->
-<SvelteTheme enableSystem={false} defaultTheme={'light'} />
+<SvelteTheme enableSystem={false} defaultTheme={'light'} forcedTheme={'light'} />
 <div class="wrapper" on:click={closeModal}>
   <div
     class="inner-wrapper"
