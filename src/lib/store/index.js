@@ -99,18 +99,11 @@ currentSelectedUser.subscribe(
   (val) => browser && localStorage.setItem("selected user", val)
 );
 
-export const isDarkMode = writable(
-  browser && localStorage.getItem("mode") || false
+export const selectedUsername = writable(
+  browser && localStorage.getItem("selected user name") || {}
 );
 selectedUsername.subscribe(
-  (val) => browser && localStorage.setItem("mode", val)
-);
-
-export const mode = writable(
-  browser && localStorage.getItem("mode") || "light"
-);
-selectedUsername.subscribe(
-  (val) => browser && localStorage.setItem("mode", val)
+  (val) => browser && localStorage.setItem("selected user name", val)
 );
 
 export const selectedUsername = writable(
