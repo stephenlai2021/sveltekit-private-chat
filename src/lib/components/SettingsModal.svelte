@@ -37,7 +37,11 @@
 
   const toggleTheme = () => {
     theme = !theme;
-    if (theme) setTheme("dark");
+    if (theme) {
+      setTheme("dark");
+      $themeStore.forcedTheme = 'dark'
+      $themeStore.enableSystem = true
+    }
     if (!theme) setTheme("light");
   };
 
