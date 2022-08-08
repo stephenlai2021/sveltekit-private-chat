@@ -63,6 +63,11 @@
       {/if}
       <b>1</b>
     </div>
+
+    <!-- <div class="message">
+      <p>hi, there !</p>
+      <b>1</b>
+    </div> -->
   </div>
 </div>
 
@@ -135,6 +140,9 @@
   .message {
     display: flex;
     justify-content: space-between;
+    height: 22px;
+    position: relative;
+    /* border: 1px solid; */
   }
 
   .message p {
@@ -146,6 +154,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     color: gray;
+    position: absolute;
   }
 
   .block.unread .details .message b {
@@ -159,5 +168,7 @@
     place-content: center;
     font-size: 0.75em;
     margin-right: 3px;
+    position: absolute;
+    right: 0px;
   }
 </style>
