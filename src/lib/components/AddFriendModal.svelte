@@ -88,6 +88,7 @@
   class="search-friend-modal"
   transition:fly={{ y: 100, duration: 100, delay: 100 }}
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+  on:click|stopPropagation
 >
   <div class="top">
     <svg

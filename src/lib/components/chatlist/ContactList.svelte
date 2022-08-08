@@ -1,15 +1,13 @@
 <script>
   import {
-    allUsers,
-    bgColor,
     mobile,
     keyword,
     isMobile,
+    lastMsg,
     loggedinUser,
     profileUpdated,
     loginUserEmail,
     selectedUsername,
-    // currentSelectedUser,
     showSettingsModal,
     privateChat,
     groupChat,
@@ -22,63 +20,103 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import themeStore from "svelte-themes";
-  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import { onMount } from "svelte";
+
+  // components
+  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
+  import User from "$lib/components/chatlist/User.svelte";
+  import LastMsg from "$lib/components/chatlist/LastMsg.svelte";
 
   let users = [];
   let ready = false;
   let filteredUsers = [];
-  let unsubUsers = null
+  let message = "";
+  let lastMsgs = [];
 
   const selectUser = (selectedUser) => {
     $currentContact = selectedUser;
-    console.log(`${selectedUser.name} is selected`);
     $selectedUsername = selectedUser.name;
-
     goto(`/${$selectedUsername}`);
   };
 
   onMount(() => {
-    
-  })
-
-  $: if ($isMobile || $mobile) $currentContact = null;
-
-  $: if ($profileUpdated) {
-    console.log("user profile updated detected !");
-    $loggedinUser = auth.currentUser;
-  }
-  
-  $: if ($loggedinUser && $loginUserEmail) {
-    ready = true;
-    console.log("user is ready");
-    console.log("user", $loggedinUser);   
-  }
-  
-  $: if (ready) {
+    // get users
     let usersRef = collection(db, "whatzapp_users");
-    const q = query(
+    let userQuery = query(
       usersRef,
       where("contactList", "array-contains", $loginUserEmail)
     );
-
-    // unsubUsers is function in here
-    const unsubUsers = onSnapshot(q, (snapshot) => {
+    const unsubUsers = onSnapshot(userQuery, (snapshot) => {
       let tempUsers = [];
       snapshot.docs.forEach((doc) => {
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
-      $allUsers = tempUsers;
-      console.log("initialzie user list | snapshot", users);
-      
-      // stop listen to change 
-      unsubUsers()
-      ready = false
-      console.log('stop listen to change')
+      console.log("users | snapshot", users);
+      return () => unsubUsers();
     });
-    ready = false;
-  }
+
+    // get last messages
+    let lastMsgRef = collection(db, "lastMsg");
+    let lastMsgQuery = query(
+      lastMsgRef,
+      where("from", "==", $loggedinUser.displayName)
+    );
+    const unsubLastMsgs = onSnapshot(lastMsgQuery, (snapshot) => {
+      let tempLastMsgs = [];
+      snapshot.docs.forEach((doc) => {
+        tempLastMsgs.push(doc.data());
+      });
+      lastMsgs = tempLastMsgs;
+      console.log("last messages | snapshot", lastMsgs);
+      return () => unsubLastMsgs();
+    });
+  });
+
+  $: if ($isMobile || $mobile) $currentContact = null;
+
+  $: if ($profileUpdated) $loggedinUser = auth.currentUser;
+
+  // $: if ($loggedinUser && $loginUserEmail) ready = true;
+
+  // $: if (ready) {
+  //   let usersRef = collection(db, "whatzapp_users");
+  //   let userQuery = query(
+  //     usersRef,
+  //     where("contactList", "array-contains", $loginUserEmail)
+  //   );
+  //   const unsubUsers = onSnapshot(userQuery, (snapshot) => {
+  //     let tempUsers = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       tempUsers.push({ ...doc.data() });
+  //     });
+  //     users = tempUsers;
+  //     console.log("initialzie user list | snapshot", users);
+  //     unsubUsers();
+  //     console.log("stop listen to users");
+  //   });
+
+  //   let lastMsgRef = collection(db, "lastMsg");
+  //   let lastMsgQuery = query(
+  //     lastMsgRef,
+  //     where("from", "==", $loggedinUser.displayName)
+  //   );
+  //   const lastMsgs = onSnapshot(lastMsgQuery, (snapshot) => {
+  //     let tempLastMsgs = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       console.log(
+  //         `${doc.data().from} to ${doc.data().to}~ ${doc.data().text}`
+  //       );
+  //       tempLastMsgs.push(doc.data());
+  //     });
+  //     lastMsgs = tempLastMsgs;
+  //     console.log("last messages", lastMsgs);
+  //     unsubLastMsg();
+  //     console.log("stop listen to last messages");
+  //   });
+
+  //   ready = false;
+  // }
 
   $: filteredUsers = users.filter((usesr) => {
     return (
@@ -94,41 +132,12 @@
   <div class="chatlist" transition:fade={{ duration: 100 }}>
     {#if users.length}
       {#each filteredUsers as user}
-        <div
-          class="block"
-          class:unread={user.unread}
-          on:click={() => selectUser(user)}
-          style:border-radius={($currentContact === user && !$mobile) ||
-          (user.name === $page.params.userId && !$mobile)
-            ? "8px"
-            : "0"}
-          style:background={($currentContact === user && !$mobile) ||
-          (user.name === $page.params.userId && !$mobile)
-            ? $themeStore.theme === "dark"
-              ? "#3a3f50"
-              : "rgba(235, 235, 235, 1)"
-            : $currentContact != user && !$mobile
-            ? $themeStore.theme === "dark"
-              ? "#292F3F"
-              : "transparent"
-            : ""}
-        >
-          <div class="imgbx">
-            <img src={user.avatar} alt="" class="cover" />
-            <div class={user.isOnline ? "status online" : "status offline"} />
-          </div>
-          <div class="details">
-            <div class="listHead">
-              <span class="user-title">{user.name}</span>
-              <p class="time">10:56</p>
-            </div>
-            <div class="message">
-              <p>How to make Whatsapp clone using html and css</p>
-              <b>1</b>
-            </div>
-          </div>
-        </div>
+        <User {user} {lastMsgs} />        
       {/each}
+
+      <!-- {#each lastMsgs as msg}
+        <LastMsg {msg} />
+      {/each} -->
     {:else}
       <div class="loading">
         <Skeleton />
@@ -166,7 +175,7 @@
     overflow: auto;
     border-radius: 8px;
     /* border: 1px solid; */
-  }  
+  }
 
   ::-webkit-scrollbar {
     width: 0px;
@@ -244,6 +253,7 @@
   .message {
     display: flex;
     justify-content: space-between;
+    /* border: 1px solid; */
   }
 
   .message p {

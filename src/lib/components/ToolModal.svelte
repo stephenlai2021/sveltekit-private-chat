@@ -52,11 +52,12 @@
     });
   };
 
-  $: if ($currentSelectedUser) {
-    console.log('current selected user: ', $currentSelectedUser.name)
-    console.log('current selected user: ', $currentSelectedUser)
-  }
-  $: if ($currentSelectedUser) console.log('current selected user: ', $currentSelectedUser)
+  // $: if ($currentSelectedUser) {
+  //   console.log('current selected user: ', $currentSelectedUser.name)
+  //   console.log('current selected user: ', $currentSelectedUser)
+  // }
+
+  // $: if ($currentSelectedUser) console.log('current selected user: ', $currentSelectedUser)
 
   $: if ($page.url.pathname === "/") {
     $currentSelectedUser = {}

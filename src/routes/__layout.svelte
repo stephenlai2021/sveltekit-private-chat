@@ -63,8 +63,6 @@
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
   import LoadingModal from "$lib/components/LoadingModal.svelte";
 
-  // $themeStore.enableSystem = false
-  
   let user = null;
   let users = null;
   let colRef = collection(db, "whatzapp_users");
@@ -98,7 +96,7 @@
       if (!user) goto("/login");
       else {
         $loggedinUser = user;
-        console.log("get loggedin user name: ", $loggedinUser.displayName);
+        console.log("loggedin user:", $loggedinUser.displayName);
       }
     });
     $currentSelectedUser = null;
@@ -131,28 +129,22 @@
   $: if ($themeStore.theme === "dark") console.log("you are in light mode");
   $: if ($themeStore.theme === "light") console.log("you are in dark mode");
   $: if ($themeStore.theme === "system") console.log("you are in system mode");
-
-  // $: if ($page.url.pathname === "/") $currentSelectedUser = {}
 </script>
 
 <svelte:head>
   <title>Sveltechat</title>
 </svelte:head>
 
-<!-- <SvelteTheme forcedTheme={'light'} /> -->
-<!-- <SvelteTheme enableSystem={false} /> -->
 <SvelteTheme />
 <div class="wrapper" on:click={closeModal}>
   <div
     class="inner-wrapper"
     style:display={$page.url.pathname === "/login" ? "block" : "flex"}
-    style:background={
-      $themeStore.theme === "dark" ? 
-        "#1F232F"
-      : $page.url.pathname === "/" ?
-        "#ebebeb"
-      : $currentSelectedUser?.bgColor
-    }    
+    style:background={$themeStore.theme === "dark"
+      ? "#1F232F"
+      : $page.url.pathname === "/"
+      ? "#ebebeb"
+      : $currentSelectedUser?.bgColor}
   >
     <SettingsModal />
     <div

@@ -57,7 +57,7 @@
       });
       messages = msgs;
       chat.scrollTo(0, chat.scrollHeight)
-      console.log("messages:", messages);
+      console.log("messages | snapshot", messages);
       return () => unsubMsgs();
     });
     matched = false;

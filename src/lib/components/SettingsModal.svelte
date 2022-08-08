@@ -20,12 +20,6 @@
   import { onAuthStateChanged, updateProfile } from "firebase/auth";
   import { doc, updateDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-  import CameraModal from "$lib/components/CameraModal.svelte";
-  // import { handleFileChange } from '$lib/functions/handleFileChange'
-
-  // export let user;
-
-  // const { file, fileError } = handleFileChange()
 
   let url = null;
   let file = null;
@@ -225,7 +219,7 @@
       </li>
       <li class="theme" on:click={toggleTheme}>
         <div class="content">
-          {#if $themeStore.theme === "light" || $themeStore.theme === "system"}
+          {#if $themeStore.theme === "light"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="ionicon"

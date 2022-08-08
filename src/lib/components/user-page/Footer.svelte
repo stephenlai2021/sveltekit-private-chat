@@ -3,6 +3,7 @@
   import { db, storage } from "$lib/firebase/client";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import {
+    lastMsg,
     isMobile,
     showActionMenu,
     showCameraModal,
@@ -17,13 +18,8 @@
     doc,
     addDoc,
     setDoc,
-    updateDoc,
-    query,
-    where,
-    orderBy,
     Timestamp,
-    collection,
-    onSnapshot,
+    collection
   } from "firebase/firestore";
 
   let url = null;
@@ -77,6 +73,7 @@
     messageSent = $message;
     $message = "";
 
+    // combined id of two users
     let msgId =
       $loggedinUser.displayName > $selectedUsername
         ? `${$loggedinUser.displayName} & ${$selectedUsername}`
@@ -90,19 +87,34 @@
         to: $selectedUsername,
         createdAt: Timestamp.fromDate(new Date()),
       });
-      messageSent = "";
-      console.log("message created successfully 😁");
 
-      // await setDoc(doc(db, 'lastMsg', msgId), {
-      //   text: messageSent,
-      //   from: $loggedinUser.displayName,
-      //   to: $selectedUsername,
-      //   createdAt: Timestamp.fromDate(new Date()),
-      //   unread: true
-      // })
+      await setDoc(doc(db, 'lastMsg', msgId), {
+        text: messageSent,
+        from: $loggedinUser.displayName,
+        to: $selectedUsername,
+        createdAt: Timestamp.fromDate(new Date()),
+        unread: true
+      })
+
+      $lastMsg = true
+      messageSent = "";
+      console.log("message created successfully 😁");      
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
+
+    // try {
+    //   await setDoc(doc(db, 'lastMsg', msgId), {
+    //     text: messageSent,
+    //     from: $loggedinUser.displayName,
+    //     to: $selectedUsername,
+    //     createdAt: Timestamp.fromDate(new Date()),
+    //     unread: true
+    //   })
+    //   $lastMsg = true
+    // } catch (error) {
+    //   console.log("ooh, something went wrong 😥", error);
+    // }
   };
 </script>
 
@@ -316,16 +328,12 @@
     align-items: center;
     padding-left: 15px;
     backdrop-filter: blur(20px);
-    /* border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px; */
     border-radius: 8px;
-    /* border: 1px solid; */
   }
 
   .chatbox_input input {
     width: 100%;
     height: 100%;
-    /* padding: 0px 40px; */
     padding-left: 40px;
     padding-right: 35px;
     border: none;
@@ -416,7 +424,6 @@
 
   @media (max-width: 800px) {
     .chatbox_input {
-      /* padding-left: 10px; */
       bottom: 0;
       border-radius: 0;
     }

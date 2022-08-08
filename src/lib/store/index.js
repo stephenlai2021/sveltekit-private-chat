@@ -10,6 +10,9 @@ import {
 
 let colRef = collection(db, "whatzapp_users");
 
+
+export const lastMsgArray = writable([])
+export const lastMsg = writable(false)
 export const foundUser = writable({})
 export const isSignout = writable(false)
 export const selectedMembers = writable([])
