@@ -57,7 +57,7 @@
       });
       messages = msgs;
       chat.scrollTo(0, chat.scrollHeight)
-      console.log("messages | snapshot", messages);
+      console.log("dialogue", messages);
       return () => unsubMsgs();
     });
     matched = false;
@@ -78,9 +78,9 @@
     audio.pause();
   };
 
-  $: if (isAudioPlayed) console.log("audio is played");
+  // $: if (isAudioPlayed) console.log("audio is played");
 
-  $: if (!isAudioPlayed) console.log("audio is paused");
+  // $: if (!isAudioPlayed) console.log("audio is paused");
 
   onMount(() => {
     const audio = new Audio();

@@ -2,25 +2,32 @@
   import { fly } from "svelte/transition";
   import {
     allUsers,
+    loggedinUser,
     showAddFriendModal,
-    showSearchFriendModal
+    showSearchFriendModal,
   } from "$lib/store";
   import { getAllDocs } from "$lib/functions/getAllDocs";
-  import { doc, updateDoc } from "firebase/firestore";
+  import { doc, getDoc, updateDoc } from "firebase/firestore";
   import { onAuthStateChanged } from "firebase/auth";
   import { db, auth } from "$lib/firebase/client";
   import themeStore from "svelte-themes";
+  import { onMount } from "svelte";
 
   let url = null;
   let user = null;
-  let users = [];
+  let foundUsers = [];
   let username = null;
   let notFound = false;
   let sameUser = false;
   let matchedUser = false;
+  let me = null;
 
-  onAuthStateChanged(auth, (_user) => {
-    user = _user;
+  onMount(async () => {
+    let loggedinUserRef = doc(db, "whatzapp_users", $loggedinUser.email);
+
+    const docSnap = await getDoc(loggedinUserRef);
+    console.log("loggedinUser doc", docSnap.data());
+    me = docSnap.data();
   });
 
   const getUser = async () => {
@@ -32,25 +39,16 @@
       "==",
       username,
     ]);
-    users = docs;
-    if (!users.length) notFound = true;
+    foundUsers = docs;
+    if (!foundUsers[0]) {
+      notFound = true;
+      sameUser = false;
+    }
+    if (foundUsers[0]) notFound = false;
   };
 
+  // clear same user
   $: if (!username) sameUser = false;
-
-  $: if (user && users && !notFound) {
-    console.log(`${users[0].name} is found`);
-    console.log(`loggedin user name is ${user.displayName}`);
-    url = users[0].avatar;
-
-    if (users[0].name === user.displayName) {
-      console.log("this is your name 🤗");
-      users = [];
-      sameUser = true;
-    }
-  } else {
-    console.log(`user cannot be found ! 😥`);
-  }
 
   const handleSearch = (e) => {
     if (e.charCode === 13) getUser();
@@ -58,29 +56,50 @@
 
   const addUser = async () => {
     $showSearchFriendModal = false;
-    let userDoc = doc(db, "whatzapp_users", users[0].email);
+    $showAddFriendModal = false;
+
+    // add loggedin user to found usesr's contact list
+    let userDoc = doc(db, "whatzapp_users", foundUsers[0].email);
     await updateDoc(userDoc, {
-      contactList: users[0].contactList.includes(user.email)
-        ? [...users[0].contactList]
-        : [...users[0].contactList, user.email],
+      contactList: foundUsers[0].contactList.includes($loggedinUser.email)
+        ? [...foundUsers[0].contactList]
+        : [...foundUsers[0].contactList, $loggedinUser.email],
     });
-    console.log(`${users[0].name} is successfully added to contact list 😁}`);
+    console.log(
+      `${foundUsers[0].name} is successfully added to contact list 😁}`
+    );
+
+    // add found user to loggedin user's contact list
+    let loggedinUserRef = doc(db, "whatzapp_users", $loggedinUser.email);
+    await updateDoc(loggedinUserRef, {
+      contactList: me.contactList.includes(foundUsers[0].email)
+        ? [...me.contactList]
+        : [...me.contactList, foundUsers[0].email],
+    });
+    console.log(`${me.name} is successfully added to contact list 😁}`);
+
   };
 
-  $: if (users && users.length) {
-    url = users[0].avatar;
-
-    // compare searched user with contactlist
-    if ($allUsers.find((user) => user.name === users[0].name)) {
+  $: if (foundUsers && foundUsers.length) {
+    url = foundUsers[0].avatar;
+    if ($allUsers.find((user) => user.name === foundUsers[0].name)) {
       console.log("find matched user");
       matchedUser = true;
+    } else {
+      matchedUser = false;
+    }
+    if (foundUsers[0].name === $loggedinUser.displayName) {
+      sameUser = true;
+      foundUsers = [];
+    } else {
+      sameUser = false;
     }
   }
 
   $: if (!username) {
-    users = null;
+    foundUsers = null;
     notFound = false;
-    // sameUser = false
+    sameUser = false;
   }
 </script>
 
@@ -114,6 +133,32 @@
 
   <div class="search_user">
     <div class="search-user-wrapper">
+      <div class="clear-text" on:click={() => username = ''}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon icon-close"
+          viewBox="0 0 512 512"
+          width="18"
+          height="18"
+          fill="currentColor"
+        >
+          <path
+            d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+            fill="none"
+            stroke="currentColor"
+            stroke-miterlimit="10"
+            stroke-width="32"
+          />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M320 320L192 192M192 320l128-128"
+          />
+        </svg>
+      </div>
       <input
         type="text"
         placeholder="Search friend"
@@ -149,8 +194,8 @@
     </div>
   </div>
 
-  {#if users}
-    {#each users as user}
+  {#if foundUsers}
+    {#each foundUsers as user}
       <div class="users">
         <div class="avatar-wrapper">
           {#if user.avatar}
@@ -164,9 +209,10 @@
           <h4 style:text-align="center">{user.name}</h4>
         </div>
         {#if matchedUser}
-          <span style:margin-top="20px"
-            >This user is alreay in contact list</span
-          >
+          <span style:margin-top="20px">
+            <!-- This user is alreay in contact list -->
+            {foundUsers[0].name} is already your friend
+          </span>
         {:else}
           <div class="add-friend-wrapper" on:click={addUser}>
             <svg
@@ -176,7 +222,6 @@
               width="24"
               height="24"
               fill="currentColor"
-              on:click={addUser}
             >
               <path
                 fill="none"
@@ -218,10 +263,19 @@
 </div>
 
 <style>
+  .icon-close {
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+  }
+
   .add-friend-wrapper {
     display: flex;
     align-items: center;
     margin-top: 30px;
+    cursor: pointer;
     /* border: 1px solid; */
   }
 
@@ -256,7 +310,7 @@
   } */
 
   .info-message {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   .userimg {
@@ -268,6 +322,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    /* position: absolute; */
     /* border: 1px solid; */
   }
 
@@ -297,7 +352,7 @@
     padding: 10px;
     border-radius: 10px;
     font-size: 14px;
-    padding-left: 15px;
+    padding-left: 30px;
   }
 
   .search-user-wrapper {

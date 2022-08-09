@@ -126,9 +126,9 @@
     });
     window.addEventListener("resize", () => desktopOrMobile());
   }
-  $: if ($themeStore.theme === "dark") console.log("you are in light mode");
-  $: if ($themeStore.theme === "light") console.log("you are in dark mode");
-  $: if ($themeStore.theme === "system") console.log("you are in system mode");
+  // $: if ($themeStore.theme === "dark") console.log("you are in light mode");
+  // $: if ($themeStore.theme === "light") console.log("you are in dark mode");
+  // $: if ($themeStore.theme === "system") console.log("you are in system mode");
 </script>
 
 <svelte:head>

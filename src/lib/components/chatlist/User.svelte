@@ -8,9 +8,15 @@
   import themeStore from "svelte-themes";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
+  import { onMount } from 'svelte'
+  import { onSnapshot, doc } from 'firebase/firestore'
+  import { db } from '$lib/firebase/client'
 
   export let user;
+  // export let message
   export let lastMsgs;
+  
+  // let message = ''
 
   const selectUser = (selectedUser) => {
     $currentContact = selectedUser;
@@ -19,6 +25,18 @@
 
     goto(`/${$selectedUsername}`);
   };
+
+  // onMount(() => {
+  //   let msgId =
+  //     $loggedinUser.displayName > $selectedUsername
+  //       ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+  //       : `${$selectedUsername} & ${$loggedinUser.displayName}`;
+  //   let lastMsgRef = doc(db, 'lastMsg', msgId)
+  //   const unsubLastMsg = onSnapshot(lastMsgRef, doc => {
+  //     message = doc.data().text
+  //     return () => unsubLastMsg()
+  //   })
+  // })
 </script>
 
 <div
@@ -53,14 +71,18 @@
       {#if lastMsgs.length}
         {#each lastMsgs as msg}
           {#if user.name === msg.to}
-            {#if msg.from === $loggedinUser.displayName}
+            <!-- {#if msg.from === $loggedinUser.displayName}
               <p>me:{msg.text}</p>
             {:else}
               <p>{msg.text}</p>
-            {/if}
+            {/if} -->
+            <p>{msg.from === $loggedinUser.displayName ? 'me:' : ''} {msg.text}</p>
           {/if}
         {/each}
+      {:else}
+        <p>New message would appear here</p>
       {/if}
+      <!-- <p>{message}</p> -->
       <b>1</b>
     </div>
 

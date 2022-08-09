@@ -4,6 +4,7 @@
     keyword,
     isMobile,
     lastMsg,
+    allUsers,
     loggedinUser,
     profileUpdated,
     loginUserEmail,
@@ -14,7 +15,7 @@
     publicChat,
     currentContact,
   } from "$lib/store";
-  import { collection, onSnapshot, query, where } from "firebase/firestore";
+  import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
   import { auth, db } from "$lib/firebase/client";
   import { fade } from "svelte/transition";
   import { page } from "$app/stores";
@@ -52,7 +53,8 @@
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
-      console.log("users | snapshot", users);
+      $allUsers = tempUsers
+      console.log("contact list", users);
       return () => unsubUsers();
     });
 
@@ -66,57 +68,28 @@
       let tempLastMsgs = [];
       snapshot.docs.forEach((doc) => {
         tempLastMsgs.push(doc.data());
+        // console.log(`${doc.data().from} to ${doc.data().to}~ ${doc.data().text}`)
       });
       lastMsgs = tempLastMsgs;
-      console.log("last messages | snapshot", lastMsgs);
+      console.log("last messages", lastMsgs);
       return () => unsubLastMsgs();
     });
+
+    // get last message
+    let msgId =
+      $loggedinUser.displayName > $selectedUsername
+        ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+        : `${$selectedUsername} & ${$loggedinUser.displayName}`;
+    let msgRef = doc(db, 'lastMsg', msgId)
+    const unsubLastMsg = onSnapshot(msgRef, doc => {
+      message = doc.data().text
+      return () => unsubLastMsg()
+    })
   });
 
   $: if ($isMobile || $mobile) $currentContact = null;
 
   $: if ($profileUpdated) $loggedinUser = auth.currentUser;
-
-  // $: if ($loggedinUser && $loginUserEmail) ready = true;
-
-  // $: if (ready) {
-  //   let usersRef = collection(db, "whatzapp_users");
-  //   let userQuery = query(
-  //     usersRef,
-  //     where("contactList", "array-contains", $loginUserEmail)
-  //   );
-  //   const unsubUsers = onSnapshot(userQuery, (snapshot) => {
-  //     let tempUsers = [];
-  //     snapshot.docs.forEach((doc) => {
-  //       tempUsers.push({ ...doc.data() });
-  //     });
-  //     users = tempUsers;
-  //     console.log("initialzie user list | snapshot", users);
-  //     unsubUsers();
-  //     console.log("stop listen to users");
-  //   });
-
-  //   let lastMsgRef = collection(db, "lastMsg");
-  //   let lastMsgQuery = query(
-  //     lastMsgRef,
-  //     where("from", "==", $loggedinUser.displayName)
-  //   );
-  //   const lastMsgs = onSnapshot(lastMsgQuery, (snapshot) => {
-  //     let tempLastMsgs = [];
-  //     snapshot.docs.forEach((doc) => {
-  //       console.log(
-  //         `${doc.data().from} to ${doc.data().to}~ ${doc.data().text}`
-  //       );
-  //       tempLastMsgs.push(doc.data());
-  //     });
-  //     lastMsgs = tempLastMsgs;
-  //     console.log("last messages", lastMsgs);
-  //     unsubLastMsg();
-  //     console.log("stop listen to last messages");
-  //   });
-
-  //   ready = false;
-  // }
 
   $: filteredUsers = users.filter((usesr) => {
     return (
@@ -132,7 +105,8 @@
   <div class="chatlist" transition:fade={{ duration: 100 }}>
     {#if users.length}
       {#each filteredUsers as user}
-        <User {user} {lastMsgs} />        
+        <User {user} {lastMsgs} />
+        <!-- <User {user} {message} />         -->
       {/each}
 
       <!-- {#each lastMsgs as msg}

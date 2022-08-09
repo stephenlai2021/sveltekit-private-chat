@@ -46,7 +46,7 @@
       selectedUser = tempUsers[0];
       $currentSelectedUser = tempUsers[0];
       $selectedUserReady = true;
-      console.log("selected user | snapshot:", selectedUser.name);
+      console.log("current contact:", selectedUser.name);
       return () => unsub();
     });
     matched = false;
