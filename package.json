@@ -23,6 +23,7 @@
   "type": "module",
   "dependencies": {
     "cookie": "^0.4.2",
+    "date-fns": "^2.29.1",
     "firebase": "^9.6.7",
     "firebase-admin": "^10.0.2",
     "js-cookie": "^3.0.1",

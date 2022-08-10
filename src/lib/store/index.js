@@ -11,6 +11,7 @@ import {
 let colRef = collection(db, "whatzapp_users");
 
 
+// export const selectedUseremail = writable(null)
 export const lastMsgArray = writable([])
 export const lastMsg = writable(false)
 export const foundUser = writable({})
@@ -107,6 +108,13 @@ export const selectedUsername = writable(
 );
 selectedUsername.subscribe(
   (val) => browser && localStorage.setItem("selected user name", val)
+);
+
+export const selectedUseremail = writable(
+  browser && localStorage.getItem("selected user email") || {}
+);
+selectedUseremail.subscribe(
+  (val) => browser && localStorage.setItem("selected user email", val)
 );
 
 export const imageTitle = writable(

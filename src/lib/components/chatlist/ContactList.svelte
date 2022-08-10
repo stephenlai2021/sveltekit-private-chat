@@ -31,7 +31,7 @@
   let users = [];
   let ready = false;
   let filteredUsers = [];
-  let message = "";
+  let data = null;
   let lastMsgs = [];
 
   const selectUser = (selectedUser) => {
@@ -60,31 +60,15 @@
 
     // get last messages
     let lastMsgRef = collection(db, "lastMsg");
-    let lastMsgQuery = query(
-      lastMsgRef,
-      where("from", "==", $loggedinUser.displayName)
-    );
-    const unsubLastMsgs = onSnapshot(lastMsgQuery, (snapshot) => {
+    const unsubLastMsgs = onSnapshot(lastMsgRef, (snapshot) => {
       let tempLastMsgs = [];
       snapshot.docs.forEach((doc) => {
         tempLastMsgs.push(doc.data());
-        // console.log(`${doc.data().from} to ${doc.data().to}~ ${doc.data().text}`)
       });
       lastMsgs = tempLastMsgs;
       console.log("last messages", lastMsgs);
       return () => unsubLastMsgs();
     });
-
-    // get last message
-    let msgId =
-      $loggedinUser.displayName > $selectedUsername
-        ? `${$loggedinUser.displayName} & ${$selectedUsername}`
-        : `${$selectedUsername} & ${$loggedinUser.displayName}`;
-    let msgRef = doc(db, 'lastMsg', msgId)
-    const unsubLastMsg = onSnapshot(msgRef, doc => {
-      message = doc.data().text
-      return () => unsubLastMsg()
-    })
   });
 
   $: if ($isMobile || $mobile) $currentContact = null;
@@ -106,12 +90,7 @@
     {#if users.length}
       {#each filteredUsers as user}
         <User {user} {lastMsgs} />
-        <!-- <User {user} {message} />         -->
       {/each}
-
-      <!-- {#each lastMsgs as msg}
-        <LastMsg {msg} />
-      {/each} -->
     {:else}
       <div class="loading">
         <Skeleton />
@@ -159,7 +138,7 @@
     background: inherit;
   }
 
-  .block {
+  /* .block {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,7 +206,6 @@
   .message {
     display: flex;
     justify-content: space-between;
-    /* border: 1px solid; */
   }
 
   .message p {
@@ -252,7 +230,7 @@
     place-content: center;
     font-size: 0.75em;
     margin-right: 3px;
-  }
+  } */
 
   @media (max-width: 800px) {
     .chatlist {

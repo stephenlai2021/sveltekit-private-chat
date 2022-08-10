@@ -22,6 +22,7 @@
   import { onMount, beforeUpdate, afterUpdate } from "svelte";
   import { browser } from "$app/env";
   import AudioPlayer from "$lib/components/AudioPlayer.svelte"
+  import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
   let y
   let q = null;
@@ -57,7 +58,7 @@
       });
       messages = msgs;
       chat.scrollTo(0, chat.scrollHeight)
-      console.log("dialogue", messages);
+      console.log("chat messages", messages);
       return () => unsubMsgs();
     });
     matched = false;
@@ -77,10 +78,6 @@
     // audio.addEventListener('loadeddata', () => audio.volume = .75)
     audio.pause();
   };
-
-  // $: if (isAudioPlayed) console.log("audio is played");
-
-  // $: if (!isAudioPlayed) console.log("audio is paused");
 
   onMount(() => {
     const audio = new Audio();
@@ -132,7 +129,8 @@
             class="showtime"
             style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"}
           >
-            {moment(msg.createdAt.toDate()).format("LT")}
+            <!-- {moment(msg.createdAt.toDate()).format("LT")} -->
+            {formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })}
           </span>
 
           {#if msg.audioURL}
@@ -195,17 +193,20 @@
 
   .message.my_message .showtime {
     position: absolute;
-    left: -60px;
+    left: -105px;
     bottom: 0px;
     width: 55px;
+    width: 100px;
+    /* max-width: 150px; */
     text-align: right;
   }
 
   .message.friend_message .showtime {
     position: absolute;
-    right: -60px;
+    right: -105px;
     bottom: 0px;
     width: 55px;
+    width: 100px;
     text-align: left;
   }
 
@@ -236,8 +237,6 @@
     color: var(--icon-add-color);   
     /* border: 1px solid red; */
   }
-
-
 
   .message-content .message-text {
     /* font-size: 18px;

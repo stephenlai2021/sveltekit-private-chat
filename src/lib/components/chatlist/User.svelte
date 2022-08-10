@@ -4,39 +4,37 @@
     loggedinUser,
     currentContact,
     selectedUsername,
+    selectedUseremail,
   } from "$lib/store";
   import themeStore from "svelte-themes";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { onMount } from 'svelte'
-  import { onSnapshot, doc } from 'firebase/firestore'
-  import { db } from '$lib/firebase/client'
+  import { updateDoc, doc } from "firebase/firestore";
+  import { db } from "$lib/firebase/client";
+  import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
   export let user;
-  // export let message
   export let lastMsgs;
-  
-  // let message = ''
 
-  const selectUser = (selectedUser) => {
+  const selectUser = async (selectedUser) => {
+    // update unread status
+    // let msgId =
+    //   $loggedinUser.displayName > $selectedUsername
+    //     ? `${$loggedinUser.displayName} & ${$selectedUsername}`
+    //     : `${$selectedUsername} & ${$loggedinUser.displayName}`;
+    // await updateDoc(doc(db, 'lastMsg', msgId), {
+    //   unread: false
+    // })
+
     $currentContact = selectedUser;
     $selectedUsername = selectedUser.name;
-    console.log(`${selectedUser.name} is selected`);
+    $selectedUseremail = selectedUser.email;
+
+    // console.log(`${selectedUser.name} is selected`);
+    // console.log(`${selectedUser.email} is selected`);
 
     goto(`/${$selectedUsername}`);
   };
-
-  // onMount(() => {
-  //   let msgId =
-  //     $loggedinUser.displayName > $selectedUsername
-  //       ? `${$loggedinUser.displayName} & ${$selectedUsername}`
-  //       : `${$selectedUsername} & ${$loggedinUser.displayName}`;
-  //   let lastMsgRef = doc(db, 'lastMsg', msgId)
-  //   const unsubLastMsg = onSnapshot(lastMsgRef, doc => {
-  //     message = doc.data().text
-  //     return () => unsubLastMsg()
-  //   })
-  // })
 </script>
 
 <div
@@ -65,31 +63,27 @@
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <p class="time">10:56</p>
+      <!-- <p class="time">{user.createdAt}</p> -->
+      {#each lastMsgs as msg}
+        {#if user.name === msg.from || user.name === msg.to}
+        {#if msg.from === $loggedinUser.displayName || msg.to === $loggedinUser.displayName}
+        <p class="time">{formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })}</p>
+        {/if}
+        {/if}
+      {/each}
     </div>
     <div class="message">
-      {#if lastMsgs.length}
-        {#each lastMsgs as msg}
-          {#if user.name === msg.to}
-            <!-- {#if msg.from === $loggedinUser.displayName}
-              <p>me:{msg.text}</p>
-            {:else}
-              <p>{msg.text}</p>
-            {/if} -->
-            <p>{msg.from === $loggedinUser.displayName ? 'me:' : ''} {msg.text}</p>
+      {#each lastMsgs as msg}
+        {#if user.name === msg.from || user.name === msg.to}
+          {#if msg.from === $loggedinUser.displayName}
+            <p>me: {msg.text}</p>
+          {:else if msg.to === $loggedinUser.displayName}
+            <p>{msg.text}</p>
           {/if}
-        {/each}
-      {:else}
-        <p>New message would appear here</p>
-      {/if}
-      <!-- <p>{message}</p> -->
-      <b>1</b>
+        {/if}
+        <b>1</b>
+      {/each}
     </div>
-
-    <!-- <div class="message">
-      <p>hi, there !</p>
-      <b>1</b>
-    </div> -->
   </div>
 </div>
 
@@ -175,8 +169,23 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    color: gray;
+    color: rgb(83, 81, 81);
     position: absolute;
+  }
+
+  .block .details .message b {
+    background: var(--active-green);
+    background: gray;
+    color: white;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    font-size: 0.75em;
+    margin-right: 3px;
+    position: absolute;
+    right: 0px;
   }
 
   .block.unread .details .message b {

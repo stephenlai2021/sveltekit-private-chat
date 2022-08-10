@@ -5,6 +5,8 @@
   import {
     lastMsg,
     isMobile,
+    loginUserEmail,
+    currentContact,
     showActionMenu,
     showCameraModal,
     showEmojiMenu,
@@ -13,11 +15,13 @@
     selectedImg,
     loggedinUser,
     selectedUsername,
+    selectedUseremail
   } from "$lib/store";
   import {
     doc,
     addDoc,
     setDoc,
+    updateDoc,
     Timestamp,
     collection
   } from "firebase/firestore";
