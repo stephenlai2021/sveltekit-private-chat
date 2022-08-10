@@ -11,7 +11,7 @@
   import { goto } from "$app/navigation";
   import { updateDoc, doc } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
-  import { formatDistanceToNow} from "date-fns";
+  import { formatDistanceToNow } from "date-fns";
 
   export let user;
   export let lastMsgs;
@@ -64,13 +64,13 @@
     <div class="listHead">
       <span class="user-title">{user.name}</span>
       <!-- <p class="time">{user.createdAt}</p> -->
-      {#each lastMsgs as msg}
+      <!-- {#each lastMsgs as msg}
         {#if user.name === msg.from || user.name === msg.to}
         {#if msg.from === $loggedinUser.displayName || msg.to === $loggedinUser.displayName}
         <p class="time">{formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })}</p>
         {/if}
         {/if}
-      {/each}
+      {/each} -->
     </div>
     <div class="message">
       {#each lastMsgs as msg}
