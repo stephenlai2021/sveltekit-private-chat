@@ -11,7 +11,7 @@
   import { goto } from "$app/navigation";
   import { updateDoc, doc } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
-  import formatDistanceToNow from "date-fns/formatDistanceToNow";
+  import { formatDistanceToNow} from "date-fns";
 
   export let user;
   export let lastMsgs;

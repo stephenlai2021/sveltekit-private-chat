@@ -22,7 +22,7 @@
   import { onMount, beforeUpdate, afterUpdate } from "svelte";
   import { browser } from "$app/env";
   import AudioPlayer from "$lib/components/AudioPlayer.svelte"
-  import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+  import { formatDistanceToNow } from 'date-fns'
 
   let y
   let q = null;
