@@ -79,6 +79,8 @@
             <p>me: {msg.text}</p>
           {:else if msg.to === $loggedinUser.displayName}
             <p>{msg.text}</p>
+          {:else}
+          <p></p>
           {/if}
         {/if}
         <b>1</b>
