@@ -89,7 +89,8 @@
   <div class="chatlist" transition:fade={{ duration: 100 }}>
     {#if users.length}
       {#each filteredUsers as user}
-        <User {user} {lastMsgs} />
+        <!-- <User {user} {lastMsgs} /> -->
+        <User {user} />
       {/each}
     {:else}
       <div class="loading">

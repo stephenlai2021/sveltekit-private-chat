@@ -9,12 +9,15 @@
   import themeStore from "svelte-themes";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { updateDoc, doc } from "firebase/firestore";
+  import { updateDoc, doc, collection, onSnapshot } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
   import { formatDistanceToNow } from "date-fns";
+  import { onMount } from 'svelte'
 
   export let user;
-  export let lastMsgs;
+  // export let lastMsgs;
+
+  let lastMsgs
 
   const selectUser = async (selectedUser) => {
     // update unread status
@@ -35,6 +38,20 @@
 
     goto(`/${$selectedUsername}`);
   };
+
+  onMount(() => {
+    // get last messages
+    let lastMsgRef = collection(db, "lastMsg");
+    const unsubLastMsgs = onSnapshot(lastMsgRef, (snapshot) => {
+      let tempLastMsgs = [];
+      snapshot.docs.forEach((doc) => {
+        tempLastMsgs.push(doc.data());
+      });
+      lastMsgs = tempLastMsgs;
+      console.log("last messages", lastMsgs);
+      return () => unsubLastMsgs();
+    });
+  })
 </script>
 
 <div
@@ -73,18 +90,18 @@
       {/each} -->
     </div>
     <div class="message">
-      {#each lastMsgs as msg}
-        {#if user.name === msg.from || user.name === msg.to}
-          {#if msg.from === $loggedinUser.displayName}
-            <p>me: {msg.text}</p>
-          {:else if msg.to === $loggedinUser.displayName}
-            <p>{msg.text}</p>
-          <!-- {:else}
-          <p></p> -->
+      {#if lastMsgs}
+        {#each lastMsgs as msg}
+          {#if user.name === msg.from || user.name === msg.to}
+            {#if msg.from === $loggedinUser.displayName}
+              <p>me: {msg.text}</p>
+            {:else if msg.to === $loggedinUser.displayName}
+              <p>{msg.text}</p>
+            {/if}
           {/if}
-        {/if}
-        <b>1</b>
-      {/each}
+          <b>1</b>
+        {/each}
+      {/if}
     </div>
   </div>
 </div>
