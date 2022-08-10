@@ -63,7 +63,7 @@
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <!-- <p class="time">{user.createdAt}</p> -->
+      <p class="time">{user.createdAt}</p>
       <!-- {#each lastMsgs as msg}
         {#if user.name === msg.from || user.name === msg.to}
         {#if msg.from === $loggedinUser.displayName || msg.to === $loggedinUser.displayName}
@@ -79,8 +79,8 @@
             <p>me: {msg.text}</p>
           {:else if msg.to === $loggedinUser.displayName}
             <p>{msg.text}</p>
-          {:else}
-          <p></p>
+          <!-- {:else}
+          <p></p> -->
           {/if}
         {/if}
         <b>1</b>
