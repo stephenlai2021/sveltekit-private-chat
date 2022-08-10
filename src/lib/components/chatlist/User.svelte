@@ -33,9 +33,6 @@
     $selectedUsername = selectedUser.name;
     $selectedUseremail = selectedUser.email;
 
-    // console.log(`${selectedUser.name} is selected`);
-    // console.log(`${selectedUser.email} is selected`);
-
     goto(`/${$selectedUsername}`);
   };
 
@@ -80,14 +77,16 @@
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <p class="time">{user.createdAt}</p>
-      <!-- {#each lastMsgs as msg}
-        {#if user.name === msg.from || user.name === msg.to}
-        {#if msg.from === $loggedinUser.displayName || msg.to === $loggedinUser.displayName}
-        <p class="time">{formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })}</p>
-        {/if}
-        {/if}
-      {/each} -->
+      <!-- <p class="time">{user.createdAt}</p> -->
+      {#if lastMsgs}
+        {#each lastMsgs as msg}
+          {#if user.name === msg.from || user.name === msg.to}
+            {#if msg.from === $loggedinUser.displayName || msg.to === $loggedinUser.displayName}
+              <p class="time">{formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })}</p>
+            {/if}
+          {/if}
+        {/each}
+      {/if}
     </div>
     <div class="message">
       {#if lastMsgs}
