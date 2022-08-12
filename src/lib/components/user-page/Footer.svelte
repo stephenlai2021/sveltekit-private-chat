@@ -101,9 +101,9 @@
         unread: true,
       });
 
+      /* send last message to selected user*/
       let selectedUserRef = doc(db, "whatzapp_users", $selectedUseremail);
       let selectedUserSnap = await getDoc(selectedUserRef);
-
       await updateDoc(selectedUserRef, {
         lastMsg: selectedUserSnap
           .data()
@@ -114,9 +114,9 @@
           ),
       });
 
+      // send last message to loggedin user
       let loggedinUserRef = doc(db, "whatzapp_users", $loggedinUser.email);
       let loggedinUserSnap = await getDoc(loggedinUserRef);
-
       await updateDoc(loggedinUserRef, {
         lastMsg: loggedinUserSnap
           .data()

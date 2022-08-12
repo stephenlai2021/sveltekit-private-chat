@@ -78,42 +78,22 @@
     <div class="listHead">
       <span class="user-title">{user.name}</span>
       <p class="time">12:15</p>
-      <!-- {#if lastMsgs}
-        {#each lastMsgs as msg}
-        {#if user.name === msg.from || user.name === msg.to}
-        {#if msg.from === $loggedinUser.displayName || msg.to === $loggedinUser.displayName}
-        <p 
-        class="time"
-        style:color={msg.unread ? 'var(--theme-color)' : 'gray'}
-        >
-        {formatDistanceToNow(new Date(msg.createdAt.toDate()), {
-          addSuffix: true,
-        })}
-      </p>
-      {/if}
-      {/if}
-      {/each}
-      {/if} -->
-
+      <!-- <p 
+      class="time"
+      style:color={msg.unread ? 'var(--theme-color)' : 'gray'}
+      >
+      {formatDistanceToNow(new Date(msg.createdAt.toDate()), {
+        addSuffix: true,
+      })}
+    </p> -->
     </div>
     <div class="message">
-      <!-- {#if lastMsgs}
-        {#each lastMsgs as msg}
-          {#if user.name === msg.from || user.name === msg.to}
-            {#if msg.from === $loggedinUser.displayName}
-              <p>me: {msg.text}</p>
-              <b style:background={msg.unread ? 'var(--theme-color)' : 'gray'}>1</b>
-            {:else if msg.to === $loggedinUser.displayName}
-              <p>{msg.text}</p>
-              <b style:background={msg.unread ? 'var(--theme-color)' : 'gray'}>1</b>
-            {/if}
-          {/if}
-        {/each}
-      {/if} -->
-
       {#if user.lastMsg}
-        <p>{user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)].split('=>')[1]}</p>
+        {#if user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)]}
+          <p>{user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)].split('=>')[1]}</p>
+        {/if}
       {/if}
+      <!-- <p>hi, there !</p> -->
       <b>1</b>
     </div>
   </div>
