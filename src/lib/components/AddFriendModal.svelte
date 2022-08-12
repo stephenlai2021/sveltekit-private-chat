@@ -65,9 +65,7 @@
       contactList: foundUsers[0].contactList.includes($loggedinUser.email)
         ? [...foundUsers[0].contactList]
         : [...foundUsers[0].contactList, $loggedinUser.email],
-      // lastMsg: [...userSnap.data().lastMsg, me.name + '=>' + 'Say something to ' + foundUsers[0].name]
-      // lastMsg: [...userSnap.data().lastMsg, me.name + '=>' + '[new message would appear here...]']
-      lastMsg: [...userSnap.data().lastMsg, me.name + '=>' + 'Say something ...']
+      lastMsg: [...userSnap.data().lastMsg, me.name + '=>' + '[NEW]']
     });
     console.log(
       `${foundUsers[0].name} is successfully added to contact list 😁}`
@@ -80,9 +78,7 @@
       contactList: me.contactList.includes(foundUsers[0].email)
         ? [...me.contactList]
         : [...me.contactList, foundUsers[0].email],
-      // lastMsg: [...loggedinUserSnap.data().lastMsg, foundUsers[0].name + '=>' + 'Say something to ' + me.name]
-      // lastMsg: [...loggedinUserSnap.data().lastMsg, foundUsers[0].name + '=>' + '[new message would appear here...]']
-      lastMsg: [...loggedinUserSnap.data().lastMsg, foundUsers[0].name + '=>' + 'Say somethig ...']
+      lastMsg: [...loggedinUserSnap.data().lastMsg, foundUsers[0].name + '=>' + '[NEW]']
     });
     console.log(`${me.name} is successfully added to contact list 😁}`);
 
