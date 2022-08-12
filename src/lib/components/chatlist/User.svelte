@@ -93,7 +93,6 @@
           <p>{user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)].split('=>')[1]}</p>
         {/if}
       {/if}
-      <!-- <p>hi, there !</p> -->
       <b>1</b>
     </div>
   </div>

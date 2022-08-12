@@ -109,7 +109,7 @@
           .data()
           .lastMsg.map((msg) =>
             msg.split("=>")[0] === $loggedinUser.displayName
-              ? `${$loggedinUser.displayName}=>me:${messageSent}`
+              ? `${$loggedinUser.displayName}=>me: ${messageSent}`
               : msg
           ),
       });
