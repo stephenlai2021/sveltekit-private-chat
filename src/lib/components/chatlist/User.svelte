@@ -12,12 +12,12 @@
   import { updateDoc, doc, collection, onSnapshot } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
   import { formatDistanceToNow } from "date-fns";
-  import { onMount } from 'svelte'
+  import { onMount } from "svelte";
 
   export let user;
   // export let lastMsgs;
 
-  let lastMsgs
+  let lastMsgs;
 
   const selectUser = async (selectedUser) => {
     // update unread status
@@ -37,23 +37,23 @@
   };
 
   onMount(() => {
-    // get last messages
-    let lastMsgRef = collection(db, "lastMsg");
-    const unsubLastMsgs = onSnapshot(lastMsgRef, (snapshot) => {
-      let tempLastMsgs = [];
-      snapshot.docs.forEach((doc) => {
-        tempLastMsgs.push(doc.data());
-      });
-      lastMsgs = tempLastMsgs;
-      console.log("last messages", lastMsgs);
-      return () => unsubLastMsgs();
-    });
-  })
+    /* get last messages */
+    // let lastMsgRef = collection(db, "lastMsg");
+    // const unsubLastMsgs = onSnapshot(lastMsgRef, (snapshot) => {
+    //   let tempLastMsgs = [];
+    //   snapshot.docs.forEach((doc) => {
+    //     tempLastMsgs.push(doc.data());
+    //   });
+    //   lastMsgs = tempLastMsgs;
+    //   console.log("last messages", lastMsgs);
+    //   return () => unsubLastMsgs();
+    // });
+  });
 </script>
 
+<!-- class:unread={user.unread} -->
 <div
   class="block"
-  class:unread={user.unread}
   on:click={() => selectUser(user)}
   style:border-radius={($currentContact === user && !$mobile) ||
   (user.name === $page.params.userId && !$mobile)
@@ -77,30 +77,44 @@
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <!-- <p class="time">{user.createdAt}</p> -->
-      {#if lastMsgs}
+      <p class="time">12:15</p>
+      <!-- {#if lastMsgs}
         {#each lastMsgs as msg}
-          {#if user.name === msg.from || user.name === msg.to}
-            {#if msg.from === $loggedinUser.displayName || msg.to === $loggedinUser.displayName}
-              <p class="time">{formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })}</p>
-            {/if}
-          {/if}
-        {/each}
+        {#if user.name === msg.from || user.name === msg.to}
+        {#if msg.from === $loggedinUser.displayName || msg.to === $loggedinUser.displayName}
+        <p 
+        class="time"
+        style:color={msg.unread ? 'var(--theme-color)' : 'gray'}
+        >
+        {formatDistanceToNow(new Date(msg.createdAt.toDate()), {
+          addSuffix: true,
+        })}
+      </p>
       {/if}
+      {/if}
+      {/each}
+      {/if} -->
+
     </div>
     <div class="message">
-      {#if lastMsgs}
+      <!-- {#if lastMsgs}
         {#each lastMsgs as msg}
           {#if user.name === msg.from || user.name === msg.to}
             {#if msg.from === $loggedinUser.displayName}
               <p>me: {msg.text}</p>
+              <b style:background={msg.unread ? 'var(--theme-color)' : 'gray'}>1</b>
             {:else if msg.to === $loggedinUser.displayName}
               <p>{msg.text}</p>
+              <b style:background={msg.unread ? 'var(--theme-color)' : 'gray'}>1</b>
             {/if}
           {/if}
-          <b>1</b>
         {/each}
+      {/if} -->
+
+      {#if user.lastMsg}
+        <p>{user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)].split('=>')[1]}</p>
       {/if}
+      <b>1</b>
     </div>
   </div>
 </div>

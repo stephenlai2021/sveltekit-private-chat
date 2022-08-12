@@ -29,10 +29,8 @@
   import LastMsg from "$lib/components/chatlist/LastMsg.svelte";
 
   let users = [];
-  let ready = false;
   let filteredUsers = [];
-  let data = null;
-  let lastMsgs = [];
+  // let lastMsgs = [];
 
   const selectUser = (selectedUser) => {
     $currentContact = selectedUser;
@@ -41,7 +39,7 @@
   };
 
   onMount(() => {
-    // get users
+    /*  get users */
     let usersRef = collection(db, "whatzapp_users");
     let userQuery = query(
       usersRef,
@@ -58,17 +56,20 @@
       return () => unsubUsers();
     });
 
-    // get last messages
-    let lastMsgRef = collection(db, "lastMsg");
-    const unsubLastMsgs = onSnapshot(lastMsgRef, (snapshot) => {
-      let tempLastMsgs = [];
-      snapshot.docs.forEach((doc) => {
-        tempLastMsgs.push(doc.data());
-      });
-      lastMsgs = tempLastMsgs;
-      console.log("last messages", lastMsgs);
-      return () => unsubLastMsgs();
-    });
+    /* get users' last message */
+    // let lastRef = collection(db, "whatzapp_users", )
+
+    /* get last messages */
+    // let lastMsgRef = collection(db, "lastMsg");
+    // const unsubLastMsgs = onSnapshot(lastMsgRef, (snapshot) => {
+    //   let tempLastMsgs = [];
+    //   snapshot.docs.forEach((doc) => {
+    //     tempLastMsgs.push(doc.data());
+    //   });
+    //   lastMsgs = tempLastMsgs;
+    //   console.log("last messages", lastMsgs);
+    //   return () => unsubLastMsgs();
+    // });
   });
 
   $: if ($isMobile || $mobile) $currentContact = null;

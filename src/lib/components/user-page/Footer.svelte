@@ -15,15 +15,16 @@
     selectedImg,
     loggedinUser,
     selectedUsername,
-    selectedUseremail
+    selectedUseremail,
   } from "$lib/store";
   import {
     doc,
+    getDoc,
     addDoc,
     setDoc,
     updateDoc,
     Timestamp,
-    collection
+    collection,
   } from "firebase/firestore";
 
   let url = null;
@@ -92,33 +93,46 @@
         createdAt: Timestamp.fromDate(new Date()),
       });
 
-      await setDoc(doc(db, 'lastMsg', msgId), {
+      await setDoc(doc(db, "lastMsg", msgId), {
         text: messageSent,
         from: $loggedinUser.displayName,
         to: $selectedUsername,
         createdAt: Timestamp.fromDate(new Date()),
-        unread: true
-      })
+        unread: true,
+      });
 
-      $lastMsg = true
+      let selectedUserRef = doc(db, "whatzapp_users", $selectedUseremail);
+      let selectedUserSnap = await getDoc(selectedUserRef);
+
+      await updateDoc(selectedUserRef, {
+        lastMsg: selectedUserSnap
+          .data()
+          .lastMsg.map((msg) =>
+            msg.split("=>")[0] === $loggedinUser.displayName
+              ? `${$loggedinUser.displayName}=>me:${messageSent}`
+              : msg
+          ),
+      });
+
+      let loggedinUserRef = doc(db, "whatzapp_users", $loggedinUser.email);
+      let loggedinUserSnap = await getDoc(loggedinUserRef);
+
+      await updateDoc(loggedinUserRef, {
+        lastMsg: loggedinUserSnap
+          .data()
+          .lastMsg.map((msg) =>
+            msg.split("=>")[0] === $selectedUsername
+              ? `${$selectedUsername}=>${messageSent}`
+              : msg
+          ),
+      });
+
+      $lastMsg = true;
       messageSent = "";
-      console.log("message created successfully 😁");      
+      console.log("message created successfully 😁");
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
-
-    // try {
-    //   await setDoc(doc(db, 'lastMsg', msgId), {
-    //     text: messageSent,
-    //     from: $loggedinUser.displayName,
-    //     to: $selectedUsername,
-    //     createdAt: Timestamp.fromDate(new Date()),
-    //     unread: true
-    //   })
-    //   $lastMsg = true
-    // } catch (error) {
-    //   console.log("ooh, something went wrong 😥", error);
-    // }
   };
 </script>
 
