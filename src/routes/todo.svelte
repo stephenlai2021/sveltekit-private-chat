@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   import {
     todos,
     isTodoReady,
@@ -158,4 +158,4 @@
     display: flex;
     justify-content: space-between;
   }
-</style>
+</style> -->
