@@ -1,7 +1,9 @@
 <script>
   import {
+    myDoc,
     mobile,
     bgColor,
+    userAvatar,
     loggedinUser,
     profileUpdated,
     showThemeModal,
@@ -16,22 +18,15 @@
   import { page } from "$app/stores";
   import { auth, db, storage } from "$lib/firebase/client";
   import { onAuthStateChanged, updateProfile } from "firebase/auth";
-  import { doc, updateDoc } from "firebase/firestore";
+  import { doc, updateDoc, getDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-  // import { v4 } from "uuid";
   import CameraModal from "$lib/components/CameraModal.svelte";
-  // import { handleFileChange } from '$lib/functions/handleFileChange'
-
-  // export let user;
-
-  // const { file, fileError } = handleFileChange()
 
   let url = null;
   let file = null;
   let theme = true;
   let fileError = null;
-
-  // onAuthStateChanged(auth, _user => user = _user)
+  let fileUploaded = false;
 
   const toggleTheme = () => {
     theme = !theme;
@@ -40,7 +35,6 @@
   };
 
   const logout = () => {
-    // $loggedinUser = null
     $showSettingsModalMobile = false;
     signout();
   };
@@ -53,8 +47,7 @@
 
     if (selectedFile && types.includes(selectedFile.type)) {
       file = selectedFile;
-      console.log(file);
-      console.log(`${file.name} is selected`);
+      console.log(`>>> ${file.name} selected <<<`);
       fileError = null;
     } else {
       file = null;
@@ -63,16 +56,18 @@
   };
 
   $: if (file) {
-    // change file type to .png
+    /* change file type to .png */
     let blob = file.slice(0, file.size, "image/png");
     let newFile = new File([blob], "avatar.png", { type: "image/png" });
     let imageRef = ref(
       storage,
-      `letschat/profile/${user.displayName}/${newFile.name}`
+      `letschat/profile/${$loggedinUser.displayName}/${newFile.name}`
     );
 
+    /* upload image */
+    fileUploaded = true;
     uploadBytes(imageRef, file).then(() => {
-      console.log("image upload completed !");
+      console.log(">>> image upload completed <<<");
       getDownloadURL(imageRef).then((_url) => {
         url = _url;
       });
@@ -80,21 +75,21 @@
   }
 
   $: if (url) {
-    console.log("image url: ", url);
-
-    updateProfile(user, {
+    /* update user profile */
+    updateProfile($loggedinUser, {
       photoURL: url,
     }).then(() => {
       $profileUpdated = true;
-      console.log("use profile uupdated successfully !");
+      console.log(">>> use profile uupdated <<<");
     });
 
-    // update user avatar
-    let userRef = doc(db, "whatzapp_users", user.email);
+    /* update user document */
+    let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
     updateDoc(userRef, {
       avatar: url,
     }).then(() => {
-      console.log("user avatar updated successfully !");
+      console.log(">>> user avatar updated <<<");
+      fileUploaded = false
     });
   }
 
@@ -136,8 +131,18 @@
     <div class="user-profile">
       <div class="avatar-section">
         <div class="image-wrapper">
-          {#if $loggedinUser.photoURL}
-            <img src={$loggedinUser.photoURL} alt="" width="80" height="80" />
+          {#if $myDoc}
+            <!-- {#if !$myDoc.avatar}
+              <img src="/joke.png" alt="" width="80" height="80" />
+            {/if} -->
+            {#if $myDoc.avatar && !fileUploaded}
+              <img src={$myDoc.avatar} alt="" width="80" height="80" />
+            {/if}
+            {#if fileUploaded}
+              <div class="loading">
+                <img src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif" alt="" width="20" height="20">
+              </div>
+            {/if}
             <label>
               <input
                 type="file"
@@ -177,17 +182,17 @@
               </svg>
             </label>
           {:else}
-            <img src="/joke.png" alt="" width="80" height="80" />
+            <div class="user-avatar animation" />
           {/if}
         </div>
       </div>
       <li style:padding="0">
         <h3 style:width="120px">
-          {$loggedinUser.displayName}
+          {$myDoc.name}
         </h3>
       </li>
       <li style:padding="0">
-        <p style:width="120px">{$loggedinUser.email}</p>
+        <p style:width="120px">{$myDoc.email}</p>
       </li>
     </div>
     <li>
@@ -351,6 +356,14 @@
 </ul>
 
 <style>
+  .loading {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   span.menu-item {
     font-size: 14px;
     letter-spacing: 0.8px;

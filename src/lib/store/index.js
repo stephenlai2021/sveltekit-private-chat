@@ -10,8 +10,9 @@ import {
 
 let colRef = collection(db, "whatzapp_users");
 
-
-// export const selectedUseremail = writable(null)
+export const myDoc = writable(null)
+export const userAvatar = writable(null)
+export const todos = writable([])
 export const lastMsgArray = writable([])
 export const lastMsg = writable(false)
 export const foundUser = writable({})
@@ -95,6 +96,13 @@ export const getSelectedUser = (selectedUsername) => {
     return () => unsub();
   });
 };
+
+// export const userAvatar = writable(
+//   browser && localStorage.getItem("user avatar") || null
+// );
+// userAvatar.subscribe(
+//   (val) => browser && localStorage.setItem("user avatar", val)
+// );
 
 export const currentSelectedUser = writable(
   browser && localStorage.getItem("selected user") || {}

@@ -3,19 +3,24 @@
     mobile,
     keyword,
     isMobile,
-    lastMsg,
     allUsers,
     loggedinUser,
     profileUpdated,
     loginUserEmail,
-    selectedUsername,
     showSettingsModal,
     privateChat,
     groupChat,
     publicChat,
     currentContact,
   } from "$lib/store";
-  import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
+  import {
+    collection,
+    onSnapshot,
+    query,
+    where,
+    doc,
+  } from "firebase/firestore";
+  import { onAuthStateChanged } from "firebase/auth";
   import { auth, db } from "$lib/firebase/client";
   import { fade } from "svelte/transition";
   import { page } from "$app/stores";
@@ -26,24 +31,21 @@
   // components
   import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import User from "$lib/components/chatlist/User.svelte";
-  import LastMsg from "$lib/components/chatlist/LastMsg.svelte";
-
+  
   let users = [];
   let filteredUsers = [];
-  // let lastMsgs = [];
+  let usersReady = false
 
-  const selectUser = (selectedUser) => {
-    $currentContact = selectedUser;
-    $selectedUsername = selectedUser.name;
-    goto(`/${$selectedUsername}`);
-  };
+  $: if ($loggedinUser) {
+    usersReady = true
+    console.log($loggedinUser.displayName + ' is here !')
+  }
 
-  onMount(() => {
-    /*  get users */
+  $: if (usersReady) {
     let usersRef = collection(db, "whatzapp_users");
     let userQuery = query(
       usersRef,
-      where("contactList", "array-contains", $loginUserEmail)
+      where("contactList", "array-contains", $loggedinUser.email)
     );
     const unsubUsers = onSnapshot(userQuery, (snapshot) => {
       let tempUsers = [];
@@ -51,26 +53,12 @@
         tempUsers.push({ ...doc.data() });
       });
       users = tempUsers;
-      $allUsers = tempUsers
+      $allUsers = tempUsers;
       console.log("contact list", users);
       return () => unsubUsers();
     });
-
-    /* get users' last message */
-    // let lastRef = collection(db, "whatzapp_users", )
-
-    /* get last messages */
-    // let lastMsgRef = collection(db, "lastMsg");
-    // const unsubLastMsgs = onSnapshot(lastMsgRef, (snapshot) => {
-    //   let tempLastMsgs = [];
-    //   snapshot.docs.forEach((doc) => {
-    //     tempLastMsgs.push(doc.data());
-    //   });
-    //   lastMsgs = tempLastMsgs;
-    //   console.log("last messages", lastMsgs);
-    //   return () => unsubLastMsgs();
-    // });
-  });
+    usersReady = false
+  }
 
   $: if ($isMobile || $mobile) $currentContact = null;
 
@@ -90,7 +78,6 @@
   <div class="chatlist" transition:fade={{ duration: 100 }}>
     {#if users.length}
       {#each filteredUsers as user}
-        <!-- <User {user} {lastMsgs} /> -->
         <User {user} />
       {/each}
     {:else}

@@ -15,7 +15,6 @@
   import { onMount } from "svelte";
 
   export let user;
-  // export let lastMsgs;
 
   let lastMsgs;
 
@@ -113,8 +112,8 @@
   }
 
   .imgbx {
-    min-width: 40px;
-    height: 40px;
+    min-width: 45px;
+    height: 45px;
     cursor: pointer;
     margin-right: 15px;
     border-radius: 50%;
@@ -125,8 +124,8 @@
   }
 
   .imgbx img {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     overflow: hidden;
     object-fit: cover;
     border-radius: 50%;
@@ -147,7 +146,7 @@
   }
 
   .details .listHead .user-title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
     letter-spacing: 0.5px;
     font-style: normal;
@@ -180,7 +179,7 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    color: rgb(83, 81, 81);
+    /* color: rgb(83, 81, 81); */
     position: absolute;
   }
 

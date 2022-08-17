@@ -38,22 +38,6 @@
   let colRef = collection(db, "whatzapp_users");
 
   /*
-    collection = whatzapp_users
-    document id = stephenlai2015@gmail.com    
-    field = {
-      avatar: "https://lh3.googleusercontent.com/a-/AOh14GgSxu4x8DUiNMF2s_d5ih3PmIt62v75f1af5iIpow=s96-c"
-      avatarPath: null,
-      contactList: ["batman@mail.com"],
-      createdAt: xxx,
-      email: "stephenlai2015@gmail.com",
-      isOnline: true,
-      name: "Mask Man",
-      uid: "IYZK6CoIcKb8CEpr5sJMgMTF8BK2",
-      unread: true
-    }
-  */
-
-  /*
     firebase auth error
     signup
     - code: auth/invalid-email; message: Firebase: Error (auth/invalid-email)
@@ -94,52 +78,49 @@
   };
 
   const handleSignup = async () => {
-    try {
-      // add maskman to signedup user's constact list
-      // add signedup user's email to maskman's contact list
+    // try {           
+      /* add user email to maskman's contact list */
       try {
         const maskmanRef = doc(db, "whatzapp_users", "maskman@mail.com");
         const maskmanSnap = await getDoc(maskmanRef);
         await updateDoc(maskmanRef, {
           contactList: [...maskmanSnap.data().contactList, email],
+          lastMsg: [`${name}=>[NEW]`]
         });
         console.log("maskman is added to user contact list");
-      } catch (err) {
-        console.log(`error code: `, err.message);
+      } catch (error) {
         console.log(`error message: `, err.message);
       }
 
-      // get signedup user profile
+      /* signedup user */
       try {
         result = await createUserWithEmailAndPassword(auth, email, password);
         console.log(`${result.user.email} signed up successfully 🙂`);
+        // $loggedinUser = result.user
+        // $loginUserEmail = result.user.email;
         $loginState = true;
-        $loginUserEmail = result.user.email;
       } catch (err) {
-        console.log(`error code: `, err.code);
         console.log(`error message: `, err.message);
-        errorMsg = err.code;
       }
 
-      // update displayName of signedup user profile
+      /* update user profile */
       try {
-        await updateProfile(auth.currentUser, {
+        await updateProfile(result.user, {
           displayName: name,
         });
-        console.log(`${auth.currentUser.email} displayName is updated 🙂`);
+        console.log(`update ${result.user.displayName} 😀`);
       } catch (err) {
-        console.log(`error code: `, err.code);
         console.log(`error message: `, err.message);
       }
 
-      // add signedup user to maskman's contact list
+      /* create user document*/
       let userRef = doc(db, "whatzapp_users", email);
       try {
         await setDoc(userRef, {
-          avatar: result.user.photoURL,
+          avatar: result.user.photoURL || 'https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png',
           avatarPath: null,
-          // contactList: ["stephenlai2015@gmail.com"],
-          contactList: [],
+          contactList: ["maskman@mail.com"], 
+          lastMsg: ["maskman=>[NEW]"],
           createdAt: Date.now().toLocaleString(),
           email: result.user.email,
           isOnline: true,
@@ -153,11 +134,10 @@
         console.log(`error code: `, err.code);
         console.log(`error message: `, err.message);
       }
-    } catch (err) {
-      console.log("Error Code: ", err.code);
-      console.log("Error Message: ", err.message);
-      error = err.message;
-    }
+    // } catch (err) {
+    //   console.log("Error Message: ", err.message);
+    //   error = err.message;
+    // }
   };
 
   const handleLogin = async () => {
@@ -264,8 +244,8 @@
         </div>
       </form>
     </div>
-    {/if}
-    <p class="error-message">{errorMsg}</p>
+  {/if}
+  <p class="error-message">{errorMsg}</p>
 
   {#if isLogin}
     <div class="loading-indicator">

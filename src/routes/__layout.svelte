@@ -11,6 +11,7 @@
 <script>
   import "$lib/styles/global.css";
   import {
+    myDoc,
     mobile,
     bgColor,
     connection,
@@ -42,7 +43,7 @@
   } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
-  import { collection, onSnapshot } from "firebase/firestore";
+  import { collection, onSnapshot, doc } from "firebase/firestore";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { auth, db } from "$lib/firebase/client";
@@ -63,18 +64,7 @@
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
   import LoadingModal from "$lib/components/LoadingModal.svelte";
 
-  let user = null;
-  let users = null;
-  let colRef = collection(db, "whatzapp_users");
-
-  const unsub = onSnapshot(colRef, (snapshot) => {
-    let tempUsers = [];
-    snapshot.docs.forEach((doc) => {
-      tempUsers.push({ ...doc.data() });
-    });
-    users = tempUsers;
-    return () => unsub();
-  });
+  let userDocReady = false;
 
   const desktopOrMobile = () => {
     if (window.innerWidth <= 800) $mobile = true;
@@ -96,14 +86,22 @@
       if (!user) goto("/login");
       else {
         $loggedinUser = user;
-        console.log("loggedin user:", $loggedinUser.displayName);
+        console.log("loggedin user | layout: ", $loggedinUser.displayName);
       }
     });
     $currentSelectedUser = null;
   });
 
-  $: if (user) $loginFormShow = false;
-  $: if (!user) $loginFormShow = true;
+  $: if ($loggedinUser) userDocReady = true
+
+  $: if (userDocReady) {
+    let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
+    const unsubUser = onSnapshot(userRef, (userSnap) => {
+      $myDoc = userSnap.data();
+      return () => unsubUser;
+    });
+    userDocReady = false
+  }
 
   $: if (browser) {
     window.addEventListener("online", () => {
@@ -182,9 +180,9 @@
 
     <ToolModal />
 
-    {#if $isSignout}
+    <!-- {#if !$isSignout}
       <LoadingModal />
-    {/if}
+    {/if} -->
 
     {#if $showAddGroupModal}
       <AddGroupModal />
