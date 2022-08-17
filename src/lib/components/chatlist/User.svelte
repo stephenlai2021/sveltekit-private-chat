@@ -4,7 +4,7 @@
     loggedinUser,
     currentContact,
     selectedUsername,
-    selectedUseremail,
+    selectedUseremail
   } from "$lib/store";
   import themeStore from "svelte-themes";
   import { page } from "$app/stores";
@@ -16,38 +16,13 @@
 
   export let user;
 
-  let lastMsgs;
-
   const selectUser = async (selectedUser) => {
-    // update unread status
-    // let msgId =
-    //   $loggedinUser.displayName > $selectedUsername
-    //     ? `${$loggedinUser.displayName} & ${$selectedUsername}`
-    //     : `${$selectedUsername} & ${$loggedinUser.displayName}`;
-    // await updateDoc(doc(db, 'lastMsg', msgId), {
-    //   unread: false
-    // })
-
     $currentContact = selectedUser;
     $selectedUsername = selectedUser.name;
     $selectedUseremail = selectedUser.email;
 
     goto(`/${$selectedUsername}`);
   };
-
-  onMount(() => {
-    /* get last messages */
-    // let lastMsgRef = collection(db, "lastMsg");
-    // const unsubLastMsgs = onSnapshot(lastMsgRef, (snapshot) => {
-    //   let tempLastMsgs = [];
-    //   snapshot.docs.forEach((doc) => {
-    //     tempLastMsgs.push(doc.data());
-    //   });
-    //   lastMsgs = tempLastMsgs;
-    //   console.log("last messages", lastMsgs);
-    //   return () => unsubLastMsgs();
-    // });
-  });
 </script>
 
 <!-- class:unread={user.unread} -->
@@ -87,11 +62,11 @@
     </p> -->
     </div>
     <div class="message">
-      {#if user.lastMsg}
+      <!-- {#if user.lastMsg} -->
         {#if user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)]}
           <p>{user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)].split('=>')[1]}</p>
         {/if}
-      {/if}
+      <!-- {/if} -->
       <b>1</b>
     </div>
   </div>

@@ -18,12 +18,10 @@
     widthLessthan1200,
     widthLessthan1000,
     currentSelectedUser,
-    loginFormShow,
     loggedinUser,
     showToolModal,
     showEmojiMenu,
     showActionMenu,
-    showSidebarMenu,
     showImagePreviewModal,
     showCameraPreviewModal,
     showThemeModal,
@@ -38,7 +36,6 @@
     showAddRoomModal,
     showAudioPlayerModal,
     showAudioRecordingModal,
-    privateChat,
     isSignout,
   } from "$lib/store";
   import { browser } from "$app/env";

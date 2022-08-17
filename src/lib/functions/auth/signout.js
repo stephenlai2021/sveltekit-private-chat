@@ -1,7 +1,7 @@
 import { auth, db } from "$lib/firebase/client";
 import { signOut } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import { loginState, loginUserEmail, isSignout, userAvatar, loggedinUser } from "$lib/store";
+import { loginState, isSignout } from "$lib/store";
 
 export const signout = async () => {
   isSignout.set(true)
@@ -21,11 +21,8 @@ export const signout = async () => {
     await signOut(auth);
     console.log(`${tempUserEmail} is signed out 😃`);
     loginState.set(false);
-    loginUserEmail.set(null);
-    // isSignout.set(false)
-    // loggedinUser.set(null)
     console.log('signing out ended')
-  } catch (err) {
-    console.log(err.code, err.message);
+  } catch (error) {
+    console.log('error message: ', error.message);
   }
 };

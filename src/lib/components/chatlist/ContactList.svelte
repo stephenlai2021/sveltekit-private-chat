@@ -6,7 +6,6 @@
     allUsers,
     loggedinUser,
     profileUpdated,
-    loginUserEmail,
     showSettingsModal,
     privateChat,
     groupChat,
@@ -20,7 +19,6 @@
     where,
     doc,
   } from "firebase/firestore";
-  import { onAuthStateChanged } from "firebase/auth";
   import { auth, db } from "$lib/firebase/client";
   import { fade } from "svelte/transition";
   import { page } from "$app/stores";
@@ -29,17 +27,14 @@
   import { onMount } from "svelte";
 
   // components
-  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
   import User from "$lib/components/chatlist/User.svelte";
-  
+  import Skeleton from "$lib/components/skeleton/LeftSideSkeleton.svelte";
+
   let users = [];
   let filteredUsers = [];
   let usersReady = false
 
-  $: if ($loggedinUser) {
-    usersReady = true
-    console.log($loggedinUser.displayName + ' is here !')
-  }
+  $: if ($loggedinUser) usersReady = true
 
   $: if (usersReady) {
     let usersRef = collection(db, "whatzapp_users");
@@ -62,7 +57,7 @@
 
   $: if ($isMobile || $mobile) $currentContact = null;
 
-  $: if ($profileUpdated) $loggedinUser = auth.currentUser;
+  // $: if ($profileUpdated) $loggedinUser = auth.currentUser;
 
   $: filteredUsers = users.filter((usesr) => {
     return (

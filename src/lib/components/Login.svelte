@@ -19,7 +19,7 @@
   import { loginWithGoogle } from "$lib/functions/auth/google";
   import { bgColor, userList } from "$lib/store";
   import { updateProfile } from "firebase/auth";
-  import { loginState, loggedinUser, loginUserEmail } from "$lib/store";
+  import { loginState } from "$lib/store";
   // import themeStore from 'svelte-themes'
 
   let users = [];
@@ -78,66 +78,60 @@
   };
 
   const handleSignup = async () => {
-    // try {           
-      /* add user email to maskman's contact list */
-      try {
-        const maskmanRef = doc(db, "whatzapp_users", "maskman@mail.com");
-        const maskmanSnap = await getDoc(maskmanRef);
-        await updateDoc(maskmanRef, {
-          contactList: [...maskmanSnap.data().contactList, email],
-          lastMsg: [`${name}=>[NEW]`]
-        });
-        console.log("maskman is added to user contact list");
-      } catch (error) {
-        console.log(`error message: `, err.message);
-      }
+    /* add user email to maskman's contact list */
+    try {
+      const maskmanRef = doc(db, "whatzapp_users", "maskman@mail.com");
+      const maskmanSnap = await getDoc(maskmanRef);
+      await updateDoc(maskmanRef, {
+        contactList: [...maskmanSnap.data().contactList, email],
+        lastMsg: [...maskmanSnap.data().lastMsg, `${name}=>[NEW]`],
+      });
+      console.log("maskman is added to user contact list");
+    } catch (error) {
+      console.log(`error message: `, err.message);
+    }
 
-      /* signedup user */
-      try {
-        result = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(`${result.user.email} signed up successfully 🙂`);
-        // $loggedinUser = result.user
-        // $loginUserEmail = result.user.email;
-        $loginState = true;
-      } catch (err) {
-        console.log(`error message: `, err.message);
-      }
+    /* signedup user */
+    try {
+      result = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(`${result.user.email} signed up successfully 🙂`);
+      $loginState = true;
+    } catch (err) {
+      console.log(`error message: `, err.message);
+    }
 
-      /* update user profile */
-      try {
-        await updateProfile(result.user, {
-          displayName: name,
-        });
-        console.log(`update ${result.user.displayName} 😀`);
-      } catch (err) {
-        console.log(`error message: `, err.message);
-      }
+    /* update login user's profile */
+    try {
+      await updateProfile(result.user, {
+        displayName: name,
+      });
+      console.log(`update ${result.user.displayName} 😀`);
+    } catch (err) {
+      console.log(`error message: `, err.message);
+    }
 
-      /* create user document*/
-      let userRef = doc(db, "whatzapp_users", email);
-      try {
-        await setDoc(userRef, {
-          avatar: result.user.photoURL || 'https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png',
-          avatarPath: null,
-          contactList: ["maskman@mail.com"], 
-          lastMsg: ["maskman=>[NEW]"],
-          createdAt: Date.now().toLocaleString(),
-          email: result.user.email,
-          isOnline: true,
-          name: name,
-          password,
-          uid: result.user.uid,
-          unread: true,
-        });
-        console.log(`${result.user.email} document is created 🥰`);
-      } catch (err) {
-        console.log(`error code: `, err.code);
-        console.log(`error message: `, err.message);
-      }
-    // } catch (err) {
-    //   console.log("Error Message: ", err.message);
-    //   error = err.message;
-    // }
+    /* create user document*/
+    let userRef = doc(db, "whatzapp_users", email);
+    try {
+      await setDoc(userRef, {
+        avatar:
+          result.user.photoURL ||
+          "https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png",
+        avatarPath: null,
+        contactList: ["maskman@mail.com"],
+        lastMsg: ["maskman=>[NEW]"],
+        createdAt: Date.now().toLocaleString(),
+        email: result.user.email,
+        isOnline: true,
+        name: name,
+        password,
+        uid: result.user.uid,
+        unread: true,
+      });
+      console.log(`${result.user.email} document is created 🥰`);
+    } catch (err) {
+      console.log(`error message: `, err.message);
+    }
   };
 
   const handleLogin = async () => {
@@ -146,21 +140,18 @@
       result = await signInWithEmailAndPassword(auth, email, password);
       console.log(`${result.user.email} signed in successfully 😙`);
       $loginState = true;
-      // $loggedinUser = result.user
-      $loginUserEmail = result.user.email;
-      console.log("loggedin user email: ", $loginUserEmail);
 
       userRef = doc(db, "whatzapp_users", result.user.email);
       await updateDoc(userRef, {
         isOnline: true,
       });
       console.log(`update ${result.user.email}'s status -> 🟢`);
-      isLogin = false
+      isLogin = false;
     } catch (err) {
       console.log(`error code: `, err.code);
       console.log(`error message: `, err.message);
       errorMsg = err.code;
-      isLogin = false
+      isLogin = false;
     }
   };
 
@@ -169,7 +160,7 @@
     if (!signup) handleLogin();
   };
 
-  const clearUsername = () => (warningMsg = null);
+  // const clearUsername = () => (warningMsg = null);
 
   $: if (errorMsg) {
     if (
@@ -182,7 +173,7 @@
       passwordErrMsg = errorMsg;
   }
 
-  $: console.log(signup ? "You are in signup page" : "You are in login page");
+  // $: console.log(signup ? "You are in signup page" : "You are in login page");
 </script>
 
 <!-- <section transition:fade> -->
@@ -364,11 +355,11 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .main {
     position: relative;
     width: 300px;
     margin: 200px auto;
     overflow-y: auto;
-  }  
+  }
 </style>

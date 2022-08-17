@@ -1,14 +1,5 @@
 import { writable } from "svelte/store";
-import { db } from "$lib/firebase/client";
 import { browser } from "$app/env";
-import {
-  query,
-  where,
-  collection,
-  onSnapshot,
-} from "firebase/firestore";
-
-let colRef = collection(db, "whatzapp_users");
 
 export const myDoc = writable(null)
 export const userAvatar = writable(null)
@@ -97,13 +88,6 @@ export const getSelectedUser = (selectedUsername) => {
   });
 };
 
-// export const userAvatar = writable(
-//   browser && localStorage.getItem("user avatar") || null
-// );
-// userAvatar.subscribe(
-//   (val) => browser && localStorage.setItem("user avatar", val)
-// );
-
 export const currentSelectedUser = writable(
   browser && localStorage.getItem("selected user") || {}
 );
@@ -160,18 +144,18 @@ selectedImg.subscribe(
   (val) => browser && localStorage.setItem("selected image", val)
 );
 
+export const loginUserEmail = writable(
+  browser && JSON.parse(localStorage.getItem("login user email"))
+);
+loginUserEmail.subscribe(
+  (val) => browser && localStorage.setItem("login user email", JSON.stringify(val))
+);
+
 export const loggedinUser = writable(
   browser && JSON.parse(localStorage.getItem("loggedin user"))
 );
 loggedinUser.subscribe(
   (val) => browser && localStorage.setItem("loggedin user", JSON.stringify(val))
-);
-
-export const loginUserEmail = writable(
-  browser && localStorage.getItem("loggedin user email")
-);
-loginUserEmail.subscribe(
-  (val) => browser && localStorage.setItem("loggedin user email", val)
 );
 
 export const connection = writable(
