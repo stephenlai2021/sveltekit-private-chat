@@ -6,7 +6,7 @@
   import { onMount } from 'svelte'
   import { loggedinUser, yo } from '$lib/store'
 
-  let flag = false
+  // let flag = false
   
   onMount(() => {
     onAuthStateChanged(auth, user => { 
@@ -14,11 +14,9 @@
     })
   })
 
-  $: if ($loggedinUser) flag = true
-
   $: if ($yo) {
-    location.reload()
-    $yo = false
+    location.replace('/login')
+    // $yo = false
   }
 </script>
 
