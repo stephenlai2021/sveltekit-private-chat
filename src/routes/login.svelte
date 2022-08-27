@@ -9,8 +9,11 @@
   
   onMount(() => {
     onAuthStateChanged(auth, user => { 
-      if (user) goto('/')
+      // if (user) goto('/')
+      if (user) return () => location.replace('/')
+      if (!user) return () => location.replace('/login')
     })
+    // return () => location.reload()
   })
 </script>
 

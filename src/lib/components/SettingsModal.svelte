@@ -42,7 +42,6 @@
   const logout = async () => {
     $showSettingsModal = false;
     await signOut(auth);
-    // return () => location.reload()
   };
 
   const handleFileChange = (e) => {
