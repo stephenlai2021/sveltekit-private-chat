@@ -4,20 +4,17 @@
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from '$app/navigation'
   import { onMount } from 'svelte'
-  import { loggedinUser, yo } from '$lib/store'
+  import { browser } from '$app/env'
 
-  // let flag = false
+  const reload = () => location.reload()
+
+  reload()
   
   onMount(() => {
     onAuthStateChanged(auth, user => { 
       if (user) goto('/')
     })
   })
-
-  $: if ($yo) {
-    location.replace('/login')
-    // $yo = false
-  }
 </script>
 
 <svelte:head>

@@ -1,7 +1,6 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
-export const yo = writable(false)
 export const myDoc = writable(null)
 export const userAvatar = writable(null)
 export const todos = writable([])
@@ -76,13 +75,6 @@ export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
 export const showSearchFriendModal = writable(false)
-
-// export const yo = writable(
-//   browser && (localStorage.getItem("yo") || false)
-// );
-// yo.subscribe(
-//   (val) => browser && localStorage.setItem("yo", val)
-// );
 
 export const userEmail = writable(
   browser && (localStorage.getItem("user email") || null)

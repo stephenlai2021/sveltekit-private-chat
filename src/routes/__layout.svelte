@@ -95,7 +95,7 @@
         $loggedinUser = null;
         $allUsers = null
         console.log("signout, user: ", $loggedinUser);
-        $yo = true
+        // $yo = true
         goto("/login");
       } else {
         $loggedinUser = user;
