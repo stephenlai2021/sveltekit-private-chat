@@ -13,7 +13,8 @@
 
   // onMount(() => {
   // beforeUpdate(() => {
-  afterUpdate(() => {
+  // afterUpdate(() => {
+  onDestroy(() => {
     return () => location.reload();
   });
 </script>
