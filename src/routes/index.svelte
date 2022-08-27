@@ -2,6 +2,10 @@
   import { bgColor, background, bgOpacity, imageURL } from "$lib/store";
   import { onMount } from "svelte";
   import themeStore from "svelte-themes";
+
+  onMount(() => {
+    return () => location.reload()
+  })
 </script>
 
 <svelte:head>
