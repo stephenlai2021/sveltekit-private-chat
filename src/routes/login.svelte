@@ -6,15 +6,22 @@
   import { onMount, onDestroy } from 'svelte'
   import themeStore from 'svelte-themes'
   import { browser } from '$app/env'
+  import { loggedinUser } from '$lib/store'
+
+  let flag = false
   
   onMount(() => {
     onAuthStateChanged(auth, user => { 
-      // if (user) return () => location.replace('/')
       if (user) goto('/')
     })
-
-    // return () => location.reload()
   })
+
+  $: if ($loggedinUser) flag = true
+
+  $: if (flag) {
+    location.reload()
+    flag = false
+  }
 </script>
 
 <svelte:head>
