@@ -6,11 +6,15 @@
   import { onMount, onDestroy } from 'svelte'
   import themeStore from 'svelte-themes'
   import { browser } from '$app/env'
-
+  
   onMount(() => {
-    return () => location.reload()
+    onAuthStateChanged(auth, user => { 
+      if (user) {
+        location.reload()
+        goto('/')
+      }
+    })
   })
-
 </script>
 
 <svelte:head>
