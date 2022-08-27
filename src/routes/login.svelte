@@ -3,7 +3,7 @@
   import { auth } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
+  import { onMount, beforeUpdate, afterUpdate, onDestroy } from "svelte";
   import { browser } from "$app/env";
 
   browser &&
@@ -11,10 +11,8 @@
       if (user) goto("/");
     });
 
-  onMount(() => {
-    // onAuthStateChanged(auth, user => {
-    //   if (user) goto('/')
-    // })
+  // onMount(() => {
+  beforeUpdate(() => {
     return () => location.reload();
   });
 </script>
