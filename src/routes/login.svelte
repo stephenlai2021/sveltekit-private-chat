@@ -8,10 +8,10 @@
   import { browser } from '$app/env'
   
   onMount(() => {
+    return () => location.reload()
     onAuthStateChanged(auth, user => { 
       if (user) goto('/')
     })
-    // return () => location.reload()
   })
 
 </script>
