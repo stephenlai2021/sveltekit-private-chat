@@ -94,8 +94,9 @@
         $loggedinUser = null;
         $allUsers = null
         console.log("signout, user: ", $loggedinUser);
-        goto("/login");
+        // goto("/login");
         // return () => location.replace('/login')
+        return () => location.href = '/login'
       } else {
         $loggedinUser = user;
         console.log("signin, user: ", $loggedinUser);
