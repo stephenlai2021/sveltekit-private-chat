@@ -13,9 +13,9 @@
     })
   })
   
-  onDestroy(() => {
-    return () => location.reload()
-  })
+  // onDestroy(() => {
+  //   return () => location.reload()
+  // })
 
 </script>
 

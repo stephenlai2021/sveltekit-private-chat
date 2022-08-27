@@ -115,6 +115,8 @@
       }
     });
     $currentSelectedUser = null;    
+
+    if ($page.url.pathname === "/login") return () => location.reload()
   });
 
   $: if ($loggedinUser && $initial) userDocReady = true;
