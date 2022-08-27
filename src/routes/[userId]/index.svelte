@@ -56,7 +56,7 @@
       $isMobile = true;
       console.log("device type: ", $isMobile ? "mobile" : "desktop");
     }
-    return () => location.reload()
+    // return () => location.reload()
   });
 
   $: if ($pictureConfirmed) {
