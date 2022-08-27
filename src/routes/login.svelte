@@ -12,7 +12,8 @@
     });
 
   // onMount(() => {
-  beforeUpdate(() => {
+  // beforeUpdate(() => {
+  afterUpdate(() => {
     return () => location.reload();
   });
 </script>
