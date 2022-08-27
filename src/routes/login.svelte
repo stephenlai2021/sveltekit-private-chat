@@ -12,7 +12,7 @@
     //   if (user) return () => location.replace('/')
     //   if (!user) return () => location.replace('/login')
     // })
-    return () => location.replace('/login')
+    return () => location.reload()
   })
 </script>
 
