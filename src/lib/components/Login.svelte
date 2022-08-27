@@ -34,6 +34,37 @@
     errorMsg = null;
 
     try {
+      /* add user email to maskman's contact list */
+      const maskmanRef = doc(db, "whatzapp_users", "maskman@mail.com");
+      const maskmanSnap = await getDoc(maskmanRef);
+      await updateDoc(maskmanRef, {
+        contactList: [...maskmanSnap.data().contactList, email],
+        lastMsg: [
+          ...maskmanSnap.data().lastMsg,
+          `${name}=>[NEW]`,
+        ],
+      });
+      console.log(">>> 3.maskman is added to user contact list <<<");
+
+      /* create user document */
+      userRef = doc(db, "whatzapp_users", email);
+      await setDoc(userRef, {
+        avatar:
+          "https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png",
+        avatarPath: null,
+        bgColor: "skyblue",
+        contactList: ["maskman@mail.com"],
+        lastMsg: ["maskman=>[NEW]"],
+        createdAt: Date.now().toLocaleString(),
+        email: email,
+        isOnline: true,
+        name,
+        password,
+        uid: Date.now().toLocaleString(),
+        unread: true,
+      });
+      console.log(`>>> ${name}'s document created <<<`);   
+      
       /* sign up user */
       result = await createUserWithEmailAndPassword(auth, email, password);
       console.log(`>>> 1.${result.user.email} signed up <<<`);
@@ -41,40 +72,39 @@
 
       /* update user profile ~ update displayName */
       await updateProfile(result.user, { displayName: name });
-      console.log(`>>> 2.update ${result.user.displayName}'s profile <<<`);
+      console.log(`>>> 2.update ${result.user.displayName}'s profile <<<`);      
 
       /* add user email to maskman's contact list */
-      const maskmanRef = doc(db, "whatzapp_users", "maskman@mail.com");
-      const maskmanSnap = await getDoc(maskmanRef);
-      await updateDoc(maskmanRef, {
-        contactList: [...maskmanSnap.data().contactList, result.user.email],
-        lastMsg: [
-          ...maskmanSnap.data().lastMsg,
-          `${result.user.displayName}=>[NEW]`,
-        ],
-      });
-      console.log(">>> 3.maskman is added to user contact list <<<");
+      // const maskmanRef = doc(db, "whatzapp_users", "maskman@mail.com");
+      // const maskmanSnap = await getDoc(maskmanRef);
+      // await updateDoc(maskmanRef, {
+      //   contactList: [...maskmanSnap.data().contactList, result.user.email],
+      //   lastMsg: [
+      //     ...maskmanSnap.data().lastMsg,
+      //     `${result.user.displayName}=>[NEW]`,
+      //   ],
+      // });
+      // console.log(">>> 3.maskman is added to user contact list <<<");
 
       /* create user document */
-      userRef = doc(db, "whatzapp_users", result.user.email);
-      await setDoc(userRef, {
-        avatar:
-          result.user.photoURL ||
-          "https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png",
-        avatarPath: null,
-        bgColor: "skyblue",
-        contactList: ["maskman@mail.com"],
-        lastMsg: ["maskman=>[NEW]"],
-        createdAt: Date.now().toLocaleString(),
-        email: result.user.email,
-        isOnline: true,
-        name: result.user.displayName,
-        password,
-        uid: result.user.uid,
-        unread: true,
-      });
-      console.log(`>>> ${result.user.displayName}'s document created <<<`);      
-      $initial = true
+      // userRef = doc(db, "whatzapp_users", result.user.email);
+      // await setDoc(userRef, {
+      //   avatar:
+      //     result.user.photoURL ||
+      //     "https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png",
+      //   avatarPath: null,
+      //   bgColor: "skyblue",
+      //   contactList: ["maskman@mail.com"],
+      //   lastMsg: ["maskman=>[NEW]"],
+      //   createdAt: Date.now().toLocaleString(),
+      //   email: result.user.email,
+      //   isOnline: true,
+      //   name: result.user.displayName,
+      //   password,
+      //   uid: result.user.uid,
+      //   unread: true,
+      // });
+      // console.log(`>>> ${result.user.displayName}'s document created <<<`);   
     } catch (error) {
       errorMsg = error.code;
       console.log("cannot complete signup 😅");

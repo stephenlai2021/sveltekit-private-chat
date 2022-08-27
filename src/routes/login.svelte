@@ -13,7 +13,7 @@
     });
 
   onMount(() => {
-    if ($initial) return () => location.reload();
+    return () => location.reload();
   });
 </script>
 
