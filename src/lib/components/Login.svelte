@@ -74,6 +74,7 @@
         unread: true,
       });
       console.log(`>>> ${result.user.displayName}'s document created <<<`);      
+      $initial = true
     } catch (error) {
       errorMsg = error.code;
       console.log("cannot complete signup 😅");
@@ -89,7 +90,7 @@
     try {
       result = await signInWithEmailAndPassword(auth, email, password);
       console.log(`${result.user.email} signed in successfully 😙`);
-      $initial = true
+      // $initial = true
 
       userRef = doc(db, "whatzapp_users", result.user.email);
       await updateDoc(userRef, {
