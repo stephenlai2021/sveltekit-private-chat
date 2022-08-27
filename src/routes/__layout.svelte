@@ -40,8 +40,6 @@
     showAddRoomModal,
     showAudioPlayerModal,
     showAudioRecordingModal,
-    isSignout,
-    yo
   } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
