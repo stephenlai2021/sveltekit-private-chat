@@ -112,7 +112,6 @@
           console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
           return () => unsubUsers();
         });
-        // return () => location.reload()
       }
     });
     $currentSelectedUser = null;    
