@@ -13,7 +13,8 @@
     })
   }
 
-  onMount(() => {
+  // onMount(() => {
+  onDestroy(() => {
     return () => location.reload()
   })
 
