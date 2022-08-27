@@ -93,7 +93,6 @@
         $loggedinUser = null;
         $allUsers = null
         console.log("signout, user: ", $loggedinUser);
-        // $yo = true
         goto("/login");
       } else {
         $loggedinUser = user;
@@ -117,7 +116,8 @@
     $currentSelectedUser = null;        
   });
 
-  $: if ($loggedinUser && $initial) userDocReady = true;
+  // $: if ($loggedinUser && $initial) userDocReady = true;
+  $: if ($loggedinUser) userDocReady = true;
 
   $: if (userDocReady) {
     let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
