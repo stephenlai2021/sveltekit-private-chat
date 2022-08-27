@@ -41,6 +41,7 @@
     showAudioPlayerModal,
     showAudioRecordingModal,
     isSignout,
+    yo
   } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
@@ -94,10 +95,8 @@
         $loggedinUser = null;
         $allUsers = null
         console.log("signout, user: ", $loggedinUser);
-        // location.reload()
+        $yo = true
         goto("/login");
-        // return () => location.replace('/login')
-        // return () => location.href = '/login'
       } else {
         $loggedinUser = user;
         console.log("signin, user: ", $loggedinUser);

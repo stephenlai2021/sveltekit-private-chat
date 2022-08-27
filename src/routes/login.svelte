@@ -1,12 +1,10 @@
 <script>
   import Login from "$lib/components/Login.svelte";
-  import { auth, db } from "$lib/firebase/client";
+  import { auth } from "$lib/firebase/client";
   import { onAuthStateChanged } from "firebase/auth";
   import { goto } from '$app/navigation'
-  import { onMount, onDestroy } from 'svelte'
-  import themeStore from 'svelte-themes'
-  import { browser } from '$app/env'
-  import { loggedinUser } from '$lib/store'
+  import { onMount } from 'svelte'
+  import { loggedinUser, yo } from '$lib/store'
 
   let flag = false
   
@@ -18,9 +16,9 @@
 
   $: if ($loggedinUser) flag = true
 
-  $: if (flag) {
+  $: if ($yo) {
     location.reload()
-    flag = false
+    $yo = false
   }
 </script>
 
