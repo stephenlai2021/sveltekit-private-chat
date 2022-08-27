@@ -103,14 +103,15 @@
           usersRef,
           where("contactList", "array-contains", $loggedinUser.email)
         );
-        const unsubUsers = onSnapshot(userQuery, (snapshot) => {
+        // const unsubUsers = onSnapshot(userQuery, (snapshot) => {
+        onSnapshot(userQuery, (snapshot) => {
           let tempUsers = [];
           snapshot.forEach((doc) => {
             tempUsers.push(doc.data());
           });
           $allUsers = tempUsers;
           console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
-          return () => unsubUsers();
+          // return () => unsubUsers();
         });
         return () => location.reload()
       }
