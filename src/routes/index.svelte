@@ -3,9 +3,9 @@
   import { onMount } from "svelte";
   import themeStore from "svelte-themes";
 
-  () => location.reload()
-
-  // onMount(() => {})
+  onMount(() => {
+    return () => location.reload()
+  })
 </script>
 
 <svelte:head>
