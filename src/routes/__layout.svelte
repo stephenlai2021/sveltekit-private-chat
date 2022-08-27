@@ -14,11 +14,15 @@
     myDoc,
     mobile,
     bgColor,
+    allUsers,
+    initial,
+    userEmail,
     connection,
     widthLessthan1200,
     widthLessthan1000,
     currentSelectedUser,
     loggedinUser,
+    loginUserEmail,
     showToolModal,
     showEmojiMenu,
     showActionMenu,
@@ -40,7 +44,13 @@
   } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
-  import { collection, onSnapshot, doc } from "firebase/firestore";
+  import {
+    collection,
+    onSnapshot,
+    doc,
+    query,
+    where,
+  } from "firebase/firestore";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { auth, db } from "$lib/firebase/client";
@@ -76,20 +86,38 @@
     $showEmojiMenu = false;
     $showToolModal = false;
   };
-
-  onMount(() => {
+  
+  onMount(() => {    
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
-      if (!user) goto("/login");
-      else {
+      if (!user) {
+        $loggedinUser = null;
+        $allUsers = null
+        console.log("signout, user: ", $loggedinUser);
+        goto("/login");
+      } else {
         $loggedinUser = user;
-        console.log("loggedin user | layout: ", $loggedinUser.displayName);
+        console.log("signin, user: ", $loggedinUser);
+        let usersRef = collection(db, "whatzapp_users");
+        let userQuery = query(
+          usersRef,
+          where("contactList", "array-contains", $loggedinUser.email)
+        );
+        const unsubUsers = onSnapshot(userQuery, (snapshot) => {
+          let tempUsers = [];
+          snapshot.forEach((doc) => {
+            tempUsers.push(doc.data());
+          });
+          $allUsers = tempUsers;
+          console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
+          return () => unsubUsers();
+        });
       }
     });
-    $currentSelectedUser = null;
+    $currentSelectedUser = null;    
   });
 
-  $: if ($loggedinUser) userDocReady = true
+  $: if ($loggedinUser && $initial) userDocReady = true;
 
   $: if (userDocReady) {
     let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
@@ -97,7 +125,7 @@
       $myDoc = userSnap.data();
       return () => unsubUser;
     });
-    userDocReady = false
+    userDocReady = false;
   }
 
   $: if (browser) {
@@ -121,14 +149,14 @@
     });
     window.addEventListener("resize", () => desktopOrMobile());
   }
-  // $: if ($themeStore.theme === "dark") console.log("you are in light mode");
-  // $: if ($themeStore.theme === "light") console.log("you are in dark mode");
-  // $: if ($themeStore.theme === "system") console.log("you are in system mode");
 </script>
+
+<!-- <svelte:window on:load={() => location.reload()} /> -->
 
 <svelte:head>
   <title>Sveltechat</title>
 </svelte:head>
+
 
 <SvelteTheme />
 <div class="wrapper" on:click={closeModal}>

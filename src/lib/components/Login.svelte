@@ -17,237 +17,178 @@
   import { auth, db } from "$lib/firebase/client";
   import { fly, fade } from "svelte/transition";
   import { loginWithGoogle } from "$lib/functions/auth/google";
-  import { bgColor, userList } from "$lib/store";
+  import { bgColor, userList, loginUserEmail, loggedinUser, myDoc, initial } from "$lib/store";
   import { updateProfile } from "firebase/auth";
-  import { loginState } from "$lib/store";
-  // import themeStore from 'svelte-themes'
 
-  let users = [];
   let name = "";
   let email = "";
   let password = "";
-  let error = null;
   let signup = false;
   let isLogin = false;
   let result = null;
   let userRef = null;
   let errorMsg = "";
-  let warningMsg = null;
-  let emailErrMsg = null;
-  let passwordErrMsg = null;
-  let colRef = collection(db, "whatzapp_users");
-
-  /*
-    firebase auth error
-    signup
-    - code: auth/invalid-email; message: Firebase: Error (auth/invalid-email)
-    - code: auth/weak-password; message: Firebase: Password should be at least 6 characters
-    
-    login
-    - code: auth/user-not-found; message: Firebase: Error (auth/user-not-found)
-    - code: auth/wrong-password; message: Firebase: Error (auth/wrong-password).
-  */
-
-  const checkUsername = async () => {
-    if (signup) {
-      console.log("user name: ", name);
-      const q = query(colRef, where("name", "==", name));
-      const unsub = onSnapshot(q, async (snapshot) => {
-        let tempUsers = [];
-        snapshot.docs.forEach((doc) => {
-          tempUsers.push({ ...doc.data() });
-        });
-        users = tempUsers;
-        console.log("get user list", users);
-
-        if (users.length === 0) {
-          users = [];
-          console.log(`${name} is available 😀`);
-          handleSignup();
-        }
-        if (users.length != 0) {
-          console.log(`${name} is already in use 😆`);
-          warningMsg = "This name is already in use 😆";
-          users = [];
-          return;
-        }
-        return () => unsub();
-      });
-    }
-    if (!signup) handleLogin();
-  };
 
   const handleSignup = async () => {
-    /* add user email to maskman's contact list */
+    isLogin = true;
+    errorMsg = null;
+
     try {
+      /* sign up user */
+      result = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(`>>> 1.${result.user.email} signed up <<<`);
+      isLogin = false;
+
+      /* update user profile ~ update displayName */
+      await updateProfile(result.user, { displayName: name });
+      console.log(`>>> 2.update ${result.user.displayName}'s profile <<<`);
+
+      /* add user email to maskman's contact list */
       const maskmanRef = doc(db, "whatzapp_users", "maskman@mail.com");
       const maskmanSnap = await getDoc(maskmanRef);
       await updateDoc(maskmanRef, {
-        contactList: [...maskmanSnap.data().contactList, email],
-        lastMsg: [...maskmanSnap.data().lastMsg, `${name}=>[NEW]`],
+        contactList: [...maskmanSnap.data().contactList, result.user.email],
+        lastMsg: [
+          ...maskmanSnap.data().lastMsg,
+          `${result.user.displayName}=>[NEW]`,
+        ],
       });
-      console.log("maskman is added to user contact list");
-    } catch (error) {
-      console.log(`error message: `, err.message);
-    }
+      console.log(">>> 3.maskman is added to user contact list <<<");
 
-    /* signedup user */
-    try {
-      result = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(`${result.user.email} signed up successfully 🙂`);
-      $loginState = true;
-    } catch (err) {
-      console.log(`error message: `, err.message);
-    }
-
-    /* update login user's profile */
-    try {
-      await updateProfile(result.user, {
-        displayName: name,
-      });
-      console.log(`update ${result.user.displayName} 😀`);
-    } catch (err) {
-      console.log(`error message: `, err.message);
-    }
-
-    /* create user document*/
-    let userRef = doc(db, "whatzapp_users", email);
-    try {
+      /* create user document */
+      userRef = doc(db, "whatzapp_users", result.user.email);
       await setDoc(userRef, {
         avatar:
           result.user.photoURL ||
           "https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png",
         avatarPath: null,
+        bgColor: "skyblue",
         contactList: ["maskman@mail.com"],
         lastMsg: ["maskman=>[NEW]"],
         createdAt: Date.now().toLocaleString(),
         email: result.user.email,
         isOnline: true,
-        name: name,
+        name: result.user.displayName,
         password,
         uid: result.user.uid,
         unread: true,
       });
-      console.log(`${result.user.email} document is created 🥰`);
-    } catch (err) {
-      console.log(`error message: `, err.message);
+      console.log(`>>> ${result.user.displayName}'s document created <<<`);      
+    } catch (error) {
+      errorMsg = error.code;
+      console.log("cannot complete signup 😅");
+      console.log("error code: ", error.code);
+      console.log("error message: ", error.message);
+      isLogin = false;
     }
   };
 
   const handleLogin = async () => {
     isLogin = true;
+    errorMsg = null;    
     try {
       result = await signInWithEmailAndPassword(auth, email, password);
       console.log(`${result.user.email} signed in successfully 😙`);
-      $loginState = true;
+      $initial = true
 
       userRef = doc(db, "whatzapp_users", result.user.email);
       await updateDoc(userRef, {
         isOnline: true,
       });
+
       console.log(`update ${result.user.email}'s status -> 🟢`);
       isLogin = false;
-    } catch (err) {
-      console.log(`error code: `, err.code);
-      console.log(`error message: `, err.message);
-      errorMsg = err.code;
+    } catch (error) {
+      errorMsg = error.message;
       isLogin = false;
     }
   };
 
-  const handleLoginSignup = () => {
+  const handleAuth = () => {
     if (signup) handleSignup();
     if (!signup) handleLogin();
   };
-
-  // const clearUsername = () => (warningMsg = null);
-
-  $: if (errorMsg) {
-    if (
-      errorMsg === "auth/invalid-email" ||
-      errorMsg === "auth/user-not-found" ||
-      errorMsg === "auth/email-already-in-use"
-    )
-      emailErrMsg = errorMsg;
-    if (errorMsg === "auth/weak-password" || errorMsg === "auth/wrong-password")
-      passwordErrMsg = errorMsg;
-  }
-
-  // $: console.log(signup ? "You are in signup page" : "You are in login page");
 </script>
 
-<!-- <section transition:fade> -->
 <section>
-  {#if !isLogin}
-    <div class="main">
-      <div class="logo-wrapper">
-        <img
-          src="https://www.hosteurope.de/blog/wp-content/uploads/2020/11/abbildung_-_das-offizielle-svelte-logo.jpg"
-          alt=""
-          class="logo"
+  <div class="main">
+    <div class="logo-wrapper">
+      <img
+        src="https://www.hosteurope.de/blog/wp-content/uploads/2020/11/abbildung_-_das-offizielle-svelte-logo.jpg"
+        alt=""
+        class="logo"
+      />
+    </div>
+
+    <form on:submit|preventDefault={handleAuth}>
+      <div class="top">
+        <div class="btn btn-login" on:click={() => (signup = false)}>Login</div>
+        <div class="btn btn-signup" on:click={() => (signup = true)}>
+          Signup
+        </div>
+      </div>
+      <div class="body">
+        {#if signup}
+          <input
+            type="text"
+            class="user-name"
+            placeholder="name"
+            required
+            bind:value={name}
+          />
+        {/if}
+        <input
+          type="email"
+          class="user-email"
+          placeholder="email"
+          required
+          bind:value={email}
+        />
+        <input
+          type="password"
+          class="user-password"
+          placeholder="password"
+          required
+          bind:value={password}
         />
       </div>
-
-      <form on:submit|preventDefault={checkUsername}>
-        <div class="top">
-          <div class="btn btn-login" on:click={() => (signup = false)}>
-            Login
-          </div>
-          <div class="btn btn-signup" on:click={() => (signup = true)}>
-            Signup
-          </div>
-        </div>
-        <div class="body">
-          {#if signup}
-            <input
-              type="text"
-              class="user-name"
-              placeholder="name"
-              required
-              bind:value={name}
-            />
-          {/if}
-          <input
-            type="email"
-            class="user-email"
-            placeholder="email"
-            required
-            bind:value={email}
-          />
-          <input
-            type="password"
-            class="user-password"
-            placeholder="password"
-            required
-            bind:value={password}
-          />
-        </div>
-        <div class="btn-action" on:click={handleLoginSignup}>
-          {signup ? "signup" : "login"}
-        </div>
-        <div class="btn-facebook">
-          <img
-            class="icon-facebook"
-            src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Facebook_icon_2013.svg"
-            alt=""
-          />
-          <p>Login with Facebook</p>
-        </div>
-      </form>
-    </div>
-  {/if}
-  <p class="error-message">{errorMsg}</p>
-
-  {#if isLogin}
-    <div class="loading-indicator">
-      <div class="lds-ring">
-        <div />
-        <div />
-        <div />
-        <div />
+      <button class="btn-action" type="submit">
+        {signup ? "Signup" : "Login"}
+      </button>
+      <div class="btn-facebook">
+        <img
+          class="icon-facebook"
+          src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Facebook_icon_2013.svg"
+          alt=""
+        />
+        <p>Login with Facebook</p>
       </div>
-    </div>
-  {/if}
+    </form>
+    {#if errorMsg}
+      <p class="error-message">
+        {errorMsg.includes("auth/")
+          ? errorMsg
+              .replace("Firebase: Error", "")
+              .replace("(", "")
+              .replace("auth/", "")
+              .replace(")", "")
+              .replace("-", " ")
+              .replace("-", " ")
+              .replace(".", "")
+          : errorMsg}
+      </p>
+    {/if}
+    {#if isLogin}
+      <div class="loading">
+        <img
+          src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif"
+          alt=""
+          width="20"
+          height="20"
+        />
+      </div>
+    {/if}
+  </div>
 </section>
 
 <style>
@@ -260,6 +201,11 @@
     --btn-red-hover: #f53677;
     --facebook-blue: #3a559f;
     --facebook-blue: #3d5998;
+  }
+
+  .loading {
+    text-align: center;
+    margin-top: 20px;
   }
 
   form {
@@ -305,6 +251,11 @@
     color: white;
     background: rgb(187, 195, 206);
     border-radius: 2px;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
   }
 
   input {
@@ -349,17 +300,11 @@
     background: #fff;
   }
 
-  .loading-indicator {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .main {
     position: relative;
     width: 300px;
     margin: 200px auto;
     overflow-y: auto;
+    overflow-x: hidden;
   }
 </style>

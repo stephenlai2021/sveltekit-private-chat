@@ -3,6 +3,8 @@
     myDoc,
     mobile,
     bgColor,
+    initial,
+    isLogout,
     loggedinUser,
     showThemeModal,
     showCameraModal,
@@ -10,20 +12,26 @@
     widthLessthan1200,
   } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { fly } from "svelte/transition";
   import Cookies from "js-cookie";
   import { page } from "$app/stores";
   import { auth, db, storage } from "$lib/firebase/client";
   import { updateProfile, signOut } from "firebase/auth";
-  import { doc, updateDoc } from "firebase/firestore";
-  import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+  import { doc, updateDoc, onSnapshot } from "firebase/firestore";
+  import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    uploadBytesResumable,
+  } from "firebase/storage";
 
   let url = null;
   let file = null;
   let theme = false;
   let fileError = null;
   let fileUploaded = false;
+  let userDocReady = false 
 
   const toggleTheme = () => {
     theme = !theme;
@@ -33,7 +41,7 @@
 
   const logout = async () => {
     $showSettingsModal = false;
-    await signOut(auth)
+    await signOut(auth);
   };
 
   const handleFileChange = (e) => {
@@ -85,9 +93,8 @@
       avatar: url,
     }).then(() => {
       console.log(">>> user document updated <<<");
-      fileUploaded = false
+      fileUploaded = false;
     });
-
   }
 
   onMount(() => {
@@ -115,15 +122,15 @@
       <div class="avatar-section">
         <div class="image-wrapper">
           {#if $myDoc}
-            <!-- {#if !$myDoc.avatar}
-              <img src="/joke.png" alt="" width="80" height="80" />
-            {/if} -->
+            {#if !$myDoc.avatar}
+              <img src="/joke.png" alt="" width="100" height="100" />
+            {/if}
             {#if $myDoc.avatar && !fileUploaded}
-              <img src={$myDoc.avatar} alt="" width="80" height="80" />
-            {/if} 
+              <img class="image" src={$myDoc.avatar} alt="" />
+            {/if}
             {#if fileUploaded}
               <div class="loading">
-                <img src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif" alt="" width="20" height="20">
+                <img class="loading-gif" src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif" alt="" width="20" height="20">
               </div>
             {/if}
             <label>
@@ -177,7 +184,7 @@
           </h3>
         </li>
         <li style:padding="0">
-          <p style:width="120px">{$myDoc.email}</p>
+          <p>{$myDoc.email}</p>
         </li>
       {:else}
         <li style:padding="0">
@@ -193,9 +200,42 @@
       {/if}
     </div>
 
-    {#if $loggedinUser}
-      <li>
-        <div class="content">
+    <!-- {#if $loggedinUser} -->
+    <li>
+      <div class="content">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M48 112h288M192 64v48M272 448l96-224 96 224M301.5 384h133M281.3 112S257 206 199 277 80 384 80 384"
+          />
+          <path
+            d="M256 336s-35-27-72-75-56-85-56-85"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+        </svg>
+        <div class="title-wrapper">
+          <span class="menu-item">Language</span>
+        </div>
+      </div>
+    </li>
+    <li class="theme" on:click={toggleTheme}>
+      <div class="content">
+        {#if $themeStore.theme === "light"}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="ionicon"
@@ -205,15 +245,7 @@
             fill="currentColor"
           >
             <path
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
-              d="M48 112h288M192 64v48M272 448l96-224 96 224M301.5 384h133M281.3 112S257 206 199 277 80 384 80 384"
-            />
-            <path
-              d="M256 336s-35-27-72-75-56-85-56-85"
+              d="M160 136c0-30.62 4.51-61.61 16-88C99.57 81.27 48 159.32 48 248c0 119.29 96.71 216 216 216 88.68 0 166.73-51.57 200-128-26.39 11.49-57.38 16-88 16-119.29 0-216-96.71-216-216z"
               fill="none"
               stroke="currentColor"
               stroke-linecap="round"
@@ -222,69 +254,9 @@
             />
           </svg>
           <div class="title-wrapper">
-            <span class="menu-item">Language</span>
+            <span class="menu-item">Dark mode</span>
           </div>
-        </div>
-      </li>
-      <li class="theme" on:click={toggleTheme}>
-        <div class="content">
-          {#if $themeStore.theme === "light"}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="ionicon"
-              viewBox="0 0 512 512"
-              width="24"
-              height="24"
-              fill="currentColor"
-            >
-              <path
-                d="M160 136c0-30.62 4.51-61.61 16-88C99.57 81.27 48 159.32 48 248c0 119.29 96.71 216 216 216 88.68 0 166.73-51.57 200-128-26.39 11.49-57.38 16-88 16-119.29 0-216-96.71-216-216z"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="32"
-              />
-            </svg>
-            <div class="title-wrapper">
-              <span class="menu-item">Dark mode</span>
-            </div>
-          {:else}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="ionicon"
-              viewBox="0 0 512 512"
-              width="24"
-              height="24"
-              fill="currentColor"
-            >
-              <path
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-miterlimit="10"
-                stroke-width="32"
-                d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94"
-              />
-              <circle
-                cx="256"
-                cy="256"
-                r="80"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-miterlimit="10"
-                stroke-width="32"
-              />
-            </svg>
-            <div class="title-wrapper">
-              <span class="menu-item">Light mode</span>
-            </div>
-          {/if}
-        </div>
-      </li>
-      <li>
-        <div class="content">
+        {:else}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="ionicon"
@@ -293,71 +265,111 @@
             height="24"
             fill="currentColor"
           >
-            <path
-              d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184 184-82.39 184-184S349.61 64 248 64z"
-              fill="none"
-              stroke="currentColor"
-              stroke-miterlimit="10"
-              stroke-width="32"
-            />
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
-              d="M220 220h32v116"
-            />
             <path
               fill="none"
               stroke="currentColor"
               stroke-linecap="round"
               stroke-miterlimit="10"
               stroke-width="32"
-              d="M208 340h88"
+              d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94"
             />
-            <path d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z" />
-          </svg>
-          <div class="title-wrapper">
-            <span class="menu-item">About</span>
-          </div>
-        </div>
-      </li>
-      <li on:click={logout}>
-        <div class="content">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="ionicon"
-            viewBox="0 0 512 512"
-            width="24"
-            height="24"
-            fill="currentColor"
-          >
-            <path
-              d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
+            <circle
+              cx="256"
+              cy="256"
+              r="80"
               fill="none"
               stroke="currentColor"
               stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke-miterlimit="10"
               stroke-width="32"
             />
           </svg>
           <div class="title-wrapper">
-            <span class="menu-item">Logout</span>
+            <span class="menu-item">Light mode</span>
           </div>
+        {/if}
+      </div>
+    </li>
+    <li>
+      <div class="content">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184 184-82.39 184-184S349.61 64 248 64z"
+            fill="none"
+            stroke="currentColor"
+            stroke-miterlimit="10"
+            stroke-width="32"
+          />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M220 220h32v116"
+          />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-miterlimit="10"
+            stroke-width="32"
+            d="M208 340h88"
+          />
+          <path d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z" />
+        </svg>
+        <div class="title-wrapper">
+          <span class="menu-item">About</span>
         </div>
-      </li>
-    {/if}
+      </div>
+    </li>
+    <li on:click={logout}>
+      <div class="content">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+        </svg>
+        <div class="title-wrapper">
+          <span class="menu-item">Logout</span>
+        </div>
+      </div>
+    </li>
+    <!-- {/if} -->
   </div>
 </ul>
 
 <style>
+  .percentage {
+    font-size: 40px;
+  }
+
   .loading {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* border: 1px solid; */
   }
 
   span.menu-item {
@@ -370,7 +382,6 @@
     margin-top: 10px;
   }
 
-  h3,
   p {
     text-align: left;
     letter-spacing: 0.8px;
@@ -403,15 +414,22 @@
   .icon-camera {
     width: 24px;
     height: 24px;
-    margin-right: 0;
+    /* margin-right: 0; */
     position: absolute;
-    right: 30px;
+    /* right: 30px;
+    right: 0px; */
+    /* top: 50%; */
+    right: -32px;
+    /* transform: translateY(-50%); */
     bottom: -10px;
   }
 
-  .image-wrapper img {
+  .image-wrapper .image {
     border-radius: 8px;
-    object-fit: contain;
+    object-fit: cover;
+    /* border: 1px solid; */
+    /* width: 100%; */
+    height: 100px;
   }
 
   .image-wrapper {
@@ -419,7 +437,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 120px;
+    width: 100px;
+    /* border: 1px solid green; */
   }
 
   .main {
@@ -433,6 +452,7 @@
     align-items: center;
     margin-bottom: 15px;
     display: flex;
+    /* border: 1px solid red; */
   }
 
   .user-profile {
@@ -471,6 +491,11 @@
     margin: 0 10px;
     margin-bottom: 5px;
     border-radius: 8px;
+  }
+
+  li h3 {
+    text-align: center;
+    margin-top: 10px;
   }
 
   ul {

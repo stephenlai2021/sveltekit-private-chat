@@ -76,17 +76,26 @@ export const rightsideState = writable(true);
 export const menubarState = writable(true);
 export const showSearchFriendModal = writable(false)
 
-export const getSelectedUser = (selectedUsername) => {
-  let q = query(colRef, where("name", "==", selectedUsername));
-  const unsub = onSnapshot(q, (snapshot) => {
-    let tempUsers = [];
-    snapshot.docs.forEach((doc) => {
-      tempUsers.push({ ...doc.data() });
-    });
-    selectedUser.set(tempUsers[0])
-    return () => unsub();
-  });
-};
+export const userEmail = writable(
+  browser && (localStorage.getItem("user email") || null)
+);
+userEmail.subscribe(
+  (val) => browser && localStorage.setItem("user email", val)
+);
+
+export const initial = writable(
+  browser && (localStorage.getItem("initial") || false)
+);
+initial.subscribe(
+  (val) => browser && localStorage.setItem("initial", val)
+);
+
+export const isLogout = writable(
+  browser && (localStorage.getItem("logout state") || false)
+);
+isLogout.subscribe(
+  (val) => browser && localStorage.setItem("logout state", val)
+);
 
 export const currentSelectedUser = writable(
   browser && localStorage.getItem("selected user") || {}
@@ -152,7 +161,8 @@ loginUserEmail.subscribe(
 );
 
 export const loggedinUser = writable(
-  browser && JSON.parse(localStorage.getItem("loggedin user"))
+  browser && JSON.parse(localStorage.getItem("loggedin user") || null) 
+  // browser && JSON.parse(localStorage.getItem("loggedin user")) || null
 );
 loggedinUser.subscribe(
   (val) => browser && localStorage.setItem("loggedin user", JSON.stringify(val))

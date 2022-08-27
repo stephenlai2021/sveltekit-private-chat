@@ -25,7 +25,6 @@
   };
 </script>
 
-<!-- class:unread={user.unread} -->
 <div
   class="block"
   on:click={() => selectUser(user)}
@@ -62,11 +61,11 @@
     </p> -->
     </div>
     <div class="message">
-      <!-- {#if user.lastMsg} -->
+      {#if user && $loggedinUser}
         {#if user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)]}
           <p>{user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)].split('=>')[1]}</p>
         {/if}
-      <!-- {/if} -->
+      {/if}
       <b>1</b>
     </div>
   </div>
@@ -82,9 +81,9 @@
     cursor: pointer;
   }
 
-  .block:hover {
+  /* .block:hover {
     transform: scale(1.01);
-  }
+  } */
 
   .imgbx {
     min-width: 45px;
@@ -147,7 +146,7 @@
   }
 
   .message p {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.6px;
     display: -webkit-box;
@@ -156,6 +155,8 @@
     overflow: hidden;
     /* color: rgb(83, 81, 81); */
     position: absolute;
+    /* text-decoration: wavy; */
+    font-style: italic;
   }
 
   .block .details .message b {

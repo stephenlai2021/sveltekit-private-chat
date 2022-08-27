@@ -12,12 +12,12 @@
   } from "$lib/store";
   import themeStore, { setTheme } from "svelte-themes";
   import { onMount } from "svelte";
-  import { signout } from "$lib/functions/auth/signout";
+  // import { signout } from "$lib/functions/auth/signout";
   import { fly } from "svelte/transition";
   import Cookies from "js-cookie";
   import { page } from "$app/stores";
   import { auth, db, storage } from "$lib/firebase/client";
-  import { onAuthStateChanged, updateProfile } from "firebase/auth";
+  import { onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
   import { doc, updateDoc, getDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import CameraModal from "$lib/components/CameraModal.svelte";
@@ -34,9 +34,10 @@
     if (!theme) setTheme("light");
   };
 
-  const logout = () => {
+  const logout = async () => {
     $showSettingsModalMobile = false;
-    signout();
+    // signout();
+    await signOut(auth)
   };
 
   const handleFileChange = (e) => {

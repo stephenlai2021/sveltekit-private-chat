@@ -99,7 +99,7 @@
     ? "#292F3F"
     : "rgba(235, 235, 235, 0.1)"}
 >
-  {#if messages}
+  {#if messages && $loggedinUser}
     {#each messages as msg}
       <div
         class="message"
@@ -130,7 +130,8 @@
             style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"}
           >
             <!-- {moment(msg.createdAt.toDate()).format("LT")} -->
-            {formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })}
+            <!-- {formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })} -->
+            {formatDistanceToNow(new Date(msg.createdAt.toDate()))}
           </span>
 
           {#if msg.audioURL}
