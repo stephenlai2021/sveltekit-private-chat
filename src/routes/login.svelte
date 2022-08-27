@@ -11,11 +11,13 @@
       if (user) goto("/");
     });
 
+  const reload = () => {
+    if (browser) return () => location.reload()
+  }
+  reload()
+
   onMount(() => {
-  // beforeUpdate(() => {
-  // afterUpdate(() => {
-  // onDestroy(() => {
-    return () => location.reload();
+    // return () => location.reload();
   });
 </script>
 
