@@ -112,7 +112,7 @@
           console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
           return () => unsubUsers();
         });
-        if ($page.url.pathname === "/login") return () => location.reload()
+        // if ($page.url.pathname === "/login") return () => location.reload()
       }
     });
     $currentSelectedUser = null;        
