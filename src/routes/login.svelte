@@ -11,10 +11,10 @@
       if (user) goto("/");
     });
 
-  // onMount(() => {
+  onMount(() => {
   // beforeUpdate(() => {
   // afterUpdate(() => {
-  onDestroy(() => {
+  // onDestroy(() => {
     return () => location.reload();
   });
 </script>
