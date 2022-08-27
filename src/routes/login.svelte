@@ -11,7 +11,7 @@
     onAuthStateChanged(auth, user => { 
       if (user) goto('/')
     })
-    // return () => location.reload()
+    return () => location.reload()
   })
 
 </script>
