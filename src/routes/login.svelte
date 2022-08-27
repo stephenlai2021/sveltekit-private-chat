@@ -10,8 +10,10 @@
   onMount(() => {
     onAuthStateChanged(auth, user => { 
       if (user) {
-        location.reload()
-        goto('/')
+        return () => {
+          location.reload()
+          goto('/')
+        }
       }
     })
   })
