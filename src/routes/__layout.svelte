@@ -94,7 +94,8 @@
         $loggedinUser = null;
         $allUsers = null
         console.log("signout, user: ", $loggedinUser);
-        goto("/login");
+        // goto("/login");
+        location.replace('/login')
       } else {
         $loggedinUser = user;
         console.log("signin, user: ", $loggedinUser);
@@ -112,7 +113,6 @@
           console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
           return () => unsubUsers();
         });
-        // if ($page.url.pathname === "/login") return () => location.reload()
       }
     });
     $currentSelectedUser = null;        
