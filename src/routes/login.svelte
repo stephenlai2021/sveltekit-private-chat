@@ -11,8 +11,8 @@
     onAuthStateChanged(auth, user => { 
       if (user) {
         return () => {
-          location.reload()
-          goto('/')
+          location.replace('/')
+          // goto('/')
         }
       }
     })
