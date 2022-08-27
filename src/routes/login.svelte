@@ -6,7 +6,7 @@
   import { onMount } from 'svelte'
   import { browser } from '$app/env'
 
-  const reload = () => location.reload()
+  const reload = () => browser && window.location.reload()
 
   reload()
   
