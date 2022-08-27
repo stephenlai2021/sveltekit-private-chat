@@ -87,8 +87,7 @@
     $showToolModal = false;
   };
   
-  onMount(() => {    
-    if ($page.url.pathname === "/login") return () => location.reload()
+  onMount(() => {        
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -113,6 +112,7 @@
           console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
           return () => unsubUsers();
         });
+        if ($page.url.pathname === "/login") return () => location.reload()
       }
     });
     $currentSelectedUser = null;        
