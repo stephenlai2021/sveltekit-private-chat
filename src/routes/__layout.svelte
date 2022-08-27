@@ -88,6 +88,7 @@
   };
   
   onMount(() => {    
+    if ($page.url.pathname === "/login") return () => location.reload()
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -114,9 +115,7 @@
         });
       }
     });
-    $currentSelectedUser = null;    
-
-    if ($page.url.pathname === "/login") return () => location.reload()
+    $currentSelectedUser = null;        
   });
 
   $: if ($loggedinUser && $initial) userDocReady = true;
