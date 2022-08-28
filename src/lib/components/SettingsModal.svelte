@@ -25,14 +25,14 @@
     getDownloadURL,
     uploadBytesResumable,
   } from "firebase/storage";
-  import { signout } from "$lib/functions/auth/signout"
+  import { signout } from "$lib/functions/auth/signout";
 
   let url = null;
   let file = null;
   let theme = false;
   let fileError = null;
   let fileUploaded = false;
-  let userDocReady = false 
+  let userDocReady = false;
 
   const toggleTheme = () => {
     theme = !theme;
@@ -40,12 +40,9 @@
     if (!theme) setTheme("light");
   };
 
-  // const logout = async () => {
-  const logout = () => {
+  const logout = async () => {
     $showSettingsModal = false;
-    // await signOut(auth);
-    // await signout()
-    signout()
+    await signout()
   };
 
   const handleFileChange = (e) => {
@@ -134,7 +131,13 @@
             {/if}
             {#if fileUploaded}
               <div class="loading">
-                <img class="loading-gif" src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif" alt="" width="20" height="20">
+                <img
+                  class="loading-gif"
+                  src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif"
+                  alt=""
+                  width="20"
+                  height="20"
+                />
               </div>
             {/if}
             <label>
@@ -334,33 +337,29 @@
         </div>
       </div>
     </li>
-    <!-- <li on:click={logout}> -->
-    <li>
-      <form on:submit={logout}>      
-        <div class="content">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="ionicon"
-            viewBox="0 0 512 512"
-            width="24"
-            height="24"
-            fill="currentColor"
-          >
-            <path
-              d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
-            />
-          </svg>
-          <div class="title-wrapper">
-            <!-- <span class="menu-item">Logout</span> -->
-            <input type="submit" class="menu-item" value="Logout">
-          </div>
+    <li on:click={logout}>
+      <div class="content">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+          />
+        </svg>
+        <div class="title-wrapper">
+          <span class="menu-item">Logout</span>
         </div>
-      </form>
+      </div>
     </li>
     <!-- {/if} -->
   </div>
