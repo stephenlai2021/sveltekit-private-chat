@@ -25,6 +25,7 @@
     getDownloadURL,
     uploadBytesResumable,
   } from "firebase/storage";
+  import { signout } from "$lib/functions/auth/signout"
 
   let url = null;
   let file = null;
@@ -41,7 +42,8 @@
 
   const logout = async () => {
     $showSettingsModal = false;
-    await signOut(auth);
+    // await signOut(auth);
+    await signout()
   };
 
   const handleFileChange = (e) => {
@@ -330,29 +332,33 @@
         </div>
       </div>
     </li>
-    <li on:click={logout}>
-      <div class="content">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
-        >
-          <path
-            d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-        </svg>
-        <div class="title-wrapper">
-          <span class="menu-item">Logout</span>
+    <!-- <li on:click={logout}> -->
+    <li>
+      <form on:submit={logout}>      
+        <div class="content">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon"
+            viewBox="0 0 512 512"
+            width="24"
+            height="24"
+            fill="currentColor"
+          >
+            <path
+              d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="32"
+            />
+          </svg>
+          <div class="title-wrapper">
+            <!-- <span class="menu-item">Logout</span> -->
+            <input type="submit" class="menu-item" value="Logout">
+          </div>
         </div>
-      </div>
+      </form>
     </li>
     <!-- {/if} -->
   </div>
