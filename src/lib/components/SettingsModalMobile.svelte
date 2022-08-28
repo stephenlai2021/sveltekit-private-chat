@@ -400,6 +400,19 @@
     margin-top: 10px;
   }
 
+  p {
+    text-align: left;
+    letter-spacing: 0.8px;
+    font-size: 16px;
+  }
+
+  h3 span,
+  p span {
+    color: transparent;
+    line-height: 0.7;
+    border-radius: 4px;
+  }
+
   .user-avatar {
     width: 80px;
     height: 80px;
@@ -408,14 +421,6 @@
 
   svg {
     margin-right: 20px;
-  }
-
-  h3 span,
-  p span {
-    text-align: center;
-    text-align: left;
-    letter-spacing: 0.8px;
-    font-size: 16px;
   }
 
   label input {

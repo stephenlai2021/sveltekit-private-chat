@@ -372,7 +372,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid; */
   }
 
   span.menu-item {
