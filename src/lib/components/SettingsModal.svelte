@@ -123,9 +123,9 @@
       <div class="avatar-section">
         <div class="image-wrapper">
           {#if $myDoc}
-            {#if !$myDoc.avatar}
+            <!-- {#if !$myDoc.avatar}
               <img src="/joke.png" alt="" width="100" height="100" />
-            {/if}
+            {/if} -->
             {#if $myDoc.avatar && !fileUploaded}
               <img class="image" src={$myDoc.avatar} alt="" />
             {/if}
@@ -366,10 +366,6 @@
 </ul>
 
 <style>
-  .percentage {
-    font-size: 40px;
-  }
-
   .loading {
     width: 100px;
     height: 100px;
@@ -377,11 +373,6 @@
     justify-content: center;
     align-items: center;
     /* border: 1px solid; */
-  }
-
-  input.menu-item {
-    outline: none;
-    border: none;
   }
 
   span.menu-item {
@@ -426,21 +417,14 @@
   .icon-camera {
     width: 24px;
     height: 24px;
-    /* margin-right: 0; */
     position: absolute;
-    /* right: 30px;
-    right: 0px; */
-    /* top: 50%; */
     right: -32px;
-    /* transform: translateY(-50%); */
     bottom: -10px;
   }
 
   .image-wrapper .image {
     border-radius: 8px;
     object-fit: cover;
-    /* border: 1px solid; */
-    /* width: 100%; */
     height: 100px;
   }
 
@@ -450,7 +434,6 @@
     flex-direction: column;
     justify-content: center;
     width: 100px;
-    /* border: 1px solid green; */
   }
 
   .main {
@@ -464,7 +447,6 @@
     align-items: center;
     margin-bottom: 15px;
     display: flex;
-    /* border: 1px solid red; */
   }
 
   .user-profile {

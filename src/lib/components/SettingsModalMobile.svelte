@@ -21,6 +21,7 @@
   import { doc, updateDoc, getDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import CameraModal from "$lib/components/CameraModal.svelte";
+  import { signout } from "$lib/functions/auth/signout";
 
   let url = null;
   let file = null;
@@ -36,8 +37,7 @@
 
   const logout = async () => {
     $showSettingsModalMobile = false;
-    // signout();
-    await signOut(auth)
+    await signout()
   };
 
   const handleFileChange = (e) => {
@@ -187,15 +187,40 @@
           {/if}
         </div>
       </div>
-      <li style:padding="0">
+
+      <!-- <li style:padding="0">
         <h3 style:width="120px">
           {$myDoc.name}
         </h3>
       </li>
       <li style:padding="0">
         <p style:width="120px">{$myDoc.email}</p>
-      </li>
+      </li> -->
+
+      {#if $myDoc}
+        <li style:padding="0">
+          <h3 style:width="120px">
+            {$myDoc.name}
+          </h3>
+        </li>
+        <li style:padding="0">
+          <p>{$myDoc.email}</p>
+        </li>
+      {:else}
+        <li style:padding="0">
+          <h3 class="user-name" style:width="120px">
+            <span class="animation">maskman</span>
+          </h3>
+        </li>
+        <li style:padding="0">
+          <p class="user-email" style:width="120px">
+            <span class="animation">maskman@mail.com</span>
+          </p>
+        </li>
+      {/if}
+
     </div>
+
     <li>
       <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
@@ -358,8 +383,8 @@
 
 <style>
   .loading {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -370,12 +395,23 @@
     letter-spacing: 0.8px;
   }
 
+  h3.user-name {
+    margin-bottom: 5px;
+    margin-top: 10px;
+  }
+
+  .user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+  }
+
   svg {
     margin-right: 20px;
   }
 
-  h3,
-  p {
+  h3 span,
+  p span {
     text-align: center;
     text-align: left;
     letter-spacing: 0.8px;
@@ -391,15 +427,17 @@
   .icon-camera {
     width: 24px;
     height: 24px;
-    margin-right: 0;
+    /* margin-right: 0; */
     position: absolute;
-    right: 30px;
+    /* right: 30px; */
+    right: -32px;
     bottom: -10px;
   }
 
   .image-wrapper img {
     border-radius: 8px;
-    object-fit: contain;
+    object-fit: cover;
+    height: 100px;
   }
 
   .image-wrapper {
@@ -407,7 +445,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 120px;
+    width: 100px;
   }
 
   .main {
