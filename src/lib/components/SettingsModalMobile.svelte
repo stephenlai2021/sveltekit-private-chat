@@ -193,15 +193,6 @@
         </div>
       </div>
 
-      <!-- <li style:padding="0">
-        <h3 style:width="120px">
-          {$myDoc.name}
-        </h3>
-      </li>
-      <li style:padding="0">
-        <p style:width="120px">{$myDoc.email}</p>
-      </li> -->
-
       {#if $myDoc}
         <li style:padding="0">
           <h3 style:width="120px">
@@ -226,7 +217,6 @@
     </div>
 
     <li>
-      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -259,7 +249,6 @@
       </div>
     </li>
     <li class="theme" on:click={toggleTheme}>
-      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         {#if $themeStore.theme === "light"}
           <svg
@@ -317,7 +306,6 @@
       </div>
     </li>
     <li>
-      <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -436,14 +424,12 @@
   .icon-camera {
     width: 24px;
     height: 24px;
-    /* margin-right: 0; */
     position: absolute;
-    /* right: 30px; */
     right: -32px;
     bottom: -10px;
   }
 
-  .image-wrapper img {
+  .image-wrapper .image {
     border-radius: 8px;
     object-fit: cover;
     height: 100px;
@@ -468,7 +454,6 @@
     align-items: center;
     margin-bottom: 15px;
     display: flex;
-    /* border: 1px solid; */
   }
 
   .user-profile {
@@ -488,20 +473,14 @@
   }
 
   .top {
-    display: flex;
-    align-items: center;
     height: 60px;
-    display: flex;
-    justify-content: flex-start;
     margin-bottom: 10px;
-    /* border: 1px solid; */
   }
 
   label {
     display: flex;
     align-items: center;
     width: 100px;
-    /* border: 1px solid; */
   }
 
   li {
@@ -513,13 +492,16 @@
     margin: 0 10px;
     margin-bottom: 5px;
     border-radius: 8px;
-    /* border: 1px solid; */
+  }
+
+  li h3 {
+    text-align: center;
+    margin-top: 10px;
   }
 
   ul {
     position: absolute;
     top: 0px;
-    /* bottom: 10px; */
     left: 0;
     width: 100%;
     z-index: 100;
