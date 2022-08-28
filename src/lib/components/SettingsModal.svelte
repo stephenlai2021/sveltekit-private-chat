@@ -40,10 +40,12 @@
     if (!theme) setTheme("light");
   };
 
-  const logout = async () => {
+  // const logout = async () => {
+  const logout = () => {
     $showSettingsModal = false;
     // await signOut(auth);
-    await signout()
+    // await signout()
+    signout()
   };
 
   const handleFileChange = (e) => {
