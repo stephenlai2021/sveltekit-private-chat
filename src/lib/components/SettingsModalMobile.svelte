@@ -37,7 +37,7 @@
 
   const logout = async () => {
     $showSettingsModalMobile = false;
-    await signout()
+    await signout();
   };
 
   const handleFileChange = (e) => {
@@ -90,7 +90,7 @@
       avatar: url,
     }).then(() => {
       console.log(">>> user avatar updated <<<");
-      fileUploaded = false
+      fileUploaded = false;
     });
   }
 
@@ -137,11 +137,16 @@
               <img src="/joke.png" alt="" width="80" height="80" />
             {/if} -->
             {#if $myDoc.avatar && !fileUploaded}
-              <img src={$myDoc.avatar} alt="" width="80" height="80" />
+              <img class="image" src={$myDoc.avatar} alt="" />
             {/if}
             {#if fileUploaded}
               <div class="loading">
-                <img src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif" alt="" width="20" height="20">
+                <img
+                  src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif"
+                  alt=""
+                  width="20"
+                  height="20"
+                />
               </div>
             {/if}
             <label>
@@ -218,7 +223,6 @@
           </p>
         </li>
       {/if}
-
     </div>
 
     <li>
