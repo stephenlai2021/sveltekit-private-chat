@@ -380,6 +380,11 @@
     /* border: 1px solid; */
   }
 
+  input.menu-item {
+    outline: none;
+    border: none;
+  }
+
   span.menu-item {
     font-size: 14px;
     letter-spacing: 0.8px;
