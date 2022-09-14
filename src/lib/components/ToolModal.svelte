@@ -1,4 +1,10 @@
 <script>
+  import { db } from "$lib/firebase/client";
+  import {    
+    doc,
+    getDoc,
+    updateDoc
+  } from "firebase/firestore";
   import {
     file,
     bgColor,
@@ -23,6 +29,8 @@
   import bgPics from "$lib/data/bgPics.json";
   import { page } from "$app/stores";
   import themeStore from "svelte-themes";
+
+  let colorVal = "#b69696";
 
   const setBgColor = (val) => {
     $bgColor = val;
@@ -52,6 +60,39 @@
     });
   };
 
+  const uploadTheme = async (theme) => {
+    console.log('theme: ', theme)
+    console.log('selected user: ', $selectedUsername)
+
+    let userRef = doc(db, "users", $selectedUsername);
+    // const userSnap = await getDoc(userRef);
+    await updateDoc(userRef, {
+      bgColor: `url(${theme.url})`,
+    });
+  };
+
+  const uploadGradient = async (gradient) => {
+    console.log('gradient: ', gradient)
+    console.log('selected user: ', $selectedUsername)
+
+    let userRef = doc(db, "users", $selectedUsername);
+    // const userSnap = await getDoc(userRef);
+    await updateDoc(userRef, {
+      bgColor: gradient.background,
+    });
+  };
+
+  const uploadColor = async (color) => {
+    console.log('color: ', color)
+    console.log('selected user: ', $selectedUsername)
+
+    let userRef = doc(db, "users", $selectedUsername);
+    // const userSnap = await getDoc(userRef);
+    await updateDoc(userRef, {
+      bgColor: color,
+    });
+  };
+
   // $: if ($currentSelectedUser) {
   //   console.log('current selected user: ', $currentSelectedUser.name)
   //   console.log('current selected user: ', $currentSelectedUser)
@@ -60,8 +101,8 @@
   // $: if ($currentSelectedUser) console.log('current selected user: ', $currentSelectedUser)
 
   $: if ($page.url.pathname === "/") {
-    $currentSelectedUser = {}
-    $selectedUserReady = false
+    $currentSelectedUser = {};
+    $selectedUserReady = false;
   }
 </script>
 
@@ -83,10 +124,11 @@
       <div class="image-wrapper">
         {#if $selectedUserReady && $currentSelectedUser}
           <img
+            class="image"
             src={$currentSelectedUser.avatar}
             alt=""
-            width="80"
-            height="80"
+            width="100"
+            height="100"
           />
         {:else if $page.url.pathname === "/"}
           <span />
@@ -98,7 +140,9 @@
 
     {#if $selectedUserReady && $currentSelectedUser}
       <li style:padding="0">
-        <h3>{$currentSelectedUser.name}</h3>
+        <h3 style:width="120px">
+          {$currentSelectedUser.name}
+        </h3>
       </li>
       <li style:padding="0">
         <p>{$currentSelectedUser.email}</p>
@@ -119,128 +163,130 @@
     {/if}
   </div>
 
-  {#if $selectedUserReady && $currentSelectedUser}
-    <ul>
-      {#if $themeStore.theme === "light"}
-        <li>
-          <div
-            class="option"
-            on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
-          >
-            <div class="content">
-              <div class="title-wrapper">
-                <span class="menu-item">Image gallery</span>
-              </div>
-              {#if !$showThemeMenu}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="ionicon"
-                  viewBox="0 0 512 512"
-                  width="15"
-                  height="15"
-                  fill="currentColor"
-                  style:margin-left="26px"
-                >
-                  <path
-                    d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-                  />
-                </svg>
-              {:else}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="ionicon"
-                  viewBox="0 0 512 512"
-                  width="15"
-                  height="15"
-                  fill="currentColor"
-                  style:margin-left="26px"
-                >
-                  <path
-                    d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-                  />
-                </svg>
-              {/if}
-            </div>
+  <!-- {#if $selectedUserReady && $currentSelectedUser} -->
+  <ul>
+    <!-- {#if $themeStore.theme === "light"} -->
+    <li>
+      <div
+        class="option"
+        on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
+      >
+        <div class="content">
+          <div class="title-wrapper">
+            <span class="menu-item">Image gallery</span>
           </div>
-          {#if $showThemeMenu}
-            <main>
-              {#each bgPics as bgPic}
-                <div
-                  class="theme-item"
-                  style:cursor="pointer"
-                  on:click={() =>
-                    ($bgColor = `no-repeat center center url(${bgPic.url})`)}
-                >
-                  <div
-                    class="theme-image"
-                    style:background-image={`url(${bgPic.url})`}
-                  />
-                </div>
-              {/each}
-            </main>
-          {/if}
-        </li>
-
-        {#if !$disabled}
-          <li>
-            <div
-              class="option"
-              on:click={() => ($showGradientMenu = !$showGradientMenu)}
+          {#if !$showThemeMenu}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon"
+              viewBox="0 0 512 512"
+              width="15"
+              height="15"
+              fill="currentColor"
+              style:margin-left="26px"
             >
-              <div class="content">
-                <div class="title-wrapper">
-                  <span class="menu-item">Gradient gallery</span>
-                </div>
-                {#if !$showGradientMenu}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="ionicon"
-                    viewBox="0 0 512 512"
-                    width="15"
-                    height="15"
-                    fill="currentColor"
-                    style:margin-left="10px"
-                  >
-                    <path
-                      d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-                    />
-                  </svg>
-                {:else}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="ionicon"
-                    viewBox="0 0 512 512"
-                    width="15"
-                    height="15"
-                    fill="currentColor"
-                    style:margin-left="10px"
-                  >
-                    <path
-                      d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-                    />
-                  </svg>
-                {/if}
-              </div>
+              <path
+                d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+              />
+            </svg>
+          {:else}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon"
+              viewBox="0 0 512 512"
+              width="15"
+              height="15"
+              fill="currentColor"
+              style:margin-left="26px"
+            >
+              <path
+                d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+              />
+            </svg>
+          {/if}
+        </div>
+      </div>
+      {#if $showThemeMenu}
+        <main>
+          {#each bgPics as bgPic}
+            <div
+              class="theme-item"
+              style:cursor="pointer"
+              on:click={() => uploadTheme(bgPic)}
+            >
+              <!-- on:click={() =>
+                    ($bgColor = `no-repeat center center url(${bgPic.url})`)} -->
+              <div
+                class="theme-image"
+                style:background-image={`url(${bgPic.url})`}
+              />
             </div>
-            {#if $showGradientMenu}
-              <main>
-                {#each themes as theme}
-                  <div
-                    class="theme-item"
-                    style:cursor="pointer"
-                    on:click={() => setBgColor(theme.background)}
-                  >
-                    <div
-                      class="theme-image"
-                      style:background-image={theme.background}
-                    />
-                  </div>
-                {/each}
-              </main>
-            {/if}
-          </li>
+          {/each}
+        </main>
+      {/if}
+    </li>
 
-          <!-- {#if !$isMobile}
+    {#if !$disabled}
+      <li>
+        <div
+          class="option"
+          on:click={() => ($showGradientMenu = !$showGradientMenu)}
+        >
+          <div class="content">
+            <div class="title-wrapper">
+              <span class="menu-item">Gradient gallery</span>
+            </div>
+            {#if !$showGradientMenu}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+                fill="currentColor"
+                style:margin-left="10px"
+              >
+                <path
+                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                />
+              </svg>
+            {:else}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+                fill="currentColor"
+                style:margin-left="10px"
+              >
+                <path
+                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                />
+              </svg>
+            {/if}
+          </div>
+        </div>
+        {#if $showGradientMenu}
+          <main>
+            {#each themes as theme}
+              <div
+                class="theme-item"
+                style:cursor="pointer"
+                on:click={() => uploadGradient(theme)}
+              >
+                <!-- on:click={() => setBgColor(theme.background)} -->
+                <div
+                  class="theme-image"
+                  style:background-image={theme.background}
+                />
+              </div>
+            {/each}
+          </main>
+        {/if}
+      </li>
+
+      <!-- {#if !$isMobile}
             <li>
               <div class="content">
                 <label>
@@ -257,32 +303,31 @@
             </li>
           {/if} -->
 
-          <li>
-            <div class="content">
-              <label>
-                <input
-                  type="color"
-                  bind:value={$bgColor}
-                  on:input|stopPropagation={() =>
-                    Cookies.set("bgColor", $bgColor)}
-                />
-              </label>
-              <div class="title-wrapper">
-                <span class="menu-item">Select single color</span>
-              </div>
-            </div>
-          </li>
-        {/if}
-      {/if}
-      <li on:click={() => ($showMapModal = true)}>
+      <li>
         <div class="content">
           <div class="title-wrapper">
-            <span class="menu-item">Show location</span>
+            <span class="menu-item">Set Color</span>
           </div>
+          <input
+            type="color"
+            bind:value={colorVal}
+            on:input|stopPropagation={() => uploadColor(colorVal)}
+          />
+          <!-- on:input|stopPropagation={() =>
+              console.log("color value: " + colorVal)} -->
         </div>
       </li>
-    </ul>
-  {/if}
+    {/if}
+    <!-- {/if} -->
+    <li on:click={() => ($showMapModal = true)}>
+      <div class="content">
+        <div class="title-wrapper">
+          <span class="menu-item">Show location</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <!-- {/if} -->
 </div>
 
 <style>
@@ -316,13 +361,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 140px;
+    /* width: 140px; */
+    width: 100px;
     /* border: 1px solid; */
   }
 
-  .image-wrapper img {
+  .image-wrapper .image {
     border-radius: 8px;
-    object-fit: contain;
+    /* object-fit: contain; */
+    object-fit: cover;
+    height: 100px;
   }
 
   span.menu-item {
@@ -337,7 +385,7 @@
 
   h3,
   p {
-    text-align: left;
+    text-align: center;
     letter-spacing: 0.8px;
     font-size: 16px;
     width: 140px;
@@ -368,6 +416,8 @@
   .content {
     width: 140px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     /* border: 1px solid; */
   }
 

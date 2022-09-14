@@ -9,6 +9,7 @@
   } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
   import {
+    // bgColor,
     loggedinUser,
     storedImageURL,
     storedPictureURL,
@@ -66,10 +67,11 @@
 <div
   class="chatBox"
   bind:this={chat}
-  style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "rgba(235, 235, 235, 0.1)"}
 >
+  <!-- style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "rgba(235, 235, 235, 0.1)"
+  } -->
   {#if messages && $loggedinUser}
   <!-- {#if messages} -->
     {#each messages as msg}
@@ -247,7 +249,7 @@
     padding: 0px 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    backdrop-filter: blur(20px);
+    /* backdrop-filter: blur(20px); */
   }
 
   @media (max-width: 800px) {

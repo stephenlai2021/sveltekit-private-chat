@@ -242,7 +242,7 @@
         </div>
       </div>
     </li>
-    <li class="theme" on:click={toggleTheme}>
+    <!-- <li class="theme" on:click={toggleTheme}>
       <div class="content">
         {#if $themeStore.theme === "light"}
           <svg
@@ -298,7 +298,7 @@
           </div>
         {/if}
       </div>
-    </li>
+    </li> -->
     <li>
       <div class="content">
         <svg

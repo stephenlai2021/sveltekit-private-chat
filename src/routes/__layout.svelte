@@ -112,6 +112,7 @@
           console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
           return () => unsubUsers();
         });
+
         let userRef = doc(db, "users", $loggedinUser.displayName);
         const unsubUser = onSnapshot(userRef, (userSnap) => {
           $myDoc = userSnap.data();
@@ -120,6 +121,7 @@
       }
     });
     $currentSelectedUser = null;
+    return () => location.reload();
   });
 
   // $: if ($loggedinUser) userDocReady = true;
@@ -169,7 +171,8 @@
       ? "#1F232F"
       : $page.url.pathname === "/"
       ? "#ebebeb"
-      : $currentSelectedUser?.bgColor}
+      : `${$currentSelectedUser?.bgColor} center / cover`
+    }
   >
     <SettingsModal />
     <div
