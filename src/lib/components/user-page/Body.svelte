@@ -9,32 +9,22 @@
   } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
   import {
-    bgColor,
     loggedinUser,
-    // isAudioPlayed,
     storedImageURL,
     storedPictureURL,
     selectedUsername,
     showImagePreviewModal,
   } from "$lib/store";
   import { page } from "$app/stores";
-  import moment from "moment";
-  import { onMount, beforeUpdate, afterUpdate } from "svelte";
-  import { browser } from "$app/env";
+  import { beforeUpdate, afterUpdate } from "svelte";
   import AudioPlayer from "$lib/components/AudioPlayer.svelte"
   import { formatDistanceToNow } from 'date-fns'
 
-  let y
   let q = null;
   let chat = null
   let autoscroll = null
-  let audio = null;
-  let player = null;
   let messages = [];
   let matched = false;
-  let isAudioPlayed = false;
-  let playBtnClicked = false;
-  // let selectedUserMsgsReady = false;
 
   const showImagePreview = (pictureURL, imageURL) => {
     $showImagePreviewModal = true;    
@@ -57,31 +47,12 @@
         msgs.push(doc.data());
       });
       messages = msgs;
-      chat.scrollTo(0, chat.scrollHeight)
+      chat?.scrollTo(0, chat.scrollHeight)
       console.log("chat messages", messages);
       return () => unsubMsgs();
     });
     matched = false;
   }
-
-  // $: if (messages) chat.scrollTo(0, chat.scrollHeight)
-
-  const playAudio = (audioURL) => {
-    playBtnClicked = true;
-    audio = new Audio(audioURL);
-    audio.addEventListener("loadeddata", () => (audio.volume = 0.55));
-    audio.play();
-  };
-
-  const pauseAudio = () => {
-    // audio = new Audio(audioURL)
-    // audio.addEventListener('loadeddata', () => audio.volume = .75)
-    audio.pause();
-  };
-
-  onMount(() => {
-    const audio = new Audio();
-  });
 
   beforeUpdate(() => {
     autoscroll = chat && chat.offsetHeight + chat.scrollTop > chat.scrollHeight - 20;
@@ -100,6 +71,7 @@
     : "rgba(235, 235, 235, 0.1)"}
 >
   {#if messages && $loggedinUser}
+  <!-- {#if messages} -->
     {#each messages as msg}
       <div
         class="message"
@@ -129,8 +101,6 @@
             class="showtime"
             style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"}
           >
-            <!-- {moment(msg.createdAt.toDate()).format("LT")} -->
-            <!-- {formatDistanceToNow(new Date(msg.createdAt.toDate()), { addSuffix: true })} -->
             {formatDistanceToNow(new Date(msg.createdAt.toDate()))}
           </span>
 

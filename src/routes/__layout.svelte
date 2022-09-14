@@ -85,22 +85,23 @@
     $showEmojiMenu = false;
     $showToolModal = false;
   };
-  
-  onMount(() => {        
+
+  onMount(() => {
     desktopOrMobile();
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         $loggedinUser = null;
-        $allUsers = null
+        $allUsers = null;
         console.log("signout, user: ", $loggedinUser);
         goto("/login");
       } else {
         $loggedinUser = user;
-        console.log("signin, user: ", $loggedinUser);
-        let usersRef = collection(db, "whatzapp_users");
+        console.log("signin, user: ", $loggedinUser.displayName);
+
+        let usersRef = collection(db, "users");
         let userQuery = query(
           usersRef,
-          where("contactList", "array-contains", $loggedinUser.email)
+          where("contactList", "array-contains", $loggedinUser.displayName)
         );
         const unsubUsers = onSnapshot(userQuery, (snapshot) => {
           let tempUsers = [];
@@ -111,22 +112,26 @@
           console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
           return () => unsubUsers();
         });
+        let userRef = doc(db, "users", $loggedinUser.displayName);
+        const unsubUser = onSnapshot(userRef, (userSnap) => {
+          $myDoc = userSnap.data();
+          return () => unsubUser;
+        });
       }
     });
-    $currentSelectedUser = null;        
+    $currentSelectedUser = null;
   });
 
-  // $: if ($loggedinUser && $initial) userDocReady = true;
-  $: if ($loggedinUser) userDocReady = true;
+  // $: if ($loggedinUser) userDocReady = true;
 
-  $: if (userDocReady) {
-    let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
-    const unsubUser = onSnapshot(userRef, (userSnap) => {
-      $myDoc = userSnap.data();
-      return () => unsubUser;
-    });
-    userDocReady = false;
-  }
+  // $: if (userDocReady) {
+  //   let userRef = doc(db, "users", $loggedinUser.displayName);
+  //   const unsubUser = onSnapshot(userRef, (userSnap) => {
+  //     $myDoc = userSnap.data();
+  //     return () => unsubUser;
+  //   });
+  //   userDocReady = false;
+  // }
 
   $: if (browser) {
     window.addEventListener("online", () => {
@@ -151,12 +156,9 @@
   }
 </script>
 
-<!-- <svelte:window on:load={() => location.reload()} /> -->
-
 <svelte:head>
   <title>Sveltechat</title>
 </svelte:head>
-
 
 <SvelteTheme />
 <div class="wrapper" on:click={closeModal}>

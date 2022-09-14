@@ -12,8 +12,8 @@ export const signout = async () => {
   let userName = tempUser.displayName;
 
   try {
-    await updateDoc(userRef, { isOnline: false });
-    console.log(`update ${userName} status -> ⚪`);
+    // await updateDoc(userRef, { isOnline: false });
+    // console.log(`update ${userName} status -> ⚪`);
 
     await signOut(auth);
     console.log(`${userName} is signed out 😃`);

@@ -42,6 +42,7 @@
 
   const logout = async () => {
     $showSettingsModal = false;
+    $initial = false
     await signout()
   };
 
@@ -89,7 +90,8 @@
     });
 
     /* update user document */
-    let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
+    // let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
+    let userRef = doc(db, "users", $loggedinUser.displayName);
     updateDoc(userRef, {
       avatar: url,
     }).then(() => {

@@ -1,34 +1,34 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
-export const myDoc = writable(null)
-export const userAvatar = writable(null)
-export const todos = writable([])
-export const lastMsgArray = writable([])
-export const lastMsg = writable(false)
-export const foundUser = writable({})
-export const isSignout = writable(false)
-export const selectedMembers = writable([])
-export const selectedUserReady = writable(false)
-export const currentContact = writable(null)
-export const showAddPeopleModal = writable(false)
-export const showToolModalMobile = writable(false)
-export const showSettingsModalMobile = writable(false)
-export const widthLessthan1200 = writable(false)
-export const widthLessthan1000 = writable(false)
-export const isAudioPlayed = writable(false)
+export const myDoc = writable(null);
+export const userAvatar = writable(null);
+export const todos = writable([]);
+export const lastMsgArray = writable([]);
+export const lastMsg = writable(false);
+export const foundUser = writable({});
+export const isSignout = writable(false);
+export const selectedMembers = writable([]);
+export const selectedUserReady = writable(false);
+export const currentContact = writable(null);
+export const showAddPeopleModal = writable(false);
+export const showToolModalMobile = writable(false);
+export const showSettingsModalMobile = writable(false);
+export const widthLessthan1200 = writable(false);
+export const widthLessthan1000 = writable(false);
+export const isAudioPlayed = writable(false);
 export const showAddFriendModal = writable(false);
-export const showAddGroupModal = writable(false)
-export const showAddRoomModal = writable(false)
-export const allUsers = writable([])
-export const privateChat = writable(true)
-export const groupChat = writable(false)
-export const publicChat = writable(false)
-export const showActionMenu = writable(false)
-export const storedImageURL = writable(null)
-export const storedPictureURL = writable(null)
-export const showImagePreviewModal = writable(false)
-export const showSidebarMenu = writable(true)
+export const showAddGroupModal = writable(false);
+export const showAddRoomModal = writable(false);
+export const allUsers = writable([]);
+export const privateChat = writable(true);
+export const groupChat = writable(false);
+export const publicChat = writable(false);
+export const showActionMenu = writable(false);
+export const storedImageURL = writable(null);
+export const storedPictureURL = writable(null);
+export const showImagePreviewModal = writable(false);
+export const showSidebarMenu = writable(true);
 export const selectedUsernameMatched = writable(false);
 export const showGradientMenu = writable(false);
 export const showThemeMenu = writable(false);
@@ -74,7 +74,14 @@ export const showBgSettingsModal = writable(false);
 export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
-export const showSearchFriendModal = writable(false)
+export const showSearchFriendModal = writable(false);
+
+export const msgCount = writable(
+  browser && (localStorage.getItem("message count: ") || 0)
+);
+msgCount.subscribe(
+  (val) => browser && localStorage.setItem("message count: ", val)
+);
 
 export const userEmail = writable(
   browser && (localStorage.getItem("user email") || null)
@@ -86,9 +93,7 @@ userEmail.subscribe(
 export const initial = writable(
   browser && (localStorage.getItem("initial") || false)
 );
-initial.subscribe(
-  (val) => browser && localStorage.setItem("initial", val)
-);
+initial.subscribe((val) => browser && localStorage.setItem("initial", val));
 
 export const isLogout = writable(
   browser && (localStorage.getItem("logout state") || false)
@@ -98,21 +103,21 @@ isLogout.subscribe(
 );
 
 export const currentSelectedUser = writable(
-  browser && localStorage.getItem("selected user") || {}
+  (browser && localStorage.getItem("selected user")) || {}
 );
 currentSelectedUser.subscribe(
   (val) => browser && localStorage.setItem("selected user", val)
 );
 
 export const selectedUsername = writable(
-  browser && localStorage.getItem("selected user name") || {}
+  (browser && localStorage.getItem("selected user name")) || {}
 );
 selectedUsername.subscribe(
   (val) => browser && localStorage.setItem("selected user name", val)
 );
 
 export const selectedUseremail = writable(
-  browser && localStorage.getItem("selected user email") || {}
+  (browser && localStorage.getItem("selected user email")) || {}
 );
 selectedUseremail.subscribe(
   (val) => browser && localStorage.setItem("selected user email", val)
@@ -157,15 +162,16 @@ export const loginUserEmail = writable(
   browser && JSON.parse(localStorage.getItem("login user email"))
 );
 loginUserEmail.subscribe(
-  (val) => browser && localStorage.setItem("login user email", JSON.stringify(val))
+  (val) =>
+    browser && localStorage.setItem("login user email", JSON.stringify(val))
 );
 
 export const loggedinUser = writable(
-  browser && JSON.parse(localStorage.getItem("loggedin user") || null) 
-  // browser && JSON.parse(localStorage.getItem("loggedin user")) || null
+  // browser && JSON.parse(localStorage.getItem("login user") || null)
+  browser && JSON.parse(localStorage.getItem("login user")) || null
 );
 loggedinUser.subscribe(
-  (val) => browser && localStorage.setItem("loggedin user", JSON.stringify(val))
+  (val) => browser && localStorage.setItem("login user", JSON.stringify(val))
 );
 
 export const connection = writable(

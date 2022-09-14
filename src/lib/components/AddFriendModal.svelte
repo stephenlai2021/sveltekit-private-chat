@@ -1,6 +1,7 @@
 <script>
   import { fly } from "svelte/transition";
   import {
+    myDoc,
     allUsers,
     loggedinUser,
     showAddFriendModal,
@@ -22,19 +23,19 @@
   let matchedUser = false;
   let me = null;
 
-  onMount(async () => {
-    let loggedinUserRef = doc(db, "whatzapp_users", $loggedinUser.email);
+  // onMount(async () => {
+  //   let loggedinUserRef = doc(db, "users", $loggedinUser.displayName);
 
-    const docSnap = await getDoc(loggedinUserRef);
-    console.log("loggedinUser doc", docSnap.data());
-    me = docSnap.data();
-  });
+  //   const docSnap = await getDoc(loggedinUserRef);
+  //   console.log("loggedinUser doc", docSnap.data());
+  //   me = docSnap.data();
+  // });
 
   const getUser = async () => {
     if (!username) {
       return;
     }
-    const { docs } = await getAllDocs("whatzapp_users", [
+    const { docs } = await getAllDocs("users", [
       "name",
       "==",
       username,
@@ -59,29 +60,32 @@
     $showAddFriendModal = false;
 
     // add loggedin user to found usesr's contact list (ok)
-    let userDoc = doc(db, "whatzapp_users", foundUsers[0].email);
+    let userDoc = doc(db, "users", foundUsers[0].name);
     let userSnap = await getDoc(userDoc);
     await updateDoc(userDoc, {
-      contactList: foundUsers[0].contactList.includes($loggedinUser.email)
+      contactList: foundUsers[0].contactList.includes($loggedinUser.displayName)
         ? [...foundUsers[0].contactList]
-        : [...foundUsers[0].contactList, $loggedinUser.email],
-      lastMsg: [...userSnap.data().lastMsg, me.name + '=>' + '[NEW]']
+        : [...foundUsers[0].contactList, $loggedinUser.displayName],
+      lastMsg: [...userSnap.data().lastMsg, $loggedinUser.displayName + '=>' + '[NEW]'],
+      lastUpdated: [],
+      unread: []
     });
     console.log(
-      `${foundUsers[0].name} is successfully added to contact list 😁}`
+      `${$loggedinUser.displayName} is successfully added to ${foundUsers[0].name}'s contact list 😁}`
     );
 
-    // add found user to loggedin user's contact list
-    let loggedinUserRef = doc(db, "whatzapp_users", $loggedinUser.email);
-    let loggedinUserSnap = await getDoc(loggedinUserRef);
-    await updateDoc(loggedinUserRef, {
-      contactList: me.contactList.includes(foundUsers[0].email)
-        ? [...me.contactList]
-        : [...me.contactList, foundUsers[0].email],
-      lastMsg: [...loggedinUserSnap.data().lastMsg, foundUsers[0].name + '=>' + '[NEW]']
+    // add found user to loggedin user's contact list 
+    // let meRef = doc(db, "users", $loggedinUser.displayName);
+    let meRef = doc(db, "users", $myDoc.name);
+    let meSnap = await getDoc(meRef);
+    await updateDoc(meRef, {
+      contactList: $myDoc.contactList.includes(foundUsers[0].name)
+        ? [...$myDoc.contactList]
+        : [...$myDoc.contactList, foundUsers[0].name],
+      lastMsg: [...meSnap.data().lastMsg, foundUsers[0].name + '=>' + '[NEW]']
     });
-    console.log(`${me.name} is successfully added to contact list 😁}`);
-
+    // console.log(`${foundUsers[0].name} is successfully added to ${$loggedinUser.displayName}'s contact list 😁}`);
+    console.log(`${foundUsers[0].name} is successfully added to ${$myDoc.name}'s contact list 😁}`);
   };
 
   $: if (foundUsers && foundUsers.length) {
@@ -378,6 +382,9 @@
     left: 0;
     width: 100%;
     height: 100vh;
+    height: calc(100vh - 20px);
     z-index: 200;
+    border-radius: 8px;
+    /* border: 1px solid; */
   }
 </style>

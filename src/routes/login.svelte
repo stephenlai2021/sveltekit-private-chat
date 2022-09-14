@@ -5,7 +5,6 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { browser } from "$app/env";
-  import { initial } from '$lib/store'
 
   browser &&
     onAuthStateChanged(auth, (user) => {

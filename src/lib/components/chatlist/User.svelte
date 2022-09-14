@@ -4,22 +4,19 @@
     loggedinUser,
     currentContact,
     selectedUsername,
-    selectedUseremail
+    selectedUseremail,
   } from "$lib/store";
   import themeStore from "svelte-themes";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { updateDoc, doc, collection, onSnapshot } from "firebase/firestore";
-  import { db } from "$lib/firebase/client";
   import { formatDistanceToNow } from "date-fns";
-  import { onMount } from "svelte";
 
   export let user;
 
   const selectUser = async (selectedUser) => {
-    $currentContact = selectedUser;
+    // $currentContact = selectedUser;
     $selectedUsername = selectedUser.name;
-    $selectedUseremail = selectedUser.email;
+    // $selectedUseremail = selectedUser.email;
 
     goto(`/${$selectedUsername}`);
   };
@@ -50,23 +47,35 @@
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <p class="time">12:15</p>
-      <!-- <p 
-      class="time"
-      style:color={msg.unread ? 'var(--theme-color)' : 'gray'}
-      >
-      {formatDistanceToNow(new Date(msg.createdAt.toDate()), {
-        addSuffix: true,
-      })}
-    </p> -->
+      <!-- <p class="time">
+        {formatDistanceToNow(
+          new Date(
+            user.lastUpdated[
+              user.lastUpdated.findIndex(
+                (time) => time.split("=>")[0] === $loggedinUser.displayName
+              )
+            ].split("=>")[1]
+          )
+        )}
+      </p> -->
     </div>
     <div class="message">
       {#if user && $loggedinUser}
-        {#if user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)]}
-          <p>{user.lastMsg[user.lastMsg.findIndex(msg => msg.split('=>')[0] === $loggedinUser.displayName)].split('=>')[1]}</p>
-        {/if}
+        <p>
+          {user.lastMsg[
+            user.lastMsg.findIndex(
+              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
+            )
+          ].split("=>")[1]}
+        </p>
       {/if}
-      <b>1</b>
+      <!-- <b>
+        {user.msgCount[
+          user.lastMsg.findIndex(
+            (count) => count.split("=>")[0] === $loggedinUser.displayName
+          )
+        ].split("=>")[1]}
+      </b> -->
     </div>
   </div>
 </div>
@@ -153,10 +162,8 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    /* color: rgb(83, 81, 81); */
     position: absolute;
-    /* text-decoration: wavy; */
-    font-style: italic;
+    color: rgb(66, 57, 57);
   }
 
   .block .details .message b {

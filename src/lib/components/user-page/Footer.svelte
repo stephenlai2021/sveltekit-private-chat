@@ -3,10 +3,7 @@
   import { db, storage } from "$lib/firebase/client";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import {
-    lastMsg,
     isMobile,
-    loginUserEmail,
-    currentContact,
     showActionMenu,
     showCameraModal,
     showEmojiMenu,
@@ -16,6 +13,7 @@
     loggedinUser,
     selectedUsername,
     selectedUseremail,
+    msgCount,
   } from "$lib/store";
   import {
     doc,
@@ -26,10 +24,18 @@
     Timestamp,
     collection,
   } from "firebase/firestore";
+  import { onMount } from "svelte";
 
   let url = null;
   let file = null;
   let messageSent = "";
+  // let countVal = 0;
+
+  // msgCount.subscribe((val) => (countVal = val));
+
+  onMount(() => {
+    // msgCount.subscribe(val => countVal = val)
+  });
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
@@ -93,16 +99,8 @@
         createdAt: Timestamp.fromDate(new Date()),
       });
 
-      await setDoc(doc(db, "lastMsg", msgId), {
-        text: messageSent,
-        from: $loggedinUser.displayName,
-        to: $selectedUsername,
-        createdAt: Timestamp.fromDate(new Date()),
-        unread: true,
-      });
-
-      /* send last message to selected user*/
-      let selectedUserRef = doc(db, "whatzapp_users", $selectedUseremail);
+      /* update selected user document */
+      let selectedUserRef = doc(db, "users", $selectedUsername);
       let selectedUserSnap = await getDoc(selectedUserRef);
       await updateDoc(selectedUserRef, {
         lastMsg: selectedUserSnap
@@ -112,10 +110,33 @@
               ? `${$loggedinUser.displayName}=>You: ${messageSent}`
               : msg
           ),
+        lastUpdated: selectedUserSnap
+          .data()
+          .lastUpdated.map((time) =>
+            time.split("=>")[0] === $loggedinUser.displayName
+              // ? `${$loggedinUser.displayName}=>You: ${Timestamp.fromDate(new Date())}`
+              // ? $loggedinUser.displayName + '=>' + Date.now().toLocaleString()
+              ? $loggedinUser.displayName + '=>' + Date.now()
+              : time
+          ),
+        // msgCount: selectedUserSnap
+        //   .data()
+        //   .msgCount.map((count) =>
+        //     count.split("=>")[0] === $loggedinUser.displayName
+        //       ? `${$loggedinUser.displayName}=>You: ${countVal++}`
+        //       : count
+        //   ),
+        unread: selectedUserSnap
+          .data()
+          .unread.map((state) =>
+            state.split("=>")[0] === $loggedinUser.displayName
+              ? `${$loggedinUser.displayName}=>You: true`
+              : state
+          ),
       });
 
-      // send last message to loggedin user
-      let loggedinUserRef = doc(db, "whatzapp_users", $loggedinUser.email);
+      // update login user document
+      let loggedinUserRef = doc(db, "users", $loggedinUser.displayName);
       let loggedinUserSnap = await getDoc(loggedinUserRef);
       await updateDoc(loggedinUserRef, {
         lastMsg: loggedinUserSnap
@@ -125,15 +146,40 @@
               ? `${$selectedUsername}=>${messageSent}`
               : msg
           ),
+        lastUpdated: loggedinUserSnap
+          .data()
+          .lastUpdated.map((time) =>
+            time.split("=>")[0] === $selectedUsername
+              // ? `${$selectedUsername}=>${Timestamp.fromDate(new Date())}`
+              // ? $selectedUsername + '=>' + Date.now().toLocaleString()
+              ? $selectedUsername + '=>' + Date.now()
+              : time
+          ),
+        // msgCount: loggedinUserSnap
+        //   .data()
+        //   .msgCount.map((count) =>
+        //     count.split("=>")[0] === $selectedUsername
+        //       ? `${$selectedUsername}=>${countVal++}`
+        //       : count
+        //   ),
+        unread: loggedinUserSnap
+          .data()
+          .unread.map((state) =>
+            state.split("=>")[0] === $selectedUsername
+              ? `${$selectedUsername}=>true`
+              : state
+          ),
       });
-
-      $lastMsg = true;
       messageSent = "";
+      // msgCount.update((n) => n + 1);
+      // msgCount.set(countVal)
       console.log("message created successfully 😁");
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
   };
+
+  // $: console.log("msgCount: ", countVal);
 </script>
 
 <div
