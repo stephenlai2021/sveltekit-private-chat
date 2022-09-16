@@ -1,10 +1,6 @@
 <script>
   import { db } from "$lib/firebase/client";
-  import {    
-    doc,
-    getDoc,
-    updateDoc
-  } from "firebase/firestore";
+  import { doc, updateDoc } from "firebase/firestore";
   import {
     file,
     bgColor,
@@ -38,17 +34,20 @@
   };
 
   const handleFileChange = async (e) => {
+    console.log("handle file change");
     $file = e.target.files[0];
     console.log($file);
-    $showToolModal = false;
 
     $imageURL = await readURL($file);
     console.log("image url: ", $imageURL);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: `url(${$imageURL})`,
+    });
+
     $imageTitle = $file.name;
     console.log("image title: ", $imageTitle);
-    $background.src = $imageURL;
-    $bgOpacity = 0.5;
-    $disabled = false;
   };
 
   const readURL = (file) => {
@@ -61,44 +60,34 @@
   };
 
   const uploadTheme = async (theme) => {
-    console.log('theme: ', theme)
-    console.log('selected user: ', $selectedUsername)
+    console.log("theme: ", theme);
+    console.log("selected user: ", $selectedUsername);
 
     let userRef = doc(db, "users", $selectedUsername);
-    // const userSnap = await getDoc(userRef);
     await updateDoc(userRef, {
       bgColor: `url(${theme.url})`,
     });
   };
 
   const uploadGradient = async (gradient) => {
-    console.log('gradient: ', gradient)
-    console.log('selected user: ', $selectedUsername)
+    console.log("gradient: ", gradient);
+    console.log("selected user: ", $selectedUsername);
 
     let userRef = doc(db, "users", $selectedUsername);
-    // const userSnap = await getDoc(userRef);
     await updateDoc(userRef, {
       bgColor: gradient.background,
     });
   };
 
   const uploadColor = async (color) => {
-    console.log('color: ', color)
-    console.log('selected user: ', $selectedUsername)
+    console.log("color: ", color);
+    console.log("selected user: ", $selectedUsername);
 
     let userRef = doc(db, "users", $selectedUsername);
-    // const userSnap = await getDoc(userRef);
     await updateDoc(userRef, {
       bgColor: color,
     });
   };
-
-  // $: if ($currentSelectedUser) {
-  //   console.log('current selected user: ', $currentSelectedUser.name)
-  //   console.log('current selected user: ', $currentSelectedUser)
-  // }
-
-  // $: if ($currentSelectedUser) console.log('current selected user: ', $currentSelectedUser)
 
   $: if ($page.url.pathname === "/") {
     $currentSelectedUser = {};
@@ -163,171 +152,166 @@
     {/if}
   </div>
 
-  <!-- {#if $selectedUserReady && $currentSelectedUser} -->
-  <ul>
-    <!-- {#if $themeStore.theme === "light"} -->
-    <li>
-      <div
-        class="option"
-        on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
-      >
-        <div class="content">
-          <div class="title-wrapper">
-            <span class="menu-item">Image gallery</span>
-          </div>
-          {#if !$showThemeMenu}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="ionicon"
-              viewBox="0 0 512 512"
-              width="15"
-              height="15"
-              fill="currentColor"
-              style:margin-left="26px"
-            >
-              <path
-                d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-              />
-            </svg>
-          {:else}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="ionicon"
-              viewBox="0 0 512 512"
-              width="15"
-              height="15"
-              fill="currentColor"
-              style:margin-left="26px"
-            >
-              <path
-                d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-              />
-            </svg>
-          {/if}
-        </div>
-      </div>
-      {#if $showThemeMenu}
-        <main>
-          {#each bgPics as bgPic}
-            <div
-              class="theme-item"
-              style:cursor="pointer"
-              on:click={() => uploadTheme(bgPic)}
-            >
-              <!-- on:click={() =>
-                    ($bgColor = `no-repeat center center url(${bgPic.url})`)} -->
-              <div
-                class="theme-image"
-                style:background-image={`url(${bgPic.url})`}
-              />
-            </div>
-          {/each}
-        </main>
-      {/if}
-    </li>
-
-    {#if !$disabled}
-      <li>
-        <div
-          class="option"
-          on:click={() => ($showGradientMenu = !$showGradientMenu)}
-        >
-          <div class="content">
-            <div class="title-wrapper">
-              <span class="menu-item">Gradient gallery</span>
-            </div>
-            {#if !$showGradientMenu}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-                style:margin-left="10px"
-              >
-                <path
-                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-                />
-              </svg>
-            {:else}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-                style:margin-left="10px"
-              >
-                <path
-                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-                />
-              </svg>
-            {/if}
-          </div>
-        </div>
-        {#if $showGradientMenu}
-          <main>
-            {#each themes as theme}
-              <div
-                class="theme-item"
-                style:cursor="pointer"
-                on:click={() => uploadGradient(theme)}
-              >
-                <!-- on:click={() => setBgColor(theme.background)} -->
-                <div
-                  class="theme-image"
-                  style:background-image={theme.background}
-                />
+  {#if $selectedUserReady && $currentSelectedUser}
+    <ul>
+      {#if $themeStore.theme === "light"}
+        <li>
+          <div
+            class="option"
+            on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
+          >
+            <div class="content">
+              <div class="title-wrapper">
+                <span class="menu-item">Image gallery</span>
               </div>
-            {/each}
-          </main>
-        {/if}
-      </li>
+              {#if !$showThemeMenu}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon"
+                  viewBox="0 0 512 512"
+                  width="15"
+                  height="15"
+                  fill="currentColor"
+                  style:margin-left="26px"
+                >
+                  <path
+                    d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                  />
+                </svg>
+              {:else}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon"
+                  viewBox="0 0 512 512"
+                  width="15"
+                  height="15"
+                  fill="currentColor"
+                  style:margin-left="26px"
+                >
+                  <path
+                    d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                  />
+                </svg>
+              {/if}
+            </div>
+          </div>
+          {#if $showThemeMenu}
+            <main>
+              {#each bgPics as bgPic}
+                <div
+                  class="theme-item"
+                  style:cursor="pointer"
+                  on:click={() => uploadTheme(bgPic)}
+                >
+                  <div
+                    class="theme-image"
+                    style:background-image={`url(${bgPic.url})`}
+                  />
+                </div>
+              {/each}
+            </main>
+          {/if}
+        </li>
 
-      <!-- {#if !$isMobile}
+        {#if !$disabled}
+          <li>
+            <div
+              class="option"
+              on:click={() => ($showGradientMenu = !$showGradientMenu)}
+            >
+              <div class="content">
+                <div class="title-wrapper">
+                  <span class="menu-item">Gradient gallery</span>
+                </div>
+                {#if !$showGradientMenu}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="ionicon"
+                    viewBox="0 0 512 512"
+                    width="15"
+                    height="15"
+                    fill="currentColor"
+                    style:margin-left="10px"
+                  >
+                    <path
+                      d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                    />
+                  </svg>
+                {:else}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="ionicon"
+                    viewBox="0 0 512 512"
+                    width="15"
+                    height="15"
+                    fill="currentColor"
+                    style:margin-left="10px"
+                  >
+                    <path
+                      d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                    />
+                  </svg>
+                {/if}
+              </div>
+            </div>
+            {#if $showGradientMenu}
+              <main>
+                {#each themes as theme}
+                  <div
+                    class="theme-item"
+                    style:cursor="pointer"
+                    on:click={() => uploadGradient(theme)}
+                  >
+                    <div
+                      class="theme-image"
+                      style:background-image={theme.background}
+                    />
+                  </div>
+                {/each}
+              </main>
+            {/if}
+          </li>
+
+          {#if !$isMobile}
             <li>
               <div class="content">
                 <label>
+                  <div class="title-wrapper">
+                    <span class="menu-item">Select image</span>
+                  </div>
                   <input
                     type="file"
                     on:change={handleFileChange}
                     accept="image/png, image/jpg, image/jpeg"
                   />
                 </label>
-                <div class="title-wrapper">
-                  <span class="menu-item">Select image</span>
-                </div>
               </div>
             </li>
-          {/if} -->
+          {/if}
 
-      <li>
+          <li>
+            <div class="content">
+              <div class="title-wrapper">
+                <span class="menu-item">Set Color</span>
+              </div>
+              <input
+                type="color"
+                bind:value={colorVal}
+                on:input|stopPropagation={() => uploadColor(colorVal)}
+              />
+            </div>
+          </li>
+        {/if}
+      {/if}
+      <li on:click={() => ($showMapModal = true)}>
         <div class="content">
           <div class="title-wrapper">
-            <span class="menu-item">Set Color</span>
+            <span class="menu-item">Show location</span>
           </div>
-          <input
-            type="color"
-            bind:value={colorVal}
-            on:input|stopPropagation={() => uploadColor(colorVal)}
-          />
-          <!-- on:input|stopPropagation={() =>
-              console.log("color value: " + colorVal)} -->
         </div>
       </li>
-    {/if}
-    <!-- {/if} -->
-    <li on:click={() => ($showMapModal = true)}>
-      <div class="content">
-        <div class="title-wrapper">
-          <span class="menu-item">Show location</span>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <!-- {/if} -->
+    </ul>
+  {/if}
 </div>
 
 <style>
@@ -376,6 +360,7 @@
   span.menu-item {
     font-size: 14px;
     letter-spacing: 0.8px;
+    /* border: 1px solid; */
   }
 
   h3.user-name {
@@ -428,8 +413,10 @@
   }
 
   label {
-    margin-left: 0px;
+    /* margin-left: 0px; */
     cursor: pointer;
+    height: 18px;
+    /* border: 1px solid red; */
   }
 
   label input {

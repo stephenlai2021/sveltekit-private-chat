@@ -44,11 +44,11 @@
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
   import {
-    collection,
-    onSnapshot,
     doc,
     query,
     where,
+    collection,
+    onSnapshot,
   } from "firebase/firestore";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
@@ -121,7 +121,6 @@
       }
     });
     $currentSelectedUser = null;
-    return () => location.reload();
   });
 
   // $: if ($loggedinUser) userDocReady = true;

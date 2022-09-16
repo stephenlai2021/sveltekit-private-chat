@@ -101,8 +101,8 @@
         >
           <span
             class="showtime"
-            style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"}
-          >
+            >
+            <!-- style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"} -->
             {formatDistanceToNow(new Date(msg.createdAt.toDate()))}
           </span>
 
@@ -162,6 +162,12 @@
     max-width: 800px;
     margin: 25px auto;
     /* border: 1px solid; */
+  }
+
+  .showtime {
+    text-shadow: 0.1em 0.1em 0.05em #333;
+    text-shadow: 0.1em 0.1em 0.2em black;
+    color: white;
   }
 
   .message.my_message .showtime {

@@ -27,6 +27,7 @@
   import { page } from "$app/stores";
   import themeStore from "svelte-themes";
   import { db } from "$lib/firebase/client";
+  import { onMount } from 'svelte'
 
   let q = null;
   let matched = false;
@@ -34,6 +35,10 @@
   let selectedUser = {};
   // let colRef = collection(db, "whatzapp_users");
   let colRef = collection(db, "users");
+
+  onMount(() => {
+    $showToolModalMobile = true
+  })
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 

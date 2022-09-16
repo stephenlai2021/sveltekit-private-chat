@@ -1,4 +1,6 @@
 <script>
+  import { db } from "$lib/firebase/client";
+  import { doc, updateDoc } from "firebase/firestore";
   import {
     file,
     mobile,
@@ -10,6 +12,7 @@
     bgOpacity,
     background,
     showThemeMenu,
+    selectedUsername,
     showGradientMenu,
     showMapModal,
     showToolModal,
@@ -26,41 +29,23 @@
   import themeStore from "svelte-themes";
   import { widthLessthan1200 } from "../store";
 
-  const setBgColor = (val) => {
-    $bgColor = val;
-    Cookies.set("bgColor", $bgColor);
-  };
-
-  const setBgPic = (url, title) => {
-    console.log(`url: ${url}`);
-    console.log(`image title: ${title}`);
-
-    $imageTitle = title;
-    $imageURL = url;
-    $background.src = $imageURL;
-    if ($imageTitle === "Default") {
-      $bgOpacity = 0.06;
-      $bgColor = "#e5ddd5";
-      $disabled = true;
-    }
-    if ($imageTitle != "Default") {
-      $bgOpacity = 0.6;
-      $disabled = false;
-    }
-  };
+  let colorVal = "#b69696";
 
   const handleFileChange = async (e) => {
+    console.log('handle file change')
     $file = e.target.files[0];
     console.log($file);
-    $showToolModal = false;
 
     $imageURL = await readURL($file);
     console.log("image url: ", $imageURL);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: `url(${$imageURL})`,
+    });
+
     $imageTitle = $file.name;
     console.log("image title: ", $imageTitle);
-    $background.src = $imageURL;
-    $bgOpacity = 0.5;
-    $disabled = false;
   };
 
   const readURL = (file) => {
@@ -71,6 +56,41 @@
       reader.readAsDataURL(file);
     });
   };
+
+  const uploadTheme = async (theme) => {
+    console.log("theme: ", theme);
+    console.log("selected user: ", $selectedUsername);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: `url(${theme.url})`,
+    });
+  };
+
+  const uploadGradient = async (gradient) => {
+    console.log("gradient: ", gradient);
+    console.log("selected user: ", $selectedUsername);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: gradient.background,
+    });
+  };
+
+  const uploadColor = async (color) => {
+    console.log("color: ", color);
+    console.log("selected user: ", $selectedUsername);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: color,
+    });
+  };
+
+  $: if ($page.url.pathname === "/") {
+    $currentSelectedUser = {};
+    $selectedUserReady = false;
+  }
 </script>
 
 <div class="tool-modal" on:click|stopPropagation>
@@ -108,8 +128,8 @@
           <img
             src={$currentSelectedUser.avatar}
             alt=""
-            width="80"
-            height="80"
+            width="100"
+            height="100"
           />
         {:else if $page.url.pathname === "/"}
           <span />
@@ -121,7 +141,9 @@
 
     {#if $selectedUserReady && $currentSelectedUser}
       <li style:padding="0">
-        <h3>{$currentSelectedUser.name}</h3>
+        <h3 style:width="120px">
+          {$currentSelectedUser.name}
+        </h3>
       </li>
       <li style:padding="0">
         <p>{$currentSelectedUser.email}</p>
@@ -130,12 +152,12 @@
       <span />
     {:else}
       <li style:padding="0">
-        <h3 class="user-name" style:width="140px">
+        <h3 class="user-name" style:width="120px">
           <span class="animation">maskman</span>
         </h3>
       </li>
       <li style:padding="0">
-        <p class="user-email" style:width="140px">
+        <p class="user-email" style:width="120px">
           <span class="animation">maskman@mail.com</span>
         </p>
       </li>
@@ -191,8 +213,7 @@
                 <div
                   class="theme-item"
                   style:cursor="pointer"
-                  on:click={() =>
-                    ($bgColor = `no-repeat center center url(${bgPic.url})`)}
+                  on:click={() => uploadTheme(bgPic)}
                 >
                   <div
                     class="theme-image"
@@ -203,6 +224,7 @@
             </main>
           {/if}
         </li>
+
         {#if !$disabled}
           <li>
             <div
@@ -250,7 +272,7 @@
                   <div
                     class="theme-item"
                     style:cursor="pointer"
-                    on:click={() => setBgColor(theme.background)}
+                     on:click={() => uploadGradient(theme)}
                   >
                     <div
                       class="theme-image"
@@ -261,39 +283,34 @@
               </main>
             {/if}
           </li>
+
           {#if !$isMobile}
             <li>
               <div class="content">
                 <label>
+                  <div class="title-wrapper">
+                    <span class="menu-item">Select image</span>
+                  </div>
                   <input
                     type="file"
                     on:change={handleFileChange}
                     accept="image/png, image/jpg, image/jpeg"
                   />
                 </label>
-                <div class="title-wrapper">
-                  <span class="menu-item">Select image</span>
-                </div>
               </div>
             </li>
           {/if}
 
           <li>
             <div class="content">
-              <label>
-                <input
-                  type="color"
-                  bind:value={$bgColor}
-                  on:input|stopPropagation={() =>
-                    Cookies.set("bgColor", $bgColor)}
-                />
-                <!-- style:height="0"
-              style:width="0"
-              style:opacity="0" -->
-              </label>
               <div class="title-wrapper">
-                <span class="menu-item">Select single color</span>
+                <span class="menu-item">Set Color</span>
               </div>
+              <input
+                type="color"
+                bind:value={colorVal}
+                on:input|stopPropagation={() => uploadColor(colorVal)}
+              />
             </div>
           </li>
         {/if}
@@ -345,13 +362,15 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 140px;
+    width: 100px;
     /* border: 1px solid; */
   }
 
   .image-wrapper img {
     border-radius: 8px;
     object-fit: contain;
+    object-fit: cover;
+    height: 100px;
   }
 
   span.menu-item {
@@ -367,6 +386,7 @@
   h3,
   p {
     text-align: left;
+    text-align: center;
     letter-spacing: 0.8px;
     font-size: 16px;
     width: 140px;
@@ -397,6 +417,8 @@
   .content {
     width: 140px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     /* border: 1px solid; */
   }
 
@@ -408,6 +430,7 @@
 
   label {
     margin-left: 0px;
+    height: 18px;
     cursor: pointer;
   }
 
@@ -420,7 +443,7 @@
   ul {
     text-align: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;    
   }
 
   li {
@@ -455,8 +478,8 @@
     z-index: 500;
     overflow-y: auto;
     overflow-x: hidden;
-    /* background: #ebebeb; */
     background: white;
+    background: #ebebeb;
   }
 
   @media (max-width: 800px) {
