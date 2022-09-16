@@ -39,8 +39,8 @@
       $imageURL = await readURL($file);
       console.log("image url: ", $imageURL);
     } catch (error) {
-      console.log('error: ', error)
-      alert('error: ', error)
+      console.log('convert error: ', error)
+      alert('convert error: ', error)
     }
 
     try {
@@ -49,8 +49,8 @@
         bgColor: `url(${$imageURL})`,
       });
     } catch (error) {
-      console.log('error: ', error)
-      alert('error: ', error)
+      console.log('upload error: ', error)
+      alert('upload error: ', error)
     }
 
     $imageTitle = $file.name;
