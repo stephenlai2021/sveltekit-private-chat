@@ -306,7 +306,7 @@
               <input
                 type="file"
                 on:change={handleFileChange}
-                accept="image/png, image/jpg, image/jpeg, image/gif, image/tiff, image/bmp"
+                accept="image/png, image/jpg, image/jpeg, image/jfif, image/gif, image/tiff, image/bmp"
               />
             </label>
           </div>
