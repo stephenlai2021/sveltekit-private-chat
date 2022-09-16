@@ -272,7 +272,7 @@
             {/if}
           </li>
 
-          <!-- {#if !$isMobile} -->
+          {#if !$isMobile}
             <li>
               <div class="content">
                 <label>
@@ -287,7 +287,7 @@
                 </label>
               </div>
             </li>
-          <!-- {/if} -->
+          {/if}
 
           <li>
             <div class="content">
