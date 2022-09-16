@@ -154,7 +154,7 @@
 
   {#if $selectedUserReady && $currentSelectedUser}
     <ul>
-      {#if $themeStore.theme === "light"}
+      <!-- {#if $themeStore.theme === "light"} -->
         <li>
           <div
             class="option"
@@ -272,7 +272,7 @@
             {/if}
           </li>
 
-          {#if !$isMobile}
+          <!-- {#if !$isMobile} -->
             <li>
               <div class="content">
                 <label>
@@ -287,7 +287,7 @@
                 </label>
               </div>
             </li>
-          {/if}
+          <!-- {/if} -->
 
           <li>
             <div class="content">
@@ -302,7 +302,8 @@
             </div>
           </li>
         {/if}
-      {/if}
+      <!-- {/if} -->
+
       <li on:click={() => ($showMapModal = true)}>
         <div class="content">
           <div class="title-wrapper">

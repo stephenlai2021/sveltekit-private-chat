@@ -248,7 +248,8 @@
         </div>
       </div>
     </li>
-    <li class="theme" on:click={toggleTheme}>
+
+    <!-- <li class="theme" on:click={toggleTheme}>
       <div class="content">
         {#if $themeStore.theme === "light"}
           <svg
@@ -304,7 +305,8 @@
           </div>
         {/if}
       </div>
-    </li>
+    </li> -->
+
     <li>
       <div class="content">
         <svg
@@ -345,6 +347,7 @@
         </div>
       </div>
     </li>
+
     <li on:click={logout}>
       <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
       <div class="content">
@@ -370,6 +373,7 @@
         </div>
       </div>
     </li>
+
   </div>
 </ul>
 
@@ -475,6 +479,9 @@
   .top {
     height: 60px;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    /* border: 1px solid; */
   }
 
   label {

@@ -36,9 +36,9 @@
   // let colRef = collection(db, "whatzapp_users");
   let colRef = collection(db, "users");
 
-  onMount(() => {
-    $showToolModalMobile = true
-  })
+  // onMount(() => {
+  //   $showToolModalMobile = true
+  // })
 
   $: if ($page.params.userId === $selectedUsername) matched = true;
 
