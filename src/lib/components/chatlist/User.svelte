@@ -48,7 +48,7 @@
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <p class="time" style:font-size="12px" style:color={"var(--theme-color)"}>
+      <!-- <p class="time" style:font-size="12px" style:color={"var(--theme-color)"}>
         {formatDistanceToNow(
           new Date(
             user.lastUpdated[
@@ -58,9 +58,9 @@
             ].split("=>")[1].toDate()
           )
         )}
-      </p>
+      </p> -->
 
-      <!-- <p style:font-size="12px" style:color={"var(--theme-color)"}>about 10 hours</p> -->
+      <p style:font-size="12px" style:color={"var(--theme-color)"}>about 10 hours</p>
     </div>
     <div class="message">
       {#if user && $loggedinUser}
