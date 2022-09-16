@@ -41,6 +41,7 @@
     } catch (error) {
       console.log('convert error: ', error)
       alert('convert error: ', error)
+      return
     }
 
     try {
@@ -51,6 +52,7 @@
     } catch (error) {
       console.log('upload error: ', error)
       alert('upload error: ', error)
+      return
     }
 
     $imageTitle = $file.name;
