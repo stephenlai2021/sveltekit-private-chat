@@ -134,9 +134,14 @@
   //   userDocReady = false;
   // }
 
+  const refreshLoginPage = () => {
+    return () => location.reload()
+  }
+
   $: {if (browser && $page.url.pathname === "/login") {
     // location.reload()
     // location.replace('/login')
+    refreshLoginPage()
   }}
 
   $: if (browser) {
