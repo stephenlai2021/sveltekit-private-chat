@@ -49,12 +49,13 @@
         bgColor: `url(${$imageURL})`,
       });
     } catch (error) {
-      console.log('error: ', error.message)
-      alert('error: ', error.message)
+      console.log('error: ', error)
+      alert('error: ', error)
     }
 
     $imageTitle = $file.name;
-    console.log("image title: ", $imageTitle);
+    console.log("file name: ", $imageTitle);
+    alert("file name: ", $imageTitle);    
   };
 
   const readURL = (file) => {
