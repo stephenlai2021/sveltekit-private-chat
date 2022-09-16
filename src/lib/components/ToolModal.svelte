@@ -3,6 +3,7 @@
   import { doc, updateDoc } from "firebase/firestore";
   import {
     file,
+    mobile,
     bgColor,
     disabled,
     isMobile,

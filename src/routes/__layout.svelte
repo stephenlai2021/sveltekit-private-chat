@@ -136,7 +136,7 @@
 
   $: {if (browser && $page.url.pathname === "/login") {
     // location.reload()
-    location.replace('/login')
+    // location.replace('/login')
   }}
 
   $: if (browser) {
