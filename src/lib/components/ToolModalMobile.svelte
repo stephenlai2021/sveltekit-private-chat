@@ -35,8 +35,13 @@
     $file = e.target.files[0];
     console.log($file);
 
-    $imageURL = await readURL($file);
-    console.log("image url: ", $imageURL);
+    try {
+      $imageURL = await readURL($file);
+      console.log("image url: ", $imageURL);
+    } catch (error) {
+      console.log('error: ', error)
+      alert('error: ', error)
+    }
 
     try {
       let userRef = doc(db, "users", $selectedUsername);
