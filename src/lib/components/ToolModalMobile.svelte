@@ -38,10 +38,15 @@
     $imageURL = await readURL($file);
     console.log("image url: ", $imageURL);
 
-    let userRef = doc(db, "users", $selectedUsername);
-    await updateDoc(userRef, {
-      bgColor: `url(${$imageURL})`,
-    });
+    try {
+      let userRef = doc(db, "users", $selectedUsername);
+      await updateDoc(userRef, {
+        bgColor: `url(${$imageURL})`,
+      });
+    } catch (error) {
+      console.log('error: ', error.message)
+      alert('error: ', error.message)
+    }
 
     $imageTitle = $file.name;
     console.log("image title: ", $imageTitle);

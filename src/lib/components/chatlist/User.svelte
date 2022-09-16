@@ -6,6 +6,7 @@
     selectedUsername,
     selectedUseremail,
   } from "$lib/store";
+  import { Timestamp } from "firebase/firestore";
   import themeStore from "svelte-themes";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
@@ -47,17 +48,19 @@
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <!-- <p class="time">
+      <p class="time" style:font-size="12px" style:color={"var(--theme-color)"}>
         {formatDistanceToNow(
           new Date(
             user.lastUpdated[
               user.lastUpdated.findIndex(
                 (time) => time.split("=>")[0] === $loggedinUser.displayName
               )
-            ].split("=>")[1]
+            ].split("=>")[1].toDate()
           )
         )}
-      </p> -->
+      </p>
+
+      <!-- <p style:font-size="12px" style:color={"var(--theme-color)"}>about 10 hours</p> -->
     </div>
     <div class="message">
       {#if user && $loggedinUser}
@@ -76,6 +79,7 @@
           )
         ].split("=>")[1]}
       </b> -->
+      <b style:background={"var(--theme-color)"}>3</b>
     </div>
   </div>
 </div>
@@ -157,7 +161,7 @@
   .message p {
     font-size: 15px;
     font-weight: 500;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.3px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;

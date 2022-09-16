@@ -134,6 +134,11 @@
   //   userDocReady = false;
   // }
 
+  $: {if (browser && $page.url.pathname === "/login") {
+    // location.reload()
+    location.replace('/login')
+  }}
+
   $: if (browser) {
     window.addEventListener("online", () => {
       $connection = true;
