@@ -70,6 +70,7 @@
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
   import LoadingModal from "$lib/components/LoadingModal.svelte";
 
+  let user = null
   let userDocReady = false;
 
   const desktopOrMobile = () => {
@@ -88,73 +89,38 @@
 
   onMount(() => {
     desktopOrMobile();
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
+    onAuthStateChanged(auth, (_user) => {
+      if (!_user) {
         $loggedinUser = null;
         $allUsers = null;
         console.log("signout, user: ", $loggedinUser);
         goto("/login");
       } else {
-        $loggedinUser = user;
+        $loggedinUser = _user;
         console.log("signin, user: ", $loggedinUser.displayName);
 
-        // let usersRef = collection(db, "users");
-        // let userQuery = query(
-        //   usersRef,
-        //   where("contactList", "array-contains", $loggedinUser.displayName)
-        // );
-        // const unsubUsers = onSnapshot(userQuery, (snapshot) => {
-        //   let tempUsers = [];
-        //   snapshot.forEach((doc) => {
-        //     tempUsers.push(doc.data());
-        //   });
-        //   $allUsers = tempUsers;
-        //   console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
-        //   return () => unsubUsers();
-        // });
-
-        // let userRef = doc(db, "users", $loggedinUser.displayName);
-        // const unsubUser = onSnapshot(userRef, (userSnap) => {
-        //   $myDoc = userSnap.data();
-        //   return () => unsubUser;
-        // });
+        let usersRef = collection(db, "users");
+        let userQuery = query(
+          usersRef,
+          where("contactList", "array-contains", $loggedinUser.displayName)
+        );
+        const unsubUsers = onSnapshot(userQuery, (snapshot) => {
+          let tempUsers = [];
+          snapshot.forEach((doc) => {
+            tempUsers.push(doc.data());
+          });
+          $allUsers = tempUsers;
+          console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
+          return () => unsubUsers();
+        });
       }
     });
     $currentSelectedUser = null;
   });
 
-  const refreshLoginPage = () => {
-    return location.reload()
-  }
-
-  onMount(() => {
-    if ($page.url.pathname === "/login") return () => location.reload()
-  })
-
   $: if ($loggedinUser) userDocReady = true;
 
   $: if (userDocReady) {
-    // let userRef = doc(db, "users", $loggedinUser.displayName);
-    // const unsubUser = onSnapshot(userRef, (userSnap) => {
-    //   $myDoc = userSnap.data();
-    //   return () => unsubUser;
-    // });
-
-    let usersRef = collection(db, "users");
-    let userQuery = query(
-      usersRef,
-      where("contactList", "array-contains", $loggedinUser.displayName)
-    );
-    const unsubUsers = onSnapshot(userQuery, (snapshot) => {
-      let tempUsers = [];
-      snapshot.forEach((doc) => {
-        tempUsers.push(doc.data());
-      });
-      $allUsers = tempUsers;
-      console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
-      return () => unsubUsers();
-    });
-
     let userRef = doc(db, "users", $loggedinUser.displayName);
     const unsubUser = onSnapshot(userRef, (userSnap) => {
       $myDoc = userSnap.data();

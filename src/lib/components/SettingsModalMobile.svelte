@@ -10,7 +10,7 @@
     showCameraModal,
     showSettingsModalMobile,
   } from "$lib/store";
-  import themeStore, { setTheme } from "svelte-themes";
+  // import themeStore, { setTheme } from "svelte-themes";
   import { onMount } from "svelte";
   // import { signout } from "$lib/functions/auth/signout";
   import { fly } from "svelte/transition";
@@ -29,11 +29,11 @@
   let fileError = null;
   let fileUploaded = false;
 
-  const toggleTheme = () => {
-    theme = !theme;
-    if (theme) setTheme("dark");
-    if (!theme) setTheme("light");
-  };
+  // const toggleTheme = () => {
+  //   theme = !theme;
+  //   if (theme) setTheme("dark");
+  //   if (!theme) setTheme("light");
+  // };
 
   const logout = async () => {
     $showSettingsModalMobile = false;
@@ -94,10 +94,10 @@
     });
   }
 
-  onMount(() => {
-    if ($themeStore.theme === "light") theme = false;
-    if ($themeStore.theme === "dark") theme = true;
-  });
+  // onMount(() => {
+  //   if ($themeStore.theme === "light") theme = false;
+  //   if ($themeStore.theme === "dark") theme = true;
+  // });
 </script>
 
 <ul
@@ -105,8 +105,8 @@
   on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
   style:width={$mobile ? "80%" : "100%"}
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}
->
+  >
+  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"} -->
   <div class="top">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -133,9 +133,6 @@
       <div class="avatar-section">
         <div class="image-wrapper">
           {#if $myDoc}
-            <!-- {#if !$myDoc.avatar}
-              <img src="/joke.png" alt="" width="80" height="80" />
-            {/if} -->
             {#if $myDoc.avatar && !fileUploaded}
               <img class="image" src={$myDoc.avatar} alt="" />
             {/if}
@@ -209,7 +206,7 @@
           </h3>
         </li>
         <li style:padding="0">
-          <p class="user-email" style:width="120px">
+          <p class="user-email">
             <span class="animation">maskman@mail.com</span>
           </p>
         </li>
@@ -248,64 +245,6 @@
         </div>
       </div>
     </li>
-
-    <!-- <li class="theme" on:click={toggleTheme}>
-      <div class="content">
-        {#if $themeStore.theme === "light"}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="ionicon"
-            viewBox="0 0 512 512"
-            width="24"
-            height="24"
-            fill="currentColor"
-          >
-            <path
-              d="M160 136c0-30.62 4.51-61.61 16-88C99.57 81.27 48 159.32 48 248c0 119.29 96.71 216 216 216 88.68 0 166.73-51.57 200-128-26.39 11.49-57.38 16-88 16-119.29 0-216-96.71-216-216z"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
-            />
-          </svg>
-          <div class="title-wrapper">
-            <span class="menu-item">Dark mode</span>
-          </div>
-        {:else}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="ionicon"
-            viewBox="0 0 512 512"
-            width="24"
-            height="24"
-            fill="currentColor"
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="32"
-              d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94"
-            />
-            <circle
-              cx="256"
-              cy="256"
-              r="80"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="32"
-            />
-          </svg>
-          <div class="title-wrapper">
-            <span class="menu-item">Light mode</span>
-          </div>
-        {/if}
-      </div>
-    </li> -->
 
     <li>
       <div class="content">
@@ -378,6 +317,13 @@
 </ul>
 
 <style>
+  .modal-settings {
+    background: #ebebeb;
+
+    /* box-shadow: h-offset v-offset blur spread */
+    box-shadow: 1px 0px 5px 0px #bebbbb;
+  }
+
   .loading {
     width: 100px;
     height: 100px;
@@ -410,8 +356,8 @@
   }
 
   .user-avatar {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50px;
   }
 

@@ -26,7 +26,6 @@
   import bgPics from "$lib/data/bgPics.json";
   import { fly, fade } from "svelte/transition";
   import { page } from "$app/stores";
-  import themeStore from "svelte-themes";
 
   let colorVal = "#b69696";
 
@@ -99,6 +98,11 @@
     });
   };
 
+  const handleMapModal = () => {
+    $showToolModalMobile = false
+    $showMapModal = true
+  }
+
   $: if ($page.url.pathname === "/") {
     $currentSelectedUser = {};
     $selectedUserReady = false;
@@ -106,11 +110,6 @@
 </script>
 
 <div class="tool-modal" on:click|stopPropagation>
-  <!-- style:display={$page.url.pathname != "/login" && $widthLessthan1000
-    ? "none"
-    : $page.url.pathname === "/login"
-    ? "none"
-    : "block"} -->
   <div class="top">
     {#if $selectedUserReady && $currentSelectedUser}
       <svg
@@ -164,12 +163,12 @@
       <span />
     {:else}
       <li style:padding="0">
-        <h3 class="user-name" style:width="120px">
+        <h3 class="user-name">
           <span class="animation">maskman</span>
         </h3>
       </li>
       <li style:padding="0">
-        <p class="user-email" style:width="120px">
+        <p class="user-email">
           <span class="animation">maskman@mail.com</span>
         </p>
       </li>
@@ -178,7 +177,6 @@
 
   {#if $selectedUserReady && $currentSelectedUser}
     <ul>
-      <!-- {#if $themeStore.theme === "light"} -->
       <li>
         <div
           class="option"
@@ -325,10 +323,8 @@
           />
         </div>
       </li>
-      <!-- {/if} -->
-      <!-- {/if} -->
-
-      <li on:click={() => ($showMapModal = true)}>
+      
+      <li on:click={handleMapModal}>
         <div class="content">
           <div class="title-wrapper">
             <span class="menu-item">Show location</span>
@@ -348,8 +344,8 @@
   }
 
   .user-avatar {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50px;
   }
 
@@ -402,8 +398,6 @@
     text-align: center;
     letter-spacing: 0.8px;
     font-size: 16px;
-    width: 140px;
-    /* border: 1px solid; */
   }
 
   h3 span,

@@ -5,14 +5,20 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { browser } from "$app/env";
+  import { invalidate } from "$app/navigation";
 
   browser &&
     onAuthStateChanged(auth, (user) => {
-      if (user) goto("/");
+      if (user) {
+        location.replace('/')
+        // goto("/");
+      }
     });
 
   onMount(() => {
-    return () => location.reload();
+    // return () => location.reload();
+    // location.reload();
+    // invaliate('/login')
   });
 </script>
 

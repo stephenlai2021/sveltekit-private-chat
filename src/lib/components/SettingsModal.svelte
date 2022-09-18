@@ -11,39 +11,25 @@
     showSettingsModal,
     widthLessthan1200,
   } from "$lib/store";
-  import themeStore, { setTheme } from "svelte-themes";
-  import { onMount, onDestroy } from "svelte";
   import { fly } from "svelte/transition";
-  import Cookies from "js-cookie";
   import { page } from "$app/stores";
-  import { auth, db, storage } from "$lib/firebase/client";
-  import { updateProfile, signOut } from "firebase/auth";
-  import { doc, updateDoc, onSnapshot } from "firebase/firestore";
-  import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-    uploadBytesResumable,
-  } from "firebase/storage";
+  import { db, storage } from "$lib/firebase/client";
+  import { updateProfile } from "firebase/auth";
+  import { doc, updateDoc } from "firebase/firestore";
+  import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { signout } from "$lib/functions/auth/signout";
 
   let url = null;
   let file = null;
   let theme = false;
   let fileError = null;
+  let uploadedDone = false
   let fileUploaded = false;
-  let userDocReady = false;
-
-  const toggleTheme = () => {
-    theme = !theme;
-    if (theme) setTheme("dark");
-    if (!theme) setTheme("light");
-  };
 
   const logout = async () => {
     $showSettingsModal = false;
-    $initial = false
-    await signout()
+    $initial = false;
+    await signout();
   };
 
   const handleFileChange = (e) => {
@@ -90,7 +76,6 @@
     });
 
     /* update user document */
-    // let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
     let userRef = doc(db, "users", $loggedinUser.displayName);
     updateDoc(userRef, {
       avatar: url,
@@ -99,11 +84,6 @@
       fileUploaded = false;
     });
   }
-
-  onMount(() => {
-    if ($themeStore.theme === "light") theme = false;
-    if ($themeStore.theme === "dark") theme = true;
-  });
 </script>
 
 <ul
@@ -115,9 +95,6 @@
     : $page.url.pathname === "/login"
     ? "none"
     : "block"}
-  style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "rgba(235, 235, 235, .5)"}
 >
   <div class="top" />
   <div class="main">
@@ -125,11 +102,46 @@
       <div class="avatar-section">
         <div class="image-wrapper">
           {#if $myDoc}
-            <!-- {#if !$myDoc.avatar}
-              <img src="/joke.png" alt="" width="100" height="100" />
-            {/if} -->
             {#if $myDoc.avatar && !fileUploaded}
               <img class="image" src={$myDoc.avatar} alt="" />
+              <label>
+                <input
+                  type="file"
+                  on:change={handleFileChange}
+                  accept="image/png, image/jpg, image/jpeg"
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon icon-camera"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="32"
+                  />
+                  <circle
+                    cx="256"
+                    cy="272"
+                    r="80"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-miterlimit="10"
+                    stroke-width="32"
+                  />
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="32"
+                    d="M124 158v-22h-24v22"
+                  />
+                </svg>
+              </label>
             {/if}
             {#if fileUploaded}
               <div class="loading">
@@ -142,44 +154,6 @@
                 />
               </div>
             {/if}
-            <label>
-              <input
-                type="file"
-                on:change={handleFileChange}
-                accept="image/png, image/jpg, image/jpeg"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon icon-camera"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="32"
-                />
-                <circle
-                  cx="256"
-                  cy="272"
-                  r="80"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-miterlimit="10"
-                  stroke-width="32"
-                />
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="32"
-                  d="M124 158v-22h-24v22"
-                />
-              </svg>
-            </label>
           {:else}
             <div class="user-avatar animation" />
           {/if}
@@ -202,7 +176,7 @@
           </h3>
         </li>
         <li style:padding="0">
-          <p class="user-email" style:width="120px">
+          <p class="user-email">
             <span class="animation">maskman@mail.com</span>
           </p>
         </li>
@@ -242,63 +216,6 @@
         </div>
       </div>
     </li>
-    <!-- <li class="theme" on:click={toggleTheme}>
-      <div class="content">
-        {#if $themeStore.theme === "light"}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="ionicon"
-            viewBox="0 0 512 512"
-            width="24"
-            height="24"
-            fill="currentColor"
-          >
-            <path
-              d="M160 136c0-30.62 4.51-61.61 16-88C99.57 81.27 48 159.32 48 248c0 119.29 96.71 216 216 216 88.68 0 166.73-51.57 200-128-26.39 11.49-57.38 16-88 16-119.29 0-216-96.71-216-216z"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
-            />
-          </svg>
-          <div class="title-wrapper">
-            <span class="menu-item">Dark mode</span>
-          </div>
-        {:else}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="ionicon"
-            viewBox="0 0 512 512"
-            width="24"
-            height="24"
-            fill="currentColor"
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="32"
-              d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94"
-            />
-            <circle
-              cx="256"
-              cy="256"
-              r="80"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="32"
-            />
-          </svg>
-          <div class="title-wrapper">
-            <span class="menu-item">Light mode</span>
-          </div>
-        {/if}
-      </div>
-    </li> -->
     <li>
       <div class="content">
         <svg
@@ -400,8 +317,8 @@
   }
 
   .user-avatar {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50px;
   }
 
@@ -498,5 +415,6 @@
     backdrop-filter: blur(20px);
     border-radius: 8px;
     margin: 10px;
+    background: rgba(235, 235, 235, .5);
   }
 </style>
