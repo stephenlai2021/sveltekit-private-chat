@@ -29,8 +29,8 @@
     : "0"}
   style:background={($currentContact === user && !$mobile) ||
   (user.name === $page.params.userId && !$mobile)
-    ? $currentContact != user && !$mobile
-    : ""}
+    ? "#ebebeb"
+    : "none"}
 >
   <div class="imgbx">
     <img src={user.avatar} alt="" class="cover" />
@@ -51,7 +51,9 @@
         )}
       </p> -->
 
-      <p style:font-size="12px" style:color={"var(--theme-color)"}>about 10 hours</p>
+      <p style:font-size="12px" style:color={"var(--theme-color)"}>
+        about 10 hours
+      </p>
     </div>
     <div class="message">
       {#if user && $loggedinUser}
@@ -148,7 +150,7 @@
     position: relative;
     /* border: 1px solid; */
   }
-  
+
   .message p {
     font-size: 15px;
     font-weight: 500;
