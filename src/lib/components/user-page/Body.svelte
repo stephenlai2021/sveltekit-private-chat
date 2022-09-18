@@ -83,10 +83,11 @@
           : "6px 10px 6px 10px"}
          
           style:background={msg.pictureURL || msg.imageURL || msg.audioURL
-            ? msg.from === $loggedinUser.displayName 
-            : "#dcf8c6"
-            ? msg.from != $loggedinUser.displayName 
-            : "white"}
+            ? "none"
+            ? msg.from === $loggedinUser.displayName : "#dcf8c6"
+            ? msg.from != $loggedinUser.displayName : "white"
+            : "none"
+          }
         >
           <span class="showtime">
             {formatDistanceToNow(new Date(msg.createdAt.toDate()))}
