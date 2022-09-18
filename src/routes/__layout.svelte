@@ -98,53 +98,72 @@
         $loggedinUser = user;
         console.log("signin, user: ", $loggedinUser.displayName);
 
-        let usersRef = collection(db, "users");
-        let userQuery = query(
-          usersRef,
-          where("contactList", "array-contains", $loggedinUser.displayName)
-        );
-        const unsubUsers = onSnapshot(userQuery, (snapshot) => {
-          let tempUsers = [];
-          snapshot.forEach((doc) => {
-            tempUsers.push(doc.data());
-          });
-          $allUsers = tempUsers;
-          console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
-          return () => unsubUsers();
-        });
+        // let usersRef = collection(db, "users");
+        // let userQuery = query(
+        //   usersRef,
+        //   where("contactList", "array-contains", $loggedinUser.displayName)
+        // );
+        // const unsubUsers = onSnapshot(userQuery, (snapshot) => {
+        //   let tempUsers = [];
+        //   snapshot.forEach((doc) => {
+        //     tempUsers.push(doc.data());
+        //   });
+        //   $allUsers = tempUsers;
+        //   console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
+        //   return () => unsubUsers();
+        // });
 
-        let userRef = doc(db, "users", $loggedinUser.displayName);
-        const unsubUser = onSnapshot(userRef, (userSnap) => {
-          $myDoc = userSnap.data();
-          return () => unsubUser;
-        });
+        // let userRef = doc(db, "users", $loggedinUser.displayName);
+        // const unsubUser = onSnapshot(userRef, (userSnap) => {
+        //   $myDoc = userSnap.data();
+        //   return () => unsubUser;
+        // });
       }
     });
     $currentSelectedUser = null;
   });
 
-  // $: if ($loggedinUser) userDocReady = true;
-
-  // $: if (userDocReady) {
-  //   let userRef = doc(db, "users", $loggedinUser.displayName);
-  //   const unsubUser = onSnapshot(userRef, (userSnap) => {
-  //     $myDoc = userSnap.data();
-  //     return () => unsubUser;
-  //   });
-  //   userDocReady = false;
-  // }
-
   const refreshLoginPage = () => {
-    return () => location.reload()
+    return location.reload()
   }
 
-  $: {if (browser && $page.url.pathname === "/login") {
-    // location.reload()
-    // location.replace('/login')
-    refreshLoginPage()
-  }}
+  onMount(() => {
+    if ($page.url.pathname === "/login") return () => location.reload()
+  })
 
-  $: if (browser) {
+  $: if ($loggedinUser) userDocReady = true;
+
+  $: if (userDocReady) {
+    // let userRef = doc(db, "users", $loggedinUser.displayName);
+    // const unsubUser = onSnapshot(userRef, (userSnap) => {
+    //   $myDoc = userSnap.data();
+    //   return () => unsubUser;
+    // });
+
+    let usersRef = collection(db, "users");
+    let userQuery = query(
+      usersRef,
+      where("contactList", "array-contains", $loggedinUser.displayName)
+    );
+    const unsubUsers = onSnapshot(userQuery, (snapshot) => {
+      let tempUsers = [];
+      snapshot.forEach((doc) => {
+        tempUsers.push(doc.data());
+      });
+      $allUsers = tempUsers;
+      console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
+      return () => unsubUsers();
+    });
+
+    let userRef = doc(db, "users", $loggedinUser.displayName);
+    const unsubUser = onSnapshot(userRef, (userSnap) => {
+      $myDoc = userSnap.data();
+      return () => unsubUser;
+    });
+    userDocReady = false;
+  }
+
+  $: {if (browser) {    
     window.addEventListener("online", () => {
       $connection = true;
       console.log("internet is connected 😀");
@@ -164,7 +183,7 @@
       $showGradientMenu = false;
     });
     window.addEventListener("resize", () => desktopOrMobile());
-  }
+  }}
 </script>
 
 <svelte:head>
@@ -180,8 +199,7 @@
       ? "#1F232F"
       : $page.url.pathname === "/"
       ? "#ebebeb"
-      : `${$currentSelectedUser?.bgColor} center / cover`
-    }
+      : `${$currentSelectedUser?.bgColor} center / cover`}
   >
     <SettingsModal />
     <div

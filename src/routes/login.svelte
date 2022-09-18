@@ -11,9 +11,9 @@
       if (user) goto("/");
     });
 
-  // onMount(() => {
-  //   return () => location.reload();
-  // });
+  onMount(() => {
+    return () => location.reload();
+  });
 </script>
 
 <svelte:head>

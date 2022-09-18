@@ -155,9 +155,9 @@
     justify-content: space-between;
     height: 22px;
     position: relative;
-    /* border: 1px solid; */
+    border: 1px solid;
   }
-
+  
   .message p {
     font-size: 15px;
     font-weight: 500;
@@ -168,6 +168,9 @@
     overflow: hidden;
     position: absolute;
     color: rgb(66, 57, 57);
+    /* padding-right: 10px;
+    border: 1px solid red; */
+    width: calc(100% - 20px);
   }
 
   .block .details .message b {
