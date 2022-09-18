@@ -143,7 +143,8 @@
   $: if (browser) document.title = `Chat with ${$selectedUsername}`
 </script>
 
-<div class="user-page" style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}>
+<!-- <div class="user-page" style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}> -->
+<div class="user-page">
   <Header />
   <Body />
   <Footer />
