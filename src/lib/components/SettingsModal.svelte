@@ -416,5 +416,6 @@
     border-radius: 8px;
     margin: 10px;
     background: rgba(235, 235, 235, .5);
+    box-shadow: 1px 0px 5px 0px #bebbbb;
   }
 </style>

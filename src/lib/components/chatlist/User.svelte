@@ -15,10 +15,7 @@
   export let user;
 
   const selectUser = async (selectedUser) => {
-    // $currentContact = selectedUser;
     $selectedUsername = selectedUser.name;
-    // $selectedUseremail = selectedUser.email;
-
     goto(`/${$selectedUsername}`);
   };
 </script>
@@ -32,13 +29,7 @@
     : "0"}
   style:background={($currentContact === user && !$mobile) ||
   (user.name === $page.params.userId && !$mobile)
-    ? $themeStore.theme === "dark"
-      ? "#3a3f50"
-      : "rgba(235, 235, 235, 1)"
-    : $currentContact != user && !$mobile
-    ? $themeStore.theme === "dark"
-      ? "#292F3F"
-      : "transparent"
+    ? $currentContact != user && !$mobile
     : ""}
 >
   <div class="imgbx">
@@ -170,7 +161,7 @@
     color: rgb(66, 57, 57);
     /* padding-right: 10px;
     border: 1px solid red; */
-    width: calc(100% - 20px);
+    width: calc(100% - 80px);
   }
 
   .block .details .message b {
