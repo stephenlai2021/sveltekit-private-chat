@@ -161,7 +161,8 @@
   <div
     class="inner-wrapper"
     style:display={$page.url.pathname === "/login" ? "block" : "flex"}
-    style:background={$page.url.pathname === "/" ? "#ebebeb"
+    style:background={
+      $page.url.pathname === "/" ? "#ebebeb"
       : `${$currentSelectedUser?.bgColor} center / cover`
     }
   >
