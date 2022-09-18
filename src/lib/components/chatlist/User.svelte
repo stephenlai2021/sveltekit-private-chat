@@ -155,7 +155,7 @@
     justify-content: space-between;
     height: 22px;
     position: relative;
-    border: 1px solid;
+    /* border: 1px solid; */
   }
   
   .message p {
