@@ -11,15 +11,8 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         location.replace('/')
-        // goto("/");
       }
     });
-
-  onMount(() => {
-    // return () => location.reload();
-    // location.reload();
-    // invaliate('/login')
-  });
 </script>
 
 <svelte:head>

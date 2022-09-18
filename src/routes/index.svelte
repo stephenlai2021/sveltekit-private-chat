@@ -1,17 +1,8 @@
-<script>
-  import themeStore from "svelte-themes";
-</script>
-
 <svelte:head>
   <title>Home</title>
 </svelte:head>
 
-<div
-  class="home-page"
-  style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "rgba(235, 235, 235, .5)"}
->
+<div class="home-page">
   <div class="content">
     <div class="icon-wrapper">
 
@@ -57,5 +48,6 @@
     height: calc(100vh - 20px);
     border-radius: 8px;
     margin: 10px 0;
+    background: rgba(235, 235, 235, .5);
   }
 </style>
