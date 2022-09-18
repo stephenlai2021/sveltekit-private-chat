@@ -83,13 +83,16 @@
           : "6px 10px 6px 10px"}
          
           style:background={msg.pictureURL || msg.imageURL || msg.audioURL
-            ? "none"
-            ? msg.from === $loggedinUser.displayName : "#dcf8c6"
-            ? msg.from != $loggedinUser.displayName : "white"
+            ? "none" 
+            : msg.from === $loggedinUser.displayName ? "#dcf8c6"
+            : msg.from != $loggedinUser.displayName ? "white"
             : "none"
           }
         >
-          <span class="showtime">
+          <span
+            class="showtime"
+            >
+            <!-- style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"} -->
             {formatDistanceToNow(new Date(msg.createdAt.toDate()))}
           </span>
 
@@ -100,9 +103,8 @@
           {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
             <span
               class="message-text"
-              style:color="#292f3f"
+              style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
               >{msg.text}
-              <!-- style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"} -->
             </span>
           {/if}
 
