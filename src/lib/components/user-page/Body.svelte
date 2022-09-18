@@ -68,10 +68,6 @@
   class="chatBox"
   bind:this={chat}
 >
-  <!-- style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "rgba(235, 235, 235, 0.1)"
-  } -->
   {#if messages && $loggedinUser}
   <!-- {#if messages} -->
     {#each messages as msg}
@@ -87,22 +83,12 @@
           : "6px 10px 6px 10px"}
          
           style:background={msg.pictureURL || msg.imageURL || msg.audioURL
-            ? "none"
-            : msg.from === $loggedinUser.displayName &&
-              $themeStore.theme === "dark"
-            ? "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)"
-            : msg.from === $loggedinUser.displayName &&
-              $themeStore.theme === "light"
-            ? "#dcf8c6"
-            : msg.from != $loggedinUser.displayName &&
-              $themeStore.theme === "dark"
-            ? "linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)"
+            ? msg.from === $loggedinUser.displayName 
+            : "#dcf8c6"
+            ? msg.from != $loggedinUser.displayName 
             : "white"}
         >
-          <span
-            class="showtime"
-            >
-            <!-- style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"} -->
+          <span class="showtime">
             {formatDistanceToNow(new Date(msg.createdAt.toDate()))}
           </span>
 
@@ -113,8 +99,9 @@
           {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
             <span
               class="message-text"
-              style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
+              style:color="#292f3f"
               >{msg.text}
+              <!-- style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"} -->
             </span>
           {/if}
 
