@@ -56,7 +56,7 @@
     position: relative;
     margin: 10px 10px 10px 0px;
     border-radius: 8px;
-    box-shadow: 1px 0px 5px 0px #bebbbb;
+    /* box-shadow: 1px 0px 5px 0px #bebbbb; */
   }
   
   @media (max-width: 1200px) {

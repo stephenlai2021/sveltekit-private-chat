@@ -7,7 +7,6 @@
     selectedUseremail,
   } from "$lib/store";
   import { Timestamp } from "firebase/firestore";
-  import themeStore from "svelte-themes";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { formatDistanceToNow } from "date-fns";
@@ -126,9 +125,9 @@
   }
 
   .details .listHead .user-title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     font-style: normal;
     line-height: 20px;
   }
@@ -152,7 +151,7 @@
   }
 
   .message p {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.3px;
     display: -webkit-box;

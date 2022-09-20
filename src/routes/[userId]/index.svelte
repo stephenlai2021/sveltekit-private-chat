@@ -8,7 +8,7 @@
     pictureFile,
     audioFile,
     audioURL,
-    bgColor,
+    showActionMenu,
     audioConfirmed,
     selectedUsername,
     showAudioPlayerModal,
@@ -20,11 +20,10 @@
     showSettingsModal,
     showAddFriendModal,
     showEmojiMenu,
-    showActionMenu,
     pictureConfirmed,
     loggedinUser,
     showToolModalMobile,
-    widthLessthan1000
+    widthLessthan1000,
   } from "$lib/store";
   import CameraModal from "$lib/components/CameraModal.svelte";
   import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
@@ -39,8 +38,8 @@
   import themeStore from "svelte-themes";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import { browser } from "$app/env"
-  import ToolModalMobile from "$lib/components/ToolModalMobile.svelte"
+  import { browser } from "$app/env";
+  import ToolModalMobile from "$lib/components/ToolModalMobile.svelte";
 
   let url = null;
 
@@ -140,10 +139,9 @@
     $showAddFriendModal = false;
   }
 
-  $: if (browser) document.title = `Chat with ${$selectedUsername}`
+  $: if (browser) document.title = `Chat with ${$selectedUsername}`;
 </script>
 
-<!-- <div class="user-page" style:background={$themeStore.theme === "dark" ? "#1F232F" : $bgColor}> -->
 <div class="user-page">
   <Header />
   <Body />
@@ -151,7 +149,7 @@
 
   {#if $showEmojiMenu}
     <EmojiMenu />
-  {/if}  
+  {/if}
 
   {#if $showToolModalMobile && $widthLessthan1000}
     <ToolModalMobile />
@@ -163,5 +161,5 @@
     .user-page {
       margin-right: 10px;
     }
-  }  
+  }
 </style>

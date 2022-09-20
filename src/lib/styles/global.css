@@ -36,12 +36,11 @@
   box-sizing: border-box;
   /* font-family: "Poppins", "Montserrat", "Roboto", sans-serif; */
   font-family: "Poppins", sans-serif;
-  color: black;
 }
 
 .page-wrapper {
   height: 100vh;
-  display: flex;
+  display: rgb(63, 70, 53);
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -179,19 +178,13 @@ body {
 
 @keyframes skeleton-loading {
   0% {
-    background-color: hsl(200, 20%, 70%);
+    background-color: hsl(196, 13%, 78%);
   }
 
   100% {
     background-color: hsl(200, 20%, 95%);
   }
 }
-
-/* @media (max-width: 1000px) {
-  .inner-wrapper {
-    padding: 0 5px;
-  }
-} */
 
 @media (max-width: 800px) {
   .wrapper {
@@ -211,6 +204,11 @@ body {
   }
 }
 
+@-moz-document url-prefix() {
+  .details .listHead .user-title {
+    color: black;
+  }
+}
 
 
 

@@ -15,81 +15,84 @@
     privateChat,
     groupChat,
     publicChat,
+    allUsers,
   } from "$lib/store";
 
-  const showModal = () => {    
-    if ($privateChat) $showAddFriendModal = true
-    if ($groupChat) $showAddGroupModal = true
-    if ($publicChat) $showAddRoomModal = true
-  }
+  const showModal = () => {
+    if ($privateChat) $showAddFriendModal = true;
+    if ($groupChat) $showAddGroupModal = true;
+    if ($publicChat) $showAddRoomModal = true;
+  };
 </script>
 
 <div class="header">
   <div class="left" style:cursor="pointer">
     {#if $widthLessthan1200}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-        style:margin-right="5px"
-        on:click|stopPropagation={() => ($showSettingsModalMobile = true)}
-      >
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="32"
-          d="M80 160h352M80 256h352M80 352h352"
-        />
-      </svg>
+      {#if $allUsers && $allUsers.length}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+          style:margin-right="5px"
+          on:click|stopPropagation={() => ($showSettingsModalMobile = true)}
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-miterlimit="10"
+            stroke-width="32"
+            d="M80 160h352M80 256h352M80 352h352"
+          />
+        </svg>
+      {:else}
+        <div class="icon-plus animation" />
+      {/if}
     {/if}
-    <img src="https://miro.medium.com/max/1400/1*gr3kgm0McAm1eeJJog7jfg.png" height="30" alt="">
+    <img
+      src="https://miro.medium.com/max/1400/1*gr3kgm0McAm1eeJJog7jfg.png"
+      height="30"
+      alt=""
+    />
   </div>
 
   <ul class="nav_icons">
-    <!-- <li on:click|stopPropagation={() => ($showAddFriendModal = true)}> -->
-    <li on:click|stopPropagation={showModal}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-      >
-        <path
-          d="M376 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-        <path
-          d="M288 304c-87 0-175.3 48-191.64 138.6-2 10.92 4.21 21.4 15.65 21.4H464c11.44 0 17.62-10.48 15.65-21.4C463.3 352 375 304 288 304z"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M88 176v112M144 232H32"
-        />
-      </svg>
-    </li>
+    {#if $allUsers && $allUsers.length}
+      <li on:click|stopPropagation={showModal}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M256 112v288M400 256H112"
+          />
+        </svg>
+      </li>
+    {:else}
+      <div class="icon-plus animation" />
+    {/if}
   </ul>
 </div>
 
 <style>
+  .icon-plus {
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -114,7 +117,7 @@
     margin-left: 20px;
     display: flex;
     align-items: center;
-  }  
+  }
 
   @media (max-width: 800px) {
     .header {

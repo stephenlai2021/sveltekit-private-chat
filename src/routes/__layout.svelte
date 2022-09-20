@@ -11,6 +11,7 @@
 <script>
   import "$lib/styles/global.css";
   import {
+    phone,
     myDoc,
     mobile,
     bgColor,
@@ -74,12 +75,17 @@
   let userDocReady = false;
 
   const desktopOrMobile = () => {
-    if (window.innerWidth <= 800) $mobile = true;
-    if (window.innerWidth > 800) $mobile = false;
     if (window.innerWidth <= 1200) $widthLessthan1200 = true;
     if (window.innerWidth > 1200) $widthLessthan1200 = false;
+
     if (window.innerWidth <= 1000) $widthLessthan1000 = true;
     if (window.innerWidth > 1000) $widthLessthan1000 = false;
+
+    if (window.innerWidth <= 800) $mobile = true;
+    if (window.innerWidth > 800) $mobile = false;
+
+    if (window.innerWidth <= 360) $phone = true;
+    if (window.innerWidth > 360) $phone = false;
   };
 
   const closeModal = () => {
@@ -147,6 +153,7 @@
       $showThemeModal = false;
       $showThemeMenu = false;
       $showGradientMenu = false;
+      $showActionMenu = false
     });
     window.addEventListener("resize", () => desktopOrMobile());
   }}
@@ -156,7 +163,6 @@
   <title>Sveltechat</title>
 </svelte:head>
 
-<!-- <SvelteTheme /> -->
 <div class="wrapper" on:click={closeModal}>
   <div
     class="inner-wrapper"
@@ -200,11 +206,7 @@
       <slot />
     </div>
 
-    <ToolModal />
-
-    <!-- {#if !$isSignout}
-      <LoadingModal />
-    {/if} -->
+    <!-- <ToolModal /> -->
 
     {#if $showAddGroupModal}
       <AddGroupModal />
@@ -220,10 +222,6 @@
 
     {#if $showCameraPreviewModal}
       <CameraPreviewModal />
-    {/if}
-
-    {#if $showActionMenu}
-      <ActionMenu />
     {/if}
 
     {#if $showAudioRecordingModal}

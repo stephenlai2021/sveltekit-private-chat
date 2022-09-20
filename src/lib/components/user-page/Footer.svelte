@@ -3,6 +3,8 @@
   import { db, storage } from "$lib/firebase/client";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import {
+    phone,
+    mobile,
     isMobile,
     showActionMenu,
     showCameraModal,
@@ -25,6 +27,7 @@
     collection,
   } from "firebase/firestore";
   import { onMount } from "svelte";
+  import ActionMenu from "$lib/components/ActionMenu.svelte";
 
   let url = null;
   let file = null;
@@ -110,15 +113,13 @@
               ? `${$loggedinUser.displayName}=>You: ${messageSent}`
               : msg
           ),
-        lastUpdated: selectedUserSnap
-          .data()
-          .lastUpdated.map((time) =>
-            time.split("=>")[0] === $loggedinUser.displayName
-              // ? `${$loggedinUser.displayName}=>You: ${Timestamp.fromDate(new Date())}`
+        lastUpdated: selectedUserSnap.data().lastUpdated.map((time) =>
+          time.split("=>")[0] === $loggedinUser.displayName
+            ? // ? `${$loggedinUser.displayName}=>You: ${Timestamp.fromDate(new Date())}`
               // ? $loggedinUser.displayName + '=>' + Date.now().toLocaleString()
-              ? $loggedinUser.displayName + '=>' + Date.now()
-              : time
-          ),
+              $loggedinUser.displayName + "=>" + Date.now()
+            : time
+        ),
         // msgCount: selectedUserSnap
         //   .data()
         //   .msgCount.map((count) =>
@@ -146,15 +147,13 @@
               ? `${$selectedUsername}=>${messageSent}`
               : msg
           ),
-        lastUpdated: loggedinUserSnap
-          .data()
-          .lastUpdated.map((time) =>
-            time.split("=>")[0] === $selectedUsername
-              // ? `${$selectedUsername}=>${Timestamp.fromDate(new Date())}`
+        lastUpdated: loggedinUserSnap.data().lastUpdated.map((time) =>
+          time.split("=>")[0] === $selectedUsername
+            ? // ? `${$selectedUsername}=>${Timestamp.fromDate(new Date())}`
               // ? $selectedUsername + '=>' + Date.now().toLocaleString()
-              ? $selectedUsername + '=>' + Date.now()
-              : time
-          ),
+              $selectedUsername + "=>" + Date.now()
+            : time
+        ),
         // msgCount: loggedinUserSnap
         //   .data()
         //   .msgCount.map((count) =>
@@ -178,38 +177,81 @@
       console.log("ooh, something went wrong 😥", error);
     }
   };
-
-  // $: console.log("msgCount: ", countVal);
 </script>
 
 <div
   class="chatbox_input"
-  style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "rgba(235, 235, 235, .5)"}
 >
+  <!-- style:background={$themeStore.theme === "dark"
+    ? "#292F3F"
+    : "rgba(235, 235, 235, .5)"} -->
   <div class="icon-plus">
-    {#if $isMobile}
+    {#if $phone}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon"
         viewBox="0 0 512 512"
-        width="30"
-        height="30"
+        width="24"
+        height="24"
         fill="currentColor"
-        on:click={() => ($showActionMenu = true)}
+        on:click|stopPropagation={() => ($showActionMenu = true)}
       >
-        <path
+        <rect
+          x="48"
+          y="48"
+          width="176"
+          height="176"
+          rx="20"
+          ry="20"
           fill="none"
           stroke="currentColor"
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="32"
-          d="M256 112v288M400 256H112"
+        />
+        <rect
+          x="288"
+          y="48"
+          width="176"
+          height="176"
+          rx="20"
+          ry="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+        <rect
+          x="48"
+          y="288"
+          width="176"
+          height="176"
+          rx="20"
+          ry="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+        <rect
+          x="288"
+          y="288"
+          width="176"
+          height="176"
+          rx="20"
+          ry="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
         />
       </svg>
     {/if}
-    {#if !$isMobile}
+
+    {#if !$phone}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-camera"
@@ -292,6 +334,7 @@
       </label>
     {/if}
   </div>
+
   <form on:submit|preventDefault={handleSubmit} class="messageBox">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -344,34 +387,41 @@
       />
     </svg>
   </form>
-  <div class="icon-mic" on:click={() => ($showAudioRecordingModal = true)}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon"
-      viewBox="0 0 512 512"
-      width="26"
-      height="26"
-      fill="currentColor"
-    >
-      <path
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="32"
-        d="M192 448h128M384 208v32c0 70.4-57.6 128-128 128h0c-70.4 0-128-57.6-128-128v-32M256 368v80"
-      />
-      <path
-        d="M256 64a63.68 63.68 0 00-64 64v111c0 35.2 29 65 64 65s64-29 64-65V128c0-36-28-64-64-64z"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="32"
-      />
-    </svg>
-  </div>
+
+  {#if !$phone}
+    <div class="icon-mic" on:click={() => ($showAudioRecordingModal = true)}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="26"
+        height="26"
+        fill="currentColor"
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+          d="M192 448h128M384 208v32c0 70.4-57.6 128-128 128h0c-70.4 0-128-57.6-128-128v-32M256 368v80"
+        />
+        <path
+          d="M256 64a63.68 63.68 0 00-64 64v111c0 35.2 29 65 64 65s64-29 64-65V128c0-36-28-64-64-64z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+      </svg>
+    </div>
+  {/if}
 </div>
+
+{#if $showActionMenu}
+  <ActionMenu />
+{/if}
 
 <style>
   ::placeholder {
@@ -392,7 +442,10 @@
     align-items: center;
     padding-left: 15px;
     backdrop-filter: blur(20px);
-    border-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding-right: 10px;
+    background: rgba(235, 235, 235, .5);
   }
 
   .chatbox_input input {
@@ -428,7 +481,7 @@
 
   .icon-mic {
     margin-left: 10px;
-    margin-right: 10px;
+    /* margin-right: 10px; */
   }
 
   .icon-camera {
@@ -476,7 +529,7 @@
     }
 
     .icon-mic {
-      margin-right: 10px;
+      /* margin-right: 10px; */
     }
   }
 

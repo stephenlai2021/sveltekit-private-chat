@@ -2,10 +2,10 @@
   import {
     keyword,
     allUsers,
-    showSettingsModal,
-    privateChat,
     groupChat,
-    publicChat
+    publicChat,
+    privateChat,
+    showSettingsModal,
   } from "$lib/store";
   import { fade } from "svelte/transition";
   import { page } from "$app/stores";

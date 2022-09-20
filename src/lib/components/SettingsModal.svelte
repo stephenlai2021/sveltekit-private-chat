@@ -5,9 +5,16 @@
     bgColor,
     initial,
     isLogout,
+    isMobile,
+    imageTitle,
+    imageURL,
     loggedinUser,
+    showMapModal,
     showThemeModal,
     showCameraModal,
+    selectedUsername,
+    showThemeMenu,
+    showGradientMenu,
     showSettingsModal,
     widthLessthan1200,
   } from "$lib/store";
@@ -18,12 +25,15 @@
   import { doc, updateDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { signout } from "$lib/functions/auth/signout";
+  import themes from "$lib/data/themes.json";
+  import bgPics from "$lib/data/bgPics.json";
 
   let url = null;
   let file = null;
   let theme = false;
+  let colorVal = "#b69696";
   let fileError = null;
-  let uploadedDone = false
+  let uploadedDone = false;
   let fileUploaded = false;
 
   const logout = async () => {
@@ -32,7 +42,7 @@
     await signout();
   };
 
-  const handleFileChange = (e) => {
+  const handleAvatarChange = (e) => {
     const types = ["image/png", "image/jpg", "image/jpeg"];
 
     let selectedFile = e.target.files[0];
@@ -46,6 +56,62 @@
       file = null;
       fileError = "Please select an image file (png or jpg)";
     }
+  };
+
+  const handleFileChange = async (e) => {
+    console.log("handle file change");
+    $file = e.target.files[0];
+    console.log($file);
+
+    $imageURL = await readURL($file);
+    console.log("image url: ", $imageURL);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: `url(${$imageURL})`,
+    });
+
+    $imageTitle = $file.name;
+    console.log("image title: ", $imageTitle);
+  };
+
+  const readURL = (file) => {
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload = (e) => res(e.target.result);
+      reader.onerror = (e) => rej(e);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const uploadTheme = async (theme) => {
+    console.log("theme: ", theme);
+    console.log("selected user: ", $selectedUsername);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: `url(${theme.url})`,
+    });
+  };
+
+  const uploadGradient = async (gradient) => {
+    console.log("gradient: ", gradient);
+    console.log("selected user: ", $selectedUsername);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: gradient.background,
+    });
+  };
+
+  const uploadColor = async (color) => {
+    console.log("color: ", color);
+    console.log("selected user: ", $selectedUsername);
+
+    let userRef = doc(db, "users", $selectedUsername);
+    await updateDoc(userRef, {
+      bgColor: color,
+    });
   };
 
   $: if (file) {
@@ -107,7 +173,7 @@
               <label>
                 <input
                   type="file"
-                  on:change={handleFileChange}
+                  on:change={handleAvatarChange}
                   accept="image/png, image/jpg, image/jpeg"
                 />
                 <svg
@@ -183,108 +249,189 @@
       {/if}
     </div>
 
-    <!-- {#if $loggedinUser} -->
-    <li>
-      <div class="content">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
-        >
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-            d="M48 112h288M192 64v48M272 448l96-224 96 224M301.5 384h133M281.3 112S257 206 199 277 80 384 80 384"
+    {#if $loggedinUser}
+      <li>
+        <div class="content" style:cursor="auto" style:height="18px">
+          <div class="title-wrapper">
+            <span class="menu-item">Select Color</span>
+          </div>
+          <input
+            type="color"
+            bind:value={colorVal}
+            on:input|stopPropagation={() => uploadColor(colorVal)}
+            style:cursor="pointer"
           />
-          <path
-            d="M256 336s-35-27-72-75-56-85-56-85"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-        </svg>
-        <div class="title-wrapper">
-          <span class="menu-item">Language</span>
         </div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
+      </li>
+
+      <li>
+        <div
+          class="option"
+          on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
         >
-          <path
-            d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184 184-82.39 184-184S349.61 64 248 64z"
-            fill="none"
-            stroke="currentColor"
-            stroke-miterlimit="10"
-            stroke-width="32"
-          />
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-            d="M220 220h32v116"
-          />
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-miterlimit="10"
-            stroke-width="32"
-            d="M208 340h88"
-          />
-          <path d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z" />
-        </svg>
-        <div class="title-wrapper">
-          <span class="menu-item">About</span>
+          <div class="content">
+            <div class="title-wrapper">
+              <span class="menu-item">Image gallery</span>
+            </div>
+            {#if !$showThemeMenu}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+                fill="currentColor"
+              >
+                <path
+                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                />
+              </svg>
+            {:else}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+                fill="currentColor"
+                style:margin-left="26px"
+              >
+                <path
+                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                />
+              </svg>
+            {/if}
+          </div>
         </div>
-      </div>
-    </li>
-    <li on:click={logout}>
-      <div class="content">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
+        {#if $showThemeMenu}
+          <main>
+            {#each bgPics as bgPic}
+              <div
+                class="theme-item"
+                style:cursor="pointer"
+                on:click={() => uploadTheme(bgPic)}
+              >
+                <div
+                  class="theme-image"
+                  style:background-image={`url(${bgPic.url})`}
+                />
+              </div>
+            {/each}
+          </main>
+        {/if}
+      </li>
+
+      <li>
+        <div
+          class="option"
+          on:click={() => ($showGradientMenu = !$showGradientMenu)}
         >
-          <path
-            d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-        </svg>
-        <div class="title-wrapper">
+          <div class="content">
+            <div class="title-wrapper">
+              <span class="menu-item">Gradient gallery</span>
+            </div>
+            {#if !$showGradientMenu}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon icon-arrow-down"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+                fill="currentColor"
+              >
+                <path
+                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                />
+              </svg>
+            {:else}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon icon-arrow-up"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+                fill="currentColor"
+              >
+                <path
+                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                />
+              </svg>
+            {/if}
+          </div>
+        </div>
+        {#if $showGradientMenu}
+          <main>
+            {#each themes as theme}
+              <div
+                class="theme-item"
+                style:cursor="pointer"
+                on:click={() => uploadGradient(theme)}
+              >
+                <div
+                  class="theme-image"
+                  style:background-image={theme.background}
+                />
+              </div>
+            {/each}
+          </main>
+        {/if}
+      </li>
+
+      {#if !$isMobile}
+        <li>
+          <div class="content">
+            <label>
+              <span class="menu-item" style:cursor="pointer">Select image</span>
+              <input
+                type="file"
+                on:change={handleFileChange}
+                accept="image/png, image/jpg, image/jpeg"
+              />
+            </label>
+          </div>
+        </li>
+      {/if}
+
+      <!-- <li on:click={() => ($showMapModal = true)}>
+        <div class="content">
+          <div class="title-wrapper">
+            <span class="menu-item">Show location</span>
+          </div>
+        </div>
+      </li> -->
+
+      <li>
+        <div class="content">
+          <span class="menu-item">Switch Language</span>
+        </div>
+      </li>
+
+      <li on:click={logout}>
+        <div class="content">
           <span class="menu-item">Logout</span>
         </div>
-      </div>
-    </li>
-    <!-- {/if} -->
+      </li>
+    {/if}
   </div>
 </ul>
 
 <style>
+  .option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  main {
+    width: 100%;
+    border: 1px solid;
+  }
+
+  .theme-item {
+    padding: 0;
+    /* border: 1px solid red; */
+  }
+
   .loading {
     width: 100px;
     height: 100px;
@@ -320,10 +467,6 @@
     width: 100px;
     height: 100px;
     border-radius: 50px;
-  }
-
-  svg {
-    margin-right: 20px;
   }
 
   label input {
@@ -379,8 +522,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 120px;
+    width: 140px;
     cursor: pointer;
+    /* border: 1px solid; */
   }
 
   .top {
@@ -395,14 +539,17 @@
   }
 
   li {
-    list-style: none;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    padding: 5px 20px;
     margin: 0 10px;
+    padding: 10px 0;
+    list-style: none;
     margin-bottom: 5px;
     border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
   }
 
   li h3 {
@@ -415,7 +562,8 @@
     backdrop-filter: blur(20px);
     border-radius: 8px;
     margin: 10px;
-    background: rgba(235, 235, 235, .5);
+    background: rgba(235, 235, 235, 0.5);
     box-shadow: 1px 0px 5px 0px #bebbbb;
+    /* border: 1px solid red; */
   }
 </style>

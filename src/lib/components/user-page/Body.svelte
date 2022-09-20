@@ -1,5 +1,4 @@
 <script>
-  import themeStore from "svelte-themes";
   import {
     query,
     where,
@@ -19,7 +18,7 @@
   import { page } from "$app/stores";
   import { beforeUpdate, afterUpdate } from "svelte";
   import AudioPlayer from "$lib/components/AudioPlayer.svelte"
-  import { formatDistanceToNow } from 'date-fns'
+  import { formatDistanceToNow, formatRelative, subDays, format } from 'date-fns'
 
   let q = null;
   let chat = null
@@ -89,11 +88,10 @@
             : "none"
           }
         >
-          <span
-            class="showtime"
-            >
-            <!-- style:color={$themeStore.theme === "dark" ? "#ebebeb" : "#292f3f"} -->
-            {formatDistanceToNow(new Date(msg.createdAt.toDate()))}
+          <span class="showtime">
+            <!-- {formatDistanceToNow(new Date(msg.createdAt.toDate()))} -->
+            <!-- {formatRelative(subDays(new Date(msg.createdAt.toDate()), 2), new Date())} -->
+            {format(new Date(msg.createdAt.toDate()), 'MM/dd/yyyy hh:mm a')}
           </span>
 
           {#if msg.audioURL}
@@ -103,8 +101,8 @@
           {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
             <span
               class="message-text"
-              style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"}
               >{msg.text}
+              <!-- style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"} -->
             </span>
           {/if}
 
@@ -137,7 +135,7 @@
   }
 
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 7px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -163,7 +161,7 @@
   .message.my_message .showtime {
     position: absolute;
     left: -105px;
-    bottom: 0px;
+    bottom: 5px;
     width: 55px;
     width: 100px;
     /* max-width: 150px; */
@@ -173,7 +171,7 @@
   .message.friend_message .showtime {
     position: absolute;
     right: -105px;
-    bottom: 0px;
+    bottom: 5px;
     width: 55px;
     width: 100px;
     text-align: left;
@@ -245,7 +243,8 @@
     padding: 0px 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    /* backdrop-filter: blur(20px); */
+    border-left: 5px solid rgba(235, 235, 235, .5);
+    border-right: 5px solid rgba(235, 235, 235, .5);
   }
 
   @media (max-width: 800px) {
