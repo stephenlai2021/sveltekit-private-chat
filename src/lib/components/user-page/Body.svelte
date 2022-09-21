@@ -141,6 +141,7 @@
   ::-webkit-scrollbar-thumb {
     background: inherit;
     background: rgb(216, 216, 216);
+    /* background: rgba(235, 235, 235, .5); */
     border-radius: 10px;
   }
 
@@ -250,6 +251,7 @@
   @media (max-width: 800px) {
     .chatBox {
       top: 60px;
+      border: none;
     }
   }
 </style>
