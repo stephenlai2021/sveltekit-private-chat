@@ -139,7 +139,9 @@
     $showAddFriendModal = false;
   }
 
-  $: if (browser) document.title = `Chat with ${$selectedUsername}`;
+  // $: if (browser) document.title = `Chat with ${$selectedUsername}`;
+  $: if (browser) document.title = `${$selectedUsername} | Sveltechat`;
+  // $: if (browser) document.title = $selectedUsername
 </script>
 
 <div class="user-page">
