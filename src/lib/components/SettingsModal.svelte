@@ -392,14 +392,6 @@
         </li>
       {/if}
 
-      <!-- <li on:click={() => ($showMapModal = true)}>
-        <div class="content">
-          <div class="title-wrapper">
-            <span class="menu-item">Show location</span>
-          </div>
-        </div>
-      </li> -->
-
       <li>
         <div class="content">
           <span class="menu-item">Switch Language</span>
@@ -479,8 +471,9 @@
     width: 24px;
     height: 24px;
     position: absolute;
-    right: -32px;
+    right: -10px;
     bottom: -10px;
+    border-radius: 50px;
   }
 
   .image-wrapper .image {
@@ -529,6 +522,7 @@
 
   .top {
     height: 60px;
+    height: 50px;
     margin-bottom: 10px;
   }
 
@@ -563,7 +557,7 @@
     border-radius: 8px;
     margin: 10px;
     background: rgba(235, 235, 235, 0.5);
-    box-shadow: 1px 0px 5px 0px #bebbbb;
+    box-shadow: 1px 0px 3px 0px #bebbbb;
     /* border: 1px solid red; */
   }
 </style>

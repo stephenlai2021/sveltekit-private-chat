@@ -1,15 +1,16 @@
 <script>
   import {
+    phone,
+    mobile,
+    bgColor,
+    loggedinUser,
     showMapModal,
     showToolModal,
     selectedUsername,
-    currentSelectedUser,
-    loggedinUser,
-    bgColor,
-    mobile,
     widthLessthan1000,
-    showToolModalMobile,
     selectedUserReady,
+    currentSelectedUser,
+    showToolModalMobile,
   } from "$lib/store";
   import {
     doc,
@@ -104,11 +105,48 @@
   </div>
 
   <div class="right-part">
-    <div class="icon-menu">
-      <!-- style:margin-right={$widthLessthan1000 ? "20px" : "5px"} -->
+    {#if !$phone}
+    <div class="icon-menu icon-game" style:padding-right="15px">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="ionicon"
+        class="ionicon icon-game"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+      >
+        <path
+          d="M467.51 248.83c-18.4-83.18-45.69-136.24-89.43-149.17A91.5 91.5 0 00352 96c-26.89 0-48.11 16-96 16s-69.15-16-96-16a99.09 99.09 0 00-27.2 3.66C89 112.59 61.94 165.7 43.33 248.83c-19 84.91-15.56 152 21.58 164.88 26 9 49.25-9.61 71.27-37 25-31.2 55.79-40.8 119.82-40.8s93.62 9.6 118.66 40.8c22 27.41 46.11 45.79 71.42 37.16 41.02-14.01 40.44-79.13 21.43-165.04z"
+          fill="none"
+          stroke="currentColor"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+        <circle cx="292" cy="224" r="20" />
+        <path
+          d="M336 288a20 20 0 1120-19.95A20 20 0 01336 288z"
+        />
+        <circle cx="336" cy="180" r="20" />
+        <circle
+          cx="380"
+          cy="224"
+          r="20"
+        />
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+          d="M160 176v96M208 224h-96"
+        />
+      </svg>
+    </div>
+
+    <div class="icon-menu icon-video" style:padding-right="10px">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-video"
         viewBox="0 0 512 512"
         width="24"
         height="24"
@@ -131,16 +169,17 @@
         />
       </svg>
     </div>
+    {/if}
 
-    <div class="icon-menu">
+    <div class="icon-menu icon-geo">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-location"
+        class="ionicon icon-geo"
         viewBox="0 0 512 512"
         width="24"
         height="24"
         fill="currentColor"
-        on:click={() => $showMapModal = true}
+        on:click={() => ($showMapModal = true)}
       >
         <path
           d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0025.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"
@@ -190,8 +229,8 @@
 
 <style>
   .icon-menu {
-    /* padding: 0 0 0 10px; */
-    padding-left: 12px;
+    display: flex;
+    align-items: center;
     /* border: 1px solid; */
   }
 
@@ -204,12 +243,11 @@
     display: flex;
     align-items: center;
     max-width: 800px;
-    padding-right: 0px;
     padding: 15px 10px 15px 10px;
     backdrop-filter: blur(20px);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    background: rgba(235, 235, 235, .5);
+    background: rgba(235, 235, 235, 0.5);
   }
 
   .left-part {
@@ -267,12 +305,12 @@
   .right-part {
     display: flex;
     align-items: center;
-    /* border: 1px solid; */
+    /* border: 1px solid red; */
   }
 
   @media (max-width: 1200px) {
     .header {
-      padding-right: 15px;
+      /* padding-right: 15px; */
     }
   }
 

@@ -19,6 +19,7 @@
   import { beforeUpdate, afterUpdate } from "svelte";
   import AudioPlayer from "$lib/components/AudioPlayer.svelte"
   import { formatDistanceToNow, formatRelative, subDays, format } from 'date-fns'
+  import moment from 'moment'
 
   let q = null;
   let chat = null
@@ -89,9 +90,8 @@
           }
         >
           <span class="showtime">
-            <!-- {formatDistanceToNow(new Date(msg.createdAt.toDate()))} -->
-            <!-- {formatRelative(subDays(new Date(msg.createdAt.toDate()), 2), new Date())} -->
-            {format(new Date(msg.createdAt.toDate()), 'MM/dd/yyyy hh:mm a')}
+            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L")}<br/>
+            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("HH:mm")}
           </span>
 
           {#if msg.audioURL}
@@ -141,7 +141,6 @@
   ::-webkit-scrollbar-thumb {
     background: inherit;
     background: rgb(216, 216, 216);
-    /* background: rgba(235, 235, 235, .5); */
     border-radius: 10px;
   }
 
@@ -150,29 +149,28 @@
     display: flex;
     max-width: 800px;
     margin: 25px auto;
-    /* border: 1px solid; */
   }
 
   .showtime {
-    text-shadow: 0.1em 0.1em 0.05em #333;
     text-shadow: 0.1em 0.1em 0.2em black;
+    font-size: 12px;
+    font-weight: 400;
     color: white;
   }
 
   .message.my_message .showtime {
     position: absolute;
     left: -105px;
-    bottom: 5px;
+    bottom: 3px;
     width: 55px;
     width: 100px;
-    /* max-width: 150px; */
     text-align: right;
   }
 
   .message.friend_message .showtime {
     position: absolute;
     right: -105px;
-    bottom: 5px;
+    bottom: 3px;
     width: 55px;
     width: 100px;
     text-align: left;
@@ -181,8 +179,7 @@
   .message.my_message {
     justify-content: flex-end;
     text-align: left;
-    position: relative;
-    /* border: 1px solid red; */    
+    position: relative;    
   }
   
   .message.friend_message .message-content {
@@ -192,26 +189,19 @@
     border-bottom-left-radius: 0px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    /* border: 1px solid; */
   }
   
   .message-content {
     position: relative;
     max-width: 65%;
-    /* min-width: 20px; */
     border-radius: 10px;
     border-bottom-right-radius: 0px;    
     background: var(--lemon-green);
-    color: var(--icon-add-color);   
-    /* border: 1px solid red; */
+    color: var(--icon-add-color);  
   }
 
   .message-content .message-text {
-    /* font-size: 18px;
-    font-weight: 400; */
     word-wrap: break-word;
-    /* max-width: 60%; */
-    /* border: 1px solid; */
   }
 
   .message img {
@@ -220,18 +210,6 @@
     object-fit: cover;
     border-radius: 10px;
   }
-
-  .showtime {
-    font-size: 12px;
-    font-weight: 400;
-  }
-
-  /* .icon-expand {
-    background: rgba(0, 0, 0, 0.5);
-    color: rgba(255, 255, 255, 0.5);
-    color: white;
-    border-radius: 2px;
-  } */
 
   .chatBox {
     position: absolute;
