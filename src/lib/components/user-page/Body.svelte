@@ -90,8 +90,9 @@
           }
         >
           <span class="showtime">
-            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L")}<br/>
-            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("HH:mm")}
+            <!-- {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L")}<br/>
+            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("HH:mm")} -->
+            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L HH:mm")}
           </span>
 
           {#if msg.audioURL}
@@ -153,7 +154,7 @@
 
   .showtime {
     text-shadow: 0.1em 0.1em 0.2em black;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 400;
     color: white;
   }
