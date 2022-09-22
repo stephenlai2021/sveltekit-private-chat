@@ -139,9 +139,7 @@
     $showAddFriendModal = false;
   }
 
-  // $: if (browser) document.title = `Chat with ${$selectedUsername}`;
-  $: if (browser) document.title = `${$selectedUsername} | Sveltechat`;
-  // $: if (browser) document.title = $selectedUsername
+  $: if (browser) document.title = `Chat with ${$selectedUsername}`;
 </script>
 
 <div class="user-page">
@@ -157,15 +155,3 @@
     <ToolModalMobile />
   {/if}
 </div>
-
-<style>
-  /* .user-page {
-    margin-right: 10px;
-  } */
-
-  /* @media (max-width: 1000px) {
-    .user-page {
-      margin-right: 10px;
-    }
-  } */
-</style>

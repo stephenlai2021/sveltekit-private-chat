@@ -168,9 +168,11 @@
     class="inner-wrapper"
     style:display={$page.url.pathname === "/login" ? "block" : "flex"}
     style:background={
-      $page.url.pathname === "/" ? "#ebebeb"
-      : `${$currentSelectedUser?.bgColor} center / cover`
+      $page.url.pathname === "/" ? `${$myDoc && $myDoc.bgColor} center / cover`
+      : $page.url.pathname !== "/" && $page.url.pathname !== "/login"  ? `${$currentSelectedUser?.bgColor} center / cover`
+      : "#ebebeb"
     }
+    style:transition="background 0.2s"
   >
     <SettingsModal />
     <div

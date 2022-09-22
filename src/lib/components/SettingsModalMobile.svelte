@@ -73,7 +73,8 @@
     $imageURL = await readURL($file);
     console.log("image url: ", $imageURL);
 
-    let userRef = doc(db, "users", $selectedUsername);
+    // let userRef = doc(db, "users", $selectedUsername);
+    let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: `url(${$imageURL})`,
     });
@@ -95,7 +96,8 @@
     console.log("theme: ", theme);
     console.log("selected user: ", $selectedUsername);
 
-    let userRef = doc(db, "users", $selectedUsername);
+    // let userRef = doc(db, "users", $selectedUsername);
+    let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: `url(${theme.url})`,
     });
@@ -105,7 +107,8 @@
     console.log("gradient: ", gradient);
     console.log("selected user: ", $selectedUsername);
 
-    let userRef = doc(db, "users", $selectedUsername);
+    // let userRef = doc(db, "users", $selectedUsername);
+    let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: gradient.background,
     });
@@ -115,7 +118,8 @@
     console.log("color: ", color);
     console.log("selected user: ", $selectedUsername);
 
-    let userRef = doc(db, "users", $selectedUsername);
+    // let userRef = doc(db, "users", $selectedUsername);
+    let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: color,
     });
@@ -423,6 +427,12 @@
       <li>
         <div class="content">
           <span class="menu-item">Switch Language</span>
+        </div>
+      </li>
+
+      <li>
+        <div class="content">
+          <span class="menu-item">About</span>
         </div>
       </li>
 

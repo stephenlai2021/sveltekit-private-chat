@@ -66,7 +66,8 @@
     $imageURL = await readURL($file);
     console.log("image url: ", $imageURL);
 
-    let userRef = doc(db, "users", $selectedUsername);
+    // let userRef = doc(db, "users", $selectedUsername);
+    let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: `url(${$imageURL})`,
     });
@@ -88,7 +89,8 @@
     console.log("theme: ", theme);
     console.log("selected user: ", $selectedUsername);
 
-    let userRef = doc(db, "users", $selectedUsername);
+    // let userRef = doc(db, "users", $selectedUsername);
+    let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: `url(${theme.url})`,
     });
@@ -98,7 +100,8 @@
     console.log("gradient: ", gradient);
     console.log("selected user: ", $selectedUsername);
 
-    let userRef = doc(db, "users", $selectedUsername);
+    // let userRef = doc(db, "users", $selectedUsername);
+    let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: gradient.background,
     });
@@ -108,7 +111,8 @@
     console.log("color: ", color);
     console.log("selected user: ", $selectedUsername);
 
-    let userRef = doc(db, "users", $selectedUsername);
+    // let userRef = doc(db, "users", $selectedUsername);
+    let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: color,
     });
@@ -399,6 +403,12 @@
         </div>
       </li>
 
+      <li>
+        <div class="content">
+          <span class="menu-item">About</span>
+        </div>
+      </li>
+
       <li on:click={logout}>
         <div class="content">
           <span class="menu-item">Logout</span>
@@ -582,7 +592,7 @@
     border-radius: 8px;
     margin: 10px;
     background: rgba(235, 235, 235, 0.5);
-    box-shadow: 1px 0px 3px 0px #bebbbb;
+    /* box-shadow: 1px 0px 3px 0px #bebbbb; */
     /* border: 1px solid red; */
   }
 </style>
