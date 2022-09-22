@@ -179,17 +179,12 @@
   };
 </script>
 
-<div
-  class="chatbox_input"
->
-  <!-- style:background={$themeStore.theme === "dark"
-    ? "#292F3F"
-    : "rgba(235, 235, 235, .5)"} -->
-  <div class="icon-plus">
+<div class="chatbox_input">
+  <div class="menu-group">
     {#if $phone}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="ionicon"
+        class="ionicon icon-menu"
         viewBox="0 0 512 512"
         width="24"
         height="24"
@@ -254,6 +249,27 @@
     {#if !$phone}
       <svg
         xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-palette"
+        viewBox="0 0 512 512"
+        width="26"
+        height="26"
+        fill="currentColor"
+      >
+        <path
+          d="M430.11 347.9c-6.6-6.1-16.3-7.6-24.6-9-11.5-1.9-15.9-4-22.6-10-14.3-12.7-14.3-31.1 0-43.8l30.3-26.9c46.4-41 46.4-108.2 0-149.2-34.2-30.1-80.1-45-127.8-45-55.7 0-113.9 20.3-158.8 60.1-83.5 73.8-83.5 194.7 0 268.5 41.5 36.7 97.5 55 152.9 55.4h1.7c55.4 0 110-17.9 148.8-52.4 14.4-12.7 11.99-36.6.1-47.7z"
+          fill="none"
+          stroke="currentColor"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+        <circle cx="144" cy="208" r="32" />
+        <circle cx="152" cy="311" r="32" />
+        <circle cx="224" cy="144" r="32" />
+        <circle cx="256" cy="367" r="48" />
+        <circle cx="328" cy="144" r="32" />
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-camera"
         viewBox="0 0 512 512"
         width="26"
@@ -287,6 +303,7 @@
           d="M124 158v-22h-24v22"
         />
       </svg>
+
       <label>
         <input
           type="file"
@@ -360,12 +377,8 @@
         stroke-width="32"
       />
     </svg>
-    <input
-      type="text"
-      placeholder="Say something"
-      bind:value={$message}
-      style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
-    />
+    <input type="text" placeholder="Say something" bind:value={$message} />
+    <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="ionicon icon-submit"
@@ -424,6 +437,11 @@
 {/if}
 
 <style>
+  .icon-palette {
+    /* margin-left: 8px; */
+    margin-right: 15px;
+  }
+
   ::placeholder {
     font-style: italic;
   }
@@ -445,7 +463,7 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     padding-right: 10px;
-    background: rgba(235, 235, 235, .5);
+    background: rgba(235, 235, 235, 0.5);
   }
 
   .chatbox_input input {
@@ -461,7 +479,7 @@
   }
 
   .icon-mic,
-  .icon-plus,
+  .menu-group,
   .icon-camera {
     position: relative;
     display: flex;
@@ -469,8 +487,10 @@
     justify-content: center;
   }
 
-  .icon-plus {
-    margin-right: 10px;
+  /* .icon-plus { */
+  .menu-group {
+    margin-right: 8px;
+    /* border: 1px solid; */
   }
 
   .messageBox {
@@ -499,6 +519,7 @@
     width: 26px;
     position: relative;
     margin-right: 10px;
+    /* border: 1px solid red; */
   }
 
   .icon-image {

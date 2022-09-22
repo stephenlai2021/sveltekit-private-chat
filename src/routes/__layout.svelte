@@ -84,8 +84,8 @@
     if (window.innerWidth <= 800) $mobile = true;
     if (window.innerWidth > 800) $mobile = false;
 
-    if (window.innerWidth <= 333) $phone = true;
-    if (window.innerWidth > 333) $phone = false;
+    if (window.innerWidth <= 373) $phone = true;
+    if (window.innerWidth > 373) $phone = false;
   };
 
   const closeModal = () => {

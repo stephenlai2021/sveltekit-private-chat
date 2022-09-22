@@ -1,12 +1,12 @@
 <div class="tab-menu">
   <div class="tab">
-    <div class="icon animation" />
+    <div class="icon" />
   </div>
   <div class="tab">
-    <div class="icon animation" />
+    <div class="icon" />
   </div>
   <div class="tab">
-    <div class="icon animation" />
+    <div class="icon" />
   </div>
 </div>
 
@@ -15,9 +15,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50px;
-    /* background: var(--bg-color);
-    background-color: hsl(200, 20%, 95%);
-    background-color: hsl(197, 34%, 84%); */
+    background-color: hsl(196, 13%, 78%);
   }
 
   .tab-menu {

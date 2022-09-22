@@ -159,9 +159,13 @@
 </div>
 
 <style>
-  @media (max-width: 1000px) {
+  /* .user-page {
+    margin-right: 10px;
+  } */
+
+  /* @media (max-width: 1000px) {
     .user-page {
       margin-right: 10px;
     }
-  }
+  } */
 </style>

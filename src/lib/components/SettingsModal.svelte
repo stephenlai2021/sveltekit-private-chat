@@ -249,7 +249,8 @@
       {/if}
     </div>
 
-    {#if $loggedinUser}
+    <!-- {#if $loggedinUser} -->
+    {#if $myDoc}
       <li>
         <div class="content" style:cursor="auto" style:height="18px">
           <div class="title-wrapper">
@@ -403,11 +404,37 @@
           <span class="menu-item">Logout</span>
         </div>
       </li>
+    {:else}
+      <div class="loading-skeleton">
+        <div class="loading-menu-item" />
+        <div class="loading-menu-item" />
+        <div class="loading-menu-item" />
+        <div class="loading-menu-item" />
+        <div class="loading-menu-item" />
+        <div class="loading-menu-item" />
+      </div>
     {/if}
   </div>
 </ul>
 
 <style>
+  .loading-skeleton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid; */
+  }
+
+  .loading-menu-item {
+    height: 20px;
+    width: 150px;
+    margin-bottom: 22px;
+    background-color: hsl(196, 13%, 78%);
+    background-color: hsl(200, 20%, 95%);
+    border-radius: 4px;
+  }
+
   .option {
     display: flex;
     justify-content: center;
@@ -521,7 +548,6 @@
   }
 
   .top {
-    height: 60px;
     height: 50px;
     margin-bottom: 10px;
   }
@@ -543,7 +569,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid red; */
   }
 
   li h3 {

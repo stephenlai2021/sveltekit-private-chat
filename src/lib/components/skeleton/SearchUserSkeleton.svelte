@@ -1,5 +1,5 @@
 <div class="search_user">
-  <div class="bar animation" />
+  <div class="bar" />
 </div>
 
 <style>
@@ -7,6 +7,7 @@
     border-radius: 10px;
     width: 100%;
     height: 36.8px;
+    background-color: hsl(196, 13%, 78%);
   }
 
   .search_user {

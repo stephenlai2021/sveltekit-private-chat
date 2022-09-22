@@ -80,10 +80,14 @@ body {
   height: 100vh;
 }
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
   .inner-wrapper {
     padding-right: 10px;
   }
+} */
+
+.inner-wrapper {
+  padding-right: 10px;
 }
 
 .leftSide {
