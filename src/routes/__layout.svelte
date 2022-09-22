@@ -172,8 +172,8 @@
       : $page.url.pathname !== "/" && $page.url.pathname !== "/login"  ? `${$currentSelectedUser?.bgColor} center / cover`
       : "#ebebeb"
     }
-    style:transition="background 0.2s"
   >
+  <!-- style:transition="background 0.2s" -->
     <SettingsModal />
     <div
       class="leftSide"
