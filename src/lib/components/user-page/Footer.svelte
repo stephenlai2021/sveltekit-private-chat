@@ -545,7 +545,7 @@
 
   @media (max-width: 1200px) {
     .icon-camera {
-      margin-left: 5px;
+      /* margin-left: 5px; */
       /* margin-right: 15px; */
     }
 
