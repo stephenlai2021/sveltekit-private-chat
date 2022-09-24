@@ -7,16 +7,16 @@
 <ul class="skeleton">
   {#each users as user}
     <div class="block">
-      <div class="imgbx animation">
+      <div class="imgbx loading-animation">
         <img src="" alt="" class="cover" />
       </div>
       <div class="details">
         <div class="listHead">
-          <h4 class="title animation">Stephen Lai</h4>
-          <p class="time animation">10:56</p>
+          <h4 class="title loading-animation">Stephen Lai</h4>
+          <p class="time loading-animation">10:56</p>
         </div>
         <div class="message_p">
-          <p class="animation">How to make Whatsapp clone using html and css</p>
+          <p class="loading-animation">How to make Whatsapp clone using html and css</p>
           <!-- <b>1</b> -->
         </div>
       </div>
@@ -46,14 +46,14 @@
 	}
 
 	.skeleton .imgbx {
-    background: var(--bg-color);
+    /* background: var(--bg-color); */
 		color: transparent;
   }
 
   .skeleton .block .details .listHead .title,
   .skeleton .block .details .listHead .time,
   .skeleton .block .details .message_p p {
-    background: var(--bg-color);
+    /* background: var(--bg-color); */
 		color: transparent;
     border-radius: 2px;
   }

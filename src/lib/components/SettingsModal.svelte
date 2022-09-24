@@ -66,7 +66,6 @@
     $imageURL = await readURL($file);
     console.log("image url: ", $imageURL);
 
-    // let userRef = doc(db, "users", $selectedUsername);
     let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: `url(${$imageURL})`,
@@ -89,7 +88,6 @@
     console.log("theme: ", theme);
     console.log("selected user: ", $selectedUsername);
 
-    // let userRef = doc(db, "users", $selectedUsername);
     let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: `url(${theme.url})`,
@@ -100,7 +98,6 @@
     console.log("gradient: ", gradient);
     console.log("selected user: ", $selectedUsername);
 
-    // let userRef = doc(db, "users", $selectedUsername);
     let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: gradient.background,
@@ -111,7 +108,6 @@
     console.log("color: ", color);
     console.log("selected user: ", $selectedUsername);
 
-    // let userRef = doc(db, "users", $selectedUsername);
     let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       bgColor: color,
@@ -225,7 +221,7 @@
               </div>
             {/if}
           {:else}
-            <div class="user-avatar animation" />
+            <div class="user-avatar loading-animation" />
           {/if}
         </div>
       </div>
@@ -242,12 +238,12 @@
       {:else}
         <li style:padding="0">
           <h3 class="user-name" style:width="120px">
-            <span class="animation">maskman</span>
+            <span class="loading-animation">maskman</span>
           </h3>
         </li>
         <li style:padding="0">
           <p class="user-email">
-            <span class="animation">maskman@mail.com</span>
+            <span class="loading-animation">maskman@mail.com</span>
           </p>
         </li>
       {/if}
@@ -416,12 +412,12 @@
       </li>
     {:else}
       <div class="loading-skeleton">
-        <div class="loading-menu-item" />
-        <div class="loading-menu-item" />
-        <div class="loading-menu-item" />
-        <div class="loading-menu-item" />
-        <div class="loading-menu-item" />
-        <div class="loading-menu-item" />
+        <div class="loading-menu-item loading-animation" />
+        <div class="loading-menu-item loading-animation" />
+        <div class="loading-menu-item loading-animation" />
+        <div class="loading-menu-item loading-animation" />
+        <div class="loading-menu-item loading-animation" />
+        <div class="loading-menu-item loading-animation" />
       </div>
     {/if}
   </div>
@@ -440,9 +436,6 @@
     height: 20px;
     width: 150px;
     margin-bottom: 22px;
-    background-color: hsl(196, 13%, 78%);
-    background-color: hsl(200, 20%, 95%);
-    border-radius: 4px;
   }
 
   .option {
@@ -474,7 +467,8 @@
     letter-spacing: 0.8px;
   }
 
-  h3.user-name {
+  h3.user-name,
+  p.user-email {
     margin-bottom: 5px;
     margin-top: 10px;
   }

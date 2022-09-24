@@ -34,9 +34,7 @@
         <User {user} />
       {/each}
     {:else}
-      <div class="loading">
         <Skeleton />
-      </div>
     {/if}
   </div>
 {/if}

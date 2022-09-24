@@ -548,10 +548,6 @@
       /* margin-left: 5px; */
       /* margin-right: 15px; */
     }
-
-    .icon-mic {
-      /* margin-right: 10px; */
-    }
   }
 
   @media (max-width: 1160px) {

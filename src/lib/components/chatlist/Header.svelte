@@ -49,7 +49,7 @@
           />
         </svg>
       {:else}
-        <div class="icon-plus" style:margin-right="5px"/>
+        <div class="icon-plus loading-animation" style:margin-right="5px"/>
       {/if}
     {/if}
     <img
@@ -81,7 +81,7 @@
         </svg>
       </li>
     {:else}
-      <div class="icon-plus" />
+      <div class="icon-plus loading-animation" />
     {/if}
   </ul>
 </div>
@@ -91,7 +91,6 @@
     width: 24px;
     height: 24px;
     border-radius: 50px;
-    background-color: hsl(196, 13%, 78%);
   }
 
   .header {

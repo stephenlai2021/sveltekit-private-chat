@@ -173,7 +173,6 @@
       : "#ebebeb"
     }
   >
-  <!-- style:transition="background 0.2s" -->
     <SettingsModal />
     <div
       class="leftSide"
@@ -207,8 +206,6 @@
     >
       <slot />
     </div>
-
-    <!-- <ToolModal /> -->
 
     {#if $showAddGroupModal}
       <AddGroupModal />
