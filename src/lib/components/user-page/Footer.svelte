@@ -14,8 +14,7 @@
     selectedImg,
     loggedinUser,
     selectedUsername,
-    selectedUseremail,
-    msgCount,
+    selectedUserReady,
   } from "$lib/store";
   import {
     doc,
@@ -181,7 +180,7 @@
 
 <div class="chatbox_input">
   <div class="menu-group">
-    {#if $phone}
+    {#if $phone && $selectedUserReady}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-menu"
@@ -244,6 +243,8 @@
           stroke-width="32"
         />
       </svg>
+    {:else if $phone && !$selectedUserReady}
+      <div class="icon-skeleton loading-animation" />
     {/if}
 
     {#if !$phone}
@@ -437,6 +438,12 @@
 {/if}
 
 <style>
+  .icon-skeleton {
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+  }
+
   .icon-palette {
     /* margin-left: 8px; */
     margin-right: 15px;
