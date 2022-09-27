@@ -133,6 +133,7 @@
   @import url("$lib/styles/audio-player.css");
 
   .body-skeleton {
+    max-width: 800px;
     width: 100%;
     height: calc(100vh - 120px);
   }
