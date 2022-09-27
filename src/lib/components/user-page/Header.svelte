@@ -275,11 +275,7 @@
     font-size: 18px;
     font-weight: 600;
     line-height: 1.2em;
-  }
-
-  .user-avatar,
-  .user-name {
-    /* background: var(--bg-color); */
+    font-style: italic;
   }
 
   .user-name {
@@ -322,7 +318,7 @@
 
   @media (max-width: 360px) {
     .details h4 {
-      /* font-size: 16px; */
+      font-size: 17px;
     }
   }
 </style>
