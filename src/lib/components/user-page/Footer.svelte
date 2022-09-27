@@ -432,7 +432,7 @@
   {/if}
 </div>
 
-{#if $showActionMenu}
+{#if $showActionMenu && $phone}
   <ActionMenu />
 {/if}
 
