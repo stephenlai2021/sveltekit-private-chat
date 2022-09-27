@@ -248,63 +248,6 @@
     {/if}
 
     {#if !$phone && $selectedUserReady}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-palette"
-        viewBox="0 0 512 512"
-        width="26"
-        height="26"
-        fill="currentColor"
-      >
-        <path
-          d="M430.11 347.9c-6.6-6.1-16.3-7.6-24.6-9-11.5-1.9-15.9-4-22.6-10-14.3-12.7-14.3-31.1 0-43.8l30.3-26.9c46.4-41 46.4-108.2 0-149.2-34.2-30.1-80.1-45-127.8-45-55.7 0-113.9 20.3-158.8 60.1-83.5 73.8-83.5 194.7 0 268.5 41.5 36.7 97.5 55 152.9 55.4h1.7c55.4 0 110-17.9 148.8-52.4 14.4-12.7 11.99-36.6.1-47.7z"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-        <circle cx="144" cy="208" r="32" />
-        <circle cx="152" cy="311" r="32" />
-        <circle cx="224" cy="144" r="32" />
-        <circle cx="256" cy="367" r="48" />
-        <circle cx="328" cy="144" r="32" />
-      </svg>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-camera"
-        viewBox="0 0 512 512"
-        width="26"
-        height="26"
-        fill="currentColor"
-        on:click={() => ($showCameraModal = true)}
-      >
-        <path
-          d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-        <circle
-          cx="256"
-          cy="272"
-          r="80"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M124 158v-22h-24v22"
-        />
-      </svg>
-
       <label>
         <input
           type="file"
@@ -351,7 +294,7 @@
         </svg>
       </label>
     {:else if !$phone && !$selectedUserReady}
-      <div class="icon-skeleton loading-animation" style:margin-right="15px" />
+      <!-- <div class="icon-skeleton loading-animation" style:margin-right="15px" /> -->
       <div class="icon-skeleton loading-animation" style:margin-right="15px" />
       <div class="icon-skeleton loading-animation" style:margin-right="15px" />
     {/if}
