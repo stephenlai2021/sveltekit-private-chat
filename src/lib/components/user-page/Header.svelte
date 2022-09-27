@@ -108,72 +108,6 @@
   </div>
 
   <div class="right-part">
-    <!-- {#if !$phone}
-    <div class="icon-menu icon-game" style:padding-right="15px">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-game"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-      >
-        <path
-          d="M467.51 248.83c-18.4-83.18-45.69-136.24-89.43-149.17A91.5 91.5 0 00352 96c-26.89 0-48.11 16-96 16s-69.15-16-96-16a99.09 99.09 0 00-27.2 3.66C89 112.59 61.94 165.7 43.33 248.83c-19 84.91-15.56 152 21.58 164.88 26 9 49.25-9.61 71.27-37 25-31.2 55.79-40.8 119.82-40.8s93.62 9.6 118.66 40.8c22 27.41 46.11 45.79 71.42 37.16 41.02-14.01 40.44-79.13 21.43-165.04z"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-        <circle cx="292" cy="224" r="20" />
-        <path
-          d="M336 288a20 20 0 1120-19.95A20 20 0 01336 288z"
-        />
-        <circle cx="336" cy="180" r="20" />
-        <circle
-          cx="380"
-          cy="224"
-          r="20"
-        />
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M160 176v96M208 224h-96"
-        />
-      </svg>
-    </div>
-
-    <div class="icon-menu icon-video" style:padding-right="10px">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-video"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-      >
-        <path
-          d="M374.79 308.78L457.5 367a16 16 0 0022.5-14.62V159.62A16 16 0 00457.5 145l-82.71 58.22A16 16 0 00368 216.3v79.4a16 16 0 006.79 13.08z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-        <path
-          d="M268 384H84a52.15 52.15 0 01-52-52V180a52.15 52.15 0 0152-52h184.48A51.68 51.68 0 01320 179.52V332a52.15 52.15 0 01-52 52z"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-      </svg>
-    </div>
-    {/if} -->
-
     {#if !$phone && $selectedUserReady}
       <div class="icon-menu icon-game" style:padding-right="15px">
         <svg
@@ -339,7 +273,7 @@
 
   .details h4 {
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 600;
     line-height: 1.2em;
   }
 
@@ -388,7 +322,7 @@
 
   @media (max-width: 360px) {
     .details h4 {
-      font-size: 16px;
+      /* font-size: 16px; */
     }
   }
 </style>
