@@ -247,7 +247,7 @@
       <div class="icon-skeleton loading-animation" />
     {/if}
 
-    {#if !$phone}
+    {#if !$phone && $selectedUserReady}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-palette"
@@ -350,6 +350,10 @@
           />
         </svg>
       </label>
+    {:else if !$phone && !$selectedUserReady}
+      <div class="icon-skeleton loading-animation" style:margin-right="15px" />
+      <div class="icon-skeleton loading-animation" style:margin-right="15px" />
+      <div class="icon-skeleton loading-animation" style:margin-right="15px"/>
     {/if}
   </div>
 
