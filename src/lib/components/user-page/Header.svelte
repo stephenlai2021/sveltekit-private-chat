@@ -134,7 +134,7 @@
         <circle cx="328" cy="144" r="32" />
       </svg>
 
-      <div class="icon-menu icon-game" style:padding-right="15px">
+      <div class="icon-menu icon-game" style:margin-right="15px">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="ionicon icon-game"
