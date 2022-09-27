@@ -388,7 +388,7 @@
     {#if $selectedUserReady}
       <input type="text" placeholder="Say something" bind:value={$message} />
     {:else}
-      <div class="input-skeleton loading-animation" style:margin-right="35px" />
+      <div class="input-skeleton loading-animation" />
     {/if}
 
     {#if $selectedUserReady}
@@ -444,8 +444,8 @@
       </svg>
     </div>
   {:else if !$phone && !$selectedUserReady}
-    <!-- <div class="icon-skeleton loading-animation" style:margin-left="10px" /> -->
-    <div class="icon-skeleton loading-animation" />
+    <div class="icon-skeleton loading-animation" style:margin-left="35px" />
+    <!-- <div class="icon-skeleton loading-animation" /> -->
   {/if}
 </div>
 
