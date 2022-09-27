@@ -50,6 +50,10 @@
     });
     matched = false;
   }
+
+  $: console.log('is current width <= 370px ? ', $phone)
+  $: if ($phone) console.log('current width <= 370px')
+  $: if (!$phone) console.log('current width > 370px')
 </script>
 
 <div class="header">

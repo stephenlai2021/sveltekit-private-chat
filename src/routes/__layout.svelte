@@ -84,8 +84,8 @@
     if (window.innerWidth <= 800) $mobile = true;
     if (window.innerWidth > 800) $mobile = false;
 
-    if (window.innerWidth <= 380) $phone = true;
-    if (window.innerWidth > 380) $phone = false;
+    if (window.innerWidth <= 370) $phone = true;
+    if (window.innerWidth > 370) $phone = false;
   };
 
   const closeModal = () => {
@@ -122,6 +122,7 @@
       }
     });
     $currentSelectedUser = null;
+    alert('width: ', window.innerWidth)
   });
 
   $: if ($loggedinUser) userDocReady = true;
