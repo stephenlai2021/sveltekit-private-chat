@@ -17,18 +17,23 @@
   } from "$lib/store";
   import { page } from "$app/stores";
   import { beforeUpdate, afterUpdate } from "svelte";
-  import AudioPlayer from "$lib/components/AudioPlayer.svelte"
-  import { formatDistanceToNow, formatRelative, subDays, format } from 'date-fns'
-  import moment from 'moment'
+  import AudioPlayer from "$lib/components/AudioPlayer.svelte";
+  import {
+    formatDistanceToNow,
+    formatRelative,
+    subDays,
+    format,
+  } from "date-fns";
+  import moment from "moment";
 
   let q = null;
-  let chat = null
-  let autoscroll = null
+  let chat = null;
+  let autoscroll = null;
   let messages = [];
   let matched = false;
 
   const showImagePreview = (pictureURL, imageURL) => {
-    $showImagePreviewModal = true;    
+    $showImagePreviewModal = true;
     $storedImageURL = imageURL;
     $storedPictureURL = pictureURL;
   };
@@ -48,7 +53,7 @@
         msgs.push(doc.data());
       });
       messages = msgs;
-      chat?.scrollTo(0, chat.scrollHeight)
+      chat?.scrollTo(0, chat.scrollHeight);
       console.log("chat messages", messages);
       return () => unsubMsgs();
     });
@@ -56,42 +61,43 @@
   }
 
   beforeUpdate(() => {
-    autoscroll = chat && chat.offsetHeight + chat.scrollTop > chat.scrollHeight - 20;
-  })
+    autoscroll =
+      chat && chat.offsetHeight + chat.scrollTop > chat.scrollHeight - 20;
+  });
 
   afterUpdate(() => {
     if (autoscroll) chat.scrollTo(0, chat.scrollHeight);
-  })
+  });
 </script>
 
-<div
-  class="chatBox"
-  bind:this={chat}
->
-  {#if messages && $loggedinUser}
+{#if messages && $loggedinUser}
+  <div class="chatBox" bind:this={chat}>
+    <!-- {#if messages && $loggedinUser} -->
     {#each messages as msg}
       <div
         class="message"
         class:my_message={msg.from === $loggedinUser.displayName}
         class:friend_message={msg.from != $loggedinUser.displayName}
       >
-      <p
-        class="message-content"
-        style:padding={msg.pictureURL || msg.imageURL || msg.audioURL
-          ? "0px"
-          : "6px 10px 6px 10px"}
-         
+        <p
+          class="message-content"
+          style:padding={msg.pictureURL || msg.imageURL || msg.audioURL
+            ? "0px"
+            : "6px 10px 6px 10px"}
           style:background={msg.pictureURL || msg.imageURL || msg.audioURL
-            ? "none" 
-            : msg.from === $loggedinUser.displayName ? "#dcf8c6"
-            : msg.from != $loggedinUser.displayName ? "white"
-            : "none"
-          }
+            ? "none"
+            : msg.from === $loggedinUser.displayName
+            ? "#dcf8c6"
+            : msg.from != $loggedinUser.displayName
+            ? "white"
+            : "none"}
         >
           <span class="showtime">
             <!-- {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L")}<br/>
             {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("HH:mm")} -->
-            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L HH:mm")}
+            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format(
+              "L HH:mm"
+            )}
           </span>
 
           {#if msg.audioURL}
@@ -99,44 +105,49 @@
           {/if}
 
           {#if !msg.audioURL && !msg.pictureURL && !msg.imageURL}
-            <span
-              class="message-text"
+            <span class="message-text"
               >{msg.text}
               <!-- style:color={$themeStore.theme === "dark" ? "white" : "#292f3f"} -->
             </span>
           {/if}
 
           {#if msg.pictureURL}
-            <img 
-              src={msg.pictureURL} 
-              alt="" 
+            <img
+              src={msg.pictureURL}
+              alt=""
               on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
             />
           {/if}
 
           {#if msg.imageURL}
-            <img 
-              src={msg.imageURL} 
-              alt="" 
+            <img
+              src={msg.imageURL}
+              alt=""
               on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
             />
           {/if}
         </p>
       </div>
     {/each}
-  {:else if !messages && !$loggedinUser}
-    <div class="body-skeleton loading-animation" />
-  {/if}
-</div>
+    <!-- {:else if}
+    <div class="body-skeleton loading-animation" /> -->
+    <!-- {/if} -->
+  </div>
+{:else}
+  <div class="body-skeleton loading-animation" />
+{/if}
 
 <style>
   @import url("$lib/styles/audio-player.css");
 
   .body-skeleton {
-    max-width: 800px;
-    /* width: 100%; */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 70px;
+    bottom: 60px;
+    width: 100%;
     height: calc(100vh - 120px);
-    background: yellowgreen;
   }
 
   img:hover {
@@ -188,9 +199,9 @@
   .message.my_message {
     justify-content: flex-end;
     text-align: left;
-    position: relative;    
+    position: relative;
   }
-  
+
   .message.friend_message .message-content {
     background: #f5f5f5;
     justify-content: flex-start;
@@ -199,14 +210,14 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
-  
+
   .message-content {
     position: relative;
     max-width: 65%;
     border-radius: 10px;
-    border-bottom-right-radius: 0px;    
+    border-bottom-right-radius: 0px;
     background: var(--lemon-green);
-    color: var(--icon-add-color);  
+    color: var(--icon-add-color);
   }
 
   .message-content .message-text {
@@ -231,8 +242,8 @@
     padding: 0px 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    border-left: 5px solid rgba(235, 235, 235, .5);
-    border-right: 5px solid rgba(235, 235, 235, .5);
+    border-left: 5px solid rgba(235, 235, 235, 0.5);
+    border-right: 5px solid rgba(235, 235, 235, 0.5);
   }
 
   @media (max-width: 800px) {
