@@ -50,10 +50,6 @@
     });
     matched = false;
   }
-
-  $: console.log('is current width <= 370px ? ', $phone)
-  $: if ($phone) console.log('current width <= 370px')
-  $: if (!$phone) console.log('current width > 370px')
 </script>
 
 <div class="header">
@@ -279,7 +275,6 @@
     font-size: 18px;
     font-weight: 600;
     line-height: 1.2em;
-    font-style: italic;
   }
 
   .user-name {

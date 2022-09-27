@@ -122,7 +122,7 @@
       }
     });
     $currentSelectedUser = null;
-    alert('width: ', window.innerWidth)
+    // alert('width: ', window.innerWidth)
   });
 
   $: if ($loggedinUser) userDocReady = true;
