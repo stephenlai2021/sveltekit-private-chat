@@ -16,9 +16,9 @@
   };
 
   const handleDelete = () => {
-    $showAudioRecordingModal = false;
-    $showAudioPlayerModal = false;
     $audioFile = null;
+    $showAudioPlayerModal = false;
+    $showAudioRecordingModal = false;
   };
 </script>
 
