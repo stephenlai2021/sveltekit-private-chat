@@ -124,7 +124,7 @@
         </p>
       </div>
     {/each}
-  {:else}
+  {:else if !messages && !$loggedinUser}
     <div class="body-skeleton loading-animation" />
   {/if}
 </div>
