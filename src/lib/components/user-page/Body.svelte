@@ -228,7 +228,6 @@
     overflow-x: hidden;
     border-left: 5px solid rgba(235, 235, 235, 0.5);
     border-right: 5px solid rgba(235, 235, 235, 0.5);
-    background: #ebebeb;
   }
 
   @media (max-width: 800px) {
