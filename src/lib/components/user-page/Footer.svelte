@@ -444,8 +444,7 @@
       </svg>
     </div>
   {:else if !$phone && !$selectedUserReady}
-    <div class="icon-skeleton loading-animation" style:margin-left="15px" />
-    <!-- <div class="icon-skeleton loading-animation" /> -->
+    <div class="icon-mic-skeleton loading-animation" style:margin-left="15px" />
   {/if}
 </div>
 
@@ -454,6 +453,12 @@
 {/if}
 
 <style>
+  .icon-mic-skeleton {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+  }
+
   .input-skeleton {
     width: 100%;
     height: 40px;
