@@ -353,7 +353,7 @@
     {:else if !$phone && !$selectedUserReady}
       <div class="icon-skeleton loading-animation" style:margin-right="15px" />
       <div class="icon-skeleton loading-animation" style:margin-right="15px" />
-      <div class="icon-skeleton loading-animation" style:margin-right="15px"/>
+      <div class="icon-skeleton loading-animation" style:margin-right="15px" />
     {/if}
   </div>
 
@@ -406,7 +406,7 @@
     </svg>
   </form>
 
-  {#if !$phone}
+  {#if !$phone && $selectedUserReady}
     <div class="icon-mic" on:click={() => ($showAudioRecordingModal = true)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -434,6 +434,8 @@
         />
       </svg>
     </div>
+  {:else if !$phone && !$selectedUserReady}
+    <div class="icon-skeleton loading-animation" style:margin-left="10px" />
   {/if}
 </div>
 
