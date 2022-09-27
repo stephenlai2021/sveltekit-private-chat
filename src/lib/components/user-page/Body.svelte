@@ -147,7 +147,9 @@
     top: 70px;
     bottom: 60px;
     width: 100%;
+    max-width: 800px;
     height: calc(100vh - 120px);
+    background: yellowgreen;
   }
 
   img:hover {
