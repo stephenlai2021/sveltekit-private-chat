@@ -388,7 +388,7 @@
     {#if $selectedUserReady}
       <input type="text" placeholder="Say something" bind:value={$message} />
     {:else}
-      <div class="input-skeleton loading-animation" style:margin-right="35px/>
+      <div class="input-skeleton loading-animation" style:margin-right="35px" />
     {/if}
 
     {#if $selectedUserReady}
