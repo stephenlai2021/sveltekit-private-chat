@@ -70,9 +70,8 @@
   });
 </script>
 
-{#if messages && $loggedinUser}
-  <div class="chatBox" bind:this={chat}>
-    <!-- {#if messages && $loggedinUser} -->
+<div class="chatBox" bind:this={chat}>
+  {#if messages && $loggedinUser}
     {#each messages as msg}
       <div
         class="message"
@@ -129,28 +128,11 @@
         </p>
       </div>
     {/each}
-    <!-- {:else if}
-    <div class="body-skeleton loading-animation" /> -->
-    <!-- {/if} -->
-  </div>
-{:else}
-  <div class="body-skeleton loading-animation" />
-{/if}
+  {/if}
+</div>
 
 <style>
   @import url("$lib/styles/audio-player.css");
-
-  .body-skeleton {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 70px;
-    bottom: 60px;
-    width: 100%;
-    max-width: 800px;
-    height: calc(100vh - 120px);
-    background: yellowgreen;
-  }
 
   img:hover {
     cursor: pointer;
@@ -246,6 +228,7 @@
     overflow-x: hidden;
     border-left: 5px solid rgba(235, 235, 235, 0.5);
     border-right: 5px solid rgba(235, 235, 235, 0.5);
+    background: #ebebeb;
   }
 
   @media (max-width: 800px) {
