@@ -382,8 +382,11 @@
         stroke-width="32"
       />
     </svg>
-    <input type="text" placeholder="Say something" bind:value={$message} />
-    <!-- style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"} -->
+    {#if $selectedUserReady}
+      <input type="text" placeholder="Say something" bind:value={$message} />
+    {:else}
+      <div class="input-skeleton loading-animation" />
+    {/if}
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="ionicon icon-submit"
@@ -445,6 +448,12 @@
 {/if}
 
 <style>
+  .input-skeleton {
+    width: 100%;
+    height: 40px;
+    border-radius: 50px;
+  }
+
   .icon-skeleton {
     width: 24px;
     height: 24px;
