@@ -358,55 +358,61 @@
   </div>
 
   <form on:submit|preventDefault={handleSubmit} class="messageBox">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon icon-emoji"
-      viewBox="0 0 512 512"
-      width="24"
-      height="24"
-      fill="currentColor"
-      on:click|stopPropagation={() => ($showEmojiMenu = true)}
-    >
-      <circle cx="184" cy="232" r="24" />
-      <path
-        d="M256.05 384c-45.42 0-83.62-29.53-95.71-69.83a8 8 0 017.82-10.17h175.69a8 8 0 017.82 10.17c-11.99 40.3-50.2 69.83-95.62 69.83z"
-      />
-      <circle cx="328" cy="232" r="24" />
-      <circle
-        cx="256"
-        cy="256"
-        r="208"
-        fill="none"
-        stroke="currentColor"
-        stroke-miterlimit="10"
-        stroke-width="32"
-      />
-    </svg>
+    {#if $selectedUserReady}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-emoji"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+        on:click|stopPropagation={() => ($showEmojiMenu = true)}
+      >
+        <circle cx="184" cy="232" r="24" />
+        <path
+          d="M256.05 384c-45.42 0-83.62-29.53-95.71-69.83a8 8 0 017.82-10.17h175.69a8 8 0 017.82 10.17c-11.99 40.3-50.2 69.83-95.62 69.83z"
+        />
+        <circle cx="328" cy="232" r="24" />
+        <circle
+          cx="256"
+          cy="256"
+          r="208"
+          fill="none"
+          stroke="currentColor"
+          stroke-miterlimit="10"
+          stroke-width="32"
+        />
+      </svg>
+    {/if}
+
     {#if $selectedUserReady}
       <input type="text" placeholder="Say something" bind:value={$message} />
     {:else}
       <div class="input-skeleton loading-animation" />
     {/if}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon icon-submit"
-      viewBox="0 0 512 512"
-      width="20"
-      height="20"
-      fill="currentColor"
-      style:color={$message ? "#FF4408" : "currentColor"}
-      style:cursor={$message ? "pointer" : "none"}
-      on:click|preventDefault={handleSubmit}
-    >
-      <path
-        d="M470.3 271.15L43.16 447.31a7.83 7.83 0 01-11.16-7V327a8 8 0 016.51-7.86l247.62-47c17.36-3.29 17.36-28.15 0-31.44l-247.63-47a8 8 0 01-6.5-7.85V72.59c0-5.74 5.88-10.26 11.16-8L470.3 241.76a16 16 0 010 29.39z"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="32"
-      />
-    </svg>
+
+    {#if $selectedUserReady}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-submit"
+        viewBox="0 0 512 512"
+        width="20"
+        height="20"
+        fill="currentColor"
+        style:color={$message ? "#FF4408" : "currentColor"}
+        style:cursor={$message ? "pointer" : "none"}
+        on:click|preventDefault={handleSubmit}
+      >
+        <path
+          d="M470.3 271.15L43.16 447.31a7.83 7.83 0 01-11.16-7V327a8 8 0 016.51-7.86l247.62-47c17.36-3.29 17.36-28.15 0-31.44l-247.63-47a8 8 0 01-6.5-7.85V72.59c0-5.74 5.88-10.26 11.16-8L470.3 241.76a16 16 0 010 29.39z"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+        />
+      </svg>
+    {/if}
   </form>
 
   {#if !$phone && $selectedUserReady}
