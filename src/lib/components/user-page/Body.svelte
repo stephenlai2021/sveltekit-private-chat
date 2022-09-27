@@ -69,7 +69,6 @@
   bind:this={chat}
 >
   {#if messages && $loggedinUser}
-  <!-- {#if messages} -->
     {#each messages as msg}
       <div
         class="message"
@@ -125,11 +124,18 @@
         </p>
       </div>
     {/each}
+  {:else}
+    <div class="body-skeleton loading-animation" />
   {/if}
 </div>
 
 <style>
   @import url("$lib/styles/audio-player.css");
+
+  .body-skeleton {
+    width: 100%;
+    height: calc(100vh - 120px);
+  }
 
   img:hover {
     cursor: pointer;
