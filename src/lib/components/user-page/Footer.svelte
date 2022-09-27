@@ -444,7 +444,7 @@
       </svg>
     </div>
   {:else if !$phone && !$selectedUserReady}
-    <div class="icon-skeleton loading-animation" style:margin-left="25px" />
+    <div class="icon-skeleton loading-animation" style:margin-left="15px" />
     <!-- <div class="icon-skeleton loading-animation" /> -->
   {/if}
 </div>
