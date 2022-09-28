@@ -112,11 +112,11 @@
               ? `${$loggedinUser.displayName}=>You: ${messageSent}`
               : msg
           ),
-        lastUpdated: selectedUserSnap.data().lastUpdated.map((time) =>
-          time.split("=>")[0] === $loggedinUser.displayName
-            ? // ? `${$loggedinUser.displayName}=>You: ${Timestamp.fromDate(new Date())}`
-              // ? $loggedinUser.displayName + '=>' + Date.now().toLocaleString()
-              $loggedinUser.displayName + "=>" + Date.now()
+        lastUpdated: selectedUserSnap
+          .data()
+          .lastUpdated.map((time) =>
+            time.split("=>")[0] === $loggedinUser.displayName
+            ? `${$loggedinUser.displayName}=>You: ${new Date()}`
             : time
         ),
         // msgCount: selectedUserSnap
@@ -148,9 +148,7 @@
           ),
         lastUpdated: loggedinUserSnap.data().lastUpdated.map((time) =>
           time.split("=>")[0] === $selectedUsername
-            ? // ? `${$selectedUsername}=>${Timestamp.fromDate(new Date())}`
-              // ? $selectedUsername + '=>' + Date.now().toLocaleString()
-              $selectedUsername + "=>" + Date.now()
+            ? `${$selectedUsername}=>${new Date()}`
             : time
         ),
         // msgCount: loggedinUserSnap

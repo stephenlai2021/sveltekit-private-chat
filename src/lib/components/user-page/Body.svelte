@@ -94,8 +94,14 @@
           <span class="showtime">
             <!-- {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L")}<br/>
             {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("HH:mm")} -->
-            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format(
+            <!-- {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format(
               "L HH:mm"
+            )} -->
+            {moment(new Date(msg.createdAt.toDate()), ["h:mm:ss A"]).format(
+              "HH:mm:ss"
+            )}<br/>
+            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format(
+              "L"
             )}
           </span>
 

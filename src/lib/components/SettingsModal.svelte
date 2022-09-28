@@ -1,5 +1,6 @@
 <script>
   import {
+    selectedFile,
     myDoc,
     mobile,
     bgColor,
@@ -25,8 +26,10 @@
   import { doc, updateDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
   import { signout } from "$lib/functions/auth/signout";
+  import { goto } from "$app/navigation";
   import themes from "$lib/data/themes.json";
   import bgPics from "$lib/data/bgPics.json";
+  import { onMount } from 'svelte'
 
   let url = null;
   let file = null;
@@ -37,9 +40,18 @@
   let fileUploaded = false;
 
   const logout = async () => {
-    $showSettingsModal = false;
     $initial = false;
+    $showSettingsModal = false;
+    
+    let userRef = doc(db, "users", $myDoc.name);
+    await updateDoc(userRef, {
+      online: false,
+    });
+    
+    $myDoc = null;
+
     await signout();
+    // goto('/login')
   };
 
   const handleAvatarChange = (e) => {
@@ -60,10 +72,10 @@
 
   const handleFileChange = async (e) => {
     console.log("handle file change");
-    $file = e.target.files[0];
-    console.log($file);
+    $selectedFile = e.target.files[0];
+    console.log($selectedFile);
 
-    $imageURL = await readURL($file);
+    $imageURL = await readURL($selectedFile);
     console.log("image url: ", $imageURL);
 
     let userRef = doc(db, "users", $myDoc.name);
@@ -113,6 +125,16 @@
       bgColor: color,
     });
   };
+
+  // onMount(() => {
+  //   if ($loggedinUser) {
+  //     let userRef = doc(db, "users", $loggedinUser.displayName);
+  //     const unsubUser = onSnapshot(userRef, (userSnap) => {
+  //       $myDoc = userSnap.data();
+  //       return () => unsubUser;
+  //     });
+  //   }
+  // });
 
   $: if (file) {
     /* change file type to .png */
@@ -261,7 +283,7 @@
             bind:value={colorVal}
             on:input|stopPropagation={() => uploadColor(colorVal)}
             style:cursor="pointer"
-          />
+            />
         </div>
       </li>
 

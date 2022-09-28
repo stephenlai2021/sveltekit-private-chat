@@ -34,6 +34,7 @@ export const showGradientMenu = writable(false);
 export const showThemeMenu = writable(false);
 export const showMapModal = writable(false);
 export const disabled = writable(false);
+export const selectedFile = writable(null);
 export const file = writable(null);
 export const background = writable(null);
 export const showToolModal = writable(false);

@@ -35,11 +35,7 @@
     if (!username) {
       return;
     }
-    const { docs } = await getAllDocs("users", [
-      "name",
-      "==",
-      username,
-    ]);
+    const { docs } = await getAllDocs("users", ["name", "==", username]);
     foundUsers = docs;
     if (!foundUsers[0]) {
       notFound = true;
@@ -66,15 +62,21 @@
       contactList: foundUsers[0].contactList.includes($loggedinUser.displayName)
         ? [...foundUsers[0].contactList]
         : [...foundUsers[0].contactList, $loggedinUser.displayName],
-      lastMsg: [...userSnap.data().lastMsg, $loggedinUser.displayName + '=>' + '[NEW]'],
-      lastUpdated: [],
-      unread: []
+      lastMsg: [
+        ...userSnap.data().lastMsg,
+        $loggedinUser.displayName + "=>" + "[NEW]",
+      ],
+      lastUpdated: [
+        ...userSnap.data().lastUpdated,
+        $loggedinUser.displayName + "=>" + new Date(),
+      ],
+      unread: [],
     });
     console.log(
       `${$loggedinUser.displayName} is successfully added to ${foundUsers[0].name}'s contact list 😁}`
     );
 
-    // add found user to loggedin user's contact list 
+    // add found user to loggedin user's contact list
     // let meRef = doc(db, "users", $loggedinUser.displayName);
     let meRef = doc(db, "users", $myDoc.name);
     let meSnap = await getDoc(meRef);
@@ -82,10 +84,16 @@
       contactList: $myDoc.contactList.includes(foundUsers[0].name)
         ? [...$myDoc.contactList]
         : [...$myDoc.contactList, foundUsers[0].name],
-      lastMsg: [...meSnap.data().lastMsg, foundUsers[0].name + '=>' + '[NEW]']
+      lastMsg: [...meSnap.data().lastMsg, foundUsers[0].name + "=>" + "[NEW]"],
+      lastUpdated: [
+        ...meSnap.data().lastUpdated,
+        foundUsers[0].name + "=>" + new Date(),
+      ],
     });
     // console.log(`${foundUsers[0].name} is successfully added to ${$loggedinUser.displayName}'s contact list 😁}`);
-    console.log(`${foundUsers[0].name} is successfully added to ${$myDoc.name}'s contact list 😁}`);
+    console.log(
+      `${foundUsers[0].name} is successfully added to ${$myDoc.name}'s contact list 😁}`
+    );
   };
 
   $: if (foundUsers && foundUsers.length) {
@@ -141,7 +149,7 @@
 
   <div class="search_user">
     <div class="search-user-wrapper">
-      <div class="clear-text" on:click={() => username = ''}>
+      <div class="clear-text" on:click={() => (username = "")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="ionicon icon-close"
@@ -211,7 +219,7 @@
           {:else}
             <img src="/happy.png" alt="" width="120" height="120" />
           {/if}
-          <div class={user.isOnline ? "status online" : "status offline"} />
+          <div class={user.online ? "indicator online" : "indicator offline"} />
         </div>
         <div class="content">
           <h4 style:text-align="center">{user.name}</h4>
@@ -271,6 +279,16 @@
 </div>
 
 <style>
+  .indicator {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    border: 2px solid white;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+  }
+
   .icon-close {
     position: absolute;
     left: 5px;
@@ -290,10 +308,12 @@
   .content {
     margin-top: 15px;
   }
+
   .avatar-wrapper img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
+    border-radius: 8px;
     object-fit: cover;
   }
 

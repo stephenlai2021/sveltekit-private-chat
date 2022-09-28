@@ -70,8 +70,9 @@
   import MapModal from "$lib/components/MapModal.svelte";
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
   import LoadingModal from "$lib/components/LoadingModal.svelte";
+  import { signout } from "$lib/functions/auth/signout";
 
-  let user = null
+  let user = null;
   let userDocReady = false;
 
   const desktopOrMobile = () => {
@@ -102,14 +103,15 @@
         console.log("signout, user: ", $loggedinUser);
         goto("/login");
       } else {
+        // signout()
         $loggedinUser = _user;
         console.log("signin, user: ", $loggedinUser.displayName);
-
+        
         let usersRef = collection(db, "users");
         let userQuery = query(
           usersRef,
           where("contactList", "array-contains", $loggedinUser.displayName)
-        );
+        );        
         const unsubUsers = onSnapshot(userQuery, (snapshot) => {
           let tempUsers = [];
           snapshot.forEach((doc) => {
@@ -119,45 +121,55 @@
           console.log(`${$loggedinUser.displayName}'s contact list`, $allUsers);
           return () => unsubUsers();
         });
+
+        /* this block of codes cause sveltechat login failure !!!*/
+        let userRef = doc(db, "users", $loggedinUser.displayName);
+        const unsubUser = onSnapshot(userRef, (userSnap) => {
+          $myDoc = userSnap.data();
+          return () => unsubUser;
+        });
       }
     });
     $currentSelectedUser = null;
     // alert('width: ', window.innerWidth)
   });
 
-  $: if ($loggedinUser) userDocReady = true;
+  // $: if ($loggedinUser) userDocReady = true;
 
-  $: if (userDocReady) {
-    let userRef = doc(db, "users", $loggedinUser.displayName);
-    const unsubUser = onSnapshot(userRef, (userSnap) => {
-      $myDoc = userSnap.data();
-      return () => unsubUser;
-    });
-    userDocReady = false;
+  /* This block of codes messed up when a user sign up !!! */
+  // $: if (userDocReady) {
+  //   let userRef = doc(db, "users", $loggedinUser.displayName);
+  //   const unsubUser = onSnapshot(userRef, (userSnap) => {
+  //     $myDoc = userSnap.data();
+  //     return () => unsubUser;
+  //   });
+  //   userDocReady = false;
+  // }
+
+  $: {
+    if (browser) {
+      window.addEventListener("online", () => {
+        $connection = true;
+        console.log("internet is connected 😀");
+      });
+      window.addEventListener("offline", () => {
+        $connection = false;
+        console.log("OOh, internet is disconnected 😮");
+      });
+      window.addEventListener("click", (e) => {
+        $showSettingsModalMobile = false;
+        $showToolModalMobile = false;
+        $showAddFriendModal = false;
+        $showAddGroupModal = false;
+        $showAddRoomModal = false;
+        $showThemeModal = false;
+        $showThemeMenu = false;
+        $showGradientMenu = false;
+        $showActionMenu = false;
+      });
+      window.addEventListener("resize", () => desktopOrMobile());
+    }
   }
-
-  $: {if (browser) {    
-    window.addEventListener("online", () => {
-      $connection = true;
-      console.log("internet is connected 😀");
-    });
-    window.addEventListener("offline", () => {
-      $connection = false;
-      console.log("OOh, internet is disconnected 😮");
-    });
-    window.addEventListener("click", (e) => {
-      $showSettingsModalMobile = false;
-      $showToolModalMobile = false;
-      $showAddFriendModal = false;
-      $showAddGroupModal = false;
-      $showAddRoomModal = false;
-      $showThemeModal = false;
-      $showThemeMenu = false;
-      $showGradientMenu = false;
-      $showActionMenu = false
-    });
-    window.addEventListener("resize", () => desktopOrMobile());
-  }}
 </script>
 
 <svelte:head>
@@ -168,11 +180,11 @@
   <div
     class="inner-wrapper"
     style:display={$page.url.pathname === "/login" ? "block" : "flex"}
-    style:background={
-      $page.url.pathname === "/" ? `${$myDoc && $myDoc.bgColor} center / cover`
-      : $page.url.pathname !== "/" && $page.url.pathname !== "/login"  ? `${$currentSelectedUser?.bgColor} center / cover`
-      : "#ebebeb"
-    }
+    style:background={$page.url.pathname === "/"
+      ? `${$myDoc && $myDoc.bgColor} center / cover`
+      : $page.url.pathname !== "/" && $page.url.pathname !== "/login"
+      ? `${$currentSelectedUser?.bgColor} center / cover`
+      : "#ebebeb"}
   >
     <SettingsModal />
     <div

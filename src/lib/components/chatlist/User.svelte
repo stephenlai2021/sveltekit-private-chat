@@ -10,6 +10,7 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { formatDistanceToNow } from "date-fns";
+  import moment from "moment";
 
   export let user;
 
@@ -33,29 +34,31 @@
 >
   <div class="imgbx">
     <img src={user.avatar} alt="" class="cover" />
-    <div class={user.isOnline ? "status online" : "status offline"} />
+    <div class={user.online ? "status online" : "status offline"} />
   </div>
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <!-- <p class="time" style:font-size="12px" style:color={"var(--theme-color)"}>
-        {formatDistanceToNow(
-          new Date(
-            user.lastUpdated[
-              user.lastUpdated.findIndex(
-                (time) => time.split("=>")[0] === $loggedinUser.displayName
-              )
-            ].split("=>")[1].toDate()
-          )
-        )}
-      </p> -->
-
-      <p style:font-size="12px" style:color={"var(--theme-color)"}>
-        about 10 hours
-      </p>
+      <!-- {#if user && $loggedinUser} -->
+      {#if $loggedinUser}
+        <p style:font-size="12px" style:color={"var(--theme-color)"}>
+          {moment(
+            new Date(
+              user.lastUpdated[
+                user.lastUpdated.findIndex(
+                  (date) => date.split("=>")[0] === $loggedinUser.displayName
+                )
+              ].split("=>")[1]
+            ),
+            ["h:mm A"]
+          ).format("HH:mm L")}
+        </p>
+      {/if}
     </div>
-    <div class="message">
-      {#if user && $loggedinUser}
+
+    {#if $loggedinUser}
+      <div class="message">
+        <!-- {#if user && $loggedinUser} -->
         <p>
           {user.lastMsg[
             user.lastMsg.findIndex(
@@ -63,16 +66,16 @@
             )
           ].split("=>")[1]}
         </p>
-      {/if}
-      <!-- <b>
-        {user.msgCount[
-          user.lastMsg.findIndex(
-            (count) => count.split("=>")[0] === $loggedinUser.displayName
-          )
-        ].split("=>")[1]}
-      </b> -->
-      <b style:background={"var(--theme-color)"}>3</b>
-    </div>
+        <!-- <b>
+          {user.msgCount[
+            user.lastMsg.findIndex(
+              (count) => count.split("=>")[0] === $loggedinUser.displayName
+              )
+              ].split("=>")[1]}
+            </b> -->
+        <b style:background={"var(--theme-color)"}>3</b>
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -162,7 +165,7 @@
     color: rgb(66, 57, 57);
     /* padding-right: 10px;
     border: 1px solid red; */
-    width: calc(100% - 80px);
+    width: calc(100% - 30px);
   }
 
   .block .details .message b {

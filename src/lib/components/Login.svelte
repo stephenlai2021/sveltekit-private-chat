@@ -47,8 +47,7 @@
         ],
         lastUpdated: [
           ...adminSnap.data().lastUpdated,
-          // name + '=>' + Timestamp.fromDate(new Date()),
-          name + '=>' + Date.now().toLocaleDateString(),
+          `${name}=>${new Date()}`,
         ],
         msgCount: [
           ...adminSnap.data().msgCount,
@@ -71,8 +70,7 @@
         createdAt: Timestamp.fromDate(new Date()),
         email,
         lastMsg: ["sveltechat=>[NEW]"],
-        // lastUpdated: ['sveltechat=>' + Timestamp.fromDate(new Date())],
-        lastUpdated: ['sveltechat=>' + Date.now().toLocaleDateString()],
+        lastUpdated: [`sveltechat=>${new Date()}`],
         msgCount: ["sveltechat=>0"],
         name,
         online: true,

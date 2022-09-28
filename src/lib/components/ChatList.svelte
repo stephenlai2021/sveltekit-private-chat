@@ -41,10 +41,6 @@
   {#if $showAddFriendModal}
     <AddFriendModal />
   {/if}
-  
-  <!-- {#if $showAddPeopleModal}
-    <AddPeopleModal />
-  {/if} -->
 
   {#if $showAddRoomModal}
     <AddRoomModal />
