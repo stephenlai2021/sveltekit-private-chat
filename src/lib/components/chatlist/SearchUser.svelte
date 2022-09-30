@@ -72,9 +72,9 @@
     font-size: 16px;
   }
 
-  @media (max-width: 800px) {
+  /* @media (max-width: 800px) {
     .search_user {
       padding: 0 10px;
     }
-  }
+  } */
 </style>
