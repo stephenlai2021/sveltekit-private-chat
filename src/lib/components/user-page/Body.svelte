@@ -8,11 +8,12 @@
   } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
   import {
-    // bgColor,
+    myDoc,
     loggedinUser,
     storedImageURL,
     storedPictureURL,
     selectedUsername,
+    currentSelectedUser,
     showImagePreviewModal,
   } from "$lib/store";
   import { page } from "$app/stores";
@@ -78,6 +79,17 @@
         class:my_message={msg.from === $loggedinUser.displayName}
         class:friend_message={msg.from != $loggedinUser.displayName}
       >
+        {#if $myDoc && $currentSelectedUser}
+          <div class="avatar">
+            <img
+              src={msg.from === $loggedinUser.displayName
+                ? $myDoc?.avatar
+                : $currentSelectedUser.avatar}
+              alt="user-avatar"
+              class="image"
+            />
+          </div>
+        {/if}
         <p
           class="message-content"
           style:padding={msg.pictureURL || msg.imageURL || msg.audioURL
@@ -90,19 +102,14 @@
             : msg.from != $loggedinUser.displayName
             ? "white"
             : "none"}
+          style:right={msg.from === $loggedinUser.displayName ? "35px" : ""}
+          style:left={msg.from !== $loggedinUser.displayName ? "35px" : ""}
         >
           <span class="showtime">
-            <!-- {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L")}<br/>
-            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("HH:mm")} -->
-            <!-- {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format(
-              "L HH:mm"
-            )} -->
             {moment(new Date(msg.createdAt.toDate()), ["h:mm:ss A"]).format(
               "HH:mm:ss"
-            )}<br/>
-            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format(
-              "L"
-            )}
+            )}<br />
+            {moment(new Date(msg.createdAt.toDate()), ["h:mm A"]).format("L")}
           </span>
 
           {#if msg.audioURL}
@@ -131,6 +138,7 @@
               on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
             />
           {/if}
+          <!-- </p> -->
         </p>
       </div>
     {/each}
@@ -139,6 +147,30 @@
 
 <style>
   @import url("$lib/styles/audio-player.css");
+
+  .message.my_message .avatar {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 25px;
+    height: 25px;
+    /* border: 1px solid green; */
+  }
+
+  .message.friend_message .avatar {
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 25px;
+    height: 25px;
+    /* border: 1px solid red; */
+  }
+
+  .avatar .image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+  }
 
   img:hover {
     cursor: pointer;
@@ -190,6 +222,7 @@
     justify-content: flex-end;
     text-align: left;
     position: relative;
+    /* border: 1px solid red; */
   }
 
   .message.friend_message .message-content {

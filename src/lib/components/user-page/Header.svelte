@@ -85,14 +85,14 @@
     {#if $selectedUserReady}
       <div class="user-info">
         <div class="image-wrapper">
-          {#if selectedUser.avatar}
+          <!-- {#if selectedUser.avatar}
             <img src={selectedUser.avatar} alt="" />
           {:else}
             <div class="user-avatar animation" />
           {/if}
           <div
             class={selectedUser.isOnline ? "status online" : "status offline"}
-          />
+          /> -->
         </div>
         <div class="details">
           <h4>{selectedUser.name}</h4>
@@ -100,9 +100,9 @@
       </div>
     {:else}
       <div class="user-info">
-        <div class="image-wrapper">
+        <!-- <div class="image-wrapper">
           <div class="user-avatar loading-animation" />
-        </div>
+        </div> -->
         <div class="details">
           <h4 class="user-name loading-animation">antman</h4>
         </div>
@@ -300,6 +300,7 @@
 
   .details {
     padding-left: 15px;
+    padding-left: 5px;
   }
 
   .details h4 {

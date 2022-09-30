@@ -39,7 +39,6 @@
   <div class="details">
     <div class="listHead">
       <span class="user-title">{user.name}</span>
-      <!-- {#if user && $loggedinUser} -->
       {#if $loggedinUser}
         <p style:font-size="12px" style:color={"var(--theme-color)"}>
           {moment(
@@ -58,7 +57,6 @@
 
     {#if $loggedinUser}
       <div class="message">
-        <!-- {#if user && $loggedinUser} -->
         <p>
           {user.lastMsg[
             user.lastMsg.findIndex(
