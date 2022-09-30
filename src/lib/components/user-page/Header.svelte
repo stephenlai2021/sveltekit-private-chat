@@ -262,7 +262,7 @@
     margin-top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    height: 60px;
+    height: 50px;
     display: flex;
     align-items: center;
     max-width: 800px;
