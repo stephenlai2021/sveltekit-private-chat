@@ -610,6 +610,7 @@
     height: calc(100vh - 20px);
     border-radius: 8px;
     overflow-y: auto;
+    padding-bottom: 30px;
   }
 
   ::-webkit-scrollbar {
