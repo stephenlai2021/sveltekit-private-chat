@@ -151,7 +151,7 @@
   .message.my_message .avatar {
     position: absolute;
     right: 0px;
-    bottom: 0px;
+    bottom: -2px;
     width: 25px;
     height: 25px;
     /* border: 1px solid green; */
@@ -160,7 +160,7 @@
   .message.friend_message .avatar {
     position: absolute;
     left: 0;
-    bottom: 0px;
+    bottom: -2px;
     width: 25px;
     height: 25px;
     /* border: 1px solid red; */
