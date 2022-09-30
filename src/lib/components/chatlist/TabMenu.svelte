@@ -10,6 +10,7 @@
   } from "$lib/store";
   import TabmenuSkeleton from "../skeleton/TabmenuSkeleton.svelte";
 
+  // const menuItems = ["Private", "Group", "Public", "Live"];
   const menuItems = ["Private", "Group", "Public"];
   let currentTab = menuItems[0];
 
@@ -142,6 +143,33 @@
             />
           </svg>
         {/if}
+        <!-- {#if tab === "Live"}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon"
+            viewBox="0 0 512 512"
+            width="24"
+            height="24"
+            fill="currentColor"
+            style:color={currentTab === tab ? "#FF4408" : ""}
+          >
+            <path
+              d="M374.79 308.78L457.5 367a16 16 0 0022.5-14.62V159.62A16 16 0 00457.5 145l-82.71 58.22A16 16 0 00368 216.3v79.4a16 16 0 006.79 13.08z"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="32"
+            />
+            <path
+              d="M268 384H84a52.15 52.15 0 01-52-52V180a52.15 52.15 0 0152-52h184.48A51.68 51.68 0 01320 179.52V332a52.15 52.15 0 01-52 52z"
+              fill="none"
+              stroke="currentColor"
+              stroke-miterlimit="10"
+              stroke-width="32"
+            />
+          </svg>
+        {/if} -->
       </span>
     {/each}
   {:else}
@@ -154,6 +182,8 @@
     position: relative;
     display: flex;
     height: 60px;
+    /* padding: 0 15px; */
+    /* padding-left: 25px; */
     /* border: 1px solid; */
   }
 
@@ -165,6 +195,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* justify-content: flex-start; */
     cursor: pointer;
     /* border: 1px solid; */
   }

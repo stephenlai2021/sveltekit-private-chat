@@ -29,7 +29,7 @@
   import { goto } from "$app/navigation";
   import themes from "$lib/data/themes.json";
   import bgPics from "$lib/data/bgPics.json";
-  import { onMount } from 'svelte'
+  import { onMount } from "svelte";
 
   let url = null;
   let file = null;
@@ -42,12 +42,12 @@
   const logout = async () => {
     $initial = false;
     $showSettingsModal = false;
-    
+
     let userRef = doc(db, "users", $myDoc.name);
     await updateDoc(userRef, {
       online: false,
     });
-    
+
     $myDoc = null;
 
     await signout();
@@ -271,167 +271,170 @@
       {/if}
     </div>
 
-    <!-- {#if $loggedinUser} -->
     {#if $myDoc}
-      <li>
-        <div class="content" style:cursor="auto" style:height="18px">
-          <div class="title-wrapper">
-            <span class="menu-item">Select Color</span>
-          </div>
-          <input
-            type="color"
-            bind:value={colorVal}
-            on:input|stopPropagation={() => uploadColor(colorVal)}
-            style:cursor="pointer"
-            />
-        </div>
-      </li>
-
-      <li>
-        <div
-          class="option"
-          on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
-        >
-          <div class="content">
-            <div class="title-wrapper">
-              <span class="menu-item">Image gallery</span>
-            </div>
-            {#if !$showThemeMenu}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-              >
-                <path
-                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-                />
-              </svg>
-            {:else}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-                style:margin-left="26px"
-              >
-                <path
-                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-                />
-              </svg>
-            {/if}
-          </div>
-        </div>
-        {#if $showThemeMenu}
-          <main>
-            {#each bgPics as bgPic}
-              <div
-                class="theme-item"
-                style:cursor="pointer"
-                on:click={() => uploadTheme(bgPic)}
-              >
-                <div
-                  class="theme-image"
-                  style:background-image={`url(${bgPic.url})`}
-                />
-              </div>
-            {/each}
-          </main>
-        {/if}
-      </li>
-
-      <li>
-        <div
-          class="option"
-          on:click={() => ($showGradientMenu = !$showGradientMenu)}
-        >
-          <div class="content">
-            <div class="title-wrapper">
-              <span class="menu-item">Gradient gallery</span>
-            </div>
-            {#if !$showGradientMenu}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon icon-arrow-down"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-              >
-                <path
-                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-                />
-              </svg>
-            {:else}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon icon-arrow-up"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-              >
-                <path
-                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-                />
-              </svg>
-            {/if}
-          </div>
-        </div>
-        {#if $showGradientMenu}
-          <main>
-            {#each themes as theme}
-              <div
-                class="theme-item"
-                style:cursor="pointer"
-                on:click={() => uploadGradient(theme)}
-              >
-                <div
-                  class="theme-image"
-                  style:background-image={theme.background}
-                />
-              </div>
-            {/each}
-          </main>
-        {/if}
-      </li>
-
-      {#if !$isMobile}
+      <div class="menu-wrapper">
         <li>
-          <div class="content">
-            <label>
-              <span class="menu-item" style:cursor="pointer">Select image</span>
-              <input
-                type="file"
-                on:change={handleFileChange}
-                accept="image/png, image/jpg, image/jpeg"
-              />
-            </label>
+          <div
+            class="option"
+            on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
+          >
+            <div class="content">
+              <div class="title-wrapper">
+                <span class="menu-item">Image gallery</span>
+              </div>
+              {#if !$showThemeMenu}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon"
+                  viewBox="0 0 512 512"
+                  width="15"
+                  height="15"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                  />
+                </svg>
+              {:else}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon"
+                  viewBox="0 0 512 512"
+                  width="15"
+                  height="15"
+                  fill="currentColor"
+                  style:margin-left="26px"
+                >
+                  <path
+                    d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                  />
+                </svg>
+              {/if}
+            </div>
+          </div>
+          {#if $showThemeMenu}
+            <main>
+              {#each bgPics as bgPic}
+                <div
+                  class="theme-item"
+                  style:cursor="pointer"
+                  on:click={() => uploadTheme(bgPic)}
+                >
+                  <div
+                    class="theme-image"
+                    style:background-image={`url(${bgPic.url})`}
+                  />
+                </div>
+              {/each}
+            </main>
+          {/if}
+        </li>
+
+        <li>
+          <div
+            class="option"
+            on:click={() => ($showGradientMenu = !$showGradientMenu)}
+          >
+            <div class="content">
+              <div class="title-wrapper">
+                <span class="menu-item">Gradient gallery</span>
+              </div>
+              {#if !$showGradientMenu}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon icon-arrow-down"
+                  viewBox="0 0 512 512"
+                  width="15"
+                  height="15"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
+                  />
+                </svg>
+              {:else}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ionicon icon-arrow-up"
+                  viewBox="0 0 512 512"
+                  width="15"
+                  height="15"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
+                  />
+                </svg>
+              {/if}
+            </div>
+          </div>
+          {#if $showGradientMenu}
+            <main>
+              {#each themes as theme}
+                <div
+                  class="theme-item"
+                  style:cursor="pointer"
+                  on:click={() => uploadGradient(theme)}
+                >
+                  <div
+                    class="theme-image"
+                    style:background-image={theme.background}
+                  />
+                </div>
+              {/each}
+            </main>
+          {/if}
+        </li>
+
+        <li>
+          <div class="content" style:cursor="auto" style:height="18px">
+            <div class="title-wrapper">
+              <span class="menu-item">Select Color</span>
+            </div>
+            <input
+              type="color"
+              bind:value={colorVal}
+              on:input|stopPropagation={() => uploadColor(colorVal)}
+              style:cursor="pointer"
+            />
           </div>
         </li>
-      {/if}
 
-      <li>
-        <div class="content">
-          <span class="menu-item">Switch Language</span>
-        </div>
-      </li>
+        {#if !$isMobile}
+          <li>
+            <div class="content">
+              <label>
+                <span class="menu-item" style:cursor="pointer"
+                  >Select image</span
+                >
+                <input
+                  type="file"
+                  on:change={handleFileChange}
+                  accept="image/png, image/jpg, image/jpeg"
+                />
+              </label>
+            </div>
+          </li>
+        {/if}
 
-      <li>
-        <div class="content">
-          <span class="menu-item">About</span>
-        </div>
-      </li>
+        <li>
+          <div class="content">
+            <span class="menu-item">Switch Language</span>
+          </div>
+        </li>
 
-      <li on:click={logout}>
-        <div class="content">
-          <span class="menu-item">Logout</span>
-        </div>
-      </li>
+        <li>
+          <div class="content">
+            <span class="menu-item">About</span>
+          </div>
+        </li>
+
+        <li on:click={logout}>
+          <div class="content">
+            <span class="menu-item">Logout</span>
+          </div>
+        </li>
+      </div>
     {:else}
       <div class="loading-skeleton">
         <div class="loading-menu-item loading-animation" />
@@ -451,7 +454,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid; */
   }
 
   .loading-menu-item {
@@ -468,12 +470,13 @@
 
   main {
     width: 100%;
-    border: 1px solid;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    max-height: 400px;
   }
 
   .theme-item {
     padding: 0;
-    /* border: 1px solid red; */
   }
 
   .loading {
@@ -541,12 +544,7 @@
     flex-direction: column;
     justify-content: center;
     width: 100px;
-  }
-
-  .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    /* border: 1px solid blue; */
   }
 
   .user-profile .avatar-section {
@@ -565,10 +563,10 @@
   }
 
   .content {
+    width: 140px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 140px;
     cursor: pointer;
     /* border: 1px solid; */
   }
@@ -602,12 +600,21 @@
     margin-top: 10px;
   }
 
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: inherit;
+  }
+
   ul {
     min-width: 250px;
     backdrop-filter: blur(20px);
     border-radius: 8px;
     margin: 10px;
     background: rgba(235, 235, 235, 0.5);
+    overflow-y: auto;
     /* box-shadow: 1px 0px 3px 0px #bebbbb; */
     /* border: 1px solid red; */
   }

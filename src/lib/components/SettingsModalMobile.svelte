@@ -181,6 +181,7 @@
       />
     </svg>
   </div>
+
   <div class="main">
     <div class="user-profile">
       <div class="avatar-section">
@@ -267,20 +268,6 @@
     </div>
 
     {#if $myDoc}
-      <li>
-        <div class="content" style:cursor="auto" style:height="18px">
-          <div class="title-wrapper">
-            <span class="menu-item">Select Color</span>
-          </div>
-          <input
-            type="color"
-            bind:value={colorVal}
-            on:input|stopPropagation={() => uploadColor(colorVal)}
-            style:cursor="pointer"
-          />
-        </div>
-      </li>
-
       <li>
         <div
           class="option"
@@ -392,6 +379,20 @@
             {/each}
           </main>
         {/if}
+      </li>
+
+      <li>
+        <div class="content" style:cursor="auto" style:height="18px">
+          <div class="title-wrapper">
+            <span class="menu-item">Select Color</span>
+          </div>
+          <input
+            type="color"
+            bind:value={colorVal}
+            on:input|stopPropagation={() => uploadColor(colorVal)}
+            style:cursor="pointer"
+          />
+        </div>
       </li>
 
       {#if !$isMobile}
@@ -532,9 +533,9 @@
   }
 
   .main {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; */
   }
 
   .user-profile .avatar-section {
@@ -542,6 +543,13 @@
     align-items: center;
     margin-bottom: 15px;
     display: flex;
+  }
+
+  main {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    max-height: 400px;
   }
 
   .user-profile {
@@ -602,6 +610,14 @@
     height: calc(100vh - 20px);
     border-radius: 8px;
     overflow-y: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: inherit;
   }
 
   @media (max-width: 800px) {

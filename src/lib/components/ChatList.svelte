@@ -34,9 +34,9 @@
   <TabMenu />
   <ContactList />
 
-  {#if $showSettingsModalMobile && $widthLessthan1200}
+  <!-- {#if $showSettingsModalMobile && $widthLessthan1200} -->
     <SettingsModalMobile />
-  {/if}
+  <!-- {/if} -->
 
   {#if $showAddFriendModal}
     <AddFriendModal />
