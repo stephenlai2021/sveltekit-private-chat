@@ -615,6 +615,7 @@
     margin: 10px;
     background: rgba(235, 235, 235, 0.5);
     overflow-y: auto;
+    padding-bottom: 30px;
     /* box-shadow: 1px 0px 3px 0px #bebbbb; */
     /* border: 1px solid red; */
   }
