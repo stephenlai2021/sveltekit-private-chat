@@ -624,7 +624,7 @@
   @media (max-width: 800px) {
     ul {
       height: 100vh;
-      border-radius: none;
+      border-radius: 0px;
     }
   }
 </style>
