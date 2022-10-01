@@ -40,7 +40,7 @@
     <div class="listHead">
       <span class="user-title">{user.name}</span>
       {#if $loggedinUser}
-        <p style:font-size="12px" style:color={"var(--theme-color)"}>
+        <p class="date" style:font-size="12px">
           {moment(
             new Date(
               user.lastUpdated[
@@ -71,13 +71,17 @@
               )
               ].split("=>")[1]}
             </b> -->
-        <b style:background={"var(--theme-color)"}>3</b>
+        <!-- <b style:background={"var(--theme-color)"}>3</b> -->
       </div>
     {/if}
   </div>
 </div>
 
 <style>
+  .date {
+    color: rgb(92, 102, 102);
+  }
+
   .block {
     display: flex;
     align-items: center;
@@ -152,7 +156,7 @@
   }
 
   .message p {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.3px;
     display: -webkit-box;
@@ -160,7 +164,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     position: absolute;
-    color: rgb(66, 57, 57);
+    color: rgb(92, 102, 102);
     /* padding-right: 10px;
     border: 1px solid red; */
     width: calc(100% - 30px);
