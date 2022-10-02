@@ -98,10 +98,10 @@
             : "none"}
           style:box-shadow={msg.from === $loggedinUser.displayName &&
           $currentSelectedUser?.bgColor === "#dcf8c6"
-            ? "0.1em 0.1em 0.2em black"
+            ? "0.1em 0.1em 0.2em darkgray"
             : msg.from !== $loggedinUser.displayName &&
               $currentSelectedUser?.bgColor === "#ffffff"
-            ? "0.1em 0.1em 0.2em black"
+            ? "0.1em 0.1em 0.2em darkgray"
             : "none"}
           style:right={msg.from === $loggedinUser.displayName ? "30px" : ""}
           style:left={msg.from !== $loggedinUser.displayName ? "30px" : ""}
