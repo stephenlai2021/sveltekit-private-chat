@@ -57,18 +57,13 @@
 
     {#if $loggedinUser}
       <div class="message">
-        {#if $currentSelectedUser}
-          <p>
-            <!-- style:text-shadow={$currentSelectedUser.bgColor === "#ffffff"
-              ? "0.1em 0.1em 0.2em black"
-              : "none"} -->
-            {user.lastMsg[
-              user.lastMsg.findIndex(
-                (msg) => msg.split("=>")[0] === $loggedinUser.displayName
-              )
-            ].split("=>")[1]}
-          </p>
-        {/if}
+        <p>
+          {user.lastMsg[
+            user.lastMsg.findIndex(
+              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
+            )
+          ].split("=>")[1]}
+        </p>
         <!-- <b>
           {user.msgCount[
             user.lastMsg.findIndex(
@@ -84,9 +79,8 @@
 
 <style>
   .date {
-    color: rgb(92, 102, 102);
-    text-shadow: 0.1em 0.1em 0.2em black;
     color: white;
+    text-shadow: 0.1em 0.1em 0.2em black;
   }
 
   .block {
@@ -145,16 +139,6 @@
     /* color: var(--theme-color); */
   }
 
-  .details .listHead .time {
-    font-size: 0.75em;
-    color: #aaa;
-  }
-
-  .block.unread .details .listHead .time {
-    color: var(--active-green);
-    color: #ff4408;
-  }
-
   .message {
     display: flex;
     justify-content: space-between;
@@ -172,7 +156,6 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     position: absolute;
-    color: rgb(92, 102, 102);
     color: white;
     text-shadow: 0.1em 0.1em 0.2em black;
     width: calc(100% - 30px);

@@ -8,7 +8,7 @@
     showAddRoomModal,
     showSettingsModalMobile,
     showToolModalMobile,
-    widthLessthan1200
+    widthLessthan1200,
   } from "$lib/store";
   import SettingsModalMobile from "$lib/components/SettingsModalMobile.svelte";
   import ToolModalMobile from "$lib/components/ToolModalMobile.svelte";
@@ -21,14 +21,14 @@
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
   import AddPeopleModal from "$lib/components/AddPeopleModal.svelte";
   import AddRoomModal from "$lib/components/AddRoomModal.svelte";
-  import themeStore from "svelte-themes"
+  import themeStore from "svelte-themes";
 </script>
 
-<div 
+<div
   class="chatlist"
   style:backdrop-filter="blur(20px)"
-  >
-  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : "rgba(235, 235, 235, .5)"} -->
+  style:background="rgba(235, 235, 235, .5)"
+>
   <Header />
   <SearchUser />
   <TabMenu />
@@ -54,7 +54,7 @@
     border-radius: 8px;
     /* box-shadow: 1px 0px 5px 0px #bebbbb; */
   }
-  
+
   @media (max-width: 1200px) {
     .chatlist {
       margin-left: 10px;
