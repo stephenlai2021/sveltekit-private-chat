@@ -119,13 +119,13 @@
             ? `${$loggedinUser.displayName}=>You: ${new Date()}`
             : time
         ),
-        // msgCount: selectedUserSnap
-        //   .data()
-        //   .msgCount.map((count) =>
-        //     count.split("=>")[0] === $loggedinUser.displayName
-        //       ? `${$loggedinUser.displayName}=>You: ${countVal++}`
-        //       : count
-        //   ),
+        msgCount: selectedUserSnap
+          .data()
+          .msgCount.map((count) =>
+            count.split("=>")[0] === $loggedinUser.displayName
+              ? `${$loggedinUser.displayName}=>You: ${countVal++}`
+              : count
+          ),
         unread: selectedUserSnap
           .data()
           .unread.map((state) =>
@@ -151,13 +151,13 @@
             ? `${$selectedUsername}=>${new Date()}`
             : time
         ),
-        // msgCount: loggedinUserSnap
-        //   .data()
-        //   .msgCount.map((count) =>
-        //     count.split("=>")[0] === $selectedUsername
-        //       ? `${$selectedUsername}=>${countVal++}`
-        //       : count
-        //   ),
+        msgCount: loggedinUserSnap
+          .data()
+          .msgCount.map((count) =>
+            count.split("=>")[0] === $selectedUsername
+              ? `${$selectedUsername}=>${countVal++}`
+              : count
+          ),
         unread: loggedinUserSnap
           .data()
           .unread.map((state) =>

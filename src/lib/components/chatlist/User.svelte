@@ -9,7 +9,6 @@
   import { Timestamp } from "firebase/firestore";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { formatDistanceToNow } from "date-fns";
   import moment from "moment";
 
   export let user;
@@ -71,7 +70,7 @@
               )
               ].split("=>")[1]}
             </b> -->
-        <!-- <b style:background={"var(--theme-color)"}>3</b> -->
+        <b style:background={"var(--theme-color)"}>3</b>
       </div>
     {/if}
   </div>
@@ -80,6 +79,8 @@
 <style>
   .date {
     color: rgb(92, 102, 102);
+    text-shadow: 0.1em 0.1em 0.2em black;
+    color: white;
   }
 
   .block {
@@ -135,6 +136,7 @@
     letter-spacing: 0.3px;
     font-style: normal;
     line-height: 20px;
+    /* color: var(--theme-color); */
   }
 
   .details .listHead .time {
@@ -156,7 +158,7 @@
   }
 
   .message p {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.3px;
     display: -webkit-box;
@@ -165,6 +167,9 @@
     overflow: hidden;
     position: absolute;
     color: rgb(92, 102, 102);
+    color: white;
+    /* color: var(--theme-color); */
+    text-shadow: 0.1em 0.1em 0.2em black;
     /* padding-right: 10px;
     border: 1px solid red; */
     width: calc(100% - 30px);

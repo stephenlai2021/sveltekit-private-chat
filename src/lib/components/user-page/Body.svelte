@@ -19,12 +19,6 @@
   import { page } from "$app/stores";
   import { beforeUpdate, afterUpdate } from "svelte";
   import AudioPlayer from "$lib/components/AudioPlayer.svelte";
-  import {
-    formatDistanceToNow,
-    formatRelative,
-    subDays,
-    format,
-  } from "date-fns";
   import moment from "moment";
 
   let q = null;
@@ -102,8 +96,8 @@
             : msg.from != $loggedinUser.displayName
             ? "white"
             : "none"}
-          style:right={msg.from === $loggedinUser.displayName ? "35px" : ""}
-          style:left={msg.from !== $loggedinUser.displayName ? "35px" : ""}
+          style:right={msg.from === $loggedinUser.displayName ? "30px" : ""}
+          style:left={msg.from !== $loggedinUser.displayName ? "30px" : ""}
         >
           <span class="showtime">
             {moment(new Date(msg.createdAt.toDate()), ["h:mm:ss A"]).format(
@@ -258,10 +252,10 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 70px;
+    top: 60px;
     bottom: 60px;
     width: 100%;
-    height: calc(100vh - 120px);
+    /* height: calc(100vh - 120px); */
     padding: 0px 10px;
     overflow-y: auto;
     overflow-x: hidden;
