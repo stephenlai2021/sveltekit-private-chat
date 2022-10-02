@@ -96,6 +96,13 @@
             : msg.from != $loggedinUser.displayName
             ? "white"
             : "none"}
+          style:box-shadow={msg.from === $loggedinUser.displayName &&
+          $currentSelectedUser?.bgColor === "#dcf8c6"
+            ? "0.1em 0.1em 0.2em black"
+            : msg.from !== $loggedinUser.displayName &&
+              $currentSelectedUser?.bgColor === "#ffffff"
+            ? "0.1em 0.1em 0.2em black"
+            : "none"}
           style:right={msg.from === $loggedinUser.displayName ? "30px" : ""}
           style:left={msg.from !== $loggedinUser.displayName ? "30px" : ""}
         >
@@ -226,6 +233,8 @@
     border-bottom-left-radius: 0px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    /* border: 1px solid; */
+    /* box-shadow: 0.1em 0.1em 0.2em black; */
   }
 
   .message-content {
@@ -235,6 +244,7 @@
     border-bottom-right-radius: 0px;
     background: var(--lemon-green);
     color: var(--icon-add-color);
+    /* box-shadow: 0.1em 0.1em 0.2em black; */
   }
 
   .message-content .message-text {
