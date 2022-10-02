@@ -27,8 +27,8 @@
 <div 
   class="chatlist"
   style:backdrop-filter="blur(20px)"
-  style:background={$themeStore.theme === "dark" ? "#292F3F" : "rgba(235, 235, 235, .5)"}
->
+  >
+  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : "rgba(235, 235, 235, .5)"} -->
   <Header />
   <SearchUser />
   <TabMenu />

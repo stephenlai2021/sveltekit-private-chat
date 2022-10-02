@@ -1,10 +1,11 @@
 <script>
   import {
+    // myDoc,
     mobile,
     loggedinUser,
     currentContact,
     selectedUsername,
-    selectedUseremail,
+    currentSelectedUser,
   } from "$lib/store";
   import { Timestamp } from "firebase/firestore";
   import { page } from "$app/stores";
@@ -56,13 +57,18 @@
 
     {#if $loggedinUser}
       <div class="message">
-        <p>
-          {user.lastMsg[
-            user.lastMsg.findIndex(
-              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
-            )
-          ].split("=>")[1]}
-        </p>
+        {#if $currentSelectedUser}
+          <p>
+            <!-- style:text-shadow={$currentSelectedUser.bgColor === "#ffffff"
+              ? "0.1em 0.1em 0.2em black"
+              : "none"} -->
+            {user.lastMsg[
+              user.lastMsg.findIndex(
+                (msg) => msg.split("=>")[0] === $loggedinUser.displayName
+              )
+            ].split("=>")[1]}
+          </p>
+        {/if}
         <!-- <b>
           {user.msgCount[
             user.lastMsg.findIndex(
@@ -168,10 +174,7 @@
     position: absolute;
     color: rgb(92, 102, 102);
     color: white;
-    /* color: var(--theme-color); */
     text-shadow: 0.1em 0.1em 0.2em black;
-    /* padding-right: 10px;
-    border: 1px solid red; */
     width: calc(100% - 30px);
   }
 
