@@ -78,12 +78,13 @@ export const rightsideState = writable(true);
 export const menubarState = writable(true);
 export const showSearchFriendModal = writable(false);
 
-export const msgCount = writable(
-  browser && (localStorage.getItem("message count: ") || 0)
-);
-msgCount.subscribe(
-  (val) => browser && localStorage.setItem("message count: ", val)
-);
+export const msgCount = writable(0)
+// export const msgCount = writable(
+//   browser && (localStorage.getItem("message count: ") || 0)
+// );
+// msgCount.subscribe(
+//   (val) => browser && localStorage.setItem("message count: ", val)
+// );
 
 export const userEmail = writable(
   browser && (localStorage.getItem("user email") || null)

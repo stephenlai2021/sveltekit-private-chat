@@ -6,6 +6,7 @@
     phone,
     mobile,
     isMobile,
+    msgCount,
     showActionMenu,
     showCameraModal,
     showEmojiMenu,
@@ -30,6 +31,7 @@
 
   let url = null;
   let file = null;
+  let count = 0
   let messageSent = "";
   // let countVal = 0;
 
@@ -104,6 +106,14 @@
       /* update selected user document */
       let selectedUserRef = doc(db, "users", $selectedUsername);
       let selectedUserSnap = await getDoc(selectedUserRef);
+      // $msgCount++
+
+      count = selectedUserSnap.msgCount[
+        user.msgCount.findIndex(
+          (count) => count.split("=>")[0] === $loggedinUser.displayName
+        )
+      ].split("=>")[1]++;
+
       await updateDoc(selectedUserRef, {
         lastMsg: selectedUserSnap
           .data()
@@ -116,14 +126,14 @@
           .data()
           .lastUpdated.map((time) =>
             time.split("=>")[0] === $loggedinUser.displayName
-            ? `${$loggedinUser.displayName}=>You: ${new Date()}`
-            : time
-        ),
+              ? `${$loggedinUser.displayName}=>You: ${new Date()}`
+              : time
+          ),
         msgCount: selectedUserSnap
           .data()
           .msgCount.map((count) =>
             count.split("=>")[0] === $loggedinUser.displayName
-              ? `${$loggedinUser.displayName}=>You: ${countVal++}`
+              ? `${$loggedinUser.displayName}=>${+count}`
               : count
           ),
         unread: selectedUserSnap
@@ -138,6 +148,7 @@
       // update login user document
       let loggedinUserRef = doc(db, "users", $loggedinUser.displayName);
       let loggedinUserSnap = await getDoc(loggedinUserRef);
+      // $msgCount++
       await updateDoc(loggedinUserRef, {
         lastMsg: loggedinUserSnap
           .data()
@@ -146,16 +157,18 @@
               ? `${$selectedUsername}=>${messageSent}`
               : msg
           ),
-        lastUpdated: loggedinUserSnap.data().lastUpdated.map((time) =>
-          time.split("=>")[0] === $selectedUsername
-            ? `${$selectedUsername}=>${new Date()}`
-            : time
-        ),
+        lastUpdated: loggedinUserSnap
+          .data()
+          .lastUpdated.map((time) =>
+            time.split("=>")[0] === $selectedUsername
+              ? `${$selectedUsername}=>${new Date()}`
+              : time
+          ),
         msgCount: loggedinUserSnap
           .data()
           .msgCount.map((count) =>
             count.split("=>")[0] === $selectedUsername
-              ? `${$selectedUsername}=>${countVal++}`
+              ? `${$selectedUsername}=>${+count}`
               : count
           ),
         unread: loggedinUserSnap
@@ -170,10 +183,13 @@
       // msgCount.update((n) => n + 1);
       // msgCount.set(countVal)
       console.log("message created successfully 😁");
+      // console.log('message count: ', $msgCount)
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
   };
+
+  // $: if ($msgCount) console.log('message count: ', $msgCount)
 </script>
 
 <div class="chatbox_input">
@@ -252,7 +268,7 @@
         viewBox="0 0 512 512"
         width="26"
         height="26"
-        fill="currentColor"        
+        fill="currentColor"
         on:click={() => ($showCameraModal = true)}
       >
         <path

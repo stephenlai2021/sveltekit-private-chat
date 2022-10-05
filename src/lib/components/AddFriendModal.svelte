@@ -3,6 +3,7 @@
   import {
     myDoc,
     allUsers,
+    msgCount,
     loggedinUser,
     showAddFriendModal,
     showSearchFriendModal,
@@ -64,11 +65,15 @@
         : [...foundUsers[0].contactList, $loggedinUser.displayName],
       lastMsg: [
         ...userSnap.data().lastMsg,
-        $loggedinUser.displayName + "=>" + "[NEW]",
+        $loggedinUser.displayName + "=>[NEW]",
       ],
       lastUpdated: [
         ...userSnap.data().lastUpdated,
         $loggedinUser.displayName + "=>" + new Date(),
+      ],
+      msgCount: [
+        ...userSnap.data().msgCount,
+        $loggedinUser.displayName + "=>0"
       ],
       unread: [],
     });
@@ -84,11 +89,18 @@
       contactList: $myDoc.contactList.includes(foundUsers[0].name)
         ? [...$myDoc.contactList]
         : [...$myDoc.contactList, foundUsers[0].name],
-      lastMsg: [...meSnap.data().lastMsg, foundUsers[0].name + "=>" + "[NEW]"],
+      lastMsg: [
+        ...meSnap.data().lastMsg, 
+        foundUsers[0].name + "=>[NEW]"
+      ],
       lastUpdated: [
         ...meSnap.data().lastUpdated,
         foundUsers[0].name + "=>" + new Date(),
       ],
+      msgCount: [
+        ...meSnap.data().msgCount,
+        foundUsers[0].name + "=>0" 
+      ]
     });
     // console.log(`${foundUsers[0].name} is successfully added to ${$loggedinUser.displayName}'s contact list 😁}`);
     console.log(

@@ -64,14 +64,14 @@
             )
           ].split("=>")[1]}
         </p>
-        <!-- <b>
+        <b style:background={"var(--theme-color)"}>
           {user.msgCount[
-            user.lastMsg.findIndex(
+            user.msgCount.findIndex(
               (count) => count.split("=>")[0] === $loggedinUser.displayName
-              )
-              ].split("=>")[1]}
-            </b> -->
-        <b style:background={"var(--theme-color)"}>3</b>
+            )
+          ].split("=>")[1]}
+        </b>
+        <!-- <b style:background={"var(--theme-color)"}>3</b> -->
       </div>
     {/if}
   </div>

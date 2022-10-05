@@ -608,7 +608,7 @@
     background: inherit;
   }
 
-  ul {
+  .modal-settings {
     min-width: 250px;
     backdrop-filter: blur(20px);
     border-radius: 8px;
@@ -618,5 +618,13 @@
     padding-bottom: 30px;
     /* box-shadow: 1px 0px 3px 0px #bebbbb; */
     /* border: 1px solid red; */
+  }
+
+  @media (max-width: 800px) {
+    .modal-settings {
+      margin: 0;
+      border-radius: 0;
+      height: 100vh;
+    }
   }
 </style>
