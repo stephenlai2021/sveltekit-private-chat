@@ -13,7 +13,7 @@
   import SettingsModalMobile from "$lib/components/SettingsModalMobile.svelte";
   import ToolModalMobile from "$lib/components/ToolModalMobile.svelte";
   import Header from "$lib/components/chatlist/Header.svelte";
-  import TabMenu from "$lib/components/chatlist/TabMenu.svelte";
+  import TabMenu2 from "$lib/components/chatlist/TabMenu2.svelte";
   import SearchUser from "$lib/components/chatlist/SearchUser.svelte";
   import ContactList from "$lib/components/chatlist/ContactList.svelte";
   // import SearchFriendModal from "$lib/components/SearchFriendModal.svelte";
@@ -22,6 +22,7 @@
   import AddPeopleModal from "$lib/components/AddPeopleModal.svelte";
   import AddRoomModal from "$lib/components/AddRoomModal.svelte";
   import themeStore from "svelte-themes";
+  import AddButton from '$lib/components/chatlist/AddButton.svelte'
 </script>
 
 <div
@@ -31,14 +32,15 @@
 >
   <Header />
   <SearchUser />
-  <TabMenu />
+  <TabMenu2 />
+  <!-- <AddButton /> -->
   <ContactList />
 
   {#if $showSettingsModalMobile && $widthLessthan1200}
     <SettingsModalMobile />
   {/if}
 
-  {#if $showAddFriendModal}
+  {#if $showAddFriendModal}/
     <AddFriendModal />
   {/if}
 
@@ -52,6 +54,7 @@
     position: relative;
     margin: 10px 10px 10px 0px;
     border-radius: 8px;
+    height: calc(100vh - 20px);
     /* box-shadow: 1px 0px 5px 0px #bebbbb; */
   }
 

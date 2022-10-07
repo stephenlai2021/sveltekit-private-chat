@@ -30,6 +30,7 @@
     "js-cookie": "^3.0.1",
     "leaflet": "^1.8.0",
     "moment": "^2.29.4",
+    "peerjs": "^1.4.7",
     "svelte-themes": "^0.0.98",
     "uuid": "^8.3.2"
   }

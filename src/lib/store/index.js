@@ -77,6 +77,8 @@ export const leftsideState = writable(true);
 export const rightsideState = writable(true);
 export const menubarState = writable(true);
 export const showSearchFriendModal = writable(false);
+export const peerId = writable('')
+export const remotePeerId = writable('')
 
 export const msgCount = writable(0)
 // export const msgCount = writable(

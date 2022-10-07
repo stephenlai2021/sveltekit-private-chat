@@ -73,7 +73,7 @@
       ],
       msgCount: [
         ...userSnap.data().msgCount,
-        $loggedinUser.displayName + "=>0"
+        $loggedinUser.displayName + "=>0",
       ],
       unread: [],
     });
@@ -89,18 +89,12 @@
       contactList: $myDoc.contactList.includes(foundUsers[0].name)
         ? [...$myDoc.contactList]
         : [...$myDoc.contactList, foundUsers[0].name],
-      lastMsg: [
-        ...meSnap.data().lastMsg, 
-        foundUsers[0].name + "=>[NEW]"
-      ],
+      lastMsg: [...meSnap.data().lastMsg, foundUsers[0].name + "=>[NEW]"],
       lastUpdated: [
         ...meSnap.data().lastUpdated,
         foundUsers[0].name + "=>" + new Date(),
       ],
-      msgCount: [
-        ...meSnap.data().msgCount,
-        foundUsers[0].name + "=>0" 
-      ]
+      msgCount: [...meSnap.data().msgCount, foundUsers[0].name + "=>0"],
     });
     // console.log(`${foundUsers[0].name} is successfully added to ${$loggedinUser.displayName}'s contact list 😁}`);
     console.log(
@@ -133,14 +127,14 @@
 
 <div
   class="search-friend-modal"
-  transition:fly={{ y: 100, duration: 100, delay: 100 }}
+  transition:fly={{ y: 200, duration: 100, delay: 200 }}
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
   on:click|stopPropagation
 >
   <div class="top">
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="ionicon icon-arrow-back"
+      class="ionicon"
       viewBox="0 0 512 512"
       width="24"
       height="24"
@@ -153,7 +147,7 @@
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="48"
-        d="M328 112L184 256l144 144"
+        d="M112 184l144 144 144-144"
       />
     </svg>
     <span>Add a friend</span>
@@ -372,9 +366,10 @@
   }
 
   .top {
-    padding: 10px;
+    height: 60px;
     display: flex;
     align-items: center;
+    padding-left: 10px;
     /* border: 1px solid; */
   }
 
@@ -397,6 +392,7 @@
 
   .search-user-wrapper {
     position: relative;
+    /* border: 1px solid; */
   }
 
   .search_user {
@@ -404,7 +400,7 @@
     /* top: 0px; */
     width: 100%;
     padding: 15px;
-    margin-top: 10px;
+    /* margin-top: 5px; */
     /* border: 1px solid; */
   }
 

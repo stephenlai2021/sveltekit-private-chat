@@ -108,11 +108,11 @@
       let selectedUserSnap = await getDoc(selectedUserRef);
       // $msgCount++
 
-      count = selectedUserSnap.msgCount[
-        user.msgCount.findIndex(
-          (count) => count.split("=>")[0] === $loggedinUser.displayName
-        )
-      ].split("=>")[1]++;
+      // count = selectedUserSnap.msgCount[
+      //   user.msgCount.findIndex(
+      //     (count) => count.split("=>")[0] === $loggedinUser.displayName
+      //   )
+      // ].split("=>")[1]++;
 
       await updateDoc(selectedUserRef, {
         lastMsg: selectedUserSnap
@@ -129,13 +129,13 @@
               ? `${$loggedinUser.displayName}=>You: ${new Date()}`
               : time
           ),
-        msgCount: selectedUserSnap
-          .data()
-          .msgCount.map((count) =>
-            count.split("=>")[0] === $loggedinUser.displayName
-              ? `${$loggedinUser.displayName}=>${+count}`
-              : count
-          ),
+        // msgCount: selectedUserSnap
+        //   .data()
+        //   .msgCount.map((count) =>
+        //     count.split("=>")[0] === $loggedinUser.displayName
+        //       ? `${$loggedinUser.displayName}=>${+count}`
+        //       : count
+        //   ),
         unread: selectedUserSnap
           .data()
           .unread.map((state) =>
@@ -164,13 +164,13 @@
               ? `${$selectedUsername}=>${new Date()}`
               : time
           ),
-        msgCount: loggedinUserSnap
-          .data()
-          .msgCount.map((count) =>
-            count.split("=>")[0] === $selectedUsername
-              ? `${$selectedUsername}=>${+count}`
-              : count
-          ),
+        // msgCount: loggedinUserSnap
+        //   .data()
+        //   .msgCount.map((count) =>
+        //     count.split("=>")[0] === $selectedUsername
+        //       ? `${$selectedUsername}=>${+count}`
+        //       : count
+        //   ),
         unread: loggedinUserSnap
           .data()
           .unread.map((state) =>
