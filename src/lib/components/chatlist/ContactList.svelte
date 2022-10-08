@@ -72,7 +72,7 @@
     overflow: auto;
     border-radius: 8px;
     padding-top: 20px;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     border-top: 2px solid white;
