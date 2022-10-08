@@ -222,9 +222,9 @@
       <slot />
     </div>
 
-    {#if $showAddGroupModal}
+    <!-- {#if $showAddGroupModal} -->
       <AddGroupModal />
-    {/if}
+    <!-- {/if} -->
 
     {#if $showImagePreviewModal}
       <ImagePreviewModal />

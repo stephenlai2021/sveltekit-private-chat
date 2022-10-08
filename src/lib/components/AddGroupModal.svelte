@@ -272,18 +272,20 @@
             </svg>
           </div>
           <div class="input-group">
-            <input
-              type="text"
-              class="input-group-name"
-              placeholder="Group name"
-              bind:value={groupName}
-            />
-            <input
-              type="text"
-              class="input-description"
-              placeholder="description"
-              bind:value={description}
-            />
+            <div class="input-group-innerWrapper">
+              <input
+                type="text"
+                class="input-group-name"
+                placeholder="Group name"
+                bind:value={groupName}
+              />
+              <input
+                type="text"
+                class="input-description"
+                placeholder="description"
+                bind:value={description}
+              />
+            </div>
           </div>
         </div>
 
@@ -325,7 +327,10 @@
   }
 
   .member-name {
-    margin-left: -10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    /* margin-left: -10px; */
   }
 
   .member-avatar {
@@ -339,6 +344,7 @@
     /* max-width: 150px; */
     /* width: auto; */
     height: 40px;
+    max-width: 200px;
     padding: 5px 10px;
     border-radius: 20px;
     background: rgb(236, 235, 235);
@@ -351,23 +357,18 @@
   }
 
   .group-members {
-    height: calc(100% - 316px);
-    padding: 20px 30px;
-
-    /* display: flex;
-    flex-wrap: wrap; */
+    /* height: calc(100% - 316px); */
+    padding: 10px;
 
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fill, minmax(120px, 150px));
-    grid-template-rows: repeat(auto-fill, 50px);
-
-    /* display: flex;
-    grid-gap: 10px;
-    flex-wrap: wrap; */
+    /* grid-template-rows: repeat(auto-fill, 50px); */
 
     overflow-y: auto;
-    border: 1px solid red;
+    border-radius: 20px;
+    margin: 20px 50px 50px 50px;
+    border: 1px dashed darkgray;
   }
 
   .btn-cancel {
@@ -413,18 +414,27 @@
     border-bottom: 1px solid lightgray;
   }
 
+  .input-group-innerWrapper {
+    display: flex;
+    flex-direction: column;
+    /* padding: 0 20px; */
+    min-width: 250px;
+    max-width: 600px;
+  }
+
   .input-group {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
-    width: 60%;
-    /* border: 1px solid; */
+    margin-bottom: 10px;
+    /* width: 100%; */
+    border: 1px solid;
   }
 
   .icon-camera {
     position: absolute;
-    right: 8px;
-    bottom: 20px;
+    right: 0px;
+    bottom: 10px;
     border-radius: 50%;
     padding: 5px;
     background: white;
@@ -444,7 +454,7 @@
     padding-top: 40px;
     align-items: center;
     /* width: 100%; */
-    border: 1px solid;
+    /* border: 1px solid; */
   }
 
   /* .avatar-section img {
@@ -494,9 +504,12 @@
   }
 
   .friend-list {
-    padding-top: 10px;
-    height: calc(100vh - 110px);
-    border: 1px solid;
+    margin-top: 10px;
+    /* width: 100%; */
+    /* height: calc(100vh - 110px); */
+    overflow-y: auto;
+    /* overflow-x: hidden; */
+    /* border: 1px solid; */
   }
 
   .icon-reset {
@@ -530,15 +543,17 @@
 
   .section-left {
     width: 330px;
-    border: 1px solid;
+    width: 30%;
+    border: 1px solid darkgray;
   }
 
   .section-right {
     position: relative;
-    /* width: 60%; */
-    padding: 20px;
+    /* padding: 20px; */
     width: calc(100% - 330px);
-    border: 1px solid;
+    width: 70%;
+    /* border: 1px solid darkgray; */
+    /* border-left: none; */
   }
 
   .icon-arrow-back,
@@ -591,7 +606,7 @@
     overflow-y: auto;
   }
 
-  @media (max-width: 800px) {
+  /* @media (max-width: 800px) {
     .add-group-modal {
       top: 0;
       left: 0;
@@ -606,15 +621,32 @@
     .section-right {
       width: calc(100% - 250px);
     }
-  }
+  } */
 
-  @media (max-width: 600px) {
+  @media (max-width: 601px) {
     section {
       flex-direction: column;
+      overflow-x: hidden;
     }
 
     .section-left {
-      width: 100vw;
+      width: 100%;
+      height: auto;
+      padding-bottom: 10px;
+      border: 1px dashed darkgray;
+      border-left: none;
+      border-right: none;
+      /* overflow: auto; */
+    }
+
+    .section-right {
+      width: 100%;
+      overflow-y: auto;
+      /* height: 100vh; */
+    }
+
+    .bottom-section {
+      position: relative;
     }
   }
 </style>
