@@ -10,10 +10,10 @@
 </script>
 
 <div
-class="image-preview-modal"
-transition:scale={{ delay: 150, duration: 200, easing: quintOut }}
-style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
-  >
+  class="image-preview-modal"
+  transition:scale={{ delay: 150, duration: 200, easing: quintOut }}
+  style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     class="ionicon icon-close"
@@ -22,7 +22,9 @@ style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
     height="30"
     fill="currentColor"
     style:background={$themeStore.theme === "dark" ? "#292F3F" : "white"}
-    style:border={$themeStore.theme === "dark" ? "1px solid white" : "1px solid #292F3F"}
+    style:border={$themeStore.theme === "dark"
+      ? "1px solid white"
+      : "1px solid #292F3F"}
     on:click={() => ($showImagePreviewModal = false)}
   >
     <path
@@ -36,10 +38,7 @@ style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
   </svg>
 
   {#if $storedImageURL || $storedPictureURL}
-    <img
-      src={$storedImageURL ? $storedImageURL : $storedPictureURL}
-      alt=""
-    />
+    <img src={$storedImageURL ? $storedImageURL : $storedPictureURL} alt="" />
   {/if}
 
   {#if !$storedImageURL || !$storedPictureURL}
@@ -51,7 +50,7 @@ style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
       height="50"
       fill="currentColor"
       style:display={$storedImageURL || $storedPictureURL ? "none" : "none"}
-      >
+    >
       <rect
         x="48"
         y="80"

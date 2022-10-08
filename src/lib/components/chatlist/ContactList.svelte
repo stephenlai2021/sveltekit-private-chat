@@ -29,22 +29,28 @@
 </script>
 
 <div class="chatlist" transition:fade={{ duration: 100 }}>
-  <h2>
-    {$privateChat
-      ? "Messages"
-      : $groupChat
-      ? "Group Chat"
-      : $publicChat
-      ? "Chatroom"
-      : ""}
-  </h2>
-
+  
   <!-- {#if $privateChat} -->
   {#if $privateChat && $allUsers && $allUsers.length}
+    <!-- <h2>
+      {$privateChat
+        ? "Messages"
+        : $groupChat
+        ? "Group Chat"
+        : $publicChat
+        ? "Chatroom"
+        : ""}
+    </h2> -->
+    <h2>Messages</h2>
     {#each filteredUsers as user}
       <User {user} />
     {/each}
-  {:else if $groupChat}{:else if $publicChat}{:else}
+  {:else if $groupChat}
+    <h2>Group Chat</h2>
+  {:else if $publicChat}
+    <h2>Chatroom</h2>
+  {:else}
+  <div class="headline-skeleton loading-animation" />
     <Skeleton />
   {/if}
 
@@ -52,6 +58,14 @@
 </div>
 
 <style>
+  .headline-skeleton {
+    height: 27px;
+    width: 130px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+
   h2 {
     margin-left: 15px;
     margin-bottom: 10px;

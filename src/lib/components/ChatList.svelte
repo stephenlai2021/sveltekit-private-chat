@@ -14,7 +14,7 @@
   import SettingsModalMobile from "$lib/components/SettingsModalMobile.svelte";
   import ToolModalMobile from "$lib/components/ToolModalMobile.svelte";
   import Header from "$lib/components/chatlist/Header.svelte";
-  import TabMenu2 from "$lib/components/chatlist/TabMenu2.svelte";
+  import TabMenu from "$lib/components/chatlist/TabMenu.svelte";
   import SearchUser from "$lib/components/chatlist/SearchUser.svelte";
   import ContactList from "$lib/components/chatlist/ContactList.svelte";
   // import SearchFriendModal from "$lib/components/SearchFriendModal.svelte";
@@ -38,7 +38,7 @@
   {/if}
   
   <ContactList />
-  <TabMenu2 />
+  <TabMenu />
 
   {#if $showSettingsModalMobile && $widthLessthan1200}
     <SettingsModalMobile />

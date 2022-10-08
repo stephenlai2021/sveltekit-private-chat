@@ -5,7 +5,7 @@
     allUsers,
     keyword,
     selectedMembers,
-    currentSelectedUser
+    currentSelectedUser,
   } from "$lib/store";
   import { db } from "$lib/firebase/client";
   import {
@@ -18,6 +18,8 @@
     where,
   } from "firebase/firestore";
   import { onMount } from "svelte";
+  import { quintOut } from "svelte/easing";
+  import { scale } from "svelte/transition";
 
   let groupName = null;
   let description = null;
@@ -46,9 +48,9 @@
       return item.name != member.name;
     });
 
-    $allUsers.forEach(user => {
-      if (user.name === member.name) user.checked = false
-    })
+    $allUsers.forEach((user) => {
+      if (user.name === member.name) user.checked = false;
+    });
   };
 
   const create = async () => {
@@ -72,16 +74,16 @@
   };
 
   const cancel = () => {
-    $selectedMembers = []
-    $allUsers.forEach(user => {
-      if (user.checked) user.checked = false
-    })
-    $showAddGroupModal = false
+    $selectedMembers = [];
+    $allUsers.forEach((user) => {
+      if (user.checked) user.checked = false;
+    });
+    $showAddGroupModal = false;
   };
 
   $: if ($currentSelectedUser) {
-    console.log('current selected user: ', $currentSelectedUser)
-    $selectedMembers = [...$selectedMembers, $currentSelectedUser]
+    console.log("current selected user: ", $currentSelectedUser);
+    $selectedMembers = [...$selectedMembers, $currentSelectedUser];
   }
 
   $: if ($selectedMembers) {
@@ -90,7 +92,7 @@
     $selectedMembers.forEach((member) => {
       tempMembersEmail.push(member.email);
     });
-    membersEmail = tempMembersEmail;    
+    membersEmail = tempMembersEmail;
     console.log("member emails", membersEmail);
   }
 
@@ -106,9 +108,9 @@
 
 <div
   class="add-group-modal"
+  transition:scale={{ delay: 150, duration: 200, easing: quintOut }}
   on:click|stopPropagation={() => console.log("clicked")}
 >
-  <!-- style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"} -->
   <div class="body">
     <div class="top">
       <svg
@@ -125,8 +127,8 @@
           stroke="currentColor"
           stroke-linecap="round"
           stroke-linejoin="round"
-          stroke-width="48"
-          d="M244 400L100 256l144-144M120 256h292"
+          stroke-width="32"
+          d="M368 368L144 144M368 144L144 368"
         />
       </svg>
       <p class="title">Add a group</p>
@@ -189,7 +191,10 @@
         </div>
         <div class="friend-list">
           {#each filteredUsers as user}
-            <div class="block" style:background={user.checked ? "#ebebeb" : "white"}>
+            <div
+              class="block"
+              style:background={user.checked ? "#ebebeb" : "white"}
+            >
               <div class="imgbx">
                 <img src={user.avatar} alt="" class="cover" />
                 <div
@@ -217,8 +222,6 @@
       <div class="section-right">
         <div class="avatar-section">
           <div class="image">
-            <!-- <img src="/happy.png" alt="" /> -->
-
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="ionicon icon-image"
@@ -345,7 +348,7 @@
     /* width: auto; */
     height: 40px;
     max-width: 200px;
-    padding: 5px 10px;
+    padding: 0px 10px 0px 0px;
     border-radius: 20px;
     background: rgb(236, 235, 235);
     /* border: 1px solid; */
@@ -428,7 +431,7 @@
     margin-top: 5px;
     margin-bottom: 10px;
     /* width: 100%; */
-    border: 1px solid;
+    /* border: 1px solid; */
   }
 
   .icon-camera {
@@ -505,9 +508,10 @@
 
   .friend-list {
     margin-top: 10px;
+    max-height: 100vh;
     /* width: 100%; */
     /* height: calc(100vh - 110px); */
-    overflow-y: auto;
+    /* overflow-y: auto; */
     /* overflow-x: hidden; */
     /* border: 1px solid; */
   }
@@ -544,7 +548,11 @@
   .section-left {
     width: 330px;
     width: 30%;
-    border: 1px solid darkgray;
+    /* height: 100%; */
+    /* height: calc(100vh - 50px); */
+    border-left: 1px solid darkgray;
+    border-right: 1px solid darkgray;
+    /* border-bottom: 1px solid darkgray; */
   }
 
   .section-right {
@@ -552,6 +560,7 @@
     /* padding: 20px; */
     width: calc(100% - 330px);
     width: 70%;
+    border-right: 1px solid darkgray;
     /* border: 1px solid darkgray; */
     /* border-left: none; */
   }
@@ -574,6 +583,7 @@
     max-width: 1020px;
     margin: auto;
     height: calc(100vh - 20px);
+    height: 100vh;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -590,18 +600,20 @@
     height: 50px;
     width: 100%;
     background: #ff4408;
-    background: var(--light-dark);
+    background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+    background: linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%);
+    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+    /* background: var(--light-dark); */
   }
 
   .add-group-modal {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    width: calc(100vw - 20px);
-    height: calc(100vh - 20px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 200;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     background: white;
     overflow-y: auto;
   }
@@ -624,6 +636,15 @@
   } */
 
   @media (max-width: 601px) {
+    /* .add-group-modal {
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0px;
+    } */
+
     section {
       flex-direction: column;
       overflow-x: hidden;
@@ -632,8 +653,10 @@
     .section-left {
       width: 100%;
       height: auto;
+      /* height: 100vh; */
       padding-bottom: 10px;
       border: 1px dashed darkgray;
+      border-top: none;
       border-left: none;
       border-right: none;
       /* overflow: auto; */
@@ -642,6 +665,7 @@
     .section-right {
       width: 100%;
       overflow-y: auto;
+      border-right: none;
       /* height: 100vh; */
     }
 

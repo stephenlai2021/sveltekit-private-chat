@@ -158,8 +158,8 @@
   class="modal-settings"
   on:click|stopPropagation={() => console.log("settings modal clicked !")}
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
-  style:width={$mobile ? "80%" : "100%"}
->
+  >
+  <!-- style:width={$mobile ? "80%" : "100%"} -->
   <div class="top">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -460,9 +460,10 @@
 
   .modal-settings {
     background: #ebebeb;
+    /* width: 100vw; */
 
     /* box-shadow: h-offset v-offset blur spread */
-    box-shadow: 1px 0px 5px 0px #bebbbb;
+    /* box-shadow: 1px 0px 5px 0px #bebbbb; */
   }
 
   .loading {
