@@ -55,6 +55,7 @@
   h2 {
     margin-left: 15px;
     margin-bottom: 10px;
+    color: rgb(77, 90, 95);
   }
 
   .group,

@@ -77,7 +77,7 @@
               <circle cx="256" cy="256" r="32" />
               <circle cx="352" cy="256" r="32" />
             </svg>
-            <p class="description">msg</p>
+            <!-- <p class="description">msg</p> -->
           </div>
         {/if}
         {#if tab === "Group"}
@@ -122,7 +122,7 @@
                 stroke-width="32"
               />
             </svg>
-            <p class="description">group</p>
+            <!-- <p class="description">group</p> -->
           </div>
         {/if}
         {#if tab === "Public"}
@@ -152,7 +152,7 @@
                 stroke-width="32"
               />
             </svg>
-            <p class="description">room</p>
+            <!-- <p class="description">room</p> -->
           </div>
         {/if}
       </span>
