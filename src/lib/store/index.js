@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const showSearchBar = writable(false);
 export const myDoc = writable(null);
 export const userAvatar = writable(null);
 export const todos = writable([]);

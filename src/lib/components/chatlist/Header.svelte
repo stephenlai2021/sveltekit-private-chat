@@ -3,8 +3,10 @@
   import {
     mobile,
     bgColor,
+    keyword,
     showSidebarMenu,
     loggedinUser,
+    showSearchBar,
     showSettingsModal,
     showAddFriendModal,
     showAddGroupModal,
@@ -23,35 +25,15 @@
     if ($groupChat) $showAddGroupModal = true;
     if ($publicChat) $showAddRoomModal = true;
   };
+
+  const closeSearchBar = () => {
+    $keyword = ''
+    $showSearchBar = false
+  }
 </script>
 
 <div class="header">
   <div class="left" style:cursor="pointer">
-    <!-- {#if $widthLessthan1200}
-      {#if $allUsers && $allUsers.length}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
-          style:margin-right="5px"
-          on:click|stopPropagation={() => ($showSettingsModalMobile = true)}
-        >
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-miterlimit="10"
-            stroke-width="32"
-            d="M80 160h352M80 256h352M80 352h352"
-          />
-        </svg>
-      {:else}
-        <div class="icon-plus loading-animation" style:margin-right="5px"/>
-      {/if}
-    {/if} -->
     <img
       src="https://miro.medium.com/max/1400/1*gr3kgm0McAm1eeJJog7jfg.png"
       height="30"
@@ -61,54 +43,90 @@
 
   <ul class="nav_icons">
     {#if $allUsers && $allUsers.length}
-      <li class="icon-add-wrapper" on:click|stopPropagation={showModal}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon"
-          viewBox="0 0 512 512"
-          width="24"
-          height="24"
-          fill="currentColor"
-          on:click|stopPropagation={showModal}
+      {#if !$showSearchBar}
+        <li
+          class="icon-search"
+          on:click|stopPropagation={() => ($showSearchBar = true)}
         >
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-            d="M256 112v288M400 256H112"
-          />
-        </svg>
-      </li>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon"
+            viewBox="0 0 512 512"
+            width="24"
+            height="24"
+            fill="currentColor"
+          >
+            <path
+              d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
+              fill="none"
+              stroke="currentColor"
+              stroke-miterlimit="10"
+              stroke-width="32"
+            />
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="32"
+              d="M338.29 338.29L448 448"
+            />
+          </svg>
+        </li>
+      {/if}
+      {#if $showSearchBar}
+        <li
+          class="icon-search"
+          on:click|stopPropagation={closeSearchBar}
+          >
+          <!-- on:click|stopPropagation={() => ($showSearchBar = false)} -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon"
+            viewBox="0 0 512 512"
+            width="24"
+            height="24"
+            fill="currentColor"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="32"
+              d="M368 368L144 144M368 144L144 368"
+            />
+          </svg>
+        </li>
+      {/if}
     {:else}
-      <div class="icon-plus loading-animation" />
+      <div class="icon-search loading-animation" />
     {/if}
   </ul>
 
   {#if $allUsers && $allUsers.length}
-  <div class="icon-add-wrapper">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon icon-add"
-      viewBox="0 0 512 512"
-      width="24"
-      height="24"
-      fill="currentColor"
-      on:click|stopPropagation={showModal}
-    >
-      <path
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="32"
-        d="M256 112v288M400 256H112"
-      />
-    </svg>
-  </div>
+    <div class="icon-add-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-add"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+        on:click|stopPropagation={showModal}
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="32"
+          d="M256 112v288M400 256H112"
+        />
+      </svg>
+    </div>
   {:else}
-  <div class="icon-add-wrapper-animation loading-animation" />
+    <div class="icon-add-wrapper-animation loading-animation" />
   {/if}
 </div>
 
@@ -144,7 +162,7 @@
     justify-content: center;
   }
 
-  .icon-plus {
+  .icon-search {
     width: 24px;
     height: 24px;
     border-radius: 50px;

@@ -27,6 +27,7 @@
     showToolModal,
     showEmojiMenu,
     showActionMenu,
+    showSearchBar,
     showImagePreviewModal,
     showCameraPreviewModal,
     showThemeModal,
@@ -166,6 +167,7 @@
         $showThemeMenu = false;
         $showGradientMenu = false;
         $showActionMenu = false;
+        // $showSearchBar = false
       });
       window.addEventListener("resize", () => desktopOrMobile());
     }

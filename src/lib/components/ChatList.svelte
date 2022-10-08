@@ -1,6 +1,7 @@
 <script>
   import {
     loggedinUser,
+    showSearchBar,
     showSettingsModal,
     showAddFriendModal,
     showAddGroupModal,
@@ -31,10 +32,13 @@
   style:background="rgba(235, 235, 235, .5)"
 >
   <Header />
-  <SearchUser />
-  <TabMenu2 />
-  <!-- <AddButton /> -->
+
+  {#if $showSearchBar}
+    <SearchUser />
+  {/if}
+  
   <ContactList />
+  <TabMenu2 />
 
   {#if $showSettingsModalMobile && $widthLessthan1200}
     <SettingsModalMobile />

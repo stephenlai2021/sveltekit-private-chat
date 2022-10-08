@@ -17,7 +17,8 @@
   let filteredUsers = [];
 
   $: filteredUsers =
-    $allUsers && $allUsers.filter((user) => {
+    $allUsers &&
+    $allUsers.filter((user) => {
       return (
         user.name.toUpperCase().includes($keyword) ||
         user.name.toLowerCase().includes($keyword)
@@ -27,31 +28,35 @@
   $: if ($page.url.pathname === "/login") $showSettingsModal = false;
 </script>
 
-{#if $privateChat}
-  <div class="chatlist" transition:fade={{ duration: 100 }}>
-    {#if $allUsers && $allUsers.length}
-      {#each filteredUsers as user}
-        <User {user} />
-      {/each}
-    {:else}
-        <Skeleton />
-    {/if}
-  </div>
-{/if}
+<div class="chatlist" transition:fade={{ duration: 100 }}>
+  <h2>
+    {$privateChat
+      ? "Messages"
+      : $groupChat
+      ? "Group Chat"
+      : $publicChat
+      ? "Chatroom"
+      : ""}
+  </h2>
 
-{#if $groupChat}
-  <div class="group">
-    <h1>Group Chat</h1>
-  </div>
-{/if}
+  <!-- {#if $privateChat} -->
+  {#if $privateChat && $allUsers && $allUsers.length}
+    {#each filteredUsers as user}
+      <User {user} />
+    {/each}
+  {:else if $groupChat}{:else if $publicChat}{:else}
+    <Skeleton />
+  {/if}
 
-{#if $publicChat}
-  <div class="public">
-    <h1>Public Chatroom</h1>
-  </div>
-{/if}
+  <!-- {#if $groupChat} -->
+</div>
 
 <style>
+  h2 {
+    margin-left: 15px;
+    margin-bottom: 10px;
+  }
+
   .group,
   .public {
     width: 100%;
@@ -65,6 +70,11 @@
     height: calc(100vh - 187px);
     overflow: auto;
     border-radius: 8px;
+    padding-top: 20px;
+    margin-top: 10px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-top: 2px solid white;
   }
 
   ::-webkit-scrollbar {

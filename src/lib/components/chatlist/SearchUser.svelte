@@ -1,12 +1,15 @@
 <script>
-  import { keyword, allUsers } from "$lib/store";
+  import { keyword, allUsers, privateChat, groupChat, publicChat } from "$lib/store";
   import SearchUserSkeleton from "../skeleton/SearchUserSkeleton.svelte";
+  import { fade } from "svelte/transition";
 </script>
 
+<!-- <div class="search_user" transition:fade={{ duration: 100 }}> -->
 <div class="search_user">
   {#if $allUsers && $allUsers.length}
     <div class="search-user-wrapper">
-      <input type="text" placeholder="Find user" bind:value={$keyword} />
+      <!-- <input type="text" placeholder="Find user" bind:value={$keyword} /> -->
+      <input type="text" placeholder={$privateChat ? 'Find User' : $groupChat ? 'Find Group' : $publicChat ? 'Find Chatroom' : ''} bind:value={$keyword} />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-finduser"
