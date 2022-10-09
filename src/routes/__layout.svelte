@@ -69,7 +69,9 @@
   import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
   import SettingsModal from "$lib/components/SettingsModal.svelte";
   import MapModal from "$lib/components/MapModal.svelte";
+  import AddFriendModal from "$lib/components/AddFriendModal.svelte";
   import AddGroupModal from "$lib/components/AddGroupModal.svelte";
+  import AddRoomModal from "$lib/components/AddRoomModal.svelte";
   import LoadingModal from "$lib/components/LoadingModal.svelte";
   import { signout } from "$lib/functions/auth/signout";
 
@@ -107,12 +109,12 @@
         // signout()
         $loggedinUser = _user;
         console.log("signin, user: ", $loggedinUser.displayName);
-        
+
         let usersRef = collection(db, "users");
         let userQuery = query(
           usersRef,
           where("contactList", "array-contains", $loggedinUser.displayName)
-        );        
+        );
         const unsubUsers = onSnapshot(userQuery, (snapshot) => {
           let tempUsers = [];
           snapshot.forEach((doc) => {
@@ -225,8 +227,16 @@
       <slot />
     </div>
 
+    {#if $showAddFriendModal}/
+      <AddFriendModal />
+    {/if}
+
     {#if $showAddGroupModal}
       <AddGroupModal />
+    {/if}
+
+    {#if $showAddRoomModal}
+      <AddRoomModal />
     {/if}
 
     {#if $showImagePreviewModal}

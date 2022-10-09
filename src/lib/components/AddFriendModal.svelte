@@ -14,6 +14,8 @@
   import { db, auth } from "$lib/firebase/client";
   import themeStore from "svelte-themes";
   import { onMount } from "svelte";
+  import { quintOut } from "svelte/easing";
+  import { scale } from "svelte/transition";
 
   let url = null;
   let user = null;
@@ -127,45 +129,80 @@
 
 <div
   class="search-friend-modal"
-  transition:fly={{ y: 200, duration: 100, delay: 200 }}
+  transition:scale={{ delay: 150, duration: 200, easing: quintOut }}
   style:background={$themeStore.theme === "dark" ? "#292F3F" : "#ebebeb"}
   on:click|stopPropagation
 >
-  <div class="top">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon"
-      viewBox="0 0 512 512"
-      width="24"
-      height="24"
-      fill="currentColor"
-      on:click|stopPropagation={() => ($showAddFriendModal = false)}
-    >
-      <path
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="48"
-        d="M112 184l144 144 144-144"
-      />
-    </svg>
-    <span>Add a friend</span>
-  </div>
+  <!-- transition:fly={{ y: 200, duration: 100, delay: 200 }} -->
+  <div class="inner-wrapper">
+    <div class="top">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+        on:click|stopPropagation={() => ($showAddFriendModal = false)}
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="48"
+          d="M112 184l144 144 144-144"
+        />
+      </svg>
+      <span>Add a friend</span>
+    </div>
 
-  <div class="search_user">
-    <div class="search-user-wrapper">
-      <div class="clear-text" on:click={() => (username = "")}>
+    <div class="search_user">
+      <div class="search-user-wrapper">
+        <div class="clear-text" on:click={() => (username = "")}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="ionicon icon-close"
+            viewBox="0 0 512 512"
+            width="18"
+            height="18"
+            fill="currentColor"
+          >
+            <path
+              d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+              fill="none"
+              stroke="currentColor"
+              stroke-miterlimit="10"
+              stroke-width="32"
+            />
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="32"
+              d="M320 320L192 192M192 320l128-128"
+            />
+          </svg>
+        </div>
+        <input
+          type="text"
+          placeholder="Search friend"
+          bind:value={username}
+          on:keypress={handleSearch}
+          style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="ionicon icon-close"
+          class="ionicon icon-finduser"
           viewBox="0 0 512 512"
-          width="18"
-          height="18"
+          width="20"
+          height="20"
           fill="currentColor"
+          on:click={getUser}
         >
           <path
-            d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+            d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
             fill="none"
             stroke="currentColor"
             stroke-miterlimit="10"
@@ -175,116 +212,92 @@
             fill="none"
             stroke="currentColor"
             stroke-linecap="round"
-            stroke-linejoin="round"
+            stroke-miterlimit="10"
             stroke-width="32"
-            d="M320 320L192 192M192 320l128-128"
+            d="M338.29 338.29L448 448"
           />
         </svg>
       </div>
-      <input
-        type="text"
-        placeholder="Search friend"
-        bind:value={username}
-        on:keypress={handleSearch}
-        style:background={$themeStore.theme === "dark" ? "#3A3F50" : "white"}
-      />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-finduser"
-        viewBox="0 0 512 512"
-        width="20"
-        height="20"
-        fill="currentColor"
-        on:click={getUser}
-      >
-        <path
-          d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="32"
-          d="M338.29 338.29L448 448"
-        />
-      </svg>
     </div>
-  </div>
 
-  {#if foundUsers}
-    {#each foundUsers as user}
-      <div class="users">
-        <div class="avatar-wrapper">
-          {#if user.avatar}
-            <img src={user.avatar} alt="" />
-          {:else}
-            <img src="/happy.png" alt="" width="120" height="120" />
-          {/if}
-          <div class={user.online ? "indicator online" : "indicator offline"} />
-        </div>
-        <div class="content">
-          <h4 style:text-align="center">{user.name}</h4>
-        </div>
-        {#if matchedUser}
-          <span style:margin-top="20px">
-            <!-- This user is alreay in contact list -->
-            {foundUsers[0].name} is already your friend
-          </span>
-        {:else}
-          <div class="add-friend-wrapper" on:click={addUser}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="ionicon icon-add"
-              viewBox="0 0 512 512"
-              width="24"
-              height="24"
-              fill="currentColor"
-            >
-              <path
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="32"
-                d="M256 112v288M400 256H112"
-              />
-            </svg>
-            <span>Add friend</span>
+    {#if foundUsers}
+      {#each foundUsers as user}
+        <div class="users">
+          <div class="avatar-wrapper">
+            {#if user.avatar}
+              <img src={user.avatar} alt="" />
+            {:else}
+              <img src="/happy.png" alt="" width="120" height="120" />
+            {/if}
+            <div
+              class={user.online ? "indicator online" : "indicator offline"}
+            />
           </div>
-        {/if}
+          <div class="content">
+            <h4 style:text-align="center">{user.name}</h4>
+          </div>
+          {#if matchedUser}
+            <span style:margin-top="20px">
+              <!-- This user is alreay in contact list -->
+              {foundUsers[0].name} is already your friend
+            </span>
+          {:else}
+            <div class="add-friend-wrapper" on:click={addUser}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon icon-add"
+                viewBox="0 0 512 512"
+                width="24"
+                height="24"
+                fill="currentColor"
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="32"
+                  d="M256 112v288M400 256H112"
+                />
+              </svg>
+              <span>Add friend</span>
+            </div>
+          {/if}
+        </div>
+      {/each}
+    {/if}
+
+    {#if notFound}
+      <div class="info">
+        <img
+          class="userimg"
+          src="https://cdn.iconscout.com/icon/free/png-256/cry-face-sad-tear-emoji-37717.png"
+          alt=""
+          width="120"
+          height="120"
+        />
+        <p class="info-message">This user could not be found</p>
       </div>
-    {/each}
-  {/if}
+    {/if}
 
-  {#if notFound}
-    <div class="info">
-      <img
-        class="userimg"
-        src="https://cdn.iconscout.com/icon/free/png-256/cry-face-sad-tear-emoji-37717.png"
-        alt=""
-        width="120"
-        height="120"
-      />
-      <p class="info-message">This user could not be found</p>
-    </div>
-  {/if}
-
-  {#if sameUser}
-    <div class="info">
-      <img class="userimg" src={url} alt="" width="120" height="120" />
-      <p class="info-message" style:text-align="center">
-        You can't add yourself to contact list !
-      </p>
-    </div>
-  {/if}
+    {#if sameUser}
+      <div class="info">
+        <img class="userimg" src={url} alt="" width="120" height="120" />
+        <p class="info-message" style:text-align="center">
+          You can't add yourself to contact list !
+        </p>
+      </div>
+    {/if}
+  </div>
 </div>
 
 <style>
+  .inner-wrapper {
+    max-width: 600px;
+    margin: auto;
+    height: 100vh;
+  }
+
   .indicator {
     position: absolute;
     bottom: -5px;
@@ -410,9 +423,9 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    height: calc(100vh - 20px);
+    /* height: calc(100vh - 20px); */
     z-index: 200;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     /* border: 1px solid; */
   }
 </style>

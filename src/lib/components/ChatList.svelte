@@ -23,7 +23,7 @@
   import AddPeopleModal from "$lib/components/AddPeopleModal.svelte";
   import AddRoomModal from "$lib/components/AddRoomModal.svelte";
   import themeStore from "svelte-themes";
-  import AddButton from '$lib/components/chatlist/AddButton.svelte'
+  import AddButton from "$lib/components/chatlist/AddButton.svelte";
 </script>
 
 <div
@@ -32,25 +32,22 @@
   style:background="rgba(235, 235, 235, .5)"
 >
   <Header />
-
-  <!-- {#if $showSearchBar} -->
-    <SearchUser />
-  <!-- {/if} -->
-  
+  <SearchUser />
   <ContactList />
+  <AddButton />
   <TabMenu />
 
   {#if $showSettingsModalMobile && $widthLessthan1200}
     <SettingsModalMobile />
   {/if}
 
-  {#if $showAddFriendModal}/
+  <!-- {#if $showAddFriendModal}/
     <AddFriendModal />
-  {/if}
+  {/if} -->
 
-  {#if $showAddRoomModal}
+  <!-- {#if $showAddRoomModal}
     <AddRoomModal />
-  {/if}
+  {/if} -->
 </div>
 
 <style>

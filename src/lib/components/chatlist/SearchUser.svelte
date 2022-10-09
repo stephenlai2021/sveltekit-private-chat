@@ -1,5 +1,11 @@
 <script>
-  import { keyword, allUsers, privateChat, groupChat, publicChat } from "$lib/store";
+  import {
+    keyword,
+    allUsers,
+    privateChat,
+    groupChat,
+    publicChat,
+  } from "$lib/store";
   import SearchUserSkeleton from "../skeleton/SearchUserSkeleton.svelte";
   import { fade } from "svelte/transition";
 </script>
@@ -9,7 +15,17 @@
   {#if $allUsers && $allUsers.length}
     <div class="search-user-wrapper">
       <!-- <input type="text" placeholder="Find user" bind:value={$keyword} /> -->
-      <input type="text" placeholder={$privateChat ? 'Find User' : $groupChat ? 'Find Group' : $publicChat ? 'Find Chatroom' : ''} bind:value={$keyword} />
+      <input
+        type="text"
+        placeholder={$privateChat
+          ? "find user"
+          : $groupChat
+          ? "find group"
+          : $publicChat
+          ? "find chatroom"
+          : ""}
+        bind:value={$keyword}
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-finduser"
@@ -62,6 +78,11 @@
     border-radius: 10px;
     font-size: 14px;
     padding-left: 40px;
+  }
+
+  ::placeholder {
+    /* font-style: italic; */
+    font-size: 12px;
   }
 
   .icon-finduser {

@@ -76,7 +76,7 @@
     {/if}
   </ul>
 
-  {#if $allUsers && $allUsers.length}
+  <!-- {#if $allUsers && $allUsers.length}
     <div class="icon-add-wrapper">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +99,8 @@
     </div>
   {:else}
     <div class="icon-add-wrapper-animation loading-animation" />
-  {/if}
+  {/if} -->
+
 </div>
 
 <style>

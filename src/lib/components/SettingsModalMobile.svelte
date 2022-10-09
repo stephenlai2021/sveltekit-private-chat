@@ -612,6 +612,7 @@
     border-radius: 8px;
     overflow-y: auto;
     padding-bottom: 30px;
+    background: #ebebeb;
   }
 
   ::-webkit-scrollbar {

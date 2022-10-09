@@ -80,6 +80,7 @@
             <!-- <p class="description">msg</p> -->
           </div>
         {/if}
+
         {#if tab === "Group"}
           <div class="group" style:color={currentTab === tab ? "#FF4408" : ""}>
             <svg
@@ -125,6 +126,7 @@
             <!-- <p class="description">group</p> -->
           </div>
         {/if}
+
         {#if tab === "Public"}
           <div class="room" style:color={currentTab === tab ? "#FF4408" : ""}>
             <svg
@@ -155,8 +157,10 @@
             <!-- <p class="description">room</p> -->
           </div>
         {/if}
+
       </span>
     {/each}
+    
     {#if $mobile}
       <div class="icon-avatar">
         <img

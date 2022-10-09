@@ -1,5 +1,4 @@
 <script>
-  import themeStore from "svelte-themes";
   import {
     showAddGroupModal,
     allUsers,
@@ -113,7 +112,7 @@
 >
   <div class="body">
     <div class="top">
-      <svg
+      <!-- <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-arrow-back"
         viewBox="0 0 512 512"
@@ -130,7 +129,7 @@
           stroke-width="32"
           d="M368 368L144 144M368 144L144 368"
         />
-      </svg>
+      </svg> -->
       <p class="title">Add a group</p>
     </div>
 
@@ -226,8 +225,8 @@
               xmlns="http://www.w3.org/2000/svg"
               class="ionicon icon-image"
               viewBox="0 0 512 512"
-              width="120"
-              height="120"
+              width="200"
+              height="200"
               fill="currentColor"
             >
               <rect
@@ -264,8 +263,8 @@
               xmlns="http://www.w3.org/2000/svg"
               class="ionicon icon-camera"
               viewBox="0 0 512 512"
-              width="28"
-              height="28"
+              width="40"
+              height="40"
               fill="currentColor"
             >
               <circle cx="256" cy="272" r="64" />
@@ -375,7 +374,7 @@
   }
 
   .btn-cancel {
-    background: white;
+    background: #ebebeb;
     color: gray;
     border: 1px solid lightgray;
   }
@@ -437,16 +436,16 @@
   .icon-camera {
     position: absolute;
     right: 0px;
-    bottom: 10px;
+    bottom: 20px;
     border-radius: 50%;
     padding: 5px;
     background: white;
-    /* border: 1px solid; */
+    border: 1px solid darkgray;
   }
 
   .image {
     position: relative;
-    width: 120px;
+    width: 200px;
     /* border: 1px solid; */
   }
 
@@ -582,7 +581,6 @@
   .body {
     max-width: 1020px;
     margin: auto;
-    height: calc(100vh - 20px);
     height: 100vh;
     padding: 0;
     display: flex;
@@ -591,7 +589,7 @@
   }
 
   .title {
-    margin-left: 10px;
+    margin-left: 15px;
   }
 
   .top {
