@@ -33,9 +33,9 @@
 >
   <Header />
 
-  {#if $showSearchBar}
+  <!-- {#if $showSearchBar} -->
     <SearchUser />
-  {/if}
+  <!-- {/if} -->
   
   <ContactList />
   <TabMenu />

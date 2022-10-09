@@ -86,8 +86,8 @@
     if (window.innerWidth <= 800) $mobile = true;
     if (window.innerWidth > 800) $mobile = false;
 
-    if (window.innerWidth <= 370) $phone = true;
-    if (window.innerWidth > 370) $phone = false;
+    if (window.innerWidth <= 330) $phone = true;
+    if (window.innerWidth > 330) $phone = false;
   };
 
   const closeModal = () => {
@@ -153,10 +153,12 @@
         $connection = true;
         console.log("internet is connected 😀");
       });
+
       window.addEventListener("offline", () => {
         $connection = false;
         console.log("OOh, internet is disconnected 😮");
       });
+
       window.addEventListener("click", (e) => {
         $showSettingsModalMobile = false;
         $showToolModalMobile = false;
@@ -169,6 +171,7 @@
         $showActionMenu = false;
         // $showSearchBar = false
       });
+
       window.addEventListener("resize", () => desktopOrMobile());
     }
   }

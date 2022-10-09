@@ -85,11 +85,12 @@
     height: calc(100vh - 187px);
     overflow: auto;
     border-radius: 8px;
-    padding-top: 20px;
+    padding-top: 10px;
+    /* border: 1px solid; */
     /* margin-top: 10px; */
-    border-top-left-radius: 30px;
+    /* border-top-left-radius: 30px;
     border-top-right-radius: 30px;
-    border-top: 2px solid white;
+    border-top: 2px solid white; */
   }
 
   ::-webkit-scrollbar {
