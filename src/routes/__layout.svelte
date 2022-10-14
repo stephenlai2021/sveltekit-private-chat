@@ -54,7 +54,7 @@
   } from "firebase/firestore";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import { auth, db } from "$lib/firebase/client";
+  import { auth, db, requestForToken, onMessageListener } from "$lib/firebase/client";
   import { page } from "$app/stores";
   import ChatList from "$lib/components/ChatList.svelte";
   import SvelteTheme from "svelte-themes/SvelteTheme.svelte";
@@ -98,6 +98,14 @@
   };
 
   onMount(() => {
+    // Receiving Firebase Cloud Messaging
+    requestForToken()
+    onMessageListener()
+    .then((payload) => {
+      console.log('payload: ', payload)
+    })
+
+    .catch((err) => console.log('failed: ', err));
     desktopOrMobile();
     onAuthStateChanged(auth, (_user) => {
       if (!_user) {
