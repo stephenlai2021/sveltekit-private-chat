@@ -1,6 +1,8 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const peer = writable(null);
+export const peerInstance = writable(null);
 export const showSearchBar = writable(false);
 export const myDoc = writable(null);
 export const userAvatar = writable(null);

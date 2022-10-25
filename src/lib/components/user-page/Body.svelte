@@ -20,6 +20,8 @@
   import { beforeUpdate, afterUpdate } from "svelte";
   import AudioPlayer from "$lib/components/AudioPlayer.svelte";
   import moment from "moment";
+  import { quintOut } from "svelte/easing";
+  import { scale, fly, fade } from "svelte/transition";
 
   let q = null;
   let chat = null;
@@ -72,7 +74,11 @@
         class="message"
         class:my_message={msg.from === $loggedinUser.displayName}
         class:friend_message={msg.from != $loggedinUser.displayName}
-      >
+        transition:fade
+        >
+        <!-- transition:fly={msg.from === $loggedinUser.displayName ? { x: 30, y:30, duration: 100, delay: 100 } : { x: -30, y:30, duration: 100, delay: 100 }} -->
+        <!-- transition:fly={{ y: 30, duration: 100, delay: 100 }} -->
+        <!-- transition:scale={{ delay: 150, duration: 200, easing: quintOut }} -->
         {#if $myDoc && $currentSelectedUser}
           <div class="avatar">
             <img

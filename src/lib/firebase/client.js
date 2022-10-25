@@ -2,7 +2,6 @@ import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
-import { getMessaging, getToken, onMessage } from 'firebase/messaging'
 
 let firebaseConfig
 
@@ -36,32 +35,7 @@ initializeApp(firebaseConfig)
 const auth = getAuth()
 const db = getFirestore()
 const storage = getStorage()
-const messaging = getMessaging()
 const google = new GoogleAuthProvider()
 const facebook = new FacebookAuthProvider()
 
-export const requestForToken = () => {
-  return getToken(messaging, { vapidKey: 'BFrdhPsV5ySvrQBDcKBP-wHWnoantTiHqSxet2_fMh2uTTS16bO80uQIKT89nrRQm2yrVFgfi0KFzCU2FrM8Eec' })
-    .then((currentToken) => {
-      if (currentToken) {
-        console.log('current token for client: ', currentToken);
-        // Perform any other neccessary action with the token
-      } else {
-        // Show permission request UI
-        console.log('No registration token available. Request permission to generate one.');
-      }
-    })
-    .catch((err) => {
-      console.log('An error occurred while retrieving token. ', err);
-    });
-};
-
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    onMessage(messaging, (payload) => {
-      console.log("payload", payload)
-      resolve(payload);
-    });
-  });
-
-export { auth, db, storage, google, facebook, messaging }
+export { auth, db, storage, google, facebook }
