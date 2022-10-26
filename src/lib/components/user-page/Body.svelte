@@ -74,9 +74,10 @@
         class="message"
         class:my_message={msg.from === $loggedinUser.displayName}
         class:friend_message={msg.from != $loggedinUser.displayName}
-        transition:fade
+        in:fly={msg.from === $loggedinUser.displayName ? { x: 30, y:30, duration: 100, delay: 100 } : { x: -30, y:30, duration: 100, delay: 100 }}
         >
-        <!-- transition:fly={msg.from === $loggedinUser.displayName ? { x: 30, y:30, duration: 100, delay: 100 } : { x: -30, y:30, duration: 100, delay: 100 }} -->
+        <!-- out:fade -->
+        <!-- transition:fade -->
         <!-- transition:fly={{ y: 30, duration: 100, delay: 100 }} -->
         <!-- transition:scale={{ delay: 150, duration: 200, easing: quintOut }} -->
         {#if $myDoc && $currentSelectedUser}

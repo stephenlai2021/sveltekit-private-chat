@@ -1,14 +1,37 @@
 <script>
-  import { showMapModal } from "$lib/store";
+  import {
+    showMapModal,
+    latitude,
+    longitude,
+    myDoc,
+    currentSelectedUser,
+  } from "$lib/store";
   import { fly, fade } from "svelte/transition";
   import { onMount } from "svelte";
+  import { t } from "$lib/i18n";
+  import { db } from "$lib/firebase/client";
+  import { doc, getDoc } from "firebase/firestore";
 
   let iconClose = false;
+  let tempLocation = [];
 
   onMount(async () => {
+    const myRef = doc(db, "users", $myDoc.name);
+    const mySnap = await getDoc(myRef);
+    const myGeoLocation = mySnap.data().geoLocation;
+    console.log(`${$myDoc.name}'s geoLocation: ${myGeoLocation}`);
+
+    const userRef = doc(db, "users", $currentSelectedUser.name);
+    const userSnap = await getDoc(userRef);
+    const userGeoLocation = userSnap.data().geoLocation;
+    console.log(
+      `${$currentSelectedUser.name}'s geoLocation: ${userGeoLocation}`
+    );
+
     const leaflet = await import("leaflet");
 
-    const map = leaflet.map("map").setView([51.505, -0.09], 13);
+    const map = leaflet.map("map").setView([$latitude, $longitude], 3);
+    // const map = leaflet.map("map").setView([myGeoLocation[0], myGeoLocation[1]], 3);
 
     leaflet
       .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -18,10 +41,23 @@
       .addTo(map);
 
     leaflet
-      .marker([51.5, -0.09])
+      .marker([myGeoLocation[0], myGeoLocation[1]])
       .addTo(map)
-      .bindPopup("A pretty CSS3 popup.<br> Easily customizable.")
+      .bindPopup(`${$t("menu.hi")}, ${$myDoc.name}`)
       .openPopup();
+
+    leaflet
+      .marker([userGeoLocation[0], userGeoLocation[1]])
+      .addTo(map)
+      .bindPopup(`${$currentSelectedUser.name} ${$t("menu.isHere")}`)
+      .openPopup();
+
+    // for (var i = 0; i < tempLocation.length; i++) {
+    //   marker = new L.marker([tempLocation[i][0], tempLocation[i][1]])
+    //     .bindPopup(tempLocation[i][0])
+    //     .addTo(map)
+    //     .openPopup();
+    // }
 
     iconClose = true;
   });

@@ -21,6 +21,7 @@
   import { updateProfile } from "firebase/auth";
   import { v4 as uuidv4 } from 'uuid';
   import { loggedinUser, initial } from '$lib/store'
+  import { t } from '$lib/i18n';
 
   let name = "";
   let email = "";
@@ -134,9 +135,9 @@
 
     <form on:submit|preventDefault={handleAuth}>
       <div class="top">
-        <div class="btn btn-login" on:click={() => (signup = false)}>Login</div>
+        <div class="btn btn-login" on:click={() => (signup = false)}>{$t('menu.login')}</div>
         <div class="btn btn-signup" on:click={() => (signup = true)}>
-          Signup
+          {$t('menu.signup')}
         </div>
       </div>
       <div class="body">

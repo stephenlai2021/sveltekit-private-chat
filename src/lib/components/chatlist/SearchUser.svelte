@@ -8,6 +8,7 @@
   } from "$lib/store";
   import SearchUserSkeleton from "../skeleton/SearchUserSkeleton.svelte";
   import { fade } from "svelte/transition";
+  import { t } from '$lib/i18n';
 </script>
 
 <!-- <div class="search_user" transition:fade={{ duration: 100 }}> -->
@@ -18,11 +19,11 @@
       <input
         type="text"
         placeholder={$privateChat
-          ? "find user"
+          ? $t('menu.find_user')
           : $groupChat
-          ? "find group"
+          ? $t('menu.find_group')
           : $publicChat
-          ? "find chatroom"
+          ? $t('menu.find_chatroom')
           : ""}
         bind:value={$keyword}
       />

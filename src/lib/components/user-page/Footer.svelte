@@ -28,6 +28,7 @@
   } from "firebase/firestore";
   import { onMount } from "svelte";
   import ActionMenu from "$lib/components/ActionMenu.svelte";
+  import { t } from '$lib/i18n';
 
   let url = null;
   let file = null;
@@ -378,7 +379,8 @@
     {/if}
 
     {#if $selectedUserReady}
-      <input type="text" placeholder="Say something" bind:value={$message} />
+      <!-- <input type="text" placeholder="Say something" bind:value={$message} /> -->
+      <input type="text" placeholder={$t('menu.say_something')} bind:value={$message} />
     {:else}
       <div class="input-skeleton loading-animation" />
     {/if}

@@ -1,0 +1,23 @@
+{
+  "messages": "Messages",
+  "group_chat": "Group Chat",
+  "chatroom": "Chatroom",
+  "image_gallery": "Image Gallery",
+  "gradient_gallery": "Gradient Gallery",
+  "color": "Color",
+  "file": "From file",
+  "language": "Language",
+  "about": "About",
+  "logout": "Logout",
+  "find_user": "find user",
+  "find_group": "find group",
+  "find_chatroom": "find chatroom",
+  "say_something": "Say something",
+  "hi": "Hi",
+  "login": "Login",
+  "signup": "Signup",
+  "login_with_facebook": "Login with Facebook",
+  "email": "email",
+  "password": "password",
+  "isHere": "is here"
+}

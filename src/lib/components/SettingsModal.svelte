@@ -30,6 +30,7 @@
   import themes from "$lib/data/themes.json";
   import bgPics from "$lib/data/bgPics.json";
   import { onMount } from "svelte";
+  import { t, locales, locale } from '$lib/i18n';
 
   let url = null;
   let file = null;
@@ -280,7 +281,7 @@
           >
             <div class="content">
               <div class="title-wrapper">
-                <span class="menu-item">Image gallery</span>
+                <span class="menu-item">{$t('menu.image_gallery')}</span>
               </div>
               {#if !$showThemeMenu}
                 <svg
@@ -337,7 +338,7 @@
           >
             <div class="content">
               <div class="title-wrapper">
-                <span class="menu-item">Gradient gallery</span>
+                <span class="menu-item">{$t('menu.gradient_gallery')}</span>
               </div>
               {#if !$showGradientMenu}
                 <svg
@@ -389,7 +390,7 @@
         <li>
           <div class="content" style:cursor="auto" style:height="18px">
             <div class="title-wrapper">
-              <span class="menu-item">Select Color</span>
+              <span class="menu-item">{$t('menu.color')}</span>
             </div>
             <input
               type="color"
@@ -405,7 +406,7 @@
             <div class="content">
               <label>
                 <span class="menu-item" style:cursor="pointer"
-                  >Select image</span
+                  >{$t('menu.file')}</span
                 >
                 <input
                   type="file"
@@ -419,19 +420,24 @@
 
         <li>
           <div class="content">
-            <span class="menu-item">Switch Language</span>
+            <span class="menu-item">{$t('menu.language')}</span>
+            <select bind:value={$locale}>
+              {#each $locales as locale}
+                <option value={locale}>{locale}</option>
+              {/each}
+            </select>
           </div>
         </li>
 
         <li>
           <div class="content">
-            <span class="menu-item">About</span>
+            <span class="menu-item">{$t('menu.about')}</span>
           </div>
         </li>
 
         <li on:click={logout}>
           <div class="content">
-            <span class="menu-item">Logout</span>
+            <span class="menu-item">{$t('menu.logout')}</span>
           </div>
         </li>
       </div>
@@ -449,6 +455,12 @@
 </ul>
 
 <style>
+  select {
+    margin-left: 20px;
+    padding: 2px;
+    border-radius: 4px;
+  }
+
   .loading-skeleton {
     display: flex;
     flex-direction: column;

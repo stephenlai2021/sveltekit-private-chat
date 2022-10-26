@@ -1,13 +1,19 @@
-<!-- <script context="module">
-  import { bgColor } from "$lib/store";
-  export const load = ({ session }) => {
-    const locals = session;
-    const bgColor_preference = locals.bgColor;
+<script context="module">
+  import { locale, loadTranslations } from "$lib/i18n";
 
-    if (bgColor_preference) bgColor.set(bgColor_preference);
+  export const load = async ({ url }) => {
+    const { pathname } = url;
+
+    const defaultLocale = "en"; // get from cookie, user session, ...
+
+    const initLocale = locale.get() || defaultLocale; // set default if no locale already set
+
+    await loadTranslations(initLocale, pathname); // keep this just before the `return`
+
     return {};
   };
-</script> -->
+</script>
+
 <script>
   import "$lib/styles/global.css";
   import {
@@ -42,6 +48,8 @@
     showAddRoomModal,
     showAudioPlayerModal,
     showAudioRecordingModal,
+    latitude,
+    longitude,
   } from "$lib/store";
   import { browser } from "$app/env";
   import { onAuthStateChanged } from "firebase/auth";
@@ -51,6 +59,7 @@
     where,
     collection,
     onSnapshot,
+    updateDoc,
   } from "firebase/firestore";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
@@ -79,6 +88,12 @@
   let user = null;
   let userDocReady = false;
 
+  const geoOptions = {
+    enableHighAccuracy: true,
+    maximumAge: 30000,
+    timeout: 27000,
+  };
+
   const desktopOrMobile = () => {
     if (window.innerWidth <= 1200) $widthLessthan1200 = true;
     if (window.innerWidth > 1200) $widthLessthan1200 = false;
@@ -98,7 +113,36 @@
     $showToolModal = false;
   };
 
-  onMount(() => {
+  const success = async (position) => {
+    $latitude = position.coords.latitude;
+    $longitude = position.coords.longitude;
+
+    
+    console.log(`${$loggedinUser.displayName}'s latitude: `, $latitude);
+    console.log(`${$loggedinUser.displayName}'s longitude: `, $longitude);
+
+    const userRef = doc(db, "users", $loggedinUser.displayName);
+    await updateDoc(userRef, {
+      geoLocation: [$latitude, $longitude],
+    });
+  };
+
+  // $: if ($loggedin)
+
+  // $: if ($myDoc) {
+  //   const userRef = doc(db, 'users', $myDoc?.name)
+  //   updateDoc(userRef, {
+  //     geoLocation: [$latitude, $longitude]
+  //   }).then(() => {
+  //     console.log('geoLocation updated successfully')
+  //   })
+  // }
+
+  const error = () => {
+    console.log("no position available !");
+  };
+
+  onMount(async () => {
     desktopOrMobile();
     onAuthStateChanged(auth, (_user) => {
       if (!_user) {
@@ -132,10 +176,19 @@
           $myDoc = userSnap.data();
           return () => unsubUser;
         });
+
+        navigator.geolocation.getCurrentPosition(success, error, geoOptions)
       }
     });
     $currentSelectedUser = null;
-    // alert('width: ', window.innerWidth)
+
+    // Get current position
+    // try {
+    //   const position = await navigator.geolocation.getCurrentPosition(geoOptions);
+    //   console.log("position", position);
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
   });
 
   // $: if ($loggedinUser) userDocReady = true;

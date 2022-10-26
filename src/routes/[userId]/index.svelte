@@ -53,9 +53,9 @@
   let url = null;
 
   const constraints = {
-      video: true,
-      audio: true,
-    };
+    video: true,
+    audio: true,
+  };
 
   const call = async (remotePeerId) => {
     const getUserMedia =
@@ -63,9 +63,9 @@
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia;
 
-    const mediaStream = await getUserMedia(constraints)
+    const mediaStream = await getUserMedia(constraints);
     // show local stream
-    // const call = 
+    // const call =
   };
 
   onMount(async () => {
@@ -82,31 +82,23 @@
     }
 
     // peer.js initialization
-    const Peer = (await import("peerjs")).default;
-    const peer = new Peer();
+    // const Peer = (await import("peerjs")).default()
+    // const peer = new Peer();
 
-    peer.on("open", async (id) => {
-      // $peerId = id;
-      console.log(`${$myDoc?.name}'s peerId: ${id}`);
+    // peer.on("open", async (id) => {
+    //   console.log(`${$myDoc?.name}'s peerId: ${id}`);
 
-      // save peerid to firestore
-      let loginUserRef = doc(db, "users", $myDoc.name);
-      await updateDoc(loginUserRef, {
-        peerId: id,
-      });
-    });
+    //   let loginUserRef = doc(db, "users", $myDoc.name);
+    //   await updateDoc(loginUserRef, {
+    //     peerId: id,
+    //   });
+    // });
 
-    peer.on("call", async (call) => {
-      const getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia;
-
-      const mediaStream = await getUserMedia({ constraints });
-      // show local stream
-      call.answer(mediaStream);
-      call.on("stream", (remoteStream) => {
-        // show remote stream
+    import("peerjs").then(({ default: Peer }) => {
+      // normal synchronous code
+      const peer = new Peer();
+      peer.on("open", (id) => {
+        console.log(`${$loggedinUser.displayName}'s id: ${id}`);
       });
     });
   });

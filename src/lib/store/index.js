@@ -1,6 +1,8 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/env";
 
+export const latitude = writable(null);
+export const longitude = writable(null);
 export const peer = writable(null);
 export const peerInstance = writable(null);
 export const showSearchBar = writable(false);

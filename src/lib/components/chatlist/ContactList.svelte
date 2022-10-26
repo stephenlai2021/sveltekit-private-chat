@@ -9,6 +9,7 @@
   } from "$lib/store";
   import { fade } from "svelte/transition";
   import { page } from "$app/stores";
+  import { t } from '$lib/i18n';
 
   // components
   import User from "$lib/components/chatlist/User.svelte";
@@ -28,27 +29,16 @@
   $: if ($page.url.pathname === "/login") $showSettingsModal = false;
 </script>
 
-<div class="chatlist" transition:fade={{ duration: 100 }}>
-  
-  <!-- {#if $privateChat} -->
-  {#if $privateChat && $allUsers && $allUsers.length}
-    <!-- <h2>
-      {$privateChat
-        ? "Messages"
-        : $groupChat
-        ? "Group Chat"
-        : $publicChat
-        ? "Chatroom"
-        : ""}
-    </h2> -->
-    <h2>Messages</h2>
+<div class="chatlist" transition:fade={{ duration: 100 }}>  
+  {#if $privateChat && $allUsers && $allUsers.length}  
+    <h2>{$t('menu.messages')}</h2>
     {#each filteredUsers as user}
       <User {user} />
     {/each}
   {:else if $groupChat}
-    <h2>Group Chat</h2>
+    <h2>{$t('menu.group_chat')}</h2>
   {:else if $publicChat}
-    <h2>Chatroom</h2>
+    <h2>{$t('menu.chatroom')}</h2>
   {:else}
   <div class="headline-skeleton loading-animation" />
     <Skeleton />
