@@ -11,17 +11,17 @@
     showToolModalMobile,
     widthLessthan1200,
   } from "$lib/store";
-  import SettingsModalMobile from "$lib/components/SettingsModalMobile.svelte";
-  import ToolModalMobile from "$lib/components/ToolModalMobile.svelte";
+  import SettingsModalMobile from "$lib/components/modals/SettingsModalMobile.svelte";
+  import ToolModalMobile from "$lib/components/modals/ToolModalMobile.svelte";
   import Header from "$lib/components/chatlist/Header.svelte";
   import TabMenu from "$lib/components/chatlist/TabMenu.svelte";
   import SearchUser from "$lib/components/chatlist/SearchUser.svelte";
   import ContactList from "$lib/components/chatlist/ContactList.svelte";
   // import SearchFriendModal from "$lib/components/SearchFriendModal.svelte";
-  import AddFriendModal from "$lib/components/AddFriendModal.svelte";
-  import AddGroupModal from "$lib/components/AddGroupModal.svelte";
-  import AddPeopleModal from "$lib/components/AddPeopleModal.svelte";
-  import AddRoomModal from "$lib/components/AddRoomModal.svelte";
+  import AddFriendModal from "$lib/components/modals/AddFriendModal.svelte";
+  import AddGroupModal from "$lib/components/modals/AddGroupModal.svelte";
+  import AddPeopleModal from "$lib/components/modals/AddPeopleModal.svelte";
+  import AddRoomModal from "$lib/components/modals/AddRoomModal.svelte";
   import themeStore from "svelte-themes";
   import AddButton from "$lib/components/chatlist/AddButton.svelte";
 </script>
@@ -40,14 +40,6 @@
   {#if $showSettingsModalMobile && $widthLessthan1200}
     <SettingsModalMobile />
   {/if}
-
-  <!-- {#if $showAddFriendModal}/
-    <AddFriendModal />
-  {/if} -->
-
-  <!-- {#if $showAddRoomModal}
-    <AddRoomModal />
-  {/if} -->
 </div>
 
 <style>

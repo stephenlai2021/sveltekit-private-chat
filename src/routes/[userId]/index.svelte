@@ -33,12 +33,12 @@
     showToolModalMobile,
     widthLessthan1000,
   } from "$lib/store";
-  import CameraModal from "$lib/components/CameraModal.svelte";
-  import CameraPreviewModal from "$lib/components/CameraPreviewModal.svelte";
-  import AudioRecordingModal from "$lib/components/AudioRecordingModal.svelte";
-  import AudioPlayerModal from "$lib/components/AudioPlayerModal.svelte";
+  import CameraModal from "$lib/components/modals/CameraModal.svelte";
+  import CameraPreviewModal from "$lib/components/modals/CameraPreviewModal.svelte";
+  import AudioRecordingModal from "$lib/components/modals/AudioRecordingModal.svelte";
+  import AudioPlayerModal from "$lib/components/modals/AudioPlayerModal.svelte";
   import EmojiMenu from "$lib/components/EmojiMenu.svelte";
-  import MapModal from "$lib/components/MapModal.svelte";
+  import MapModal from "$lib/components/modals/MapModal.svelte";
   import ActionMenu from "$lib/components/ActionMenu.svelte";
   import Header from "$lib/components/user-page/Header.svelte";
   import Footer from "$lib/components/user-page/Footer.svelte";
@@ -47,7 +47,7 @@
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import { browser } from "$app/env";
-  import ToolModalMobile from "$lib/components/ToolModalMobile.svelte";
+  import ToolModalMobile from "$lib/components/modals/ToolModalMobile.svelte";
   import { getUser } from "$lib/functions/getUser";
 
   let url = null;

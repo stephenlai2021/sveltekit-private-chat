@@ -2,9 +2,9 @@
   <!-- <title>Home</title> -->
 </svelte:head>
 
-<!-- <div class="home-page">
+<div class="home-page">
   <div class="content">
-    <div class="icon-wrapper">
+    <!-- <div class="icon-wrapper">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-indicator"
@@ -22,14 +22,14 @@
         />
       </svg>
     </div>
-    <p>Please select a contact to start a conversation</p>  
+    <p>Please select a contact to start a conversation</p>   -->
   </div>
-</div> -->
+</div>
 
 <style>
-  .icon-indicator {
+  /* .icon-indicator {
     margin-right: 10px;
-  }
+  } */
 
   .content {
     display: flex;

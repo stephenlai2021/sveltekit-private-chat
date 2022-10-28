@@ -17,6 +17,7 @@ export const selectedMembers = writable([]);
 export const selectedUserReady = writable(false);
 export const currentContact = writable(null);
 export const showAddPeopleModal = writable(false);
+export const showAboutModal = writable(false);
 export const showToolModalMobile = writable(false);
 export const showSettingsModalMobile = writable(false);
 export const widthLessthan1200 = writable(false);

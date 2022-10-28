@@ -10,9 +10,8 @@
     imageTitle,
     imageURL,
     loggedinUser,
-    showMapModal,
     showThemeModal,
-    showCameraModal,
+    showAboutModal,
     selectedUsername,
     showThemeMenu,
     showGradientMenu,
@@ -283,7 +282,7 @@
               <div class="title-wrapper">
                 <span class="menu-item">{$t('menu.image_gallery')}</span>
               </div>
-              {#if !$showThemeMenu}
+              <!-- {#if !$showThemeMenu}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="ionicon"
@@ -310,7 +309,7 @@
                     d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
                   />
                 </svg>
-              {/if}
+              {/if} -->
             </div>
           </div>
           {#if $showThemeMenu}
@@ -340,7 +339,7 @@
               <div class="title-wrapper">
                 <span class="menu-item">{$t('menu.gradient_gallery')}</span>
               </div>
-              {#if !$showGradientMenu}
+              <!-- {#if !$showGradientMenu}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="ionicon icon-arrow-down"
@@ -366,7 +365,7 @@
                     d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
                   />
                 </svg>
-              {/if}
+              {/if} -->
             </div>
           </div>
           {#if $showGradientMenu}
@@ -388,16 +387,18 @@
         </li>
 
         <li>
-          <div class="content" style:cursor="auto" style:height="18px">
+          <!-- <div class="content" style:cursor="auto" style:height="18px"> -->
+          <div class="content" style:cursor="auto">
             <div class="title-wrapper">
-              <span class="menu-item">{$t('menu.color')}</span>
+              <span class="menu-item color-menu">{$t('menu.color')}</span>
+              <input
+                class="color-input"
+                type="color"
+                bind:value={colorVal}
+                on:input|stopPropagation={() => uploadColor(colorVal)}
+                style:cursor="pointer"
+              />
             </div>
-            <input
-              type="color"
-              bind:value={colorVal}
-              on:input|stopPropagation={() => uploadColor(colorVal)}
-              style:cursor="pointer"
-            />
           </div>
         </li>
 
@@ -420,18 +421,25 @@
 
         <li>
           <div class="content">
-            <span class="menu-item">{$t('menu.language')}</span>
-            <select bind:value={$locale}>
+            <!-- <span class="menu-item">{$t('menu.language')}</span> -->
+            {#if $locale === 'en'}
+              <span class="menu-item" on:click={() => $locale = 'zh-TW'}>中文 - zhTW</span>
+            {/if}
+            {#if $locale === 'zh-TW'}
+              <span class="menu-item" on:click={() => $locale = 'en'}>英文 - EN</span>
+            {/if}
+
+            <!-- <select bind:value={$locale}>
               {#each $locales as locale}
-                <option value={locale}>{locale}</option>
+                <option value={locale}>{locale === 'en' ? `英文 - ${locale}` : `中文 - ${locale}`}</option>
               {/each}
-            </select>
+            </select> -->
           </div>
         </li>
 
         <li>
           <div class="content">
-            <span class="menu-item">{$t('menu.about')}</span>
+            <span class="menu-item" on:click={() => $showAboutModal = true}>{$t('menu.about')}</span>
           </div>
         </li>
 
@@ -455,11 +463,11 @@
 </ul>
 
 <style>
-  select {
-    margin-left: 20px;
-    padding: 2px;
+  /* select {
+    padding: 3px;
     border-radius: 4px;
-  }
+  } */
+  /* margin-left: 20px; */
 
   .loading-skeleton {
     display: flex;
@@ -499,9 +507,24 @@
     align-items: center;
   }
 
+  .color-menu {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* z-index: -10; */
+  }
+
+  .color-input {
+    /* width: 0; */
+    /* width: 29.6px; */
+    opacity: 0;
+  }
+
   span.menu-item {
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: bold;
     letter-spacing: 0.8px;
+    color: rgb(55, 63, 80);
   }
 
   h3.user-name,
@@ -571,7 +594,9 @@
   }
 
   .title-wrapper {
+    position: relative;
     width: 100%;
+    /* border: 1px solid; */
   }
 
   .content {
@@ -580,6 +605,7 @@
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+    height: 36px;
     /* border: 1px solid; */
   }
 
@@ -596,7 +622,7 @@
 
   li {
     margin: 0 10px;
-    padding: 10px 0;
+    padding: 0px 0;
     list-style: none;
     margin-bottom: 5px;
     border-radius: 8px;

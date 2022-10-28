@@ -26,7 +26,7 @@
   import { onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
   import { doc, updateDoc, getDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-  import CameraModal from "$lib/components/CameraModal.svelte";
+  import CameraModal from "$lib/components/modals/CameraModal.svelte";
   import { signout } from "$lib/functions/auth/signout";
   import themes from "$lib/data/themes.json";
   import bgPics from "$lib/data/bgPics.json";

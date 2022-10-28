@@ -126,7 +126,7 @@
     box-shadow: 0.1em 0.1em 0.2em black;
   }
 
-  .icon-add {
+  /* .icon-add {
     color: white;
   }
 
@@ -149,21 +149,13 @@
     background: rgb(78, 170, 78);
     background: var(--theme-color);
     background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-    /* background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%); */
-    /* background: linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%); */
-    /* background: linear-gradient(90deg, #9ebd13 0%, #008552 100%); */
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+  } */
 
   .icon-bell-wrapper {
-    /* width: 24px;
-    height: 24px; */
-    /* border-radius: 50px; */
     position: relative;
-    /* box-shadow: 0.1em 0.1em 0.2em black; */
-    /* border: 1px solid; */
   }
 
   .header {

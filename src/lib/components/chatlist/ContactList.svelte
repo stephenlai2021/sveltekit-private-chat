@@ -48,6 +48,10 @@
 </div>
 
 <style>
+  h2 {
+    height: 27.2px;
+  }
+
   .headline-skeleton {
     height: 27px;
     width: 130px;
@@ -62,25 +66,20 @@
     color: rgb(77, 90, 95);
   }
 
-  .group,
+  /* .group,
   .public {
     width: 100%;
     height: calc(100vh - 187px);
     display: flex;
     justify-content: center;
     padding-top: 200px;
-  }
+  } */
 
   .chatlist {
     height: calc(100vh - 187px);
     overflow: auto;
     border-radius: 8px;
     padding-top: 10px;
-    /* border: 1px solid; */
-    /* margin-top: 10px; */
-    /* border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-top: 2px solid white; */
   }
 
   ::-webkit-scrollbar {

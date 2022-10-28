@@ -11,9 +11,12 @@
   import { t } from "$lib/i18n";
   import { db } from "$lib/firebase/client";
   import { doc, getDoc } from "firebase/firestore";
+  import IconClose from '$lib/components/icons/IconClose.svelte'
 
   let iconClose = false;
   let tempLocation = [];
+
+  const closeMapModal = () => $showMapModal = false
 
   onMount(async () => {
     const myRef = doc(db, "users", $myDoc.name);
@@ -64,32 +67,10 @@
 </script>
 
 <div class="map-modal" transition:fly={{ y: 100, duration: 100, delay: 100 }}>
-  {#if iconClose}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon icon-close"
-      viewBox="0 0 512 512"
-      width="30"
-      height="30"
-      fill="currentColor"
-      on:click={() => ($showMapModal = false)}
-    >
-      <path
-        d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
-        fill="none"
-        stroke="currentColor"
-        stroke-miterlimit="10"
-        stroke-width="32"
-      />
-      <path
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="32"
-        d="M320 320L192 192M192 320l128-128"
-      />
-    </svg>
+  {#if iconClose}   
+  <div class="icon-wrapper" on:click={() => $showMapModal = false}>
+    <IconClose width="30" height="30" />
+  </div>
   {/if}
   <div id="map" />
 </div>
@@ -101,14 +82,6 @@
     width: 100%;
     /* width: 1920px; */
     height: 100vh;
-  }
-
-  .icon-close {
-    position: fixed;
-    top: 15px;
-    left: 50%;
-    z-index: 700;
-    transform: translateX(-50%);
   }
 
   .map-modal {
