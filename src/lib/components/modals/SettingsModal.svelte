@@ -2,15 +2,11 @@
   import {
     selectedFile,
     myDoc,
-    mobile,
-    bgColor,
     initial,
-    isLogout,
     isMobile,
     imageTitle,
     imageURL,
     loggedinUser,
-    showThemeModal,
     showAboutModal,
     selectedUsername,
     showThemeMenu,
@@ -30,13 +26,12 @@
   import bgPics from "$lib/data/bgPics.json";
   import { onMount } from "svelte";
   import { t, locales, locale } from '$lib/i18n';
+  import IconCamera from '$lib/components/icons/IconCamera.svelte'
 
   let url = null;
   let file = null;
-  let theme = false;
   let colorVal = "#b69696";
   let fileError = null;
-  let uploadedDone = false;
   let fileUploaded = false;
 
   const logout = async () => {
@@ -51,7 +46,6 @@
     $myDoc = null;
 
     await signout();
-    // goto('/login')
   };
 
   const handleAvatarChange = (e) => {
@@ -126,16 +120,6 @@
     });
   };
 
-  // onMount(() => {
-  //   if ($loggedinUser) {
-  //     let userRef = doc(db, "users", $loggedinUser.displayName);
-  //     const unsubUser = onSnapshot(userRef, (userSnap) => {
-  //       $myDoc = userSnap.data();
-  //       return () => unsubUser;
-  //     });
-  //   }
-  // });
-
   $: if (file) {
     /* change file type to .png */
     let blob = file.slice(0, file.size, "image/png");
@@ -198,37 +182,7 @@
                   on:change={handleAvatarChange}
                   accept="image/png, image/jpg, image/jpeg"
                 />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="ionicon icon-camera"
-                  viewBox="0 0 512 512"
-                >
-                  <path
-                    d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="32"
-                  />
-                  <circle
-                    cx="256"
-                    cy="272"
-                    r="80"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-miterlimit="10"
-                    stroke-width="32"
-                  />
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="32"
-                    d="M124 158v-22h-24v22"
-                  />
-                </svg>
+               <IconCamera width="24" height="24" />
               </label>
             {/if}
             {#if fileUploaded}
@@ -423,10 +377,10 @@
           <div class="content">
             <!-- <span class="menu-item">{$t('menu.language')}</span> -->
             {#if $locale === 'en'}
-              <span class="menu-item" on:click={() => $locale = 'zh-TW'}>中文 - zhTW</span>
+              <span class="menu-item" on:click={() => $locale = 'zh-TW'}>中文 - CHN</span>
             {/if}
             {#if $locale === 'zh-TW'}
-              <span class="menu-item" on:click={() => $locale = 'en'}>英文 - EN</span>
+              <span class="menu-item" on:click={() => $locale = 'en'}>英文 - ENG</span>
             {/if}
 
             <!-- <select bind:value={$locale}>
@@ -558,14 +512,14 @@
     opacity: 0;
   }
 
-  .icon-camera {
+  /* .icon-camera {
     width: 24px;
     height: 24px;
     position: absolute;
     right: -10px;
     bottom: -10px;
     border-radius: 50px;
-  }
+  } */
 
   .image-wrapper .image {
     border-radius: 8px;

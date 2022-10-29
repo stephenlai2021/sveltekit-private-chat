@@ -69,7 +69,7 @@
 <div class="map-modal" transition:fly={{ y: 100, duration: 100, delay: 100 }}>
   {#if iconClose}   
   <div class="icon-wrapper" on:click={() => $showMapModal = false}>
-    <IconClose width="30" height="30" />
+    <IconClose width="32" height="32" />
   </div>
   {/if}
   <div id="map" />

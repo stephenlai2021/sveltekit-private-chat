@@ -26,13 +26,19 @@
     Timestamp,
     collection,
   } from "firebase/firestore";
+  import { t } from "$lib/i18n";
   import { onMount } from "svelte";
   import ActionMenu from "$lib/components/ActionMenu.svelte";
-  import { t } from '$lib/i18n';
+  import IconMenu from "$lib/components/icons/IconMenu.svelte";
+  import IconCamera from "$lib/components/icons/IconCamera.svelte";
+  import IconImage from "$lib/components/icons/IconImage.svelte";
+  import IconEmoji from "$lib/components/icons/IconEmoji.svelte";
+  import IconSubmit from "$lib/components/icons/IconSubmit.svelte";
+  import IconMic from "$lib/components/icons/IconMic.svelte";
 
   let url = null;
   let file = null;
-  let count = 0
+  let count = 0;
   let messageSent = "";
   // let countVal = 0;
 
@@ -196,73 +202,21 @@
 <div class="chatbox_input">
   <div class="menu-group">
     {#if $phone && $selectedUserReady}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-menu"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
+      <div
+        class="icon-menu-wrapper"
         on:click|stopPropagation={() => ($showActionMenu = true)}
       >
-        <rect
-          x="48"
-          y="48"
-          width="176"
-          height="176"
-          rx="20"
-          ry="20"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-        <rect
-          x="288"
-          y="48"
-          width="176"
-          height="176"
-          rx="20"
-          ry="20"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-        <rect
-          x="48"
-          y="288"
-          width="176"
-          height="176"
-          rx="20"
-          ry="20"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-        <rect
-          x="288"
-          y="288"
-          width="176"
-          height="176"
-          rx="20"
-          ry="20"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-      </svg>
+        <IconMenu />
+      </div>
     {:else if $phone && !$selectedUserReady}
       <div class="icon-skeleton loading-animation" />
     {/if}
 
     {#if !$phone && $selectedUserReady}
+      <div
+        class="icon-camear-wrapper"
+        on:click={() => ($showCameraModal = true)}
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="ionicon icon-camera"
@@ -270,7 +224,6 @@
         width="26"
         height="26"
         fill="currentColor"
-        on:click={() => ($showCameraModal = true)}
       >
         <path
           d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
@@ -304,44 +257,7 @@
           accept="image/png, image/jpg, image/jpeg"
           on:change={handleFileChange}
         />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="ionicon icon-image"
-          viewBox="0 0 512 512"
-          width="26"
-          height="26"
-          fill="currentColor"
-        >
-          <rect
-            x="48"
-            y="80"
-            width="416"
-            height="352"
-            rx="48"
-            ry="48"
-            fill="none"
-            stroke="currentColor"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-          <circle
-            cx="336"
-            cy="176"
-            r="32"
-            fill="none"
-            stroke="currentColor"
-            stroke-miterlimit="10"
-            stroke-width="32"
-          />
-          <path
-            d="M304 335.79l-90.66-90.49a32 32 0 00-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0143.11-2L464 368"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="32"
-          />
-        </svg>
+        <IconImage width="26" height="26" />
       </label>
     {:else if !$phone && !$selectedUserReady}
       <!-- <div class="icon-skeleton loading-animation" style:margin-right="15px" /> -->
@@ -352,90 +268,35 @@
 
   <form on:submit|preventDefault={handleSubmit} class="messageBox">
     {#if $selectedUserReady}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-emoji"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
+      <div
+        class="icon-emoji-wrapper"
         on:click|stopPropagation={() => ($showEmojiMenu = true)}
       >
-        <circle cx="184" cy="232" r="24" />
-        <path
-          d="M256.05 384c-45.42 0-83.62-29.53-95.71-69.83a8 8 0 017.82-10.17h175.69a8 8 0 017.82 10.17c-11.99 40.3-50.2 69.83-95.62 69.83z"
-        />
-        <circle cx="328" cy="232" r="24" />
-        <circle
-          cx="256"
-          cy="256"
-          r="208"
-          fill="none"
-          stroke="currentColor"
-          stroke-miterlimit="10"
-          stroke-width="32"
-        />
-      </svg>
+        <IconEmoji />
+      </div>
     {/if}
 
     {#if $selectedUserReady}
       <!-- <input type="text" placeholder="Say something" bind:value={$message} /> -->
-      <input type="text" placeholder={$t('menu.say_something')} bind:value={$message} />
+      <input
+        type="text"
+        placeholder={$t("menu.say_something")}
+        bind:value={$message}
+      />
     {:else}
       <div class="input-skeleton loading-animation" />
     {/if}
 
     {#if $selectedUserReady}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-submit"
-        viewBox="0 0 512 512"
-        width="20"
-        height="20"
-        fill="currentColor"
-        style:color={$message ? "#FF4408" : "currentColor"}
-        style:cursor={$message ? "pointer" : "none"}
-        on:click|preventDefault={handleSubmit}
-      >
-        <path
-          d="M470.3 271.15L43.16 447.31a7.83 7.83 0 01-11.16-7V327a8 8 0 016.51-7.86l247.62-47c17.36-3.29 17.36-28.15 0-31.44l-247.63-47a8 8 0 01-6.5-7.85V72.59c0-5.74 5.88-10.26 11.16-8L470.3 241.76a16 16 0 010 29.39z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-      </svg>
+      <div class="icon-submit-wrapper" on:click|preventDefault={handleSubmit}>
+        <IconSubmit />
+      </div>
     {/if}
   </form>
 
   {#if !$phone && $selectedUserReady}
     <div class="icon-mic" on:click={() => ($showAudioRecordingModal = true)}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon"
-        viewBox="0 0 512 512"
-        width="26"
-        height="26"
-        fill="currentColor"
-      >
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M192 448h128M384 208v32c0 70.4-57.6 128-128 128h0c-70.4 0-128-57.6-128-128v-32M256 368v80"
-        />
-        <path
-          d="M256 64a63.68 63.68 0 00-64 64v111c0 35.2 29 65 64 65s64-29 64-65V128c0-36-28-64-64-64z"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-        />
-      </svg>
+      <IconMic width="26" height="26" />
     </div>
   {:else if !$phone && !$selectedUserReady}
     <div class="icon-skeleton loading-animation" style:margin-left="15px" />
@@ -447,12 +308,6 @@
 {/if}
 
 <style>
-  .icon-mic-skeleton {
-    width: 24px;
-    height: 24px;
-    border-radius: 8px;
-  }
-
   .input-skeleton {
     width: 100%;
     height: 40px;
@@ -463,11 +318,6 @@
     width: 24px;
     height: 24px;
     border-radius: 50px;
-  }
-
-  .icon-palette {
-    /* margin-left: 8px; */
-    margin-right: 15px;
   }
 
   ::placeholder {
@@ -536,13 +386,6 @@
     margin-right: 15px;
   }
 
-  .icon-emoji {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 10px;
-  }
-
   label {
     width: 26px;
     position: relative;
@@ -550,32 +393,10 @@
     /* border: 1px solid red; */
   }
 
-  .icon-image {
-    position: absolute;
-    left: 2px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
   label input {
     width: 0;
     height: 0;
     opacity: 0;
-  }
-
-  .icon-submit {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 22px;
-  }
-
-  @media (max-width: 1200px) {
-    .icon-camera {
-      /* margin-left: 5px; */
-      /* margin-right: 15px; */
-    }
   }
 
   @media (max-width: 1160px) {

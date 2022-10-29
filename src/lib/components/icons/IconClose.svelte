@@ -1,5 +1,5 @@
 <script>
-  export let width, height
+  export let width = 24, height = 24
 </script>
 
 <svg
@@ -34,5 +34,8 @@
     left: 50%;
     z-index: 700;
     transform: translateX(-50%);
+    background: rgb(167, 153, 153);
+    border-radius: 50px;
+    color: white;
   }
 </style>
