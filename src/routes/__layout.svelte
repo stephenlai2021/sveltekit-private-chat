@@ -39,7 +39,7 @@
     showThemeModal,
     showToolModalMobile,
     showCameraModal,
-    showVideochatModal,
+    showVideoChatModal,
     showMapModal,
     showThemeMenu,
     showGradientMenu,
@@ -82,7 +82,7 @@
   import AddFriendModal from "$lib/components/modals/AddFriendModal.svelte";
   import AddGroupModal from "$lib/components/modals/AddGroupModal.svelte";
   import AddRoomModal from "$lib/components/modals/AddRoomModal.svelte";
-  import VideoChatModal from '$lib/components/modals/VideoChatModal.svelte'
+  import VideoChatModal from "$lib/components/modals/VideoChatModal.svelte";
   import LoadingModal from "$lib/components/modals/LoadingModal.svelte";
   import { signout } from "$lib/functions/auth/signout";
   import { scale, fly, fade } from "svelte/transition";
@@ -119,7 +119,6 @@
     $latitude = position.coords.latitude;
     $longitude = position.coords.longitude;
 
-    
     console.log(`${$loggedinUser.displayName}'s latitude: `, $latitude);
     console.log(`${$loggedinUser.displayName}'s longitude: `, $longitude);
 
@@ -179,7 +178,7 @@
           return () => unsubUser;
         });
 
-        navigator.geolocation.getCurrentPosition(success, error, geoOptions)
+        navigator.geolocation.getCurrentPosition(success, error, geoOptions);
       }
     });
     $currentSelectedUser = null;
@@ -317,7 +316,7 @@
       <AudioPlayerModal />
     {/if}
 
-    {#if $showVideochatModal}
+    {#if $showVideoChatModal}
       <VideoChatModal />
     {/if}
 

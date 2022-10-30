@@ -8,8 +8,8 @@
   xmlns="http://www.w3.org/2000/svg"
   class="ionicon icon-submit"
   viewBox="0 0 512 512"
-  width="20"
-  height="20"
+  width={width}
+  height={height}
   fill="currentColor"
   style:color={$message ? "#FF4408" : "currentColor"}
   style:cursor={$message ? "pointer" : "none"}

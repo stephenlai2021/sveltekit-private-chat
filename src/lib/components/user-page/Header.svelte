@@ -11,7 +11,7 @@
     selectedUserReady,
     currentSelectedUser,
     showToolModalMobile,
-    showVideochatModal,
+    showVideoChatModal,
   } from "$lib/store";
   import {
     doc,
@@ -109,7 +109,7 @@
     {#if $selectedUserReady}
       <div 
         class="icon-videocam-wrapper" 
-        on:click={() => $showVideochatModal = true}
+        on:click={() => $showVideoChatModal = true}
       >
         <IconVideoCam />
       </div>
@@ -229,10 +229,10 @@
       border-radius: 0px;
     }
 
-    .icon-arrow-back {
+    /* .icon-arrow-back {
       margin-right: 10px;
       margin-left: 0px;
-    }
+    } */
   }
 
   @media (max-width: 360px) {

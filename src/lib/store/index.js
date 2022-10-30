@@ -4,7 +4,7 @@ import { browser } from "$app/env";
 export const callRejected = writable(false);
 export const callAnswered = writable(false);
 export const showIncomingCallModal = writable(false);
-export const showVideochatModal = writable(false);
+export const showVideoChatModal = writable(false);
 export const latitude = writable(null);
 export const longitude = writable(null);
 export const peer = writable(null);

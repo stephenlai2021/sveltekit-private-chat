@@ -59,19 +59,19 @@
       >
         {#if tab === "Private"}
           <div class="msg" style:color={currentTab === tab ? "#FF4408" : ""}>          
-            <IconMessage width="24" heiht="24" />
+            <IconMessage />
           </div>
         {/if}
 
         {#if tab === "Group"}
           <div class="group" style:color={currentTab === tab ? "#FF4408" : ""}>
-            <IconGroup width="24" height="24" />
+            <IconGroup />
           </div>
         {/if}
 
         {#if tab === "Public"}
           <div class="room" style:color={currentTab === tab ? "#FF4408" : ""}>
-            <IconChat width="24" height="24" />
+            <IconChat />
           </div>
         {/if}
 

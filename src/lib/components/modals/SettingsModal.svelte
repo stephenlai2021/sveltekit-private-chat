@@ -25,8 +25,8 @@
   import themes from "$lib/data/themes.json";
   import bgPics from "$lib/data/bgPics.json";
   import { onMount } from "svelte";
-  import { t, locales, locale } from '$lib/i18n';
-  import IconCamera from '$lib/components/icons/IconCamera.svelte'
+  import { t, locales, locale } from "$lib/i18n";
+  import IconCamera from "$lib/components/icons/IconCamera.svelte";
 
   let url = null;
   let file = null;
@@ -182,7 +182,7 @@
                   on:change={handleAvatarChange}
                   accept="image/png, image/jpg, image/jpeg"
                 />
-               <IconCamera width="24" height="24" />
+                <IconCamera width="24" height="24" />
               </label>
             {/if}
             {#if fileUploaded}
@@ -234,7 +234,7 @@
           >
             <div class="content">
               <div class="title-wrapper">
-                <span class="menu-item">{$t('menu.image_gallery')}</span>
+                <span class="menu-item">{$t("menu.image_gallery")}</span>
               </div>
               <!-- {#if !$showThemeMenu}
                 <svg
@@ -291,7 +291,7 @@
           >
             <div class="content">
               <div class="title-wrapper">
-                <span class="menu-item">{$t('menu.gradient_gallery')}</span>
+                <span class="menu-item">{$t("menu.gradient_gallery")}</span>
               </div>
               <!-- {#if !$showGradientMenu}
                 <svg
@@ -344,7 +344,7 @@
           <!-- <div class="content" style:cursor="auto" style:height="18px"> -->
           <div class="content" style:cursor="auto">
             <div class="title-wrapper">
-              <span class="menu-item color-menu">{$t('menu.color')}</span>
+              <span class="menu-item color-menu">{$t("menu.color")}</span>
               <input
                 class="color-input"
                 type="color"
@@ -361,7 +361,7 @@
             <div class="content">
               <label>
                 <span class="menu-item" style:cursor="pointer"
-                  >{$t('menu.file')}</span
+                  >{$t("menu.file")}</span
                 >
                 <input
                   type="file"
@@ -376,12 +376,24 @@
         <li>
           <div class="content">
             <!-- <span class="menu-item">{$t('menu.language')}</span> -->
-            {#if $locale === 'en'}
-              <span class="menu-item" on:click={() => $locale = 'zh-TW'}>中文 - CHN</span>
+
+            <!-- {#if $locale === "en"}
+              <span class="menu-item" on:click={() => ($locale = "zh-TW")}
+                >中文 - CHN</span
+              >
             {/if}
-            {#if $locale === 'zh-TW'}
-              <span class="menu-item" on:click={() => $locale = 'en'}>英文 - ENG</span>
-            {/if}
+            {#if $locale === "zh-TW"}
+              <span class="menu-item" on:click={() => ($locale = "en")}
+                >英文 - ENG</span
+              >
+            {/if} -->
+
+            <div class="toggle-switch-wrapper">
+              <input type="checkbox" class="toggle-switch-input" />
+              <label class="toggle-switch-label" for="switch">
+                <span class="switch-txt" turnOn="On" turnOff="Off" />
+              </label>
+            </div>
 
             <!-- <select bind:value={$locale}>
               {#each $locales as locale}
@@ -393,13 +405,15 @@
 
         <li>
           <div class="content">
-            <span class="menu-item" on:click={() => $showAboutModal = true}>{$t('menu.about')}</span>
+            <span class="menu-item" on:click={() => ($showAboutModal = true)}
+              >{$t("menu.about")}</span
+            >
           </div>
         </li>
 
         <li on:click={logout}>
           <div class="content">
-            <span class="menu-item">{$t('menu.logout')}</span>
+            <span class="menu-item">{$t("menu.logout")}</span>
           </div>
         </li>
       </div>
@@ -417,6 +431,30 @@
 </ul>
 
 <style>
+  .toggle-switch-wrapper {
+    /* width: 60px; */
+    display: flex;
+    align-items: center;
+    /* border: 1px solid; */
+  }
+
+  /* input[type="checkbox"] { */
+  .toggle-switch-input {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+
+  .toggle-switch-label {
+    cursor: pointer;
+    width: 60px;
+    height: 20px;
+    background: grey;
+    display: block;
+    border-radius: 50px;
+    position: relative;
+  }
+
   /* select {
     padding: 3px;
     border-radius: 4px;

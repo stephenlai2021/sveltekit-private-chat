@@ -289,7 +289,7 @@
 
     {#if $selectedUserReady}
       <div class="icon-submit-wrapper" on:click|preventDefault={handleSubmit}>
-        <IconSubmit />
+        <IconSubmit width="20" height="20" />
       </div>
     {/if}
   </form>

@@ -52,23 +52,7 @@
 
   let url = null;
 
-  const constraints = {
-    video: true,
-    audio: true,
-  };
-
-  const call = async (remotePeerId) => {
-    const getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia;
-
-    const mediaStream = await getUserMedia(constraints);
-    // show local stream
-    // const call =
-  };
-
-  onMount(async () => {
+  onMount(() => {
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
         navigator.userAgent
@@ -80,27 +64,6 @@
       $isMobile = true;
       console.log("device type: ", $isMobile ? "mobile" : "desktop");
     }
-
-    // peer.js initialization
-    // const Peer = (await import("peerjs")).default()
-    // const peer = new Peer();
-
-    // peer.on("open", async (id) => {
-    //   console.log(`${$myDoc?.name}'s peerId: ${id}`);
-
-    //   let loginUserRef = doc(db, "users", $myDoc.name);
-    //   await updateDoc(loginUserRef, {
-    //     peerId: id,
-    //   });
-    // });
-
-    import("peerjs").then(({ default: Peer }) => {
-      // normal synchronous code
-      const peer = new Peer();
-      peer.on("open", (id) => {
-        console.log(`${$loggedinUser.displayName}'s id: ${id}`);
-      });
-    });
   });
 
   $: if ($pictureConfirmed) {
