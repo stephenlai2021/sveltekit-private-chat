@@ -27,6 +27,7 @@
   import { onMount } from "svelte";
   import { t, locales, locale } from "$lib/i18n";
   import IconCamera from "$lib/components/icons/IconCamera.svelte";
+  import IconLang from '$lib/components/icons/IconLang.svelte'
 
   let url = null;
   let file = null;
@@ -356,7 +357,7 @@
           </div>
         </li>
 
-        {#if !$isMobile}
+        <!-- {#if !$isMobile}
           <li>
             <div class="content">
               <label>
@@ -371,29 +372,23 @@
               </label>
             </div>
           </li>
-        {/if}
+        {/if} -->
 
         <li>
           <div class="content">
-            <!-- <span class="menu-item">{$t('menu.language')}</span> -->
-
-            <!-- {#if $locale === "en"}
-              <span class="menu-item" on:click={() => ($locale = "zh-TW")}
-                >中文 - CHN</span
-              >
+            {#if $locale === "en"}
+              <span class="menu-item" on:click={() => ($locale = "zh-TW")}>{$t("menu.language")}- CHN/中文</span>
             {/if}
             {#if $locale === "zh-TW"}
-              <span class="menu-item" on:click={() => ($locale = "en")}
-                >英文 - ENG</span
-              >
-            {/if} -->
+              <span class="menu-item" on:click={() => ($locale = "en")}>{$t("menu.language")}- 英文/ENG</span>
+            {/if}
 
-            <div class="toggle-switch-wrapper">
+            <!-- <div class="toggle-switch-wrapper">
               <input type="checkbox" class="toggle-switch-input" />
               <label class="toggle-switch-label" for="switch">
                 <span class="switch-txt" turnOn="On" turnOff="Off" />
               </label>
-            </div>
+            </div> -->
 
             <!-- <select bind:value={$locale}>
               {#each $locales as locale}
@@ -403,13 +398,13 @@
           </div>
         </li>
 
-        <li>
+        <!-- <li>
           <div class="content">
             <span class="menu-item" on:click={() => ($showAboutModal = true)}
               >{$t("menu.about")}</span
             >
           </div>
-        </li>
+        </li> -->
 
         <li on:click={logout}>
           <div class="content">
@@ -503,12 +498,10 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    /* z-index: -10; */
   }
 
   .color-input {
-    /* width: 0; */
-    /* width: 29.6px; */
+    width: 92px;
     opacity: 0;
   }
 
@@ -517,6 +510,7 @@
     font-weight: bold;
     letter-spacing: 0.8px;
     color: rgb(55, 63, 80);
+    text-transform: uppercase;
   }
 
   h3.user-name,

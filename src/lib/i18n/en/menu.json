@@ -2,9 +2,9 @@
   "messages": "Messages",
   "group_chat": "Group Chat",
   "chatroom": "Chatroom",
-  "image_gallery": "Image Gallery",
-  "gradient_gallery": "Gradient Gallery",
-  "color": "Color",
+  "image_gallery": "Bg Image",
+  "gradient_gallery": "Bg Gradient",
+  "color": "Bg Color",
   "file": "From file",
   "language": "Lang",
   "about": "About",
@@ -19,5 +19,8 @@
   "login_with_facebook": "Login with Facebook",
   "email": "email",
   "password": "password",
-  "isHere": "is here"
+  "isHere": "is here",
+  "unread": "unread",
+  "read": "read",
+  "new": "new"
 }

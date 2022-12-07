@@ -38,15 +38,7 @@
 
   let url = null;
   let file = null;
-  let count = 0;
   let messageSent = "";
-  // let countVal = 0;
-
-  // msgCount.subscribe((val) => (countVal = val));
-
-  onMount(() => {
-    // msgCount.subscribe(val => countVal = val)
-  });
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
@@ -113,13 +105,6 @@
       /* update selected user document */
       let selectedUserRef = doc(db, "users", $selectedUsername);
       let selectedUserSnap = await getDoc(selectedUserRef);
-      // $msgCount++
-
-      // count = selectedUserSnap.msgCount[
-      //   user.msgCount.findIndex(
-      //     (count) => count.split("=>")[0] === $loggedinUser.displayName
-      //   )
-      // ].split("=>")[1]++;
 
       await updateDoc(selectedUserRef, {
         lastMsg: selectedUserSnap
@@ -136,18 +121,12 @@
               ? `${$loggedinUser.displayName}=>You: ${new Date()}`
               : time
           ),
-        // msgCount: selectedUserSnap
-        //   .data()
-        //   .msgCount.map((count) =>
-        //     count.split("=>")[0] === $loggedinUser.displayName
-        //       ? `${$loggedinUser.displayName}=>${+count}`
-        //       : count
-        //   ),
         unread: selectedUserSnap
           .data()
           .unread.map((state) =>
             state.split("=>")[0] === $loggedinUser.displayName
-              ? `${$loggedinUser.displayName}=>You: true`
+              ? `${$loggedinUser.displayName}=>unread`
+              // ? `${$loggedinUser.displayName}=>`
               : state
           ),
       });
@@ -155,7 +134,6 @@
       // update login user document
       let loggedinUserRef = doc(db, "users", $loggedinUser.displayName);
       let loggedinUserSnap = await getDoc(loggedinUserRef);
-      // $msgCount++
       await updateDoc(loggedinUserRef, {
         lastMsg: loggedinUserSnap
           .data()
@@ -171,32 +149,20 @@
               ? `${$selectedUsername}=>${new Date()}`
               : time
           ),
-        // msgCount: loggedinUserSnap
-        //   .data()
-        //   .msgCount.map((count) =>
-        //     count.split("=>")[0] === $selectedUsername
-        //       ? `${$selectedUsername}=>${+count}`
-        //       : count
-        //   ),
         unread: loggedinUserSnap
           .data()
           .unread.map((state) =>
             state.split("=>")[0] === $selectedUsername
-              ? `${$selectedUsername}=>true`
+              ? `${$selectedUsername}=>new`
               : state
           ),
       });
       messageSent = "";
-      // msgCount.update((n) => n + 1);
-      // msgCount.set(countVal)
       console.log("message created successfully 😁");
-      // console.log('message count: ', $msgCount)
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);
     }
   };
-
-  // $: if ($msgCount) console.log('message count: ', $msgCount)
 </script>
 
 <div class="chatbox_input">

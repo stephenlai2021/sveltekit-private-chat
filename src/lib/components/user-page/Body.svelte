@@ -74,12 +74,8 @@
         class="message"
         class:my_message={msg.from === $loggedinUser.displayName}
         class:friend_message={msg.from != $loggedinUser.displayName}
-        in:fly={msg.from === $loggedinUser.displayName ? { x: 30, y:30, duration: 300, delay: 300 } : { x: -30, y:30, duration: 300, delay: 300 }}
-      >
-        <!-- transition:fade -->
-        <!-- out:fade -->
-        <!-- transition:fly={{ y: 30, duration: 100, delay: 100 }} -->
-        <!-- transition:scale={{ delay: 150, duration: 200, easing: quintOut }} -->
+        in:fly={msg.from === $loggedinUser.displayName ? { x: 30, y:30, duration: 300, delay: 300 } : { x: -30, y:30, duration: 300, delay: 300 }}        
+        >
         {#if $myDoc && $currentSelectedUser}
           <div class="avatar">
             <img
@@ -146,7 +142,6 @@
               on:click={() => showImagePreview(msg.pictureURL, msg.imageURL)}
             />
           {/if}
-          <!-- </p> -->
         </p>
       </div>
     {/each}
@@ -162,7 +157,6 @@
     bottom: -2px;
     width: 25px;
     height: 25px;
-    /* border: 1px solid green; */
   }
 
   .message.friend_message .avatar {
@@ -230,7 +224,6 @@
     justify-content: flex-end;
     text-align: left;
     position: relative;
-    /* border: 1px solid red; */
   }
 
   .message.friend_message .message-content {
@@ -240,8 +233,6 @@
     border-bottom-left-radius: 0px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    /* border: 1px solid; */
-    /* box-shadow: 0.1em 0.1em 0.2em black; */
   }
 
   .message-content {
@@ -251,7 +242,6 @@
     border-bottom-right-radius: 0px;
     background: var(--lemon-green);
     color: var(--icon-add-color);
-    /* box-shadow: 0.1em 0.1em 0.2em black; */
   }
 
   .message-content .message-text {
@@ -272,7 +262,6 @@
     top: 60px;
     bottom: 60px;
     width: 100%;
-    /* height: calc(100vh - 120px); */
     padding: 0px 10px;
     overflow-y: auto;
     overflow-x: hidden;

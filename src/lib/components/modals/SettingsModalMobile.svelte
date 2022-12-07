@@ -3,11 +3,13 @@
     myDoc,
     mobile,
     bgColor,
+    initial,
     imageURL,
     isMobile,
     userAvatar,
     imageTitle,
     loggedinUser,
+    selectedFile,
     profileUpdated,
     showThemeMenu,
     showThemeModal,
@@ -16,32 +18,34 @@
     selectedUsername,
     showSettingsModalMobile,
   } from "$lib/store";
-  // import themeStore, { setTheme } from "svelte-themes";
-  import { onMount } from "svelte";
-  // import { signout } from "$lib/functions/auth/signout";
   import { fly } from "svelte/transition";
-  import Cookies from "js-cookie";
-  import { page } from "$app/stores";
   import { auth, db, storage } from "$lib/firebase/client";
   import { onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
   import { doc, updateDoc, getDoc } from "firebase/firestore";
   import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-  import CameraModal from "$lib/components/modals/CameraModal.svelte";
   import { signout } from "$lib/functions/auth/signout";
   import themes from "$lib/data/themes.json";
   import bgPics from "$lib/data/bgPics.json";
-  import { t, locales, locale } from '$lib/i18n';
-
+  import { t, locales, locale } from "$lib/i18n";
+  import IconCamera from "$lib/components/icons/IconCamera.svelte";
 
   let url = null;
   let file = null;
-  let theme = true;
   let colorVal = "#b69696";
   let fileError = null;
   let fileUploaded = false;
 
   const logout = async () => {
+    $initial = false;
     $showSettingsModalMobile = false;
+
+    let userRef = doc(db, "users", $myDoc.name);
+    await updateDoc(userRef, {
+      online: false,
+    });
+
+    $myDoc = null;
+
     await signout();
   };
 
@@ -63,10 +67,10 @@
 
   const handleFileChange = async (e) => {
     console.log("handle file change");
-    $file = e.target.files[0];
-    console.log($file);
+    $selectedFile = e.target.files[0];
+    console.log($selectedFile);
 
-    $imageURL = await readURL($file);
+    $imageURL = await readURL($selectedFile);
     console.log("image url: ", $imageURL);
 
     let userRef = doc(db, "users", $myDoc.name);
@@ -129,7 +133,7 @@
     /* upload image */
     fileUploaded = true;
     uploadBytes(imageRef, file).then(() => {
-      console.log(">>> image upload completed <<<");
+      console.log(">>> image uploaded <<<");
       getDownloadURL(imageRef).then((_url) => {
         url = _url;
       });
@@ -141,16 +145,15 @@
     updateProfile($loggedinUser, {
       photoURL: url,
     }).then(() => {
-      $profileUpdated = true;
-      console.log(">>> use profile uupdated <<<");
+      console.log(">>> user profile uupdated <<<");
     });
 
     /* update user document */
-    let userRef = doc(db, "whatzapp_users", $loggedinUser.email);
+    let userRef = doc(db, "users", $loggedinUser.displayName);
     updateDoc(userRef, {
       avatar: url,
     }).then(() => {
-      console.log(">>> user avatar updated <<<");
+      console.log(">>> user document updated <<<");
       fileUploaded = false;
     });
   }
@@ -158,30 +161,34 @@
 
 <ul
   class="modal-settings"
-  on:click|stopPropagation={() => console.log("settings modal clicked !")}
+  on:click|stopPropagation
   transition:fly={{ x: -60, duration: 100, delay: 100 }}
-  >
+>
   <!-- style:width={$mobile ? "80%" : "100%"} -->
   <div class="top">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="ionicon"
-      viewBox="0 0 512 512"
-      width="24"
-      height="24"
-      fill="currentColor"
-      style:margin-left="5px"
-      on:click|stopPropagation={() => ($showSettingsModalMobile = false)}
-    >
-      <path
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="48"
-        d="M244 400L100 256l144-144M120 256h292"
-      />
-    </svg>
+    {#if $myDoc}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="ionicon icon-back-arrow"
+        viewBox="0 0 512 512"
+        width="24"
+        height="24"
+        fill="currentColor"
+        style:margin-left="5px"
+        on:click|stopPropagation={() => ($showSettingsModalMobile = false)}
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="48"
+          d="M244 400L100 256l144-144M120 256h292"
+        />
+      </svg>
+    {:else}
+      <div class="icon-back-arrow-loading loading-animation" />
+    {/if}
   </div>
 
   <div class="main">
@@ -191,10 +198,19 @@
           {#if $myDoc}
             {#if $myDoc.avatar && !fileUploaded}
               <img class="image" src={$myDoc.avatar} alt="" />
+              <label>
+                <input
+                  type="file"
+                  on:change={handleAvatarChange}
+                  accept="image/png, image/jpg, image/jpeg"
+                />
+                <IconCamera width="24" height="24" />
+              </label>
             {/if}
             {#if fileUploaded}
               <div class="loading">
                 <img
+                  class="loading-gif"
                   src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif"
                   alt=""
                   width="20"
@@ -202,44 +218,6 @@
                 />
               </div>
             {/if}
-            <label>
-              <input
-                type="file"
-                on:change={handleAvatarChange}
-                accept="image/png, image/jpg, image/jpeg"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon icon-camera"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 00-32 32v192a32 32 0 0032 32h352a32 32 0 0032-32V192a32 32 0 00-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="32"
-                />
-                <circle
-                  cx="256"
-                  cy="272"
-                  r="80"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-miterlimit="10"
-                  stroke-width="32"
-                />
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="32"
-                  d="M124 158v-22h-24v22"
-                />
-              </svg>
-            </label>
           {:else}
             <div class="user-avatar loading-animation" />
           {/if}
@@ -270,170 +248,101 @@
     </div>
 
     {#if $myDoc}
-      <li>
-        <div
-          class="option"
-          on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
-        >
-          <div class="content">
-            <div class="title-wrapper">
-              <span class="menu-item">{$t('menu.image_gallery')}</span>
-            </div>
-            {#if !$showThemeMenu}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-              >
-                <path
-                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-                />
-              </svg>
-            {:else}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-                style:margin-left="26px"
-              >
-                <path
-                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-                />
-              </svg>
-            {/if}
-          </div>
-        </div>
-        {#if $showThemeMenu}
-          <main>
-            {#each bgPics as bgPic}
-              <div
-                class="theme-item"
-                style:cursor="pointer"
-                on:click={() => uploadTheme(bgPic)}
-              >
-                <div
-                  class="theme-image"
-                  style:background-image={`url(${bgPic.url})`}
-                />
-              </div>
-            {/each}
-          </main>
-        {/if}
-      </li>
-
-      <li>
-        <div
-          class="option"
-          on:click={() => ($showGradientMenu = !$showGradientMenu)}
-        >
-          <div class="content">
-            <div class="title-wrapper">
-              <span class="menu-item">{$t('menu.gradient_gallery')}</span>
-            </div>
-            {#if !$showGradientMenu}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon icon-arrow-down"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-              >
-                <path
-                  d="M98 190.06l139.78 163.12a24 24 0 0036.44 0L414 190.06c13.34-15.57 2.28-39.62-18.22-39.62h-279.6c-20.5 0-31.56 24.05-18.18 39.62z"
-                />
-              </svg>
-            {:else}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon icon-arrow-up"
-                viewBox="0 0 512 512"
-                width="15"
-                height="15"
-                fill="currentColor"
-              >
-                <path
-                  d="M414 321.94L274.22 158.82a24 24 0 00-36.44 0L98 321.94c-13.34 15.57-2.28 39.62 18.22 39.62h279.6c20.5 0 31.56-24.05 18.18-39.62z"
-                />
-              </svg>
-            {/if}
-          </div>
-        </div>
-        {#if $showGradientMenu}
-          <main>
-            {#each themes as theme}
-              <div
-                class="theme-item"
-                style:cursor="pointer"
-                on:click={() => uploadGradient(theme)}
-              >
-                <div
-                  class="theme-image"
-                  style:background-image={theme.background}
-                />
-              </div>
-            {/each}
-          </main>
-        {/if}
-      </li>
-
-      <li>
-        <div class="content" style:cursor="auto" style:height="18px">
-          <div class="title-wrapper">
-            <span class="menu-item">{$t('menu.color')}</span>
-          </div>
-          <input
-            type="color"
-            bind:value={colorVal}
-            on:input|stopPropagation={() => uploadColor(colorVal)}
-            style:cursor="pointer"
-          />
-        </div>
-      </li>
-
-      {#if !$isMobile}
+      <div class="menu-wrapper">
         <li>
-          <div class="content">
-            <label>
-              <span class="menu-item" style:cursor="pointer">{$t('menu.file')}</span>
+          <div
+            class="option"
+            on:click|stopPropagation={() => ($showThemeMenu = !$showThemeMenu)}
+          >
+            <div class="content">
+              <div class="title-wrapper">
+                <span class="menu-item">{$t("menu.image_gallery")}</span>
+              </div>
+            </div>
+          </div>
+          {#if $showThemeMenu}
+            <main>
+              {#each bgPics as bgPic}
+                <div
+                  class="theme-item"
+                  style:cursor="pointer"
+                  on:click={() => uploadTheme(bgPic)}
+                >
+                  <div
+                    class="theme-image"
+                    style:background-image={`url(${bgPic.url})`}
+                  />
+                </div>
+              {/each}
+            </main>
+          {/if}
+        </li>
+
+        <li>
+          <div
+            class="option"
+            on:click={() => ($showGradientMenu = !$showGradientMenu)}
+          >
+            <div class="content">
+              <div class="title-wrapper">
+                <span class="menu-item">{$t("menu.gradient_gallery")}</span>
+              </div>
+            </div>
+          </div>
+          {#if $showGradientMenu}
+            <main>
+              {#each themes as theme}
+                <div
+                  class="theme-item"
+                  style:cursor="pointer"
+                  on:click={() => uploadGradient(theme)}
+                >
+                  <div
+                    class="theme-image"
+                    style:background-image={theme.background}
+                  />
+                </div>
+              {/each}
+            </main>
+          {/if}
+        </li>
+
+        <li>
+          <div class="content" style:cursor="auto">
+            <div class="title-wrapper">
+              <span class="menu-item color-menu">{$t("menu.color")}</span>
               <input
-                type="file"
-                on:change={handleFileChange}
-                accept="image/png, image/jpg, image/jpeg"
+                class="color-input"
+                type="color"
+                bind:value={colorVal}
+                on:input|stopPropagation={() => uploadColor(colorVal)}
+                style:cursor="pointer"
               />
-            </label>
+            </div>
           </div>
         </li>
-      {/if}
 
-      <li>
-        <div class="content">
-          <span class="menu-item">{$t('menu.language')}</span>
-          <select bind:value={$locale}>
-            {#each $locales as locale}
-              <option value={locale}>{locale}</option>
-            {/each}
-          </select>
-        </div>
-      </li>
+        <li>
+          <div class="content">
+            {#if $locale === "en"}
+              <span class="menu-item" on:click={() => ($locale = "zh-TW")}
+                >{$t("menu.language")}- CHN/中文</span
+              >
+            {/if}
+            {#if $locale === "zh-TW"}
+              <span class="menu-item" on:click={() => ($locale = "en")}
+                >{$t("menu.language")}- 英文/ENG</span
+              >
+            {/if}
+          </div>
+        </li>
 
-      <li>
-        <div class="content">
-          <span class="menu-item">About</span>
-        </div>
-      </li>
-
-      <li on:click={logout}>
-        <div class="content">
-          <span class="menu-item">Logout</span>
-        </div>
-      </li>
+        <li on:click={logout}>
+          <div class="content">
+            <span class="menu-item">{$t("menu.logout")}</span>
+          </div>
+        </li>
+      </div>
     {:else}
       <div class="loading-skeleton">
         <div class="loading-menu-item loading-animation" />
@@ -448,35 +357,48 @@
 </ul>
 
 <style>
-  select {
-    margin-left: 20px;
-    padding: 2px;
-    border-radius: 4px;
+  .icon-back-arrow-loading {
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+    margin-left: 10px;
   }
-  
+
+  .top {
+    height: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+
   .loading-skeleton {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid; */
   }
 
   .loading-menu-item {
     height: 20px;
     width: 150px;
     margin-bottom: 22px;
-    background-color: hsl(196, 13%, 78%);
-    background-color: hsl(200, 20%, 95%);
-    border-radius: 4px;
   }
 
-  .modal-settings {
-    background: #ebebeb;
-    /* width: 100vw; */
+  .option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    /* box-shadow: h-offset v-offset blur spread */
-    /* box-shadow: 1px 0px 5px 0px #bebbbb; */
+  main {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    max-height: 400px;
+  }
+
+  .theme-item {
+    padding: 0;
   }
 
   .loading {
@@ -487,14 +409,27 @@
     align-items: center;
   }
 
-  span.menu-item {
-    font-size: 14px;
-    letter-spacing: 0.8px;
-    width: 100%;
-    /* border: 1px solid red; */
+  .color-menu {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
-  h3.user-name {
+  .color-input {
+    width: 92px;
+    opacity: 0;
+  }
+
+  span.menu-item {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    color: rgb(55, 63, 80);
+    text-transform: uppercase;
+  }
+
+  h3.user-name,
+  p.user-email {
     margin-bottom: 5px;
     margin-top: 10px;
   }
@@ -524,14 +459,6 @@
     opacity: 0;
   }
 
-  .icon-camera {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    right: -10px;
-    bottom: -10px;
-  }
-
   .image-wrapper .image {
     border-radius: 8px;
     object-fit: cover;
@@ -546,12 +473,6 @@
     width: 100px;
   }
 
-  .main {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
-  }
-
   .user-profile .avatar-section {
     justify-content: center;
     align-items: center;
@@ -559,36 +480,27 @@
     display: flex;
   }
 
-  main {
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    max-height: 400px;
-  }
-
   .user-profile {
     margin-bottom: 30px;
   }
 
   .title-wrapper {
+    position: relative;
     width: 100%;
   }
 
   .content {
+    width: 140px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 140px;
     cursor: pointer;
-    /* border: 1px solid; */
+    height: 36px;
   }
 
   .top {
     height: 50px;
     margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    /* border: 1px solid; */
   }
 
   label {
@@ -599,7 +511,7 @@
 
   li {
     margin: 0 10px;
-    padding: 10px 0;
+    padding: 0px 0;
     list-style: none;
     margin-bottom: 5px;
     border-radius: 8px;
@@ -615,6 +527,14 @@
     margin-top: 10px;
   }
 
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: inherit;
+  }
+
   ul {
     position: absolute;
     top: 0px;
@@ -628,18 +548,11 @@
     background: #ebebeb;
   }
 
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: inherit;
-  }
-
   @media (max-width: 800px) {
-    ul {
+    .modal-settings {
+      margin: 0;
+      border-radius: 0;
       height: 100vh;
-      border-radius: 0px;
     }
   }
 </style>

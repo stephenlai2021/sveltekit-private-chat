@@ -2,9 +2,9 @@
   "messages": "私人信息",
   "group_chat": "群組",
   "chatroom": "聊天室",
-  "image_gallery": "圖庫",
-  "gradient_gallery": "漸變",
-  "color": "顏色",
+  "image_gallery": "背景圖庫",
+  "gradient_gallery": "背景漸變",
+  "color": "背景顏色",
   "file": "檔案",
   "language": "語言",
   "about": "關於",
@@ -19,5 +19,8 @@
   "login_with_facebook": "臉書登入",
   "email": "電子郵件信箱",
   "password": "密碼",
-  "isHere": "在這裡"
+  "isHere": "在這裡",
+  "unread": "未讀",
+  "read": "已讀",
+  "new": "新信息"
 }

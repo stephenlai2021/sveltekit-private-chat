@@ -76,7 +76,11 @@
         ...userSnap.data().msgCount,
         $loggedinUser.displayName + "=>0",
       ],
-      unread: [],
+      unread: [
+        ...userSnap.data().unread,
+        $loggedinUser.displayName + "=>[NEW]",
+
+      ],
     });
     console.log(
       `${$loggedinUser.displayName} is successfully added to ${foundUsers[0].name}'s contact list 😁}`
@@ -95,9 +99,8 @@
         ...meSnap.data().lastUpdated,
         foundUsers[0].name + "=>" + new Date(),
       ],
-      msgCount: [...meSnap.data().msgCount, foundUsers[0].name + "=>0"],
+      unread: [...meSnap.data().unread, foundUsers[0].name + "=>NEW"],
     });
-    // console.log(`${foundUsers[0].name} is successfully added to ${$loggedinUser.displayName}'s contact list 😁}`);
     console.log(
       `${foundUsers[0].name} is successfully added to ${$myDoc.name}'s contact list 😁}`
     );

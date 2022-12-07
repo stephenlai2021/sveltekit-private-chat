@@ -44,14 +44,13 @@
   </div>
 
   <ul class="nav_icons">
-    {#if $allUsers && $allUsers.length}
+    <!-- {#if $allUsers && $allUsers.length}
       <li
         class="icon-bell-wrapper"
         on:click|stopPropagation={() => ($showSearchBar = true)}
       >
         <div class="msg-count">
           <span class="count">6</span>
-          <!-- 6 -->
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -73,33 +72,34 @@
       </li>
     {:else}
       <div class="icon-bell-wrapper loading-animation" />
+    {/if} -->
+
+    {#if $allUsers && $allUsers.length}
+      <div class="icon-add-wrapper">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ionicon icon-add"
+          viewBox="0 0 512 512"
+          width="24"
+          height="24"
+          fill="currentColor"
+          on:click|stopPropagation={showModal}
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="32"
+            d="M256 112v288M400 256H112"
+          />
+        </svg>
+      </div>
+    {:else}
+      <div class="icon-add-wrapper-animation loading-animation" />
     {/if}
   </ul>
 
-  <!-- {#if $allUsers && $allUsers.length}
-    <div class="icon-add-wrapper">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="ionicon icon-add"
-        viewBox="0 0 512 512"
-        width="24"
-        height="24"
-        fill="currentColor"
-        on:click|stopPropagation={showModal}
-      >
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
-          d="M256 112v288M400 256H112"
-        />
-      </svg>
-    </div>
-  {:else}
-    <div class="icon-add-wrapper-animation loading-animation" />
-  {/if} -->
 
 </div>
 
@@ -126,33 +126,11 @@
     box-shadow: 0.1em 0.1em 0.2em black;
   }
 
-  /* .icon-add {
-    color: white;
-  }
-
   .icon-add-wrapper-animation {
-    position: absolute;
-    bottom: 80px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
+    width: 24px;
+    height: 24px;
     border-radius: 50px;
   }
-
-  .icon-add-wrapper {
-    position: absolute;
-    bottom: 80px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    background: rgb(78, 170, 78);
-    background: var(--theme-color);
-    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  } */
 
   .icon-bell-wrapper {
     position: relative;

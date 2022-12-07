@@ -12,9 +12,9 @@
     showSettingsModalMobile,
   } from "$lib/store";
   import TabmenuSkeleton from "../skeleton/TabmenuSkeleton.svelte";
-  import IconMessage from '$lib/components/icons/IconMessage.svelte'
-  import IconGroup from '$lib/components/icons/IconGroup.svelte'
-  import IconChat from '$lib/components/icons/IconChat.svelte'
+  import IconMessage from "$lib/components/icons/IconMessage.svelte";
+  import IconGroup from "$lib/components/icons/IconGroup.svelte";
+  import IconChat from "$lib/components/icons/IconChat.svelte";
 
   const menuItems = ["Private", "Group", "Public"];
   let currentTab = menuItems[0];
@@ -35,17 +35,17 @@
     }
 
     if (currentTab === "Group") {
-      $privateChat = false;
-      $groupChat = true;
-      $publicChat = false;
-      goto("/");
+      // $privateChat = false;
+      // $groupChat = true;
+      // $publicChat = false;
+      // goto("/");
     }
 
     if (currentTab === "Public") {
-      $privateChat = false;
-      $groupChat = false;
-      $publicChat = true;
-      goto("/");
+      // $privateChat = false;
+      // $groupChat = false;
+      // $publicChat = true;
+      // goto("/");
     }
   };
 </script>
@@ -58,7 +58,8 @@
         style:width={$mobile ? "25%" : "33.3%"}
       >
         {#if tab === "Private"}
-          <div class="msg" style:color={currentTab === tab ? "#FF4408" : ""}>          
+          <!-- style:color={currentTab === tab ? "#FF4408" : ""}   -->
+          <div class="msg" style:color="#FF4408">
             <IconMessage />
           </div>
         {/if}
@@ -74,10 +75,9 @@
             <IconChat />
           </div>
         {/if}
-
       </span>
     {/each}
-    
+
     {#if $mobile}
       <div class="icon-avatar">
         <img
@@ -93,10 +93,6 @@
 </div>
 
 <style>
-  /* .description {
-    font-weight: 300;
-  } */
-
   .msg,
   .group,
   .room {
@@ -105,25 +101,6 @@
     align-items: center;
     /* border: 1px solid; */
   }
-
-  /* .icon-add {
-    color: white;
-  }
-
-  .icon-add-wrapper {
-    position: absolute;
-    bottom: 80px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50px;
-    background: rgb(78, 170, 78);
-    background: var(--theme-color);
-    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  } */
 
   .icon-avatar img {
     width: 24px;
@@ -147,8 +124,6 @@
     display: flex;
     height: 60px;
     border-top: 1px solid white;
-    box-shadow: 0 0 o.1em red;
-    /* border: 1px solid; */
   }
 
   span {
@@ -158,7 +133,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    /* border: 1px solid; */
+    /* cursor: pointer; */
   }
 </style>

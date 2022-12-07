@@ -34,7 +34,7 @@
   <Header />
   <SearchUser />
   <ContactList />
-  <AddButton />
+  <!-- <AddButton /> -->
   <TabMenu />
 
   {#if $showSettingsModalMobile && $widthLessthan1200}

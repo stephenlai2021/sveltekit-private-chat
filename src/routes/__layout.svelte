@@ -82,7 +82,7 @@
   import AddFriendModal from "$lib/components/modals/AddFriendModal.svelte";
   import AddGroupModal from "$lib/components/modals/AddGroupModal.svelte";
   import AddRoomModal from "$lib/components/modals/AddRoomModal.svelte";
-  import VideoChatModal from "$lib/components/modals/VideoChatModal.svelte";
+  // import VideoChatModal from "$lib/components/modals/VideoChatModal.svelte";
   import LoadingModal from "$lib/components/modals/LoadingModal.svelte";
   import { signout } from "$lib/functions/auth/signout";
   import { scale, fly, fade } from "svelte/transition";
@@ -247,9 +247,9 @@
       : $page.url.pathname !== "/" && $page.url.pathname !== "/login"
       ? `${$currentSelectedUser?.bgColor} center / cover`
       : "#ebebeb"}
-    style:transition="background 300ms linear"
     style:-o-transition="background 300ms linear"
-  >
+    >
+    <!-- style:transition="background 300ms linear" -->
     <SettingsModal />
     <div
       class="leftSide"

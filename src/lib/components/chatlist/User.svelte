@@ -1,6 +1,5 @@
 <script>
   import {
-    // myDoc,
     mobile,
     loggedinUser,
     currentContact,
@@ -11,11 +10,49 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import moment from "moment";
+  import { t, locales, locale } from "$lib/i18n";
+  import { doc, getDoc, updateDoc } from "firebase/firestore";
+  import { db } from "$lib/firebase/client";
 
   export let user;
 
   const selectUser = async (selectedUser) => {
     $selectedUsername = selectedUser.name;
+
+    /* update selected user document */
+    let selectedUserRef = doc(db, "users", $selectedUsername);
+    let selectedUserSnap = await getDoc(selectedUserRef);
+
+    // update login user document
+    let loggedinUserRef = doc(db, "users", $loggedinUser.displayName);
+    let loggedinUserSnap = await getDoc(loggedinUserRef);
+
+    if (
+      selectedUser.unread[
+        selectedUser.unread.findIndex(
+          (msg) => msg.split("=>")[0] === $loggedinUser.displayName
+        )
+      ].split("=>")[1] === "new"
+    ) {
+      await updateDoc(selectedUserRef, {
+        unread: selectedUserSnap
+          .data()
+          .unread.map((state) =>
+            state.split("=>")[0] === $loggedinUser.displayName
+              ? `${$loggedinUser.displayName}=>`
+              : state
+          ),
+      });
+      await updateDoc(loggedinUserRef, {
+        unread: loggedinUserSnap
+          .data()
+          .unread.map((state) =>
+            state.split("=>")[0] === $selectedUsername
+              ? `${$selectedUsername}=>read`
+              : state
+          ),
+      });
+    }
     goto(`/${$selectedUsername}`);
   };
 </script>
@@ -64,20 +101,62 @@
             )
           ].split("=>")[1]}
         </p>
-        <!-- <b style:background={"var(--theme-color)"}>
-          {user.msgCount[
-            user.msgCount.findIndex(
-              (count) => count.split("=>")[0] === $loggedinUser.displayName
+        <div 
+          class="indicator"
+          style:padding={user.unread[
+            user.unread.findIndex(
+              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
             )
-          ].split("=>")[1]}
-        </b> -->
-        <b style:background={"var(--theme-color)"}>3</b>
+          ].split("=>")[1] !== ""
+            ? "2px 4px"
+            : "0"}
+          style:background={user.unread[
+            user.unread.findIndex(
+              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
+            )
+          ].split("=>")[1] === "new"
+            ? "#ff4408"
+            : "gray"}
+        >
+          {user.unread[
+            user.unread.findIndex(
+              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
+            )
+          ].split("=>")[1] === "new"
+            ? $t("menu.new")
+            : user.unread[
+                user.unread.findIndex(
+                  (msg) => msg.split("=>")[0] === $loggedinUser.displayName
+                )
+              ].split("=>")[1] === "read"
+            ? $t("menu.read")
+            : user.unread[
+                user.unread.findIndex(
+                  (msg) => msg.split("=>")[0] === $loggedinUser.displayName
+                )
+              ].split("=>")[1] === "unread"
+            ? $t("menu.unread")
+            : ""}
+        </div>
       </div>
     {/if}
   </div>
 </div>
 
 <style>
+  .indicator {
+    font-style: italic;
+    color: white;
+    border-radius: 4px;
+    min-width: 20px;
+    display: grid;
+    place-content: center;
+    font-size: 0.75em;
+    margin-right: 3px;
+    position: absolute;
+    right: 0px;
+  }
+
   .date {
     color: white;
     text-shadow: 0.1em 0.1em 0.2em black;
@@ -91,10 +170,6 @@
     height: 65px;
     cursor: pointer;
   }
-
-  /* .block:hover {
-    transform: scale(1.01);
-  } */
 
   .imgbx {
     min-width: 45px;
@@ -136,7 +211,6 @@
     letter-spacing: 0.3px;
     font-style: normal;
     line-height: 20px;
-    /* color: var(--theme-color); */
   }
 
   .message {
@@ -144,7 +218,6 @@
     justify-content: space-between;
     height: 22px;
     position: relative;
-    /* border: 1px solid; */
   }
 
   .message p {
@@ -159,35 +232,5 @@
     color: white;
     text-shadow: 0.1em 0.1em 0.2em black;
     width: calc(100% - 30px);
-  }
-
-  .block .details .message b {
-    background: var(--active-green);
-    background: gray;
-    color: white;
-    min-width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: grid;
-    place-content: center;
-    font-size: 0.75em;
-    margin-right: 3px;
-    position: absolute;
-    right: 0px;
-  }
-
-  .block.unread .details .message b {
-    background: var(--active-green);
-    background: #ff4408;
-    color: white;
-    min-width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: grid;
-    place-content: center;
-    font-size: 0.75em;
-    margin-right: 3px;
-    position: absolute;
-    right: 0px;
   }
 </style>

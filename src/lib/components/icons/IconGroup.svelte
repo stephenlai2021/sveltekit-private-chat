@@ -9,6 +9,7 @@
   width={width}
   height={height}
   fill="currentColor"
+  style:color="lightgray"
 >
   <path
     d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-3-42.31 26.37-72 66-72s69 30.46 66 72z"
