@@ -18,6 +18,7 @@
 
   const selectUser = async (selectedUser) => {
     $selectedUsername = selectedUser.name;
+    goto(`/${$selectedUsername}`);
 
     /* update selected user document */
     let selectedUserRef = doc(db, "users", $selectedUsername);
@@ -53,7 +54,7 @@
           ),
       });
     }
-    goto(`/${$selectedUsername}`);
+    // goto(`/${$selectedUsername}`);
   };
 </script>
 
@@ -145,7 +146,7 @@
 
 <style>
   .indicator {
-    font-style: italic;
+    /* font-style: italic; */
     color: white;
     border-radius: 4px;
     min-width: 20px;
