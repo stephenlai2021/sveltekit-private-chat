@@ -3,6 +3,7 @@
     mobile,
     loggedinUser,
     currentContact,
+    selectedUser,
     selectedUsername,
     currentSelectedUser,
   } from "$lib/store";
@@ -13,24 +14,29 @@
   import { t, locales, locale } from "$lib/i18n";
   import { doc, getDoc, updateDoc } from "firebase/firestore";
   import { db } from "$lib/firebase/client";
+  import IconCheck from "$lib/components/icons/IconCheck.svelte";
+  import IconPaperPlane from "$lib/components/icons/IconPaperPlane.svelte";
+  import IconBellAlert from "$lib/components/icons/IconBellAlert.svelte";
+  import IconBell from "$lib/components/icons/IconBell.svelte";
 
   export let user;
 
-  const selectUser = async (selectedUser) => {
-    $selectedUsername = selectedUser.name;
+  const selectUser = async (user) => {
+    $selectedUser = user;
+    $selectedUsername = user.name;
     goto(`/${$selectedUsername}`);
 
     /* update selected user document */
     let selectedUserRef = doc(db, "users", $selectedUsername);
     let selectedUserSnap = await getDoc(selectedUserRef);
 
-    // update login user document
+    /* update login user document */
     let loggedinUserRef = doc(db, "users", $loggedinUser.displayName);
     let loggedinUserSnap = await getDoc(loggedinUserRef);
 
     if (
-      selectedUser.unread[
-        selectedUser.unread.findIndex(
+      user.unread[
+        user.unread.findIndex(
           (msg) => msg.split("=>")[0] === $loggedinUser.displayName
         )
       ].split("=>")[1] === "new"
@@ -54,7 +60,6 @@
           ),
       });
     }
-    // goto(`/${$selectedUsername}`);
   };
 </script>
 
@@ -102,42 +107,17 @@
             )
           ].split("=>")[1]}
         </p>
-        <div 
-          class="indicator"
-          style:padding={user.unread[
-            user.unread.findIndex(
-              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
-            )
-          ].split("=>")[1] !== ""
-            ? "2px 4px"
-            : "0"}
-          style:background={user.unread[
-            user.unread.findIndex(
-              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
-            )
-          ].split("=>")[1] === "new"
-            ? "#ff4408"
-            : "gray"}
-        >
-          {user.unread[
-            user.unread.findIndex(
-              (msg) => msg.split("=>")[0] === $loggedinUser.displayName
-            )
-          ].split("=>")[1] === "new"
-            ? $t("menu.new")
-            : user.unread[
-                user.unread.findIndex(
-                  (msg) => msg.split("=>")[0] === $loggedinUser.displayName
-                )
-              ].split("=>")[1] === "read"
-            ? $t("menu.read")
-            : user.unread[
-                user.unread.findIndex(
-                  (msg) => msg.split("=>")[0] === $loggedinUser.displayName
-                )
-              ].split("=>")[1] === "unread"
-            ? $t("menu.unread")
-            : ""}
+
+        <div class="indicator">
+          {#if user.unread[user.unread.findIndex((msg) => msg.split("=>")[0] === $loggedinUser.displayName)].split("=>")[1] === "read"}
+            <IconCheck />
+          {:else if user.unread[user.unread.findIndex((msg) => msg.split("=>")[0] === $loggedinUser.displayName)].split("=>")[1] === "new"}
+            <IconBellAlert />
+          {:else if user.unread[user.unread.findIndex((msg) => msg.split("=>")[0] === $loggedinUser.displayName)].split("=>")[1] === "unread"}
+            <IconPaperPlane />
+          {:else}
+            <IconBell />
+          {/if}
         </div>
       </div>
     {/if}
@@ -146,16 +126,8 @@
 
 <style>
   .indicator {
-    /* font-style: italic; */
-    color: white;
-    border-radius: 4px;
-    min-width: 20px;
-    display: grid;
-    place-content: center;
-    font-size: 0.75em;
-    margin-right: 3px;
     position: absolute;
-    right: 0px;
+    right: 3px;
   }
 
   .date {

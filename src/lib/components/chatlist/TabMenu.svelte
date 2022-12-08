@@ -9,6 +9,7 @@
     privateChat,
     currentContact,
     selectedUsername,
+    widthLessthan1200,
     showSettingsModalMobile,
   } from "$lib/store";
   import TabmenuSkeleton from "../skeleton/TabmenuSkeleton.svelte";
@@ -78,7 +79,8 @@
       </span>
     {/each}
 
-    {#if $mobile}
+    <!-- {#if $mobile} -->
+    {#if $widthLessthan1200}
       <div class="icon-avatar">
         <img
           src={$myDoc?.avatar}

@@ -39,6 +39,7 @@
   let url = null;
   let file = null;
   let messageSent = "";
+  let isMsgSent = false;
 
   const handleFileChange = async (e) => {
     file = e.target.files[0];
@@ -121,14 +122,11 @@
               ? `${$loggedinUser.displayName}=>You: ${new Date()}`
               : time
           ),
-        unread: selectedUserSnap
-          .data()
-          .unread.map((state) =>
-            state.split("=>")[0] === $loggedinUser.displayName
-              ? `${$loggedinUser.displayName}=>unread`
-              // ? `${$loggedinUser.displayName}=>`
-              : state
-          ),
+        unread: selectedUserSnap.data().unread.map((state) =>
+          state.split("=>")[0] === $loggedinUser.displayName
+            ? `${$loggedinUser.displayName}=>unread`
+            : state
+        ),
       });
 
       // update login user document
@@ -158,6 +156,7 @@
           ),
       });
       messageSent = "";
+      isMsgSent = true;
       console.log("message created successfully 😁");
     } catch (error) {
       console.log("ooh, something went wrong 😥", error);

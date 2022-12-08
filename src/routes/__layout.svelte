@@ -154,6 +154,7 @@
       } else {
         // signout()
         $loggedinUser = _user;
+        console.log("login user: ", _user);
         console.log("signin, user: ", $loggedinUser.displayName);
 
         let usersRef = collection(db, "users");
@@ -173,6 +174,9 @@
 
         /* this block of codes cause sveltechat login failure !!!*/
         let userRef = doc(db, "users", $loggedinUser.displayName);
+        updateDoc(userRef, {
+          online: true,
+        });
         const unsubUser = onSnapshot(userRef, (userSnap) => {
           $myDoc = userSnap.data();
           return () => unsubUser;
@@ -248,7 +252,7 @@
       ? `${$currentSelectedUser?.bgColor} center / cover`
       : "#ebebeb"}
     style:-o-transition="background 300ms linear"
-    >
+  >
     <!-- style:transition="background 300ms linear" -->
     <SettingsModal />
     <div

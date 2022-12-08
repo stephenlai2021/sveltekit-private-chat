@@ -102,12 +102,13 @@
     errorMsg = null;    
     try {
       result = await signInWithEmailAndPassword(auth, email, password);
-      console.log(`${result.user.displayName} signed in successfully 😙`);
+      // console.log('user: ', result)
+      // console.log(`${result.user.displayName} signed in successfully 😙`);
 
-      userRef = doc(db, "users", result.user.displayName);
-      await updateDoc(userRef, {
-        online: true,
-      });
+      // userRef = doc(db, "users", result.user.displayName);
+      // await updateDoc(userRef, {
+      //   online: true,
+      // });
 
       console.log(`update ${result.user.displayName}'s status -> 🟢`);
       isLogin = false;
@@ -121,6 +122,10 @@
     if (signup) handleSignup();
     if (!signup) handleLogin();
   };
+
+  const handleGoogleLogin = async () => {
+
+  }
 </script>
 
 <section>
@@ -168,13 +173,13 @@
       <button class="btn-action" type="submit">
         {signup ? "Signup" : "Login"}
       </button>
-      <div class="btn-facebook">
+      <div class="btn-facebook" on:click={handleGoogleLogin}>
         <img
           class="icon-facebook"
           src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Facebook_icon_2013.svg"
           alt=""
         />
-        <p>Login with Facebook</p>
+        <p>Login with Google</p>
       </div>
     </form>
     {#if errorMsg}

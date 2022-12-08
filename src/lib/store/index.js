@@ -18,6 +18,7 @@ export const lastMsg = writable(false);
 export const foundUser = writable({});
 export const isSignout = writable(false);
 export const selectedMembers = writable([]);
+export const selectedUser = writable(null);
 export const selectedUserReady = writable(false);
 export const currentContact = writable(null);
 export const showAddPeopleModal = writable(false);
